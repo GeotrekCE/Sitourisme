@@ -1,0 +1,36 @@
+{
+	"parserOptions": {
+		"ecmaVersion": 2020,
+		"sourceType": "module"
+	},
+	"env": {
+		"node": true,
+		"es2020": true,
+		"browser": true
+	},
+	"globals": {
+		"angular": "readonly",
+		"ApplicationConfiguration": "readonly",
+		"io": "readonly"
+	},
+	"extends": [
+		"eslint:recommended",
+		"plugin:prettier/recommended"
+	],
+	"rules": { // 0: off, 1: warning, 2: error
+		"prettier/prettier": 2,
+		"no-console": 0,
+		"no-var": 0,
+		"no-fallthrough": 0,
+		"no-prototype-builtins": 0,
+		"no-unused-vars": [
+			0,
+			{
+				"vars": "local"
+			}
+		],
+		"no-undef": 1,
+		"no-redeclare": 1,
+		"no-useless-escape": 0
+	}
+}

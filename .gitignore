@@ -1,0 +1,9 @@
+.DS_Store
+*.log
+node_modules/
+public/lib/
+.bower-*/
+.idea/
+.vscode/
+.data/*
+*.rest

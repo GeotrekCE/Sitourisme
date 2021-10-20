@@ -310,57 +310,6 @@ exports.exportSitra = function (req, res) {
 };
 
 /**
- * call APIDAE's API in order to delete items
- * specified by there specialIdSitra in resquest
- * @param req
- * @param res
- */
-// SUPPRESSION APIDAE MANUEL : désactiver pour le moment
-/* exports.removeFromSitra = function(req, res) {
-  Product.removeFromSitra(req.query, function(err, result) {
-    var report = new Report();
-    if (err) {
-      result = err;
-    }
-    report.createModule(reportModule);
-    report.createReport(
-      "export_" + new Date().getTime(),
-      1
-    );
-
-    csvStringify(
-      [
-        [
-          new Date(),
-          req.query.id,
-          req.query.name,
-          result,
-          req.query.specialIdSitra ? req.query.specialIdSitra : "",
-          err ? err.info : "",
-          err ? err.errMessage : "",
-          "",
-          "",
-          "",
-          req.query.member,
-          "MANUEL"
-        ]
-      ],
-      function(err, str) {
-        report.writeReport(str);
-        return res.json({
-          err: err,
-          data: {
-            module: reportModule,
-            report: report.getReportId()
-          }
-        });
-      }
-    );
-  });
-};
-*/
-
-/**
  * Export sitra search
  *
  * @param {object} req
