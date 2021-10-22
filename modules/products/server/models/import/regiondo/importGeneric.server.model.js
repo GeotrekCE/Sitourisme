@@ -256,7 +256,10 @@ ImportGenericRegionDo.prototype.getProductByIdAndLanguage = async function (
   if (status === 200 && data) {
     const lang = language ? langMapping[language] : '';
     return {
-      image: _.map(data.image_url, (url) => ({ url })),
+      image: _.map(data.image_url, (url) => ({
+        url,
+        description: `@${data.provider}`
+      })),
       [`name${lang}`]: data.name,
       [`description${lang}`]: DataString.stripTags(data.description),
       [`shortDescription${lang}`]: DataString.cutString(
@@ -287,13 +290,16 @@ ImportGenericRegionDo.prototype.getComplement = function (element) {
 
 ImportGenericRegionDo.prototype.getComplementAccueil = function (element) {
   let complementAccueil = '';
-  if (element.faq_customer_requirements) {
+  if (
+    element.faq_customer_requirements &&
+    element.faq_customer_requirements.length
+  ) {
     complementAccueil += `${element.faq_customer_requirements}\n`;
   }
-  if (element.important_info) {
+  if (element.important_info && element.important_info.length) {
     complementAccueil += `${element.important_info}\n`;
   }
-  if (element.faq_other_info) {
+  if (element.faq_other_info && element.faq_other_info) {
     complementAccueil += `${element.faq_other_info}\n`;
   }
 
@@ -398,6 +404,8 @@ ImportGenericRegionDo.prototype.getAddress = async (
 ) => {
   const address = {
     address1: element.location_address
+      ? element.location_address.split(',')[0]
+      : ''
   };
   let zipcode = element.zipcode;
   // if not zipcode, call api with lon and lat
