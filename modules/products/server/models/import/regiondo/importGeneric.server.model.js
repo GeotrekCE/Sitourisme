@@ -16,6 +16,9 @@ const configImportRegionDo = require(path.resolve(
   'config/configImport_RegionDo.js'
 ));
 const configSitraTown = require(path.resolve('config/configSitraTown.js'));
+const configSitraTownByInsee = require(path.resolve(
+  'config/configSitraTownByInsee.js'
+));
 
 const langMapping = {
   'en-US': 'En',
@@ -41,9 +44,10 @@ util.inherits(ImportGenericRegionDo, Import);
 
 ImportGenericRegionDo.prototype.import = function (data, next) {
   try {
-    importUtils.initRegion((regionPerZipcode) =>
-      this.executeQuery(regionPerZipcode)
-    );
+    this.listCity = [];
+    importUtils.initRegion((regionPerZipcode) => {
+      this.executeQuery(regionPerZipcode);
+    });
   } catch (err) {
     console.log(err);
     next();
@@ -58,12 +62,14 @@ ImportGenericRegionDo.prototype.executeQuery = async function (
     {
       publicKey: 'OF88a123d28167',
       privateKey: 'e3a123d5956c9b6dc28167612e5c721434a02',
-      member: 3448
+      member: 3448,
+      source: 'Marseille'
     },
     {
       publicKey: 'ES60a97de11449',
       privateKey: '9ca97de2ba3e59b731144923bbfc047750d1f',
-      member: 3448
+      member: 3448,
+      source: 'Esterel'
     }
   ];
   if (process.env.NODE_ENV === 'production') {
@@ -72,13 +78,15 @@ ImportGenericRegionDo.prototype.executeQuery = async function (
       {
         publicKey: 'OF88a123d28167',
         privateKey: 'e3a123d5956c9b6dc28167612e5c721434a02',
-        member: 5701
+        member: 5701,
+        source: 'Marseille'
       },
       // regionDo - Esterel
       {
         publicKey: 'ES60a97de11449',
         privateKey: '9ca97de2ba3e59b731144923bbfc047750d1f',
-        member: 5249
+        member: 5249,
+        source: 'Esterel'
       }
     ];
   }
@@ -91,8 +99,7 @@ ImportGenericRegionDo.prototype.executeQuery = async function (
         .update(`${apiTime}${api.publicKey}`)
         .digest('hex');
       return {
-        publicKey: api.publicKey,
-        member: api.member,
+        ...api,
         api: axios.create({
           baseURL: this.baseURL,
           headers: {
@@ -116,7 +123,7 @@ ImportGenericRegionDo.prototype.executeQuery = async function (
       .then(async ({ data }) => {
         // promisify a callback function
         this.doUpsertAsync = await pify(importUtils.doUpsert);
-        await this.importProduct(data.data, instance.member, regionPerZipcode);
+        await this.importProduct(data.data, instance, regionPerZipcode);
       })
       .catch((error) => {
         console.error(error);
@@ -130,7 +137,7 @@ ImportGenericRegionDo.prototype.executeQuery = async function (
 // import recursively
 ImportGenericRegionDo.prototype.importProduct = async function (
   listElement,
-  member,
+  { member, source },
   regionPerZipcode
 ) {
   if (listElement.length > 0) {
@@ -160,7 +167,8 @@ ImportGenericRegionDo.prototype.importProduct = async function (
       metadata: JSON.stringify({
         product_id: element.product_id,
         product_supplier_id: element.product_supplier_id,
-        sku: element.sku
+        sku: element.sku,
+        source
       }),
       supplierId: element.product_supplier_id,
       supplierName: await this.getSupplierName(element.product_supplier_id),
@@ -209,8 +217,12 @@ ImportGenericRegionDo.prototype.importProduct = async function (
       'name ===>',
       product.name
     );
-    await this.doUpsertAsync(product, product.specialId, product.importType);
-    return this.importProduct(listElement, member, regionPerZipcode);
+    // await this.doUpsertAsync(product, product.specialId, product.importType);
+    return this.importProduct(
+      listElement,
+      { member, source },
+      regionPerZipcode
+    );
   } else {
     return;
   }
@@ -398,19 +410,31 @@ ImportGenericRegionDo.prototype.getPrivateData = function (element) {
   return privateData;
 };
 
-ImportGenericRegionDo.prototype.getAddress = async (
+ImportGenericRegionDo.prototype.getAddress = async function (
   element,
   regionPerZipcode
-) => {
+) {
   const address = {
     address1: element.location_address
       ? element.location_address.split(',')[0]
       : ''
   };
-  let zipcode = element.zipcode;
-  // if not zipcode, call api with lon and lat
-  if (!zipcode) {
+  const mappingInsee = _.find(configImportRegionDo.inseeByCityId, {
+    city_id: Number(element.city_id)
+  });
+  let insee = mappingInsee ? mappingInsee.insee : element.insee;
+  let zipcode = null;
+
+  if (insee) {
+    const city = configSitraTownByInsee[insee];
+    if (city) {
+      address.city = city.sitraId;
+      address.zipcode = city.zipcode;
+      address.region = regionPerZipcode[String(city.zipcode).substring(0, 2)];
+    }
+  } else {
     try {
+      // if not zipcode or insee, call api with lon and lat
       const resultZipcode = await axios.get(
         `https://api-adresse.data.gouv.fr/reverse/?lon=${element.geo_lon}&lat=${element.geo_lat}`
       );
@@ -423,19 +447,18 @@ ImportGenericRegionDo.prototype.getAddress = async (
         error.message
       );
     }
-  }
-
-  if (zipcode) {
-    zipcode = String(zipcode);
-    if (zipcode.length === 4) {
-      zipcode = `0${zipcode}`;
-    }
-    address.zipcode = zipcode;
-    address.region = regionPerZipcode[String(zipcode).substring(0, 2)];
-    const city = _.first(configSitraTown[zipcode]);
-    if (city) {
-      address.city = city.sitraId;
-      address.insee = city.insee;
+    if (zipcode) {
+      zipcode = String(zipcode);
+      if (zipcode.length === 4) {
+        zipcode = `0${zipcode}`;
+      }
+      address.zipcode = zipcode;
+      address.region = regionPerZipcode[String(zipcode).substring(0, 2)];
+      const city = _.first(configSitraTown[zipcode]);
+      if (city) {
+        address.city = city.sitraId;
+        address.insee = city.insee;
+      }
     }
   }
   return address;
