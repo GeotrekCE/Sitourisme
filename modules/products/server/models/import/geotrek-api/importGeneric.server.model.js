@@ -21,7 +21,10 @@ const ImportGenericGeotrekApi = function (options) {
   this.lang = options.lang ? options.lang : 'fr';
   this.baseURL = 'https://geotrek-admin.ecrins-parcnational.fr/api/v2';
   this.instanceApi = axios.create({
-    baseURL: this.baseURL
+    baseURL: this.baseURL,
+    ValidityStatus(status) {
+      return status < 500;
+    }
   });
 };
 
@@ -42,9 +45,13 @@ ImportGenericGeotrekApi.prototype.import = function (data, next) {
 ImportGenericGeotrekApi.prototype.executeQuery = async function (
   regionPerZipcode
 ) {
-  const { data } = await this.instanceApi.get('/tour/?format=json');
-  this.doUpsertAsync = await pify(importUtils.doUpsert);
-  await this.importProduct(data.results, regionPerZipcode);
+  const { data, status } = await this.instanceApi.get('/tour/?format=json');
+  if (status === 200) {
+    this.doUpsertAsync = await pify(importUtils.doUpsert);
+    await this.importProduct(data.results, regionPerZipcode);
+  } else {
+    console.error(status, data);
+  }
 };
 
 ImportGenericGeotrekApi.prototype.importProduct = async function (
@@ -76,14 +83,24 @@ ImportGenericGeotrekApi.prototype.importProduct = async function (
     } else if (this.baseURL.match('portcros')) {
       this.idProject = 3;
       this.idUrl = 4;
-    } else if (this.baseURL.match('alpes')) {
+    } else if (this.filename.match('alpeshauteprovence')) {
+      this.idProject = 5;
+      this.idUrl = 6;
+    } else if (this.filename.match('alpes')) {
       this.idProject = 4;
       this.idUrl = 5;
+    } else if (this.filename.match('mercantour')) {
+      this.idProject = 6;
+      this.idUrl = 7;
     }
 
-    const { data: informationsDesk } = await this.instanceApi.get(
-      `/informationdesk/${_.last(element.information_desks)}/?format=json`
-    );
+    let additionalInformation = {};
+    if (element.information_desks.length) {
+      const { data: informationsDesk } = await this.instanceApi.get(
+        `/informationdesk/${_.last(element.information_desks)}/?format=json`
+      );
+      additionalInformation = informationsDesk;
+    }
 
     const product = {
       importType: this.importType,
@@ -144,10 +161,14 @@ ImportGenericGeotrekApi.prototype.importProduct = async function (
       shortDescriptionIt: this.getShortDescription(element, 'it'),
       shortDescriptionDe: this.getShortDescription(element, 'de'),
       shortDescriptionNl: this.getShortDescription(element, 'nl'),
-      address: this.getAddress(element, regionPerZipcode),
-      // website: this.getWebsite(element),
-      // email: this.getEmail(element),
-      // phone: this.getPhone(element),
+      address: this.getAddress(
+        element,
+        additionalInformation,
+        regionPerZipcode
+      ),
+      website: this.getWebsite(additionalInformation),
+      email: this.getEmail(additionalInformation),
+      phone: this.getPhone(additionalInformation),
       gpx: this.getGpx(element),
       kml: this.getKml(element),
       video: this.getVideo(element, 'fr'),
@@ -401,34 +422,32 @@ ImportGenericGeotrekApi.prototype.getShortDescription = function (
 
 ImportGenericGeotrekApi.prototype.getAddress = function (
   element,
+  additionalElement,
   regionPerZipcode
 ) {
-  let city = null;
   const address = {
-    address1: null,
+    address1: additionalElement.street,
     address2: null,
     address3: null,
     cedex: null,
-    zipcode: null,
+    zipcode: element.departure_city,
     insee: null,
     city: null,
     region: null
   };
 
+  let city = null;
   _.forEach(element.cities, (item) => {
     if (item) {
       address.insee = item;
       city = configSitraTownByInsee[item];
       if (city) {
         address.city = city.sitraId;
-        if (!address.zipcode) {
-          address.zipcode = city.zipcode;
-        }
       }
     }
   });
 
-  if (address.zipcode) {
+  if (regionPerZipcode && address.zipcode) {
     address.region = regionPerZipcode[String(address.zipcode).substring(0, 2)];
   }
 
@@ -441,40 +460,31 @@ ImportGenericGeotrekApi.prototype.getAddress = function (
     address.address2 = address.address3;
     address.address3 = null;
   }
-
   return address;
 };
 
-ImportGenericGeotrekApi.prototype.getWebsite = function (element) {
-  /*let child = element.information_desks;
-  if (!_.isArray(child)) {
-    child = [child];
+ImportGenericGeotrekApi.prototype.getWebsite = function (additionalElement) {
+  let website = additionalElement.website;
+  if (!_.isArray(website)) {
+    website = [website];
   }
-  return _.map(child, (item) => {
-    if (item && item['website']) {
-      return this.addUrlHttp(item['website']);
-    }
-  });*/
-  return [];
+  return _.compact(website);
 };
 
-ImportGenericGeotrekApi.prototype.getEmail = function (element) {
-  /*let child = element.information_desks;
-  if (!_.isArray(child)) {
-    child = [child];
+ImportGenericGeotrekApi.prototype.getEmail = function (additionalElement) {
+  let email = additionalElement.email;
+  if (!_.isArray(email)) {
+    email = [email];
   }
-  return DataString.cleanEmailArray(
-    _.map(child, (item) => {
-      if (item && item['email']) {
-        return this.addUrlHttp(item['email']);
-      }
-    })
-  );*/
-  return [];
+  return DataString.cleanEmailArray(email);
 };
 
-ImportGenericGeotrekApi.prototype.getPhone = function (element) {
-  return DataString.cleanPhoneArray([]);
+ImportGenericGeotrekApi.prototype.getPhone = function (additionalElement) {
+  let phone = additionalElement.phone;
+  if (!_.isArray(phone)) {
+    phone = [phone];
+  }
+  return DataString.cleanPhoneArray(phone);
 };
 
 ImportGenericGeotrekApi.prototype.getGpx = function (element) {
