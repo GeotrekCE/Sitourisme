@@ -22,7 +22,7 @@ const ImportGenericGeotrekApi = function (options) {
   this.baseURL = 'https://geotrek-admin.ecrins-parcnational.fr/api/v2';
   this.instanceApi = axios.create({
     baseURL: this.baseURL,
-    ValidityStatus(status) {
+    validateStatus(status) {
       return status < 500;
     }
   });
@@ -45,12 +45,12 @@ ImportGenericGeotrekApi.prototype.import = function (data, next) {
 ImportGenericGeotrekApi.prototype.executeQuery = async function (
   regionPerZipcode
 ) {
-  const { data, status } = await this.instanceApi.get('/tour/?format=json');
+  const { data, status } = await this.instanceApi.get('/trek/?format=json');
   if (status === 200) {
     this.doUpsertAsync = await pify(importUtils.doUpsert);
     await this.importProduct(data.results, regionPerZipcode);
   } else {
-    console.error(status, data);
+    console.error('Error executeQuery', status, data);
   }
 };
 
@@ -95,11 +95,13 @@ ImportGenericGeotrekApi.prototype.importProduct = async function (
     }
 
     let additionalInformation = {};
-    if (element.information_desks.length) {
-      const { data: informationsDesk } = await this.instanceApi.get(
+    if (element.information_desk && element.information_desks.length) {
+      const { data } = await this.instanceApi.get(
         `/informationdesk/${_.last(element.information_desks)}/?format=json`
       );
-      additionalInformation = informationsDesk;
+      if (data) {
+        additionalInformation = data;
+      }
     }
 
     const product = {
@@ -189,9 +191,11 @@ ImportGenericGeotrekApi.prototype.importProduct = async function (
     product.legalEntity = this.getLegalEntity(element, product);
     product.rateCompletion = this.calculateRateCompletion(product);
 
+    console.log(`Import ${product.name} : ${product.specialId}`);
     await this.doUpsertAsync(product, product.specialId, product.importType);
     return this.importProduct(listElement, regionPerZipcode);
   } else {
+    console.log("Fin de l'import");
     return;
   }
 };
@@ -250,10 +254,13 @@ ImportGenericGeotrekApi.prototype.getComplementAccueil = async function (
   element,
   lang
 ) {
-  const { data } = await this.instanceApi.get(
-    `trek_difficulty/${element.difficulty}/?format=json`
-  );
-  return data.label[lang];
+  if (element.difficulty) {
+    const { data } = await this.instanceApi.get(
+      `trek_difficulty/${element.difficulty}/?format=json`
+    );
+    return data.label[lang];
+  }
+  return null;
 };
 
 ImportGenericGeotrekApi.prototype.getAmbianceLibelle = function (
@@ -283,22 +290,19 @@ ImportGenericGeotrekApi.prototype.getComplement = function (element, lang) {
   let complement = '';
 
   if (element.departure && element.departure[lang]) {
-    complement += `${this.translate('departure', lang)} : ${
-      element.departure[lang]
-    }.`;
+    complement += `${this.translate('departure', lang)} : ${element.departure[lang]
+      }.`;
   }
   if (element.arrival && element.arrival[lang]) {
-    complement += `\n${this.translate('arrival', lang)} : ${
-      element.arrival[lang]
-    }.`;
+    complement += `\n${this.translate('arrival', lang)} : ${element.arrival[lang]
+      }.`;
   }
   if (element.access && element.access[lang]) {
     complement += `\n${element.access[lang]}`;
   }
   if (element.advised_parking && element.advised_parking[lang]) {
-    complement += `\n${this.translate('advised_parking', lang)} : ${
-      element.advised_parking[lang]
-    } .`;
+    complement += `\n${this.translate('advised_parking', lang)} : ${element.advised_parking[lang]
+      } .`;
   }
   if (element.public_transport && element.public_transport[lang]) {
     complement += `\n${element.public_transport[lang]}`;
