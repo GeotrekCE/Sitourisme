@@ -45,7 +45,9 @@ ImportGenericGeotrekApi.prototype.import = function (data, next) {
 ImportGenericGeotrekApi.prototype.executeQuery = async function (
   regionPerZipcode
 ) {
-  const { data, status } = await this.instanceApi.get('/trek/?format=json');
+  const { data, status } = await this.instanceApi.get(
+    '/trek/?structures=1&format=json'
+  );
   if (status === 200) {
     this.doUpsertAsync = await pify(importUtils.doUpsert);
     await this.importProduct(data.results, regionPerZipcode);
