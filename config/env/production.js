@@ -2,7 +2,7 @@
 
 module.exports = {
   secure: false,
-  port: process.env.PORT || 8444,
+  port: process.env.PORT || 3003,
   db:
     process.env.MONGOHQ_URL ||
     process.env.MONGOLAB_URI ||
