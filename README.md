@@ -1,43 +1,34 @@
 # PACA-API
 
-Ce projet permet d'importer des documents, de les traiter et de les envoyer ensuite à apidae au bon format.
+Outil nécéssaire :
+- NodeJS 14+
+- Docker et docker-compose
 
-## Prérequis
-- Docker
-- NodeJS 14
+## installation
 
-Idéalement nvm
+Créer la structure de dossier comme indiqué dans l'arbre en dessous :
 
-Les fichiers d'imports doivent se trouver dans le dossier *var/data/import/nom_de_import*
-## install
+```
+├── paca-api
+└── var
+    └── data
+        ├── geotrek
+        └── town.csv
+    ├── region.csv
+```
 
-```bash
+Les fichiers town.csv et region.csv se trouve dans le dossier data du projet, il faut les déplacer au bon endroit.
+
+Dans le projet effectuer la commande d'installation : 
+
 npm install
 ```
 
-## Compiler SASS, minifier le CSS et le JS, pensez à bien effectuer cette commande avant de commit
+## Usage
 
-```bash
-npm run build
-```
+Afin de procéder à l'import des données il faut créer un compte utilisateur et intialiser le système d'import, 
+pour cela se rendre sur cette page `http://localhost:3003/authentication/signup` et remplir le formulaire
 
+Effectuer ensuite à commande `npm run init-import`
 
-## Générer les fichiers de mapping depuis les fichiers csv
-
-csv2json installé globlalement
-
-```bash
-csv2json -d -s "|" input_file output_file
-
-```
-
-## Lancer le site en local
-```bash
-docker-compose up -d
-npm run dev
-```
-
-## Lancer le site en production
-
-- Utiliser pm2 avec le fichier de config ecosystem.config.js
-- Configurer les crons avec les scripts d'import automatique
+Les imports peuvent maintenant être effectué depuis l'interface.
