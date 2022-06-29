@@ -12,6 +12,7 @@
     "start": "node server.js",
     "dev": "NODE_ENV=development nodemon server.js",
     "prod": "NODE_ENV=production PORT=3003 nodemon server.js",
+    "init-import": "NODE_ENV=development node init-import.js",
     "postinstall": "bower install --config.interactive=true",
     "lint": "eslint modules/**/*.js --fix"
   },
