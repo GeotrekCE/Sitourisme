@@ -1471,6 +1471,19 @@ function __buildSubType(product, root, rootFieldList, unwantedTypes) {
             blockCategory + '.' + blockField + '.referencesTopoguides'
           );
         }
+        if (itinerary.referencesCartographiques) {
+          blockItinerary.referencesCartographiques = {
+            libelleFr: product.itinerary.referencesCartographiques,
+            libelleEn: product.itinerary.referencesCartographiques,
+            libelleEs: product.itinerary.referencesCartographiques,
+            libelleIt: product.itinerary.referencesCartographiques,
+            libelleDe: product.itinerary.referencesCartographiques,
+            libelleNl: product.itinerary.referencesCartographiques
+          };
+          fieldList.push(
+            blockCategory + '.' + blockField + '.referencesCartographiques'
+          );
+        }
         if (Object.keys(blockItinerary).length) {
           blockData[blockField] = blockItinerary;
         }
@@ -3683,11 +3696,6 @@ function __buildPrestation(product, root, rootFieldList, unwantedTypes) {
       );
       root.informationsPrestataireActivites.prestataireActivites = true;
     }
-    if (root.informationsPrestataireActivites.prestataireActivites) {
-      rootFieldList.push(
-        'informationsPrestataireActivites.prestataireActivites'
-      );
-    }
   }
 
   if (product.language && product.language.length) {
@@ -3731,6 +3739,40 @@ function __buildPrestation(product, root, rootFieldList, unwantedTypes) {
     rootFieldList.push('prestations.tailleGroupeMin');
     prestation.tailleGroupeMax = product.tailleGroupe.max;
     rootFieldList.push('prestations.tailleGroupeMax');
+  }
+
+  if (root.informationsPrestataireActivites &&
+      root.informationsPrestataireActivites.prestataireActivites
+  ) {
+    if (!root.informationsPrestataireActivites) {
+      root.informationsPrestataireActivites = {};
+    }
+    root.informationsPrestataireActivites.prestataireActivites = true;
+    rootFieldList.push('informationsPrestataireActivites.prestataireActivites');
+  }
+
+  if (product.isActivityProvider){
+    root.informationsPrestataireActivites = {};
+    root.informationsPrestataireActivites.prestataireActivites = true;
+    rootFieldList.push('informationsPrestataireActivites.prestataireActivites');
+    // Prestation
+    if (product.prestation && product.prestation.length) {
+      root.informationsPrestataireActivites.activitesSportives = __buildTypeKeyArray(
+        product.prestation,
+        ['ActiviteSportivePrestation'],
+        unwantedTypes
+      );
+    }
+    rootFieldList.push('informationsPrestataireActivites.activitesSportives');
+    // Prestation
+    if (product.prestation && product.prestation.length) {
+      root.informationsPrestataireActivites.activitesCulturelles = __buildTypeKeyArray(
+        product.prestation,
+        ['ActiviteCulturellePrestation'],
+        unwantedTypes
+      );
+    }
+    rootFieldList.push('informationsPrestataireActivites.activitesCulturelles');
   }
 
   if (Object.keys(prestation).length) {
