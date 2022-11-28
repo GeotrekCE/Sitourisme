@@ -250,7 +250,7 @@ ImportGenericGEOTREK.prototype.importProduct = function (
       importSubType: null,
       typeCode: this.configData.codeType,
       type: this.getType(this.configData.codeType),
-      specialId: this.getSpecialId(dataProduct),
+      specialId: this.getSpecialId(dataProduct) + '-' + this.configData.member,
       subType: this.configData.subType,
       member: this.configData.member,
       state: 'HIDDEN',
@@ -328,9 +328,7 @@ ImportGenericGEOTREK.prototype.importProduct = function (
 ImportGenericGEOTREK.prototype.getMember = function (dataProduct) {
   let member = 3437; // geotrek pnr verdon - preprod by default
   if (process.env.NODE_ENV === 'production') {
-    if (this.filename.match('Ecrins')) {
-      member = 4433;
-    } else if (this.filename.match('cheminDesParcs')) {
+    if (this.filename.match('cheminDesParcs')) {
       member = 4430;
       const idStructure = _.get(dataProduct, 'properties.structure.id');
       switch (idStructure) {
@@ -602,6 +600,7 @@ ImportGenericGEOTREK.prototype.getItinerary = function (dataProduct) {
     positive: null,
     negative: null,
     referencesTopoguides: null,
+    referencesCartographiques: null,
     itineraireType: null,
     itineraireBalise: null,
     precisionsBalisage: ''
