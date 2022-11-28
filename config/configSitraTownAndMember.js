@@ -161,6 +161,9 @@ exports.perMemberId = {
   3463: {
     labelFr: 'Cannes'
   },
+  3501: {
+    labelFr: 'Gard'
+  },
   4430: {
     labelFr: 'Geotrek - Chemin des parcs'
   },
@@ -223,6 +226,33 @@ exports.perMemberId = {
   },
   6026: {
     labelFr: 'Geotrek - Mercantour'
+  },
+  6499: {
+    labelFr: 'Gard'
+  },
+  6627: {
+    labelFr: 'Avesnois'
+  },
+  /*6645: {
+    labelFr: 'Geotrek - Serre-Ponçon'
+  },
+  6646: {
+    labelFr: 'Geotrek - Pays des Ecrins'
+  },*/
+  6647: {
+    labelFr: 'Geotrek - Hautes Vallées'
+  },
+  /*6649: {
+    labelFr: 'Geotrek - Serre Chevalier Vallée Briançon'
+  },*/
+  6696: {
+    labelFr: 'Geotrek - Serre-Ponçon'
+  },
+  6705: {
+    labelFr: 'Geotrek - Pays des Écrins'
+  },
+  6707: {
+    labelFr: 'Geotrek - La Grave'
   }
 };
 
