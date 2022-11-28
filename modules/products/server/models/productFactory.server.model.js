@@ -1224,6 +1224,9 @@ const _defaultProductSchema = {
       type: Number
     }
   ],
+  isActivityProvider: {
+    type: Boolean
+  },
   activityProvider: {
     type: String
   },
@@ -1839,6 +1842,10 @@ const _defaultProductSchema = {
       type: Number
     },
     referencesTopoguides: {
+      type: String,
+      trim: true
+    },
+    referencesCartographiques: {
       type: String,
       trim: true
     },
