@@ -3,6 +3,12 @@ const path = require('path');
 const axios = require('axios');
 const pify = require('pify');
 const _ = require('lodash');
+const Report = require(path.resolve(
+  './modules/reports/server/models/report.server.model'
+));
+const { exportSitraAuto } = require(path.resolve(
+  './modules/products/server/models/exportSitra.server.model'
+));
 const Import = require(path.resolve('library/import/generic.js'));
 const importUtils = require(__dirname + '/../../importUtils.server.model.js');
 const configImportGEOTREK = require(path.resolve(
@@ -34,25 +40,45 @@ util.inherits(ImportGenericGeotrekApi, Import);
 ImportGenericGeotrekApi.prototype.import = function (data, next) {
   try {
     importUtils.initRegion((regionPerZipcode) =>
-      this.executeQuery(regionPerZipcode)
+      this.executeQuery(regionPerZipcode, 0)
     );
   } catch (err) {
     console.error(err);
-    next();
   }
 };
 
 ImportGenericGeotrekApi.prototype.executeQuery = async function (
-  regionPerZipcode
+  regionPerZipcode,
+  page
 ) {
-  const { data, status } = await this.instanceApi.get(
-    '/trek/?structures=1&format=json'
-  );
+  urlNext = (page != 0) ? '&page='+page : '';
+  const { data, status } = await this.instanceApi.get('/trek?format=json' + urlNext);
   if (status === 200) {
     this.doUpsertAsync = await pify(importUtils.doUpsert);
+    console.log('Import page ' + page);
     await this.importProduct(data.results, regionPerZipcode);
+    if (data.next){
+      page++;
+      this.executeQuery(regionPerZipcode, page);
+    }
+    else{
+      // création du fichier de rapport
+      const report = new Report();
+      report.createModule('products');
+      report.createReport(`export_${new Date().getTime()}`, 1);
+      const options = {
+        report,
+        exportType: 'AUTO'
+      };
+      console.log('exportAuto');
+      exportSitraAuto('geotrek-api', options, () => {
+        console.log('end of export sitra auto!');
+        return;
+      });
+    }
   } else {
     console.error('Error executeQuery', status, data);
+    return null;
   }
 };
 
@@ -65,136 +91,137 @@ ImportGenericGeotrekApi.prototype.importProduct = async function (
     delete element.steps;
     delete element.geometry;
 
-    this.configData = {
-      specialId: null,
-      codeType: 'EQU',
-      subType: '2988',
-      member: this.getMember(element)
-    };
-
-    // URL en fonction du nom de fichier
-    if (this.baseURL.match('ecrins')) {
-      this.idProject = 1;
-      this.idUrl = 1;
-    } else if (this.baseURL.match('chemindesparcs')) {
-      this.idProject = 2;
-      this.idUrl = 2;
-    } else if (this.baseURL.match('sisterons')) {
-      this.idProject = 1;
-      this.idUrl = 3;
-    } else if (this.baseURL.match('portcros')) {
-      this.idProject = 3;
-      this.idUrl = 4;
-    } else if (this.filename.match('alpeshauteprovence')) {
-      this.idProject = 5;
-      this.idUrl = 6;
-    } else if (this.filename.match('alpes')) {
-      this.idProject = 4;
-      this.idUrl = 5;
-    } else if (this.filename.match('mercantour')) {
-      this.idProject = 6;
-      this.idUrl = 7;
+    switch (element.structure) {
+      case 1:
+        this.member = 4433;
+        break;
+      case 5:
+        this.member = 6705;
+        break;
+      case 7:
+        this.member = 6696;
+        break;
+      case 8:
+      case 9:
+        this.member = 6707;
+        break;
+      default:
+        this.member = null;
+        break;
     }
 
-    let additionalInformation = {};
-    if (element.information_desk && element.information_desks.length) {
-      const { data } = await this.instanceApi.get(
-        `/informationdesk/${_.last(element.information_desks)}/?format=json`
-      );
-      if (data) {
-        additionalInformation = data;
+    if (this.member){
+      this.configData = {
+        specialId: null,
+        codeType: 'EQU',
+        subType: '2988',
+        member: this.member
+      };
+
+      let additionalInformation = {};
+      if (element.information_desk && element.information_desks.length) {
+        const { data } = await this.instanceApi.get(
+          `/informationdesk/${_.last(element.information_desks)}/?format=json`
+        );
+        if (data) {
+          additionalInformation = data;
+        }
       }
+
+      const product = {
+        importType: this.importType,
+        importSubType: null,
+        typeCode: this.configData.codeType,
+        type: configImportGEOTREK.types[this.configData.codeType],
+        specialId: element.id,
+        subType: this.configData.subType,
+        member: this.configData.member,
+        state: 'HIDDEN',
+        user: this.user,
+        name: element.name['fr'],
+        nameEn: element.name['en'],
+        nameEs: element.name['es'],
+        nameIt: element.name['it'],
+        nameDe: element.name['de'],
+        nameNl: element.name['nl'],
+        // activity
+        activity: this.getActivity(element),
+        complementAccueil: await this.getComplementAccueil(element, 'fr'),
+        complementAccueilEn: await this.getComplementAccueil(element, 'en'),
+        complementAccueilEs: await this.getComplementAccueil(element, 'es'),
+        complementAccueilIt: await this.getComplementAccueil(element, 'it'),
+        complementAccueilDe: await this.getComplementAccueil(element, 'de'),
+        complementAccueilNl: await this.getComplementAccueil(element, 'nl'),
+        // animauxAcceptes,
+        // ambianceIdSitra: 5536,
+        ambianceLibelle: this.getAmbianceLibelle(element, 'fr'),
+        ambianceLibelleEn: this.getAmbianceLibelle(element, 'en'),
+        ambianceLibelleEs: this.getAmbianceLibelle(element, 'es'),
+        ambianceLibelleIt: this.getAmbianceLibelle(element, 'it'),
+        ambianceLibelleDe: this.getAmbianceLibelle(element, 'de'),
+        ambianceLibelleNl: this.getAmbianceLibelle(element, 'nl'),
+        passagesDelicats: this.getPassagesDelicats(element, 'fr'),
+        passagesDelicatsEn: this.getPassagesDelicats(element, 'en'),
+        passagesDelicatsEs: this.getPassagesDelicats(element, 'es'),
+        passagesDelicatsIt: this.getPassagesDelicats(element, 'it'),
+        passagesDelicatsDe: this.getPassagesDelicats(element, 'de'),
+        passagesDelicatsNl: this.getPassagesDelicats(element, 'nl'),
+        complement: this.getComplement(element, 'fr'),
+        complementEn: this.getComplement(element, 'en'),
+        complementEs: this.getComplement(element, 'es'),
+        complementIt: this.getComplement(element, 'it'),
+        complementDe: this.getComplement(element, 'de'),
+        complementNl: this.getComplement(element, 'nl'),
+        localization: this.getLocalization(element),
+        price: this.getPrice(element),
+        itinerary: await this.getItinerary(element),
+        perimetreGeographique: this.getPerimetreGeographique(element),
+        description: this.getDescription(element, 'fr'),
+        descriptionEn: this.getDescription(element, 'en'),
+        descriptionEs: this.getDescription(element, 'es'),
+        descriptionIt: this.getDescription(element, 'it'),
+        descriptionDe: this.getDescription(element, 'de'),
+        descriptionNl: this.getDescription(element, 'nl'),
+        shortDescription: this.getShortDescription(element, 'fr'),
+        shortDescriptionEn: this.getShortDescription(element, 'en'),
+        shortDescriptionEs: this.getShortDescription(element, 'es'),
+        shortDescriptionIt: this.getShortDescription(element, 'it'),
+        shortDescriptionDe: this.getShortDescription(element, 'de'),
+        shortDescriptionNl: this.getShortDescription(element, 'nl'),
+        address: this.getAddress(
+          element,
+          additionalInformation,
+          regionPerZipcode
+        ),
+        website: this.getWebsite(additionalInformation),
+        email: this.getEmail(additionalInformation),
+        phone: this.getPhone(additionalInformation),
+        gpx: this.getGpx(element),
+        kml: this.getKml(element),
+        video: this.getVideo(element, 'fr'),
+        videoEn: this.getVideo(element, 'en'),
+        videoEs: this.getVideo(element, 'es'),
+        videoIt: this.getVideo(element, 'it'),
+        videoDe: this.getVideo(element, 'de'),
+        videoNl: this.getVideo(element, 'nl'),
+        pdf: this.getPdf(element, 'fr'),
+        pdfEn: this.getPdf(element, 'en'),
+        pdfEs: this.getPdf(element, 'es'),
+        pdfIt: this.getPdf(element, 'it'),
+        pdfDe: this.getPdf(element, 'de'),
+        pdfNl: this.getPdf(element, 'nl'),
+        image: this.getImage(element)
+      };
+
+      product.legalEntity = this.getLegalEntity(element, product);
+      product.rateCompletion = this.calculateRateCompletion(product);
+
+      console.log(`GeoTrek API => import specialId : ${product.specialId}`);
+      await this.doUpsertAsync(product, product.specialId, product.importType);
     }
-
-    const product = {
-      importType: this.importType,
-      importSubType: null,
-      typeCode: this.configData.codeType,
-      type: configImportGEOTREK.types[this.configData.codeType],
-      specialId: element.id,
-      subType: this.configData.subType,
-      member: this.configData.member,
-      state: 'HIDDEN',
-      user: this.user,
-      name: element.name['fr'],
-      nameEn: element.name['en'],
-      nameEs: element.name['es'],
-      nameIt: element.name['it'],
-      nameDe: element.name['de'],
-      nameNl: element.name['nl'],
-      // activity
-      complementAccueil: await this.getComplementAccueil(element, 'fr'),
-      complementAccueilEn: await this.getComplementAccueil(element, 'en'),
-      complementAccueilEs: await this.getComplementAccueil(element, 'es'),
-      complementAccueilIt: await this.getComplementAccueil(element, 'it'),
-      complementAccueilDe: await this.getComplementAccueil(element, 'de'),
-      complementAccueilNl: await this.getComplementAccueil(element, 'nl'),
-      // animauxAcceptes,
-      ambianceIdSitra: 5536,
-      ambianceLibelle: this.getAmbianceLibelle(element, 'fr'),
-      ambianceLibelleEn: this.getAmbianceLibelle(element, 'en'),
-      ambianceLibelleEs: this.getAmbianceLibelle(element, 'es'),
-      ambianceLibelleIt: this.getAmbianceLibelle(element, 'it'),
-      ambianceLibelleDe: this.getAmbianceLibelle(element, 'de'),
-      ambianceLibelleNl: this.getAmbianceLibelle(element, 'nl'),
-      passagesDelicats: this.getPassagesDelicats(element, 'fr'),
-      passagesDelicatsEn: this.getPassagesDelicats(element, 'en'),
-      passagesDelicatsEs: this.getPassagesDelicats(element, 'es'),
-      passagesDelicatsIt: this.getPassagesDelicats(element, 'it'),
-      passagesDelicatsDe: this.getPassagesDelicats(element, 'de'),
-      passagesDelicatsNl: this.getPassagesDelicats(element, 'nl'),
-      complement: this.getComplement(element, 'fr'),
-      complementEn: this.getComplement(element, 'en'),
-      complementEs: this.getComplement(element, 'es'),
-      complementIt: this.getComplement(element, 'it'),
-      complementDe: this.getComplement(element, 'de'),
-      complementNl: this.getComplement(element, 'nl'),
-      localization: this.getLocalization(element),
-      price: this.getPrice(element),
-      itinerary: await this.getItinerary(element),
-      perimetreGeographique: this.getPerimetreGeographique(element),
-      description: this.getDescription(element, 'fr'),
-      descriptionEn: this.getDescription(element, 'en'),
-      descriptionEs: this.getDescription(element, 'es'),
-      descriptionIt: this.getDescription(element, 'it'),
-      descriptionDe: this.getDescription(element, 'de'),
-      descriptionNl: this.getDescription(element, 'nl'),
-      shortDescription: this.getShortDescription(element, 'fr'),
-      shortDescriptionEn: this.getShortDescription(element, 'en'),
-      shortDescriptionEs: this.getShortDescription(element, 'es'),
-      shortDescriptionIt: this.getShortDescription(element, 'it'),
-      shortDescriptionDe: this.getShortDescription(element, 'de'),
-      shortDescriptionNl: this.getShortDescription(element, 'nl'),
-      address: this.getAddress(
-        element,
-        additionalInformation,
-        regionPerZipcode
-      ),
-      website: this.getWebsite(additionalInformation),
-      email: this.getEmail(additionalInformation),
-      phone: this.getPhone(additionalInformation),
-      gpx: this.getGpx(element),
-      kml: this.getKml(element),
-      video: this.getVideo(element, 'fr'),
-      videoEn: this.getVideo(element, 'en'),
-      videoEs: this.getVideo(element, 'es'),
-      videoIt: this.getVideo(element, 'it'),
-      videoDe: this.getVideo(element, 'de'),
-      videoNl: this.getVideo(element, 'nl'),
-      pdf: this.getPdf(element, 'fr'),
-      pdfEn: this.getPdf(element, 'en'),
-      pdfEs: this.getPdf(element, 'es'),
-      pdfIt: this.getPdf(element, 'it'),
-      pdfDe: this.getPdf(element, 'de'),
-      pdfNl: this.getPdf(element, 'nl'),
-      image: this.getImage(element)
-    };
-
-    product.legalEntity = this.getLegalEntity(element, product);
-    product.rateCompletion = this.calculateRateCompletion(product);
-
-    console.log(`Import ${product.name} : ${product.specialId}`);
-    await this.doUpsertAsync(product, product.specialId, product.importType);
+    else{
+      console.log(`GeoTrek API => NOT import structure : ${element.structure}`);
+    }
     return this.importProduct(listElement, regionPerZipcode);
   } else {
     console.log("Fin de l'import");
@@ -202,54 +229,13 @@ ImportGenericGeotrekApi.prototype.importProduct = async function (
   }
 };
 
-ImportGenericGeotrekApi.prototype.getMember = function (dataProduct) {
-  let member = 3437; // geotrek pnr verdon - preprod by default
-  if (process.env.NODE_ENV === 'production') {
-    if (this.baseURL.match('ecrins')) {
-      member = 4433;
-    } else if (this.baseURL.match('chemindesparcs')) {
-      member = 4430;
-      const idStructure = _.get(dataProduct, 'properties.structure.id');
-      switch (idStructure) {
-        case 2:
-          member = 5112; // Luberon
-          break;
-        case 3:
-          member = 5163; // Camarguque
-          break;
-        case 4:
-          member = 5113; // Queyras
-          break;
-        case 5:
-          member = 4730; // Verdon
-          break;
-        case 6:
-          member = 5033; // Alpilles
-          break;
-        case 7:
-          member = 5682; // Baronnies
-          break;
-        case 8:
-          member = 5052; // Préalpes
-          break;
-        case 9:
-          member = 5017; // Sainte Baume
-          break;
-        case 10:
-          member = 5446; // Ventoux
-          break;
-        default:
-          break;
-      }
-    } else if (this.baseURL.match('sisteron')) {
-      member = 4832;
-    } else if (this.baseURL.match('portcros')) {
-      member = 5193;
-    } else if (this.baseURL.match('alpes')) {
-      member = 5545;
-    }
+
+ImportGenericGeotrekApi.prototype.getActivity = function (element) {
+  var activity = [];
+  if (element.practice) {
+    activity.push(configImportGEOTREK.activity[element.practice]);
   }
-  return member;
+  return activity;
 };
 
 ImportGenericGeotrekApi.prototype.getComplementAccueil = async function (
@@ -292,19 +278,22 @@ ImportGenericGeotrekApi.prototype.getComplement = function (element, lang) {
   let complement = '';
 
   if (element.departure && element.departure[lang]) {
-    complement += `${this.translate('departure', lang)} : ${element.departure[lang]
-      }.`;
+    complement += `${this.translate('departure', lang)} : ${
+      element.departure[lang]
+    }.`;
   }
   if (element.arrival && element.arrival[lang]) {
-    complement += `\n${this.translate('arrival', lang)} : ${element.arrival[lang]
-      }.`;
+    complement += `\n${this.translate('arrival', lang)} : ${
+      element.arrival[lang]
+    }.`;
   }
   if (element.access && element.access[lang]) {
     complement += `\n${element.access[lang]}`;
   }
   if (element.advised_parking && element.advised_parking[lang]) {
-    complement += `\n${this.translate('advised_parking', lang)} : ${element.advised_parking[lang]
-      } .`;
+    complement += `\n${this.translate('advised_parking', lang)} : ${
+      element.advised_parking[lang]
+    } .`;
   }
   if (element.public_transport && element.public_transport[lang]) {
     complement += `\n${element.public_transport[lang]}`;
@@ -320,6 +309,10 @@ ImportGenericGeotrekApi.prototype.getLocalization = function (element) {
   if (element.parking_location && element.parking_location.length) {
     localization.lat = element.parking_location[1];
     localization.lon = element.parking_location[0];
+  }
+  else if (element.departure_geom && element.departure_geom.length) {
+    localization.lat = element.departure_geom[1];
+    localization.lon = element.departure_geom[0];
   }
   return localization;
 };
@@ -337,6 +330,7 @@ ImportGenericGeotrekApi.prototype.getItinerary = async function (element) {
     positive: null,
     negative: null,
     referencesTopoguides: null,
+    referencesCartographiques: null,
     itineraireType: null,
     itineraireBalise: null,
     precisionsBalisage: ''
@@ -409,7 +403,7 @@ ImportGenericGeotrekApi.prototype.getPerimetreGeographique = function (
 
 ImportGenericGeotrekApi.prototype.getDescription = function (element, lang) {
   if (element.description && element.description[lang]) {
-    DataString.stripTags(DataString.strEncode(element.description[lang]));
+    return DataString.stripTags(DataString.strEncode(element.description[lang]));
   }
   return '';
 };
@@ -558,7 +552,9 @@ ImportGenericGeotrekApi.prototype.getLegalEntity = function (element, product) {
   let legalEntity = null;
   const listLegalEntity = [];
 
-  const conf = configImportGEOTREK.entity[this.idProject][element.structure];
+  const conf = configImportGEOTREK.entity[this.member]
+    ? configImportGEOTREK.entity[this.member][element.structure]
+    : null;
   if (conf) {
     legalEntity = {
       specialId: conf.specialId,
