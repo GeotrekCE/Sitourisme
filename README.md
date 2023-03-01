@@ -12,7 +12,7 @@ Afin de mettre en place la passerelle, il est nécessaire :
   - Numéro du projet créé sur la plateforme Apidae avec envoi des clef et secret Oauth
   - Pour chaque identifiant de structure Geotrek, fournir l'identifiant de l'ENT correspondant dans Apidae 
 
-Version 1 financée par la [Région Sud](https://www.maregionsud.fr), développée par [IDfr](https://www.idfr.net) et [MEDIACTEURS](https://www.mediacteurs.com).
+Version 1 financée par la [Région Sud](https://www.maregionsud.fr), développée par [IDfr](https://www.idfr.net) et [MEDIACTEURS](https://mediacteurs.net).
 
 ## Installation
 
