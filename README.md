@@ -18,7 +18,7 @@ Version 1 financée par la [Région Sud](https://www.maregionsud.fr), développ�
 
 Outils nécessaires :
 
-- NodeJS 14+
+- NodeJS 15+
 - Docker et Docker-compose
 
 Créer la structure de dossier comme indiqué dans l'arbre en dessous :
@@ -43,10 +43,8 @@ npm install
 ## Usage
 
 Afin de procéder à l'import des données, il faut créer un compte utilisateur et initialiser le système d'import, 
-pour cela se rendre sur cette page `http://localhost:3003/authentication/signup` et remplir le formulaire.
+pour cela se rendre sur cette page `http://URL/authentication/signup` et remplir le formulaire.
 
 Effectuer ensuite à commande `npm run init-import`
 
-Les imports peuvent maintenant être effectués depuis l'interface, ou n accédans directement à l'adresse `http://URL/products/import/geotrek`
-
-Les imports peuvent aussi être lancés automatiquement avec la commande `curl "URL/api/products/import?type=geotrek"`
+Les imports peuvent être lancés automatiquement avec la commande `curl "URL/api/products/import?type=geotrek-api"`
