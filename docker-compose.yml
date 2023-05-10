@@ -1,13 +1,6 @@
 version: '2'
 services:
 
-    mongodb:
-      image: mongo:4.4.6
-      volumes:
-        - ./.data/db:/data/db
-      ports:
-        - 27017:27017
-
     elasticsearch:
       image: elasticsearch:2.4.0
       volumes:
