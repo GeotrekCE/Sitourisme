@@ -20,19 +20,19 @@ exports.invokeRolesPolicies = function () {
           resources: '/api/products',
           permissions: '*'
         },
-        {
+        /*{
           resources: '/api/products/search',
           permissions: '*'
         },
         {
           resources: '/api/products/initElasticsearch',
           permissions: '*'
-        },
+        },*/
         {
           resources: '/api/products/import',
           permissions: '*'
         },
-        {
+        /*{
           resources: '/api/products/export-sitra',
           permissions: '*'
         },
@@ -59,7 +59,7 @@ exports.invokeRolesPolicies = function () {
         {
           resources: '/api/check',
           permissions: ['get']
-        }
+        }*/
       ]
     },
     {
@@ -69,19 +69,19 @@ exports.invokeRolesPolicies = function () {
           resources: '/api/products',
           permissions: '*'
         },
-        {
+        /*{
           resources: '/api/products/search',
           permissions: '*'
         },
         {
           resources: '/api/products/initElasticsearch',
           permissions: '*'
-        },
+        },*/
         {
           resources: '/api/products/import',
           permissions: '*'
         },
-        {
+        /*{
           resources: '/api/products/export-sitra',
           permissions: '*'
         },
@@ -108,7 +108,7 @@ exports.invokeRolesPolicies = function () {
         {
           resources: '/api/check',
           permissions: ['get']
-        }
+        }*/
       ]
     },
     {
@@ -118,19 +118,19 @@ exports.invokeRolesPolicies = function () {
           resources: '/api/products',
           permissions: '*'
         },
-        {
+        /*{
           resources: '/api/products/search',
           permissions: '*'
         },
         {
           resources: '/api/products/initElasticsearch',
           permissions: '*'
-        },
+        },*/
         {
           resources: '/api/products/import',
           permissions: '*'
         },
-        {
+        /*{
           resources: '/api/products/export-sitra',
           permissions: '*'
         },
@@ -157,7 +157,7 @@ exports.invokeRolesPolicies = function () {
         {
           resources: '/api/check',
           permissions: ['get']
-        }
+        }*/
       ]
     }
   ]);
