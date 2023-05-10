@@ -1,7 +1,7 @@
 'use strict';
 
 // Configuring the Towns module
-angular.module('towns').run([
+/*angular.module('towns').run([
   'Menus',
   function (Menus) {
     // Add the towns dropdown item
@@ -36,3 +36,4 @@ angular.module('towns').run([
     });
   }
 ]);
+*/

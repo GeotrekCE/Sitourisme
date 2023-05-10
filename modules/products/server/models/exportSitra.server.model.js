@@ -82,7 +82,7 @@ function __exportSitra(products, options, callback, finalData) {
       __exportDoReport(products, product, options, callback, finalData);
     } else {
       // First of all, export legal entities if needed
-      console.log('-> Export vers APIDAE id : ' + product.specialId);
+      console.log('-> Export vers APIDAE id : ' + product.specialId + product);
       __exportEntities(
         product,
         legalEntities,
@@ -306,6 +306,7 @@ function __exportSitraAuto(type, options, callback) {
   var importType = type.toUpperCase();
 
   // on exporte les pères d'abord
+  // HACK
   Product.find({
     importType,
     lastUpdate: { $gte: today.toDate() },
@@ -699,6 +700,7 @@ function __doExport(product, accessToken, options, callback) {
   var PromiseRequestImage = Promise.method(() => {
     return new Promise((resolve, reject) => {
       productImage = [];
+
       if (product.image && product.image.length) {
         __buildImageDetail(product.image.toObject(), 0, (err, newImage) => {
           if (err) {
@@ -1005,6 +1007,7 @@ function __doExport(product, accessToken, options, callback) {
         }
       }
 
+      //console.time('Send data apidae', formData);
       console.time('Send data apidae');
       request(
         {
@@ -1077,7 +1080,7 @@ function __doExport(product, accessToken, options, callback) {
             specialIdSitra: product.specialIdSitra
           };
 
-          console.log('body.errorType', body.errorType);
+          console.log('body [.errorType] body = ', body, `http://${config.sitra.api.host}${config.sitra.api.path} ${accessToken}`);
 
           if (body) {
             if (body.errorType) {
@@ -4600,13 +4603,13 @@ function __buildImageDetail(images, nImage, callback) {
   if (images && nImage < images.length) {
     var image = images[nImage];
     if (image.url) {
-      if (image.url.match(/JPG$/)) {
+      /*if (image.url.match(/JPG$/)) {
         // extension to lowercase
         var matchUppercase = image.url.match(/\.[A-Z0-9]{3,4}$/),
           replacement = matchUppercase[0].toLowerCase();
 
         image.url = image.url.replace(matchUppercase[0], replacement);
-      }
+      }*/
 
       var urlObject = Url.parse(image.url),
         path = urlObject.path,
@@ -4616,7 +4619,7 @@ function __buildImageDetail(images, nImage, callback) {
           .replace(new RegExp('.*\\.([^\\.]+)$'), '$1')
           .toLowerCase(),
         contentType;
-
+        
       switch (ext) {
         case 'jpg':
         case 'jpeg':
@@ -4657,6 +4660,7 @@ function __buildImageDetail(images, nImage, callback) {
               content: myBuffer
             };
           } else {
+              console.log('Image error', urlObject, response.statusCode);
             images.splice(nImage--, 1);
           }
 
@@ -4952,6 +4956,10 @@ function __buildState(product, root, rootFieldList) {
 }
 
 function __getSitraToken(product, member, callback) {
+  /* HACK DEV WEBSENSO CGT*/
+  console.log('__getSitraToken for member / ProductMember =', member, product.member);
+
+  //var memberId = 3546,
   var memberId = member || (product.member ? product.member : '-'),
     configAuth = config.sitra.auth.accessPerMemberId,
     access =

@@ -216,7 +216,11 @@ ImportGenericGeotrekApi.prototype.importProduct = async function (
       product.legalEntity = this.getLegalEntity(element, product);
       product.rateCompletion = this.calculateRateCompletion(product);
 
-      console.log(`GeoTrek API => import specialId : ${product.specialId}`);
+      //if (product.specialId == '962561'){
+        console.log(`GeoTrek API => import specialId : ${product.specialId}`);
+        //console.log('element= ', element);
+        //console.log('element= ', product);
+      //} 
       await this.doUpsertAsync(product, product.specialId, product.importType);
     }
     else{
@@ -535,6 +539,26 @@ ImportGenericGeotrekApi.prototype.getPdf = function (element, lang) {
 };
 
 ImportGenericGeotrekApi.prototype.getImage = function (element) {
+  //console.log(element.pictures);
+  
+  /*const image = {
+    url : null,
+    legend: null,
+    name: null,
+    description: null
+  };
+  _.forEach(element.pictures, (picture) => {
+    console.log('picture = ', picture);
+    if (picture) {
+      image.url = this.addUrlHttp(picture['url']);
+      image.legend = picture['legend'];
+      image.name = picture['title'];
+      image.description = picture['author'];
+      return image;
+    }
+  });
+  return [];*/
+  
   if (element.attachments) {
     return _(element.attachments)
       .map((item) => ({
@@ -611,6 +635,14 @@ ImportGenericGeotrekApi.prototype.translate = function (key, ln) {
       it: 'Parcheggio',
       de: 'Parkplatz',
       nl: 'Parkeren'
+    },
+    advised_parking: {
+      fr: 'Parking conseillé',
+      en: 'Parking recommended',
+      es: 'Estacionamiento recomendado',
+      it: 'Parcheggio consigliato',
+      de: 'Parkplatz empfohlen',
+      nl: 'Parkeren aanbevolen'
     }
   };
   if (trad[key] && trad[key][ln]) {

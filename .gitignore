@@ -7,3 +7,9 @@ public/lib/
 .vscode/
 .data/*
 *.rest
+
+# WEBSENSO
+docker-compose.*
+config/env/development.js
+config/env/production.js
+websensoZzzImportPythonToMongo/
