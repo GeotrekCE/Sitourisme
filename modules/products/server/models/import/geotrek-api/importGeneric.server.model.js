@@ -17,9 +17,13 @@ const configImportGEOTREK = require(path.resolve(
 const configSitraTownByInsee = require(path.resolve(
   'config/configSitraTownByInsee.js'
 ));
+const config = require(__dirname + '/../../../../../../config/config.js');
 const DataString = require(path.resolve('library/data/manipulate.js'));
 
 const ImportGenericGeotrekApi = function (options) {
+  
+  console.log('ImportGenericGeotrekApi');
+  
   this.importType = options.importType
     ? options.importType.toUpperCase()
     : null;
@@ -38,6 +42,7 @@ const ImportGenericGeotrekApi = function (options) {
 util.inherits(ImportGenericGeotrekApi, Import);
 
 ImportGenericGeotrekApi.prototype.import = function (data, next) {
+  console.log('ImportGenericGeotrekApi.prototype.import');
   try {
     importUtils.initRegion((regionPerZipcode) =>
       this.executeQuery(regionPerZipcode, 0)
@@ -51,13 +56,28 @@ ImportGenericGeotrekApi.prototype.executeQuery = async function (
   regionPerZipcode,
   page
 ) {
-  urlNext = (page != 0) ? '&page='+page : '';
-  const { data, status } = await this.instanceApi.get('/trek?format=json' + urlNext);
+  
+  console.log('ImportGenericGeotrekApi.prototype.executeQuery');
+  let geoTrekPath = '/trek?format=json';
+  let urlNext = '';
+  if (config.debug != undefined && config.debug.idGeo != 0) {
+    geoTrekPath = '/trek/' + config.debug.idGeo + '?format=json';
+  } else {
+    urlNext = (page != 0) ? '&page='+page : '';
+  }
+  console.log('GeoPath = ', geoTrekPath);
+  const { data, status } = await this.instanceApi.get(geoTrekPath + urlNext);
   if (status === 200) {
     this.doUpsertAsync = await pify(importUtils.doUpsert);
     console.log('Import page ' + page);
+    
+    if (config.debug != undefined && config.debug.idGeo != 0) {
+      data.results = data;
+    }
+    
     await this.importProduct(data.results, regionPerZipcode);
-    if (data.next){
+   // console.log('Data= ', data);
+    if (data.next && config.debug == undefined || data.next && config.debug.allpages == true ){
       page++;
       this.executeQuery(regionPerZipcode, page);
     }
@@ -86,8 +106,18 @@ ImportGenericGeotrekApi.prototype.importProduct = async function (
   listElement,
   regionPerZipcode
 ) {
-  if (listElement && listElement.length > 0) {
-    const element = listElement.shift();
+  console.log('ImportGenericGeotrekApi.prototype.importProduct', listElement.id);
+  
+  if (listElement && listElement.length > 0 || listElement.id != undefined) {
+    
+    console.log('ImportGenericGeotrekApi.prototype.importProduct next');
+    
+    let element = listElement;
+    if (config.debug == undefined || config.debug.idGeo == 0) {
+      element = listElement.shift();
+    }
+    
+    //console.log('Elemeent = ', element);
     delete element.steps;
     delete element.geometry;
 
@@ -108,6 +138,10 @@ ImportGenericGeotrekApi.prototype.importProduct = async function (
       default:
         this.member = null;
         break;
+    }
+    
+    if (config.debug != undefined) { 
+      this.member = 3568; 
     }
 
     if (this.member){
@@ -216,13 +250,21 @@ ImportGenericGeotrekApi.prototype.importProduct = async function (
       product.legalEntity = this.getLegalEntity(element, product);
       product.rateCompletion = this.calculateRateCompletion(product);
 
-      console.log(`GeoTrek API => import specialId : ${product.specialId}`);
+      //if (product.specialId == '962561'){
+        console.log(`GeoTrek API => import specialId : ${product.specialId}`);
+        //console.log('element= ', element);
+        //console.log('element= ', product);
+      //} 
       await this.doUpsertAsync(product, product.specialId, product.importType);
     }
     else{
       console.log(`GeoTrek API => NOT import structure : ${element.structure}`);
     }
-    return this.importProduct(listElement, regionPerZipcode);
+    if (config.debug == undefined || config.debug.idGeo == 0 ) {
+      return this.importProduct(listElement, regionPerZipcode);
+    } else {
+      return;
+    }
   } else {
     console.log("Fin de l'import");
     return;
@@ -233,6 +275,7 @@ ImportGenericGeotrekApi.prototype.importProduct = async function (
 ImportGenericGeotrekApi.prototype.getActivity = function (element) {
   var activity = [];
   if (element.practice) {
+    console.log('element.practice = ', element.practice);
     activity.push(configImportGEOTREK.activity[element.practice]);
   }
   return activity;
@@ -306,13 +349,15 @@ ImportGenericGeotrekApi.prototype.getComplement = function (element, lang) {
 
 ImportGenericGeotrekApi.prototype.getLocalization = function (element) {
   const localization = {};
-  if (element.parking_location && element.parking_location.length) {
-    localization.lat = element.parking_location[1];
-    localization.lon = element.parking_location[0];
-  }
-  else if (element.departure_geom && element.departure_geom.length) {
-    localization.lat = element.departure_geom[1];
-    localization.lon = element.departure_geom[0];
+  if (config.debug === undefined) {
+    if (element.parking_location && element.parking_location.length) {
+      localization.lat = element.parking_location[1];
+      localization.lon = element.parking_location[0];
+    }
+    else if (element.departure_geom && element.departure_geom.length) {
+      localization.lat = element.departure_geom[1];
+      localization.lon = element.departure_geom[0];
+    }
   }
   return localization;
 };
@@ -398,6 +443,11 @@ ImportGenericGeotrekApi.prototype.getPerimetreGeographique = function (
     }
     return null;
   });
+  // Hack adding OT WS
+  if (config.debug !== undefined) {
+    perimetreGeo = [];
+    perimetreGeo.push(14707);
+  }
   return DataString.cleanArray(perimetreGeo);
 };
 
@@ -441,8 +491,10 @@ ImportGenericGeotrekApi.prototype.getAddress = function (
     if (item) {
       address.insee = item;
       city = configSitraTownByInsee[item];
-      if (city) {
+      if (city && config.debug === undefined) {
         address.city = city.sitraId;
+      } else {
+        address.city = 14707;
       }
     }
   });
@@ -535,6 +587,26 @@ ImportGenericGeotrekApi.prototype.getPdf = function (element, lang) {
 };
 
 ImportGenericGeotrekApi.prototype.getImage = function (element) {
+  //console.log(element.pictures);
+  
+  /*const image = {
+    url : null,
+    legend: null,
+    name: null,
+    description: null
+  };
+  _.forEach(element.pictures, (picture) => {
+    console.log('picture = ', picture);
+    if (picture) {
+      image.url = this.addUrlHttp(picture['url']);
+      image.legend = picture['legend'];
+      image.name = picture['title'];
+      image.description = picture['author'];
+      return image;
+    }
+  });
+  return [];*/
+  
   if (element.attachments) {
     return _(element.attachments)
       .map((item) => ({
@@ -611,6 +683,14 @@ ImportGenericGeotrekApi.prototype.translate = function (key, ln) {
       it: 'Parcheggio',
       de: 'Parkplatz',
       nl: 'Parkeren'
+    },
+    advised_parking: {
+      fr: 'Parking conseillé',
+      en: 'Parking recommended',
+      es: 'Estacionamiento recomendado',
+      it: 'Parcheggio consigliato',
+      de: 'Parkplatz empfohlen',
+      nl: 'Parkeren aanbevolen'
     }
   };
   if (trad[key] && trad[key][ln]) {

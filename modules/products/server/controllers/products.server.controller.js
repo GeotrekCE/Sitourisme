@@ -470,7 +470,10 @@ exports.import = function (req, res) {
     throw 'Unable to determine type';
   }
 
+
   Product.import(type, () => {
+      /* NOT FOR API  */
+    console.log('product import callback ', type);
     if (['geotrek', 'regiondo'].includes(type) && type !== 'geotrek-api') {
       console.error('End import auto for', type);
       // création du fichier de rapport

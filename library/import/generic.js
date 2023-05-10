@@ -53,6 +53,7 @@ Import.prototype.current = function (next) {
  * @param {function} next
  */
 Import.prototype.import = function (data, next) {
+  console.log('Generic import . import');
   next();
 };
 
@@ -83,6 +84,8 @@ Import.prototype.__initParser = function (callback) {
 Import.prototype.__next = function (callback) {
   var self = this;
 
+console.log('Generic import . __next');
+
   this.current(function (err, data) {
     if (err) {
       throw err;
@@ -107,6 +110,9 @@ Import.prototype.__next = function (callback) {
  */
 Import.prototype.__import = function (data, callback) {
   var self = this;
+  
+  console.log('Generic import . __import');
+
 
   this.import(data, function (err) {
     if (err) {

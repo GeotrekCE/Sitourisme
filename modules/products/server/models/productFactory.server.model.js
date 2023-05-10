@@ -2116,7 +2116,7 @@ class ProductFactory {
 
     // Init alert
     product.alert = __checkAlert(product, this.name);
-
+    
     product.save((err) => {
       if (err) {
         // Fix problem with unique url
@@ -2127,7 +2127,7 @@ class ProductFactory {
 
         console.log('Error in ' + this.name + ' save() : ', err);
       }
-      if (callback) {
+      if (callback && !err) {
         callback(err, product);
       }
     });

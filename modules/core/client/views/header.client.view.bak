@@ -27,6 +27,9 @@
       </li>
     </ul>
     <ul class="nav navbar-nav navbar-right" data-ng-hide="authentication.user">
+      <li data-ui-sref-active="active">
+        <a data-ui-sref="authentication.signup">Créer un compte</a>
+      </li>
       <li class="divider-vertical"></li>
       <li data-ui-sref-active="active">
         <a data-ui-sref="authentication.signin">Se connecter</a>
@@ -35,8 +38,8 @@
     <ul class="nav navbar-nav navbar-right" data-ng-show="authentication.user">
       <li class="dropdown" dropdown>
         <a href="#" class="dropdown-toggle user-header-dropdown-toggle" dropdown-toggle>
-          <!--<img data-ng-src="{{authentication.user.profileImageURL}}" alt="{{authentication.user.displayName}}" class="header-profile-image"
-          />//-->
+          <img data-ng-src="{{authentication.user.profileImageURL}}" alt="{{authentication.user.displayName}}" class="header-profile-image"
+          />
           <span data-ng-bind="authentication.user.displayName"></span>
           <b class="caret"></b>
         </a>

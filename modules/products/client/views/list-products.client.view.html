@@ -3,13 +3,20 @@
 		<h1>Products</h1>
 	</div>
 	<div class="list-group">
-		<a data-ng-repeat="product in products"  data-ui-sref="products.view({productId: product._id})" class="list-group-item">
-			<small class="list-group-item-text">
-				Posted on
-				<span data-ng-bind="product.created | date:'mediumDate'"></span>
-				by
-				<span data-ng-bind="product.user.displayName"></span>
+		<a data-ng-repeat="product in products" class="list-group-item"><!--data-ui-sref="products.view({productId: product._id})"//-->
+			<small class="list-group-item-text" data-ngClass="{'alert' : true}">
+				Création : 
+				<span data-ng-bind="product.created | date:'mediumDate'"></span> - 
+				Dernière MAJ : 
+				<span data-ng-bind="product.lastUpdate | date:'mediumDate'"></span> - 
+				Member = 
+				<span data-ng-bind="product.member"></span> - 
+				Géotrek ID = 
+				<span data-ng-bind="product.specialId"></span> - 
+				Apidae ID = 
+				<span data-ng-bind="product.specialIdSitra"></span>
 			</small>
+			<div style="color:white; background-color:red;" data-ng-if='product.specialIdSitra * 1 != product.specialIdSitra' data-ng-bind="product.specialIdSitra"></div>
 			<h4 class="list-group-item-heading" data-ng-bind="product.name"></h4>
 			<p class="list-group-item-text" data-ng-bind="product.description"></p>
 		</a>
@@ -18,3 +25,8 @@
 		No products yet, why don't you <a data-ui-sref="products.create">create one</a>?
 	</div>
 </section>
+<style>
+	.alert {
+		color: red;
+	}
+</style>

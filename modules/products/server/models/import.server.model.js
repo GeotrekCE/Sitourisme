@@ -22,6 +22,7 @@ exports.importProducts = __importProducts;
  * @param {function} callback
  */
 exports.import = function (type, callback) {
+  console.log('import server model > import');
   // import by api for regiondo and geotrek-api
   if (_.includes(['regiondo', 'geotrek-api'], type.toLowerCase())) {
     __doImportByApi(type, () => {
@@ -130,7 +131,7 @@ function __importProducts(filename, type, callback) {
  * @private
  */
 function __importProductsbyApi(type, callback) {
-  console.log('Importing ' + type);
+  console.log('xx Importing ' + type);
 
   var User = mongoose.model('User');
   User.findOne(

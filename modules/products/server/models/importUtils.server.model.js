@@ -17,12 +17,12 @@ let townPerZipcode = null,
  */
 exports.doUpsert = function (product, specialId, importType, next) {
   var Product = mongoose.model('Product');
-
+console.log('import utils > doUpsert');
   Product.doUpsert(product, specialId, importType, function (err, data) {
     if (err) {
       console.log(
         'Error in doUpsert() : Upsert failed for product : ',
-        product
+        product.specialId
       );
     }
 

@@ -65,8 +65,17 @@ function __exportSitra(products, options, callback, finalData) {
           ? product.legalEntity
           : null,
       optionsEntities = _.clone(options);
+      
+      
+      //console.log('Legal entities, = ', legalEntities);
+      
+    /*if (product.specialId != "919184") {
+      console.log('Product = ', product.specialId);
+      __exportSitra(products, options, callback, finalData);
+    }*/
 
-    if (product.statusImport === 0) {
+    /*if (product.statusImport === 0) {
+      console.log('statutImport = 0');
       // product not importable then we skip it and report it
       var msg = 'Objet non importable';
 
@@ -80,8 +89,9 @@ function __exportSitra(products, options, callback, finalData) {
       };
 
       __exportDoReport(products, product, options, callback, finalData);
-    } else {
+    } else {*/
       // First of all, export legal entities if needed
+      //console.log('-> Export vers APIDAE id : ' + product.specialId, product);
       console.log('-> Export vers APIDAE id : ' + product.specialId);
       __exportEntities(
         product,
@@ -130,7 +140,7 @@ function __exportSitra(products, options, callback, finalData) {
                     if (!err) {
                       // console.log('====== Metadata ======');
                       // metadata for regionDo
-                      if (
+                     /* if (
                         /regiondo/i.test(product.importType) &&
                         product.specialIdSitra &&
                         product.metadata
@@ -141,11 +151,7 @@ function __exportSitra(products, options, callback, finalData) {
                           memberMetadata = 5029;
                           nameMetadata = 'regiondo-paca';
                         }
-                        /*console.log(
-                          'export for',
-                          nameMetadata,
-                          product.metadata
-                        );*/
+                        //console.log('export for',nameMetadata,product.metadata);
                         __getSitraToken(
                           product,
                           memberMetadata, // id member for regiondo metadata
@@ -169,7 +175,7 @@ function __exportSitra(products, options, callback, finalData) {
                               );
                           }
                         );
-                      }
+                      }*/
                       // Criteria internal
                       __exportCriteriaInternal(
                         product,
@@ -207,7 +213,7 @@ function __exportSitra(products, options, callback, finalData) {
           }
         }
       );
-    }
+   // }
   } else {
     console.log("fin de l'envoi a apidae!");
     if (callback) {
@@ -306,13 +312,18 @@ function __exportSitraAuto(type, options, callback) {
   var importType = type.toUpperCase();
 
   // on exporte les pères d'abord
+  // HACK
   Product.find({
-    importType,
+    importType: importType,
     lastUpdate: { $gte: today.toDate() },
-    statusImport: { $in: [1, 2] }
+    statusImport: { $in: [0, 1, 2] }
   })
     .sort({ 'linkedObject.isFather': -1 }) // on exporte les pères d'abord
     .exec(function (err, products) {
+      console.log('Import type = ', importType);
+      console.log('Import lastdate = ', today.toDate());
+      console.log('Import products = ', products.length);
+      
       if (err) {
         console.error('Error in exportSitraAuto : ' + err);
       } else {
@@ -353,6 +364,7 @@ function __exportEntities(
 
   // if legalEntities exists then
   if (legalEntities && legalEntities.length) {
+    console.log('exportEntities');
     let legalEntity = legalEntities.shift();
     let productId =
       legalEntity && legalEntity.product ? legalEntity.product : null;
@@ -659,12 +671,20 @@ function __doExport(product, accessToken, options, callback) {
     Product = optionsDoExport.typeExport
       ? mongoose.model(optionsDoExport.typeExport)
       : mongoose.model('Product'),
-    doUpdate = product.specialIdSitra && product.specialIdSitra.length,
+    doUpdate = (product.specialIdSitra && product.specialIdSitra.length > 0) ? true : false,
     unwantedTypes = optionsDoExport.unwantedTypes || null,
     root,
     rootFieldList = [],
     dataTmp,
     finalData = {};
+    
+    if (product.specialIdSitra * 1 != product.specialIdSitra) {
+      product.specialIdSitra = '';
+      doUpdate = false;
+    }
+    
+    console.log('DoUpdate = ', doUpdate);
+    //console.log('product Sitra = ', product.specialIdSitra, product.specialIdSitra.length);
 
   if (product.gatewayStatus === false) {
     csvStringify(
@@ -699,6 +719,7 @@ function __doExport(product, accessToken, options, callback) {
   var PromiseRequestImage = Promise.method(() => {
     return new Promise((resolve, reject) => {
       productImage = [];
+
       if (product.image && product.image.length) {
         __buildImageDetail(product.image.toObject(), 0, (err, newImage) => {
           if (err) {
@@ -950,9 +971,12 @@ function __doExport(product, accessToken, options, callback) {
         formData.mode = 'CREATION';
         formData.type = product.type;
       }
+      formData.proprietaireId = 3568;
+          console.log('FormData = ', formData.mode, formData.id);
+
 
       // Skip validation GEOTREK, all products
-      if (product.importType == 'GEOTREK') {
+      if (product.importType == 'GEOTREK-API') {
         if (product.type === 'STRUCTURE') {
           formData.skipValidation = 'false';
         } else {
@@ -1008,7 +1032,7 @@ function __doExport(product, accessToken, options, callback) {
       console.time('Send data apidae');
       request(
         {
-          url: `http://${config.sitra.api.host}${config.sitra.api.path}`,
+          url: `https://${config.sitra.api.host}${config.sitra.api.path}`,
           method: 'PUT',
           formData: formData,
           json: true,
@@ -1018,6 +1042,7 @@ function __doExport(product, accessToken, options, callback) {
         },
         function (err, httpResponse, body) {
           console.timeEnd('Send data apidae');
+          //console.log('FormData= ',formData);
           // si erreur http (pas pour une erreur apidae)
           if (err) {
             /*console.error('Error begin', err);
@@ -1040,6 +1065,8 @@ function __doExport(product, accessToken, options, callback) {
 
           options.iteration = options.iteration || 0;
 
+          //console.log('Sending request Do Update = ', doUpdate, body, body.id);
+          console.log('Sending request Do Update = ', doUpdate, body.id);
           // si creation on ajoute et callback
           if (!doUpdate && body && body.id) {
             product.specialIdSitra = body.id;
@@ -1068,6 +1095,57 @@ function __doExport(product, accessToken, options, callback) {
               );
               return callback(null, finalData);
             });
+          } else if (!doUpdate) {
+            //console.log('No message !! > ', err, httpResponse,body.message);
+            
+            finalData[product.id] = {
+              name: product.name,
+              data: null,
+              err: 'no message Apidae',
+              errMessage: body.message,
+              specialIdSitra: 0
+            };
+            return Product.update(
+              {
+                _id: product.id
+              },
+              {
+                $set: {
+                  statusImport: 4,
+                  specialIdSitra: body.message
+                }
+              }
+            ).exec(async (err) => {
+              console.log(
+                `Error on creation - ${body.message} from Apidae > change statusImport = 3 for ${product.name}`
+              );
+              return callback(null, finalData);
+            });
+          } else if (doUpdate && body.errorType == 'OBJET_TOURISTIQUE_NOT_FOUND') {
+            // obj supprimé d'APIDAE
+            finalData[product.id] = {
+              name: product.name,
+              data: null,
+              err: 'not found on Apidae',
+              errMessage: body.message,
+              specialIdSitra: 0
+            };
+            return Product.update(
+              {
+                _id: product.id
+              },
+              {
+                $set: {
+                  statusImport: 4,
+                  specialIdSitra: body.message
+                }
+              }
+            ).exec(async (err) => {
+              console.log(
+                `Error on creation - ${body.message} from Apidae > change statusImport = 4 for ${product.name}`
+              );
+              return callback(null, finalData);
+            });
           }
 
           // sinon update
@@ -1077,9 +1155,9 @@ function __doExport(product, accessToken, options, callback) {
             specialIdSitra: product.specialIdSitra
           };
 
-          console.log('body.errorType', body.errorType);
+          console.log('body [.errorType] body = ', body, `https://${config.sitra.api.host}${config.sitra.api.path} ${accessToken}`);
 
-          if (body) {
+          /*if (body) {
             if (body.errorType) {
               finalData[product.id].err = body.errorType;
             } else if (body.error) {
@@ -1125,11 +1203,14 @@ function __doExport(product, accessToken, options, callback) {
 
           if (finalData[product.id].err && finalData[product.id].errMessage) {
             var errMsg = finalData[product.id].errMessage;
+
+            console.log('ERR = ', finalData[product.id].err);
+
             switch (finalData[product.id].err) {
               case 'ECRITURE_INVALID_JSON_DATA':
                 if (
-                  errMsg.match('not subtype of') &&
-                  process.env.NODE_ENV === 'production'
+                  errMsg.match('not subtype of') 
+                  // && process.env.NODE_ENV === 'production'
                 ) {
                   console.error('retry because error');
                   var errMsgArr = errMsg.split(' not subtype of '),
@@ -1185,7 +1266,8 @@ function __doExport(product, accessToken, options, callback) {
             }
           } else {
             return callback(null, finalData);
-          }
+          }*/
+          return callback(null, finalData);
         }
       );
     })
@@ -4600,13 +4682,13 @@ function __buildImageDetail(images, nImage, callback) {
   if (images && nImage < images.length) {
     var image = images[nImage];
     if (image.url) {
-      if (image.url.match(/JPG$/)) {
+      /*if (image.url.match(/JPG$/)) {
         // extension to lowercase
         var matchUppercase = image.url.match(/\.[A-Z0-9]{3,4}$/),
           replacement = matchUppercase[0].toLowerCase();
 
         image.url = image.url.replace(matchUppercase[0], replacement);
-      }
+      }*/
 
       var urlObject = Url.parse(image.url),
         path = urlObject.path,
@@ -4616,7 +4698,7 @@ function __buildImageDetail(images, nImage, callback) {
           .replace(new RegExp('.*\\.([^\\.]+)$'), '$1')
           .toLowerCase(),
         contentType;
-
+        
       switch (ext) {
         case 'jpg':
         case 'jpeg':
@@ -4657,6 +4739,7 @@ function __buildImageDetail(images, nImage, callback) {
               content: myBuffer
             };
           } else {
+              console.log('Image error', urlObject, response.statusCode);
             images.splice(nImage--, 1);
           }
 
@@ -4952,7 +5035,11 @@ function __buildState(product, root, rootFieldList) {
 }
 
 function __getSitraToken(product, member, callback) {
-  var memberId = member || (product.member ? product.member : '-'),
+  /* HACK DEV WEBSENSO CGT*/
+  console.log('__getSitraToken for member / ProductMember =', member, product.member);
+
+  var memberId = 3568,
+  //var memberId = member || (product.member ? product.member : '-'),
     configAuth = config.sitra.auth.accessPerMemberId,
     access =
       configAuth && configAuth[memberId]

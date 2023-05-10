@@ -1,7 +1,7 @@
 'use strict';
 
 // Configuring the Reports module
-angular.module('reports').run([
+/*angular.module('reports').run([
   'Menus',
   function (Menus) {
     // Add the reports dropdown item
@@ -18,3 +18,4 @@ angular.module('reports').run([
     });
   }
 ]);
+*/

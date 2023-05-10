@@ -386,6 +386,7 @@ ProductSchema.statics.indexDelete = function (product, callback) {
  * @param {function} callback
  */
 ProductSchema.statics.import = function (type, callback) {
+  console.log('ProductSchema.statics.import');
   ImportModel.import(type, callback);
 };
 
