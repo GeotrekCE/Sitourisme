@@ -316,7 +316,7 @@ function __exportSitraAuto(type, options, callback) {
   Product.find({
     importType: importType,
     lastUpdate: { $gte: today.toDate() },
-    statusImport: { $in: [0, 1, 2] }
+    statusImport: { $in: [1, 2] }
   })
     .sort({ 'linkedObject.isFather': -1 }) // on exporte les pères d'abord
     .exec(function (err, products) {
