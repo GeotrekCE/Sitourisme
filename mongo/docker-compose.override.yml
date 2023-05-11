@@ -1,0 +1,5 @@
+version: '2.1'
+services:
+    mongodb:
+      user: 1004:1004
+
