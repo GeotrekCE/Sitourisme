@@ -9,7 +9,7 @@ const Report = require(path.resolve(
 const { exportSitraAuto } = require(path.resolve(
   './modules/products/server/models/exportSitra.server.model'
 ));
-const Import = require(path.resolve('library/import/generic.js'));
+const Import = require(path.resolve('library/import/geotrek.js'));
 const importUtils = require(__dirname + '/../../importUtils.server.model.js');
 const configImportGEOTREK = require(path.resolve(
   'config/configImport_GEOTREK.js'
@@ -22,7 +22,7 @@ const DataString = require(path.resolve('library/data/manipulate.js'));
 
 const ImportGenericGeotrekApi = function (options) {
   
-  console.log('ImportGenericGeotrekApi');
+  if (process.env.NODE_ENV == 'development' && config.debug && config.debug.logs) console.log('ImportGenericGeotrekApi');
   
   this.importType = options.importType
     ? options.importType.toUpperCase()
@@ -42,44 +42,49 @@ const ImportGenericGeotrekApi = function (options) {
 util.inherits(ImportGenericGeotrekApi, Import);
 
 ImportGenericGeotrekApi.prototype.import = function (data, next) {
-  console.log('ImportGenericGeotrekApi.prototype.import');
+  
+  if (process.env.NODE_ENV == 'development' && config.debug && config.debug.logs) console.log('ImportGenericGeotrekApi.prototype.import');
+  
   try {
-    importUtils.initRegion((regionPerZipcode) =>
-      this.executeQuery(regionPerZipcode, 0)
-    );
+    this.executeQuery(0);
   } catch (err) {
     console.error(err);
   }
 };
 
 ImportGenericGeotrekApi.prototype.executeQuery = async function (
-  regionPerZipcode,
   page
 ) {
   
-  console.log('ImportGenericGeotrekApi.prototype.executeQuery');
+  if (process.env.NODE_ENV == 'development' && config.debug && config.debug.logs) console.log('ImportGenericGeotrekApi.prototype.executeQuery');
+  
   let geoTrekPath = '/trek?format=json';
   let urlNext = '';
-  if (config.debug != undefined && config.debug.idGeo != 0) {
+  
+  if (process.env.NODE_ENV == 'development' && config.debug != undefined && config.debug.idGeo != 0) {
     geoTrekPath = '/trek/' + config.debug.idGeo + '?format=json';
+    if (config.debug && config.debug.logs) console.log('GeoPath = ', geoTrekPath);
   } else {
     urlNext = (page != 0) ? '&page='+page : '';
   }
-  console.log('GeoPath = ', geoTrekPath);
+  
   const { data, status } = await this.instanceApi.get(geoTrekPath + urlNext);
   if (status === 200) {
     this.doUpsertAsync = await pify(importUtils.doUpsert);
-    console.log('Import page ' + page);
+    
+    if (process.env.NODE_ENV == 'development' && config.debug && config.debug.logs) console.log('Import page ' + page);
     
     if (config.debug != undefined && config.debug.idGeo != 0) {
       data.results = data;
     }
     
-    await this.importProduct(data.results, regionPerZipcode);
-   // console.log('Data= ', data);
+    await this.importProduct(data.results);
+    
+    if (process.env.NODE_ENV == 'development' && config.debug && config.debug.seeData) console.log('Dat a= ', data);
+    
     if (data.next && config.debug == undefined || data.next && config.debug.allpages == true ){
       page++;
-      this.executeQuery(regionPerZipcode, page);
+      this.executeQuery(page);
     }
     else{
       // création du fichier de rapport
@@ -90,9 +95,9 @@ ImportGenericGeotrekApi.prototype.executeQuery = async function (
         report,
         exportType: 'AUTO'
       };
-      console.log('exportAuto');
+      
       exportSitraAuto('geotrek-api', options, () => {
-        console.log('end of export sitra auto!');
+        if (process.env.NODE_ENV == 'development' && config.debug && config.debug.logs) console.log('end of export sitra auto!');
         return;
       });
     }
@@ -103,21 +108,21 @@ ImportGenericGeotrekApi.prototype.executeQuery = async function (
 };
 
 ImportGenericGeotrekApi.prototype.importProduct = async function (
-  listElement,
-  regionPerZipcode
+  listElement
 ) {
-  console.log('ImportGenericGeotrekApi.prototype.importProduct', listElement.id);
+  if (process.env.NODE_ENV == 'development' && config.debug && config.debug.logs) console.log('ImportGenericGeotrekApi.prototype.importProduct', listElement.id, listElement.length);
+
   
   if (listElement && listElement.length > 0 || listElement.id != undefined) {
     
-    console.log('ImportGenericGeotrekApi.prototype.importProduct next');
+    if (process.env.NODE_ENV == 'development' && config.debug && config.debug.logs) console.log('ImportGenericGeotrekApi.prototype.importProduct next');
     
     let element = listElement;
     if (config.debug == undefined || config.debug.idGeo == 0) {
       element = listElement.shift();
+      if (process.env.NODE_ENV == 'development' && config.debug && config.debug.logs) console.log('ImportGenericGeotrekApi.prototype.importProduct - shift products');
     }
     
-    //console.log('Elemeent = ', element);
     delete element.steps;
     delete element.geometry;
 
@@ -140,7 +145,7 @@ ImportGenericGeotrekApi.prototype.importProduct = async function (
         break;
     }
     
-    if (config.debug != undefined) { 
+    if (process.env.NODE_ENV == 'development' && config.debug != undefined) { 
       this.member = 3568; 
     }
 
@@ -148,7 +153,7 @@ ImportGenericGeotrekApi.prototype.importProduct = async function (
       this.configData = {
         specialId: null,
         codeType: 'EQU',
-        subType: '2988',
+        subType: '2988', // Loisirs sportifs
         member: this.member
       };
 
@@ -224,8 +229,7 @@ ImportGenericGeotrekApi.prototype.importProduct = async function (
         shortDescriptionNl: this.getShortDescription(element, 'nl'),
         address: this.getAddress(
           element,
-          additionalInformation,
-          regionPerZipcode
+          additionalInformation
         ),
         website: this.getWebsite(additionalInformation),
         email: this.getEmail(additionalInformation),
@@ -250,18 +254,16 @@ ImportGenericGeotrekApi.prototype.importProduct = async function (
       product.legalEntity = this.getLegalEntity(element, product);
       product.rateCompletion = this.calculateRateCompletion(product);
 
-      //if (product.specialId == '962561'){
-        console.log(`GeoTrek API => import specialId : ${product.specialId}`);
-        //console.log('element= ', element);
-        //console.log('element= ', product);
-      //} 
+      console.log(`GeoTrek API => import specialId : ${product.specialId}`);
+      
       await this.doUpsertAsync(product, product.specialId, product.importType);
+      
     }
     else{
       console.log(`GeoTrek API => NOT import structure : ${element.structure}`);
     }
-    if (config.debug == undefined || config.debug.idGeo == 0 ) {
-      return this.importProduct(listElement, regionPerZipcode);
+    if (config.debug == undefined || config.debug.idGeo == 0 && process.env.NODE_ENV == 'development' ) {
+      return this.importProduct(listElement);
     } else {
       return;
     }
@@ -275,6 +277,7 @@ ImportGenericGeotrekApi.prototype.importProduct = async function (
 ImportGenericGeotrekApi.prototype.getActivity = function (element) {
   var activity = [];
   if (element.practice) {
+    // TOTO pratice improv
     console.log('element.practice = ', element.practice);
     activity.push(configImportGEOTREK.activity[element.practice]);
   }
@@ -349,7 +352,7 @@ ImportGenericGeotrekApi.prototype.getComplement = function (element, lang) {
 
 ImportGenericGeotrekApi.prototype.getLocalization = function (element) {
   const localization = {};
-  if (config.debug === undefined) {
+  if (config.debug === undefined && process.env.NODE_ENV == 'production') {
     if (element.parking_location && element.parking_location.length) {
       localization.lat = element.parking_location[1];
       localization.lon = element.parking_location[0];
@@ -443,8 +446,7 @@ ImportGenericGeotrekApi.prototype.getPerimetreGeographique = function (
     }
     return null;
   });
-  // Hack adding OT WS
-  if (config.debug !== undefined) {
+  if (process.env.NODE_ENV == 'development') {
     perimetreGeo = [];
     perimetreGeo.push(14707);
   }
@@ -472,8 +474,7 @@ ImportGenericGeotrekApi.prototype.getShortDescription = function (
 
 ImportGenericGeotrekApi.prototype.getAddress = function (
   element,
-  additionalElement,
-  regionPerZipcode
+  additionalElement
 ) {
   const address = {
     address1: additionalElement.street,
@@ -491,17 +492,13 @@ ImportGenericGeotrekApi.prototype.getAddress = function (
     if (item) {
       address.insee = item;
       city = configSitraTownByInsee[item];
-      if (city && config.debug === undefined) {
+      if (city && process.env.NODE_ENV == 'production') {
         address.city = city.sitraId;
       } else {
         address.city = 14707;
       }
     }
   });
-
-  if (regionPerZipcode && address.zipcode) {
-    address.region = regionPerZipcode[String(address.zipcode).substring(0, 2)];
-  }
 
   if (!address.address1 && address.address2) {
     address.address1 = address.address2;
@@ -587,25 +584,6 @@ ImportGenericGeotrekApi.prototype.getPdf = function (element, lang) {
 };
 
 ImportGenericGeotrekApi.prototype.getImage = function (element) {
-  //console.log(element.pictures);
-  
-  /*const image = {
-    url : null,
-    legend: null,
-    name: null,
-    description: null
-  };
-  _.forEach(element.pictures, (picture) => {
-    console.log('picture = ', picture);
-    if (picture) {
-      image.url = this.addUrlHttp(picture['url']);
-      image.legend = picture['legend'];
-      image.name = picture['title'];
-      image.description = picture['author'];
-      return image;
-    }
-  });
-  return [];*/
   
   if (element.attachments) {
     return _(element.attachments)

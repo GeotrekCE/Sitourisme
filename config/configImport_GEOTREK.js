@@ -1,5 +1,29 @@
+/* Used by ImportGeneric Server Model Geotrek API*/
 exports.types = {
   EQU: 'EQUIPEMENT'
+};
+
+exports.activity = {
+  0: 3333, // Itinéraire VTT
+  1: 3284, // Itinéraire VTT
+  2: 3283, // Itinéraire cyclo
+  3: 3313, // Itinéraire de randonnée équestre
+  4: 3333, // Itinéraire de randonnée pédestre
+  5: 5147, // Randonnée palmée
+  6: 4201, // Itinéraire de Trail
+  7: 3333, // Itinéraire de randonnée pédestre
+  8: 4201, // Itinéraire de Trail
+  9: 3333, // Itinéraire VTT
+  10: 3333, // Itinéraire VTT
+  11: 3333, // Itinéraire VTT
+  14: 3333
+};
+
+exports.itineraireType = {
+  1: 'BOUCLE',
+  2: 'ALLER_RETOUR',
+  3: 'ALLER_ITINERANCE',
+  4: 'ALLER_ITINERANCE'
 };
 
 exports.url = {
@@ -83,27 +107,4 @@ exports.entity = {
       statusImport: 2
     }
   }*/
-};
-
-exports.activity = {
-  0: 3333, // Itinéraire VTT
-  1: 3284, // Itinéraire VTT
-  2: 3283, // Itinéraire cyclo
-  3: 3313, // Itinéraire de randonnée équestre
-  4: 3333, // Itinéraire de randonnée pédestre
-  5: 5147, // Randonnée palmée
-  6: 4201, // Itinéraire de Trail
-  7: 3333, // Itinéraire de randonnée pédestre
-  8: 4201, // Itinéraire de Trail
-  9: 3333, // Itinéraire VTT
-  10: 3333, // Itinéraire VTT
-  11: 3333, // Itinéraire VTT
-  14: 3333
-};
-
-exports.itineraireType = {
-  1: 'BOUCLE',
-  2: 'ALLER_RETOUR',
-  3: 'ALLER_ITINERANCE',
-  4: 'ALLER_ITINERANCE'
 };

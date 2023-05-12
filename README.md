@@ -14,7 +14,7 @@ Afin de mettre en place la passerelle, il est nécessaire :
 
 Version 1 financée par la [Région Sud](https://www.maregionsud.fr), développée par [IDfr](https://www.idfr.net) et [MEDIACTEURS](https://mediacteurs.net).
 
-Depuis 2023, l'[agence WebSenso](https://www.websenso.com) héberge la plateforme qui synchronise quotidiennement Géotrek avec Apidae. 
+Depuis 2023, l'[agence WebSenso](https://www.websenso.com) héberge la plateforme qui synchronise quotidiennement Géotrek avec Apidae et prépare la verison 2 de la passerelle.
 
 ## Installation
 
@@ -24,7 +24,7 @@ Outils nécessaires :
 - Docker et Docker-compose
 - MongoDB 4.4.6
 
-Créer la structure de dossier comme indiqué dans l'arbre elsn dessous :
+Créer la structure de dossier :
 
 ```
 ├── Sitourisme (PACA-API)
@@ -38,13 +38,21 @@ Dans le projet effectuer les commandes d'installation :
 ```
 $ docker-compose up -d
 ```
-2 containers Docker sont ainsi créés, MongoDB & ElasticSearch.
+Le container Docker de MongoDB est ainsi créé.
 
 Ensuite pour générer l'application :
 
 ```
 $ npm install
-$ npm run init-import
+```
+
+Environnement de développement, connecté à apidae.cooking sur un projet en écriture / multimembre
+```
+$ npm run dev 
+```
+
+Environnement de production, connecté à apidae.com 
+```
 $ npm run prod
 ```
 

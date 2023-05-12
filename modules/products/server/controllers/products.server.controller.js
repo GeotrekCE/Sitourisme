@@ -10,6 +10,7 @@ var path = require('path'),
   errorHandler = require(path.resolve(
     './modules/core/server/controllers/errors.server.controller'
   )),
+  config = require(__dirname + '/../../../../config/config.js'),
   _ = require('lodash');
 
 /**
@@ -126,77 +127,6 @@ exports.list = async function (req, res) {
 };
 
 /**
- * Product middleware
- *
- * @param {object} req
- * @param {object} res
- * @param {function} next
- * @param {string} id
- */
-exports.productByID = function (req, res, next, id) {
-  Product.findById(id).exec(function (err, product) {
-    if (err) return next(err);
-    if (!product) return next(new Error('Failed to load product ' + id));
-    var productObj = product.toObject(),
-      subType = Product.getSitraSubType(productObj),
-      reference = Product.getSitraReference(productObj),
-      civility = Product.getSitraCivilityReference(productObj),
-      town = Product.getSitraTownReference(productObj),
-      statusImport = Product.getStatusImportReference(productObj),
-      member = Product.getSitraMemberReference(productObj),
-      personType = Product.getSitraPersonTypeReference(productObj),
-      internalCriteria = Product.getSITRAInternalCriteriaReference();
-
-    req.product = {
-      data: product,
-      sitraReference: {
-        subType: subType,
-        ref: reference,
-        civility: civility,
-        town: town,
-        statusImport: statusImport,
-        member: member,
-        personType: personType,
-        internalCriteria: internalCriteria
-      }
-    };
-    next();
-  });
-};
-
-/**
- * Product middleware
- *
- * @param {object} req
- * @param {object} res
- * @param {function} next
- * @param {string} url
- */
-exports.productByUrl = function (req, res, next, url) {
-  Product.getByUrl(url, function (err, product) {
-    if (err) return next(err);
-    if (!product)
-      return next(new Error('Failed to load product with url ' + url));
-    var productObj = product.toObject(),
-      subType = Product.getSitraSubType(productObj),
-      reference = Product.getSitraReference(productObj),
-      town = Product.getSitraTownReference(productObj),
-      statusImport = Product.getStatusImportReference(productObj);
-
-    req.product = {
-      data: product,
-      sitraReference: {
-        subType: subType,
-        ref: reference,
-        town: town,
-        statusImport: statusImport
-      }
-    };
-    next();
-  });
-};
-
-/**
  * Search Products
  *
  * @param {object} req
@@ -222,7 +152,7 @@ exports.search = function (req, res) {
  */
 exports.import = function (req, res) {
   var type = req.query && req.query.type ? req.query.type : null;
-  console.log('Begin import auto for', type);
+  if (process.env.NODE_ENV == 'development' && config.debug && config.debug.logs) console.log('Begin import auto for', type);
 
   if (!type) {
     throw 'Unable to determine type';

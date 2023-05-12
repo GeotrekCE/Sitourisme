@@ -320,9 +320,12 @@ function __exportSitraAuto(type, options, callback) {
   })
     .sort({ 'linkedObject.isFather': -1 }) // on exporte les pères d'abord
     .exec(function (err, products) {
-      console.log('Import type = ', importType);
-      console.log('Import lastdate = ', today.toDate());
-      console.log('Import products = ', products.length);
+      
+      if (process.env.NODE_ENV == 'development' && config.debug && config.debug.logs) {
+        console.log('Import type = ', importType);
+        console.log('Import lastdate = ', today.toDate());
+        console.log('Import products = ', products.length);
+      }
       
       if (err) {
         console.error('Error in exportSitraAuto : ' + err);
@@ -683,8 +686,10 @@ function __doExport(product, accessToken, options, callback) {
       doUpdate = false;
     }
     
-    console.log('DoUpdate = ', doUpdate);
-    //console.log('product Sitra = ', product.specialIdSitra, product.specialIdSitra.length);
+    if (process.env.NODE_ENV == 'development' && config.debug && config.debug.logs) {
+      console.log('DoUpdate = ', doUpdate);
+      console.log('product Sitra = ', product.specialIdSitra, product.specialIdSitra.length);
+    }
 
   if (product.gatewayStatus === false) {
     csvStringify(
@@ -972,7 +977,7 @@ function __doExport(product, accessToken, options, callback) {
         formData.type = product.type;
       }
       formData.proprietaireId = 3568;
-          console.log('FormData = ', formData.mode, formData.id);
+      if (process.env.NODE_ENV == 'development' && config.debug && config.debug.logs) console.log('FormData = ', formData.mode, formData.id);
 
 
       // Skip validation GEOTREK, all products
@@ -1030,6 +1035,7 @@ function __doExport(product, accessToken, options, callback) {
       }
 
       console.time('Send data apidae');
+      console.log('Api PUT = ', config.sitra.api.host, config.sitra.api.path);
       request(
         {
           url: `https://${config.sitra.api.host}${config.sitra.api.path}`,
@@ -1065,8 +1071,7 @@ function __doExport(product, accessToken, options, callback) {
 
           options.iteration = options.iteration || 0;
 
-          //console.log('Sending request Do Update = ', doUpdate, body, body.id);
-          console.log('Sending request Do Update = ', doUpdate, body.id);
+          if (process.env.NODE_ENV == 'development' && config.debug && config.debug.logs) console.log('Sending request Do Update = ', doUpdate, body.id);
           // si creation on ajoute et callback
           if (!doUpdate && body && body.id) {
             product.specialIdSitra = body.id;
@@ -1096,8 +1101,6 @@ function __doExport(product, accessToken, options, callback) {
               return callback(null, finalData);
             });
           } else if (!doUpdate) {
-            //console.log('No message !! > ', err, httpResponse,body.message);
-            
             finalData[product.id] = {
               name: product.name,
               data: null,
@@ -1116,8 +1119,9 @@ function __doExport(product, accessToken, options, callback) {
                 }
               }
             ).exec(async (err) => {
+              if (process.env.NODE_ENV == 'development' && config.debug && config.debug.logs) console.log('body = ', body);
               console.log(
-                `Error on creation - ${body.message} from Apidae > change statusImport = 3 for ${product.name}`
+                `Error on creation - ${body} ${body.message} from Apidae > change statusImport = 3 for ${product.name}`
               );
               return callback(null, finalData);
             });
@@ -1155,7 +1159,7 @@ function __doExport(product, accessToken, options, callback) {
             specialIdSitra: product.specialIdSitra
           };
 
-          console.log('body [.errorType] body = ', body, `https://${config.sitra.api.host}${config.sitra.api.path} ${accessToken}`);
+          if (process.env.NODE_ENV == 'development' && config.debug && config.debug.logs) console.log('body [.errorType] body = ', body, `https://${config.sitra.api.host}${config.sitra.api.path} ${accessToken}`);
 
           /*if (body) {
             if (body.errorType) {

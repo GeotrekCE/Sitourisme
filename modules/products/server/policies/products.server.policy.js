@@ -20,46 +20,10 @@ exports.invokeRolesPolicies = function () {
           resources: '/api/products',
           permissions: '*'
         },
-        /*{
-          resources: '/api/products/search',
-          permissions: '*'
-        },
-        {
-          resources: '/api/products/initElasticsearch',
-          permissions: '*'
-        },*/
         {
           resources: '/api/products/import',
           permissions: '*'
         },
-        /*{
-          resources: '/api/products/export-sitra',
-          permissions: '*'
-        },
-        {
-          resources: '/api/products/remove-items-sitra',
-          permissions: '*'
-        },
-        {
-          resources: '/api/products/export-sitra-search',
-          permissions: '*'
-        },
-        {
-          resources: '/api/products/:productId',
-          permissions: '*'
-        },
-        {
-          resources: '/api/products/getByUrl/:productUrl',
-          permissions: ['get']
-        },
-        {
-          resources: '/api/reindexation',
-          permissions: ['get']
-        },
-        {
-          resources: '/api/check',
-          permissions: ['get']
-        }*/
       ]
     },
     {
@@ -69,46 +33,10 @@ exports.invokeRolesPolicies = function () {
           resources: '/api/products',
           permissions: '*'
         },
-        /*{
-          resources: '/api/products/search',
-          permissions: '*'
-        },
-        {
-          resources: '/api/products/initElasticsearch',
-          permissions: '*'
-        },*/
         {
           resources: '/api/products/import',
           permissions: '*'
         },
-        /*{
-          resources: '/api/products/export-sitra',
-          permissions: '*'
-        },
-        {
-          resources: '/api/products/export-sitra-search',
-          permissions: '*'
-        },
-        {
-          resources: '/api/products/remove-items-sitra',
-          permissions: '*'
-        },
-        {
-          resources: '/api/products/:productId',
-          permissions: '*'
-        },
-        {
-          resources: '/api/products/getByUrl/:productUrl',
-          permissions: ['get']
-        },
-        {
-          resources: '/api/reindexation',
-          permissions: ['get']
-        },
-        {
-          resources: '/api/check',
-          permissions: ['get']
-        }*/
       ]
     },
     {
@@ -118,46 +46,10 @@ exports.invokeRolesPolicies = function () {
           resources: '/api/products',
           permissions: '*'
         },
-        /*{
-          resources: '/api/products/search',
-          permissions: '*'
-        },
-        {
-          resources: '/api/products/initElasticsearch',
-          permissions: '*'
-        },*/
         {
           resources: '/api/products/import',
           permissions: '*'
         },
-        /*{
-          resources: '/api/products/export-sitra',
-          permissions: '*'
-        },
-        {
-          resources: '/api/products/export-sitra-search',
-          permissions: '*'
-        },
-        {
-          resources: '/api/products/remove-items-sitra',
-          permissions: '*'
-        },
-        {
-          resources: '/api/products/:productId',
-          permissions: '*'
-        },
-        {
-          resources: '/api/products/getByUrl/:productUrl',
-          permissions: ['get']
-        },
-        {
-          resources: '/api/reindexation',
-          permissions: ['get']
-        },
-        {
-          resources: '/api/check',
-          permissions: ['get']
-        }*/
       ]
     }
   ]);

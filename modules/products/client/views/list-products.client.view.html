@@ -1,6 +1,6 @@
 <section data-ng-controller="ProductsController" data-ng-init="find()">
 	<div class="page-header">
-		<h1>Products</h1>
+		<h1>Equipements</h1>
 	</div>
 	<div class="list-group">
 		<a data-ng-repeat="product in products" class="list-group-item"><!--data-ui-sref="products.view({productId: product._id})"//-->
@@ -9,24 +9,21 @@
 				<span data-ng-bind="product.created | date:'mediumDate'"></span> - 
 				Dernière MAJ : 
 				<span data-ng-bind="product.lastUpdate | date:'mediumDate'"></span> - 
-				Member = 
+				Membre = 
 				<span data-ng-bind="product.member"></span> - 
 				Géotrek ID = 
 				<span data-ng-bind="product.specialId"></span> - 
 				Apidae ID = 
-				<span data-ng-bind="product.specialIdSitra"></span>
+				<span data-ng-bind="product.specialIdSitra" data-ng-if='product.specialIdSitra * 1 == product.specialIdSitra'></span>
+				<span data-ng-if='product.specialIdSitra * 1 != product.specialIdSitra'elseif>Non créé - Erreur</span>
 			</small>
 			<div style="color:white; background-color:red;" data-ng-if='product.specialIdSitra * 1 != product.specialIdSitra' data-ng-bind="product.specialIdSitra"></div>
 			<h4 class="list-group-item-heading" data-ng-bind="product.name"></h4>
 			<p class="list-group-item-text" data-ng-bind="product.description"></p>
+			<h5>Géotrek : {{product.rateCompletion}} / 100</h5>
 		</a>
 	</div>
 	<div class="alert alert-warning text-center" data-ng-if="products.$resolved && !products.length">
-		No products yet, why don't you <a data-ui-sref="products.create">create one</a>?
+		Aucun équipement - Lancer un import
 	</div>
 </section>
-<style>
-	.alert {
-		color: red;
-	}
-</style>

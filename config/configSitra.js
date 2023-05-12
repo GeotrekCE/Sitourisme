@@ -1,3 +1,4 @@
+/* Used bu productFactory server model */
 exports.reference = {
   1: {
     labelFr: 'Famille de références sitra'
