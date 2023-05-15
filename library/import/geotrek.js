@@ -107,7 +107,7 @@ Import.prototype.__next = function (callback) {
  */
 Import.prototype.__import = function (data, callback) {
   var self = this;
-  
+
   this.import(data, function (err) {
     if (err) {
       throw err;

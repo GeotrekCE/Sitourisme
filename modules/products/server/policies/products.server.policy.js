@@ -23,7 +23,7 @@ exports.invokeRolesPolicies = function () {
         {
           resources: '/api/products/import',
           permissions: '*'
-        },
+        }
       ]
     },
     {
@@ -36,20 +36,20 @@ exports.invokeRolesPolicies = function () {
         {
           resources: '/api/products/import',
           permissions: '*'
-        },
+        }
       ]
     },
     {
       roles: ['guest'],
       allows: [
-        {
+        /*{
           resources: '/api/products',
           permissions: '*'
         },
         {
           resources: '/api/products/import',
           permissions: '*'
-        },
+        },*/
       ]
     }
   ]);

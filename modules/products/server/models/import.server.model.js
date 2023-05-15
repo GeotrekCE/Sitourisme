@@ -27,41 +27,38 @@ exports.import = function (type, callback) {
  */
 function __importProductsbyApi(type, callback) {
   var User = mongoose.model('User');
-  User.findOne(
-    {
-      username: 'admin'
-    },
-    (err, user) => {
-      if (!err) {
-        const ImportClassFilename =
-          __dirname + '/import/' + type + '/importGeneric.server.model.js';
-        let ImportClass = require(ImportClassFilename);
-        let importObj = null;
+  User.findOne({
+    username: 'admin'
+  }).then(function (err, user) {
+    if (!err) {
+      const ImportClassFilename =
+        __dirname + '/import/' + type + '/importGeneric.server.model.js';
+      let ImportClass = require(ImportClassFilename);
+      let importObj = null;
 
-        if (ImportClass) {
-          importObj = new ImportClass({
-            user: user,
-            lang: 'fr',
-            importType: type
-          });
-          importObj.start(() => {
-            if (callback) {
-              callback();
-            }
+      if (ImportClass) {
+        importObj = new ImportClass({
+          user: user,
+          lang: 'fr',
+          importType: type
+        });
 
-            importObj = ImportClass = null;
-          });
-        } else {
+        importObj.start(() => {
           if (callback) {
             callback();
           }
-        }
+          importObj = ImportClass = null;
+        });
+
       } else {
         if (callback) {
           callback();
         }
       }
+    } else {
+      if (callback) {
+        callback();
+      }
     }
-  );
+  });
 }
-

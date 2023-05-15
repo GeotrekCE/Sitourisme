@@ -127,7 +127,7 @@ class ProductFactory {
 
     // Init alert
     product.alert = __checkAlert(product, this.name);
-    
+
     product.save((err) => {
       if (err) {
         // Fix problem with unique url

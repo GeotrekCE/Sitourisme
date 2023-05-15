@@ -10,6 +10,10 @@ const _defaultProductSchema = {
     type: String,
     trim: true
   },
+  proprietaireId: {
+    type: String,
+    trim: true
+  },
   supplierId: {
     type: String,
     trim: true

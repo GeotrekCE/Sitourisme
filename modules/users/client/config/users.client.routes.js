@@ -36,6 +36,6 @@ angular.module('users').config([
         abstract: true,
         url: '/password',
         template: '<ui-view/>'
-      })
+      });
   }
 ]);

@@ -7,8 +7,7 @@ module.exports = function (app) {
   app
     .route('/api/products')
     .all(productsPolicy.isAllowed)
-    .get(products.list)
-    .post(products.create);
+    .get(products.list);
 
   app
     .route('/api/products/import')
