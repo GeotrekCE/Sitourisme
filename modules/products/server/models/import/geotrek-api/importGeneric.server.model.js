@@ -233,6 +233,7 @@ class ImportGenericGeotrekApi extends Import {
             additionalInformation = data;
           }
         }
+        const proprietaireId = (process.env.NODE_ENV == 'production') ? configImportGEOTREK.geotrekInstance[structure].structures[element.structure].proprietaireId : config.proprietaireId;
 
         const product = {
           importType: this.importType,
@@ -244,7 +245,7 @@ class ImportGenericGeotrekApi extends Import {
           member: this.configData.member,
           state: 'HIDDEN',
           user: this.user,
-          proprietaireId: configImportGEOTREK.geotrekInstance[structure].structures[element.structure].proprietaireId/*this.member*/,
+          proprietaireId: proprietaireId,
           name: element.name['fr'],
           nameEn: element.name['en'],
           nameEs: element.name['es'],
