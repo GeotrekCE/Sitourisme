@@ -70,8 +70,9 @@ $ curl "URL/api/products/import?type=geotrek-api"
 - EVO Write on Apidae Multimember project
 - EVO New Géotrek configuration file with Axios renew connection
 - EVO New Géotrek configuration file to customize activities depending of Géotrek instance
+- EVO Config/Apidae - Json Activity from Apidae
 - EVO FO removing auto inscription and unused views
-- EVO FO listing products enhanced - Status / ID Géotrek - Apidae / Errors
+- EVO FO listing products - Adding status / ID Géotrek - Apidae / Errors
 - Class ImportGenericGeotrekApi refactored with deprecated Util.inherits removed by ES6 extends Géotrek import class
 - Depcheck install & clean dependencies modules from npm project (async, elasticsearch, json2csv, mongodb, q, slug, xml2json)
 - Tests Lint Done

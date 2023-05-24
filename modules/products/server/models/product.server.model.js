@@ -344,20 +344,20 @@ ProductSchema.statics.getSITRAInternalCriteriaReference =
  * @param {function} callback
  */
 ProductSchema.statics.import = function (type, callback) {
-  if (
-    process.env.NODE_ENV == 'development' &&
-    config.debug &&
-    config.debug.logs
-  )
+  if (config.debug && config.debug.logs)
     console.log('ProductSchema.statics.import');
-    ImportModel.import(type, callback);
+  ImportModel.import(type, callback);
 };
 
 /**
  * export privateData after saving exported product of importType
  */
 ProductSchema.post('save', function (product, next) {
-  console.log('>>>>>>>>>>>>>>> ProductSchema.post( save ', product.privateData, product.specialIdSitra);
+  console.log(
+    '>>>>>>>>>>>>>>> ProductSchema.post( save ',
+    product.privateData,
+    product.specialIdSitra
+  );
   if (product.specialIdSitra && product.privateData) {
     __getSitraToken(product, function (err, accessToken) {
       if (err) {

@@ -37,22 +37,17 @@ exports.list = async function (req, res) {
  */
 exports.import = function (req, res) {
   var type = req.query && req.query.type ? req.query.type : null;
-  if (
-    process.env.NODE_ENV == 'development' &&
-    config.debug &&
-    config.debug.logs
-  )
+  if (config.debug && config.debug.logs)
     console.log('Begin import auto for', type);
 
   if (!type) {
     throw 'Unable to determine type';
   }
-  
+
   try {
     res.json({ message: 'Importing ' + type + ' flux in progress...' });
     Product.import(type);
-  }
-  catch (err) {
-    console.log('err = ',err);
+  } catch (err) {
+    console.log('err = ', err);
   }
 };

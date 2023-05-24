@@ -376,13 +376,9 @@ class ProductFactory {
 
       default:
         typeLabel = null;
-        if (process.env.NODE_ENV === 'development') {
-          console.log(
-            'Missing type "' +
-              productType +
-              '" for sub type in getSitraSubType()'
-          );
-        }
+        console.log(
+          'Missing type "' + productType + '" for sub type in getSitraSubType()'
+        );
         break;
     }
 

@@ -49,7 +49,6 @@ function __importProductsbyApi(type, callback) {
           }
           importObj = ImportClass = null;
         });
-
       } else {
         if (callback) {
           callback();

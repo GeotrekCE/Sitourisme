@@ -16,32 +16,18 @@ const config = require(__dirname + '/../../../../config/config.js');
 exports.doUpsert = function (product, specialId, importType, next) {
   var Product = mongoose.model('Product');
 
-  if (
-    process.env.NODE_ENV == 'development' &&
-    config.debug &&
-    config.debug.logs
-  )
+  if (config.debug && config.debug.logs)
     console.log('importuils before doUpsert = ', next);
 
   Product.doUpsert(product, specialId, importType, function (err, data) {
-    if (
-      process.env.NODE_ENV == 'development' &&
-      config.debug &&
-      config.debug.logs
-    )
-      console.log('>>> cb doUpsert');
+    if (config.debug && config.debug.logs) console.log('>>> cb doUpsert');
     if (err) {
       console.log(
         'Error in doUpsert() : Upsert failed for product : ',
         product.specialId
       );
     }
-    if (
-      process.env.NODE_ENV == 'development' &&
-      config.debug &&
-      config.debug.logs
-    )
-      console.log('Next !');
+    if (config.debug && config.debug.logs) console.log('Next !');
     next(null, data);
   });
 };

@@ -1,0 +1,58 @@
+[
+  {
+    "Identifiant": 3313,
+    "Nom": "Itinéraire de randonnée équestre"
+  },
+  {
+    "Identifiant": 3333,
+    "Nom": "Itinéraire de randonnée pédestre"
+  },
+  {
+    "Identifiant": 4176,
+    "Nom": "Itinéraire de ski de randonnée alpin"
+  },
+  {
+    "Identifiant": 6930,
+    "Nom": "Itinéraire de ski de randonnée nordique"
+  },
+  {
+    "Identifiant": 4201,
+    "Nom": "Itinéraire de Trail"
+  },
+  {
+    "Identifiant": 5447,
+    "Nom": "Itinéraire de Vélo à Assistance Electrique"
+  },
+  {
+    "Identifiant": 6225,
+    "Nom": "Itinéraire de VTT à Assistance Électrique"
+  },
+  {
+    "Identifiant": 5368,
+    "Nom": "Itinéraire en canoë / en kayak"
+  },
+  {
+    "Identifiant": 5446,
+    "Nom": "Itinéraire enduro"
+  },
+  {
+    "Identifiant": 4174,
+    "Nom": "Itinéraire Fat Bike"
+  },
+  {
+    "Identifiant": 6168,
+    "Nom": "Itinéraire fauteuil tout terrain"
+  },
+  {
+    "Identifiant": 6224,
+    "Nom": "Itinéraire gravel bike"
+  },
+  {
+    "Identifiant": 3302,
+    "Nom": "Itinéraire raquettes"
+  },
+  {
+    "Identifiant": 3284,
+    "Nom": "Itinéraire VTT"
+  },
+]
