@@ -45,11 +45,11 @@ exports.invokeRolesPolicies = function () {
         /*{
           resources: '/api/products',
           permissions: '*'
-        },
+        },*/
         {
           resources: '/api/products/import',
           permissions: '*'
-        },*/
+        },
       ]
     }
   ]);
