@@ -9,7 +9,7 @@ public/lib/
 *.rest
 
 # WEBSENSO
-#docker-compose.*
-config/env/development.js
+docker-compose.*
 config/env/production.js
+config/env/development.js
 websensoZzzImportPythonToMongo/

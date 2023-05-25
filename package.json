@@ -1,24 +1,20 @@
 {
   "name": "PACA-API",
-  "description": "PACA Manager APP JavaScript with MongoDB, ElasticSearch, Express, AngularJS, and Node.js..",
+  "description": "PACA Manager APP JavaScript with MongoDB, Express, AngularJS, and Node.js..",
   "version": "0.1.0",
   "private": true,
-  "author": "http://www.idfr.net",
   "repository": {
     "type": "git",
-    "url": "https://gitlab.idfr.net/Sitourisme/paca-api"
+    "url": "https://github.com/GeotrekCE/Sitourisme"
   },
   "scripts": {
-    "start": "node server.js",
     "dev": "NODE_ENV=development nodemon server.js",
     "prod": "NODE_ENV=production PORT=3003 nodemon server.js",
-    "init-import": "NODE_ENV=development node init-import.js",
-    "postinstall": "bower install --config.interactive=true",
-    "lint": "eslint modules/**/*.js --fix"
+    "postinstall": "bower install --config.interactive=true --allow-root",
+    "lint": "eslint modules/**/*.js library/import/geotrek.js --fix"
   },
   "dependencies": {
     "acl": "^0.4.11",
-    "async": "^3.2.1",
     "axios": "^0.23.0",
     "bluebird": "^3.7.2",
     "body-parser": "^1.19.0",
@@ -31,33 +27,27 @@
     "cookie-parser": "^1.4.5",
     "csv-parse": "^2.5.0",
     "csv-stringify": "3.1.1",
-    "elasticsearch": "^15.4.1",
     "express": "^4.17.1",
     "express-session": "^1.17.2",
     "glob": "^7.2.0",
     "helmet": "^4.6.0",
-    "json2csv": "^5.0.6",
     "lodash": "^3.10.1",
     "method-override": "^3.0.0",
     "moment": "^2.29.1",
-    "mongodb": "^3.6.10",
     "mongoose": "^4.13.14",
     "morgan": "^1.10.0",
     "passport": "^0.4.1",
     "passport-local": "^1.0.0",
     "pify": "^5.0.0",
-    "q": "^1.5.1",
     "request": "^2.88.2",
-    "slug": "^5.1.0",
     "socket.io": "^2.3.0",
-    "swig": "^1.4.2",
-    "xml2json": "^0.12.0"
+    "swig": "^1.4.2"
   },
   "devDependencies": {
-    "eslint": "^8.0.1",
+    "eslint": "^8.40.0",
     "eslint-config-prettier": "^8.3.0",
     "eslint-plugin-prettier": "^4.0.0",
-    "nodemon": "^2.0.20",
+    "nodemon": "^2.0.22",
     "prettier": "^2.4.1"
   }
 }

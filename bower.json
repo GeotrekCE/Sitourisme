@@ -1,6 +1,6 @@
 {
-  "name": "PACA-API",
-  "version": "0.1.0",
+  "name": "geotrek2apidae",
+  "version": "1.0.0",
   "description": "PACA Manager APP in JavaScript with MongoDB, ElasticSearch, Express, AngularJS, and Node.js.",
   "dependencies": {
     "bootstrap": "~3",

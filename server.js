@@ -15,6 +15,6 @@ mongoose.connect(function (db) {
 
   // Logging initialization
   console.log(
-    `PACA application started on port ${config.port} on ${process.env.NODE_ENV} environment`
+    `Geotrek 2 Apidae application started on port ${config.port} on ${process.env.NODE_ENV} environment`
   );
 });

@@ -140,14 +140,6 @@ LegalEntitySchema.statics.getSitraReference =
   legalEntityFactory.getSitraReference.bind(legalEntityFactory);
 
 /**
- * Get sitra town reference
- *
- * @param {Object} data
- */
-LegalEntitySchema.statics.getSitraTownReference =
-  legalEntityFactory.getSitraTownReference.bind(legalEntityFactory);
-
-/**
  * Get status import reference
  *
  * @param {Object} data

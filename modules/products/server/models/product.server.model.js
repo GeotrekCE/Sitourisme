@@ -10,12 +10,9 @@ var mongoose = require('mongoose'),
   request = require('request'),
   _ = require('lodash'),
   ImportModel = require(__dirname + '/import.server.model.js'),
-  search = require(__dirname + '/search.server.model.js'),
   productName = 'Product',
   ProductFactory = require(__dirname + '/productFactory.server.model.js'),
   config = require(__dirname + '/../../../../config/config.js'),
-  logger = require(__dirname +
-    '/../../../../library/customColorLogger/customColorLogger.js'),
   productFactory,
   ProductSchema,
   productSchema,
@@ -141,7 +138,7 @@ ProductSchema.statics.save = function (product, callback) {
     } else {
       productFactory.save(product, function (err) {
         var Product = mongoose.model(productName);
-        Product.index(product, callback);
+        callback();
       });
     }
   });
@@ -214,7 +211,6 @@ ProductSchema.statics.doUpsert = function (
 ) {
   const Product = mongoose.model('Product');
   const LegalEntity = mongoose.model('LegalEntity');
-
   Product.find({ specialId, importType }, function (err, docs) {
     if (err) {
       console.log('Error in doUpsert() : ' + err);
@@ -302,14 +298,6 @@ ProductSchema.statics.getSitraReference =
   productFactory.getSitraReference.bind(productFactory);
 
 /**
- * Get sitra town reference
- *
- * @param {Object} data
- */
-ProductSchema.statics.getSitraTownReference =
-  productFactory.getSitraTownReference.bind(productFactory);
-
-/**
  * Get status import reference
  *
  * @param {Object} data
@@ -350,100 +338,26 @@ ProductSchema.statics.getSITRAInternalCriteriaReference =
   productFactory.getSITRAInternalCriteriaReference.bind(productFactory);
 
 /**
- * Init elasticsearch analyser and mapping
- *
- * @param {function} callback
- */
-ProductSchema.statics.initElasticsearch = function (callback) {
-  search.initElasticsearch(callback);
-};
-
-/**
- * Index product
- *
- * @param {Object} product
- * @param {function} callback
- */
-ProductSchema.statics.index = function (product, callback) {
-  search.index(product, callback);
-};
-
-/**
- * Delete product from index
- *
- * @param {Object} product
- * @param {function} callback
- */
-ProductSchema.statics.indexDelete = function (product, callback) {
-  // Index product in search engine
-  search.indexDelete(product, callback);
-};
-
-/**
  * Import
  *
  * @param {String} type
  * @param {function} callback
  */
 ProductSchema.statics.import = function (type, callback) {
+  if (config.debug && config.debug.logs)
+    console.log('ProductSchema.statics.import');
   ImportModel.import(type, callback);
-};
-
-/**
- * Search object
- *
- * @param {Object} data
- * @param {function} callback
- * @param {Object} options
- */
-ProductSchema.statics.search = function (data, callback, options) {
-  if (data.search) {
-    var Town = mongoose.model('Town');
-    Town.find(
-      { name: new RegExp('^' + data.search + '$', 'i') },
-      function (err, towns) {
-        if (towns.length === 1) {
-          data.localization = towns[0].localization;
-          data.search = null;
-        }
-
-        search.search(data, callback, options);
-      }
-    );
-  } else {
-    search.search(data, callback, options);
-  }
-};
-
-/**
- * Build query
- *
- * @param {String} queryString
- */
-ProductSchema.statics.queryBuild = function (queryString) {
-  return search.queryBuild(queryString);
-};
-
-/**
- * Query add criteria
- *
- * @param {String} queryString
- * @param {String} criteriaLabel
- * @param {String} criteriaType
- * @returns {String}
- */
-ProductSchema.statics.queryAdd = function (
-  queryString,
-  criteriaLabel,
-  criteriaType
-) {
-  return search.queryAdd(queryString, criteriaLabel, criteriaType);
 };
 
 /**
  * export privateData after saving exported product of importType
  */
 ProductSchema.post('save', function (product, next) {
+  console.log(
+    '>>>>>>>>>>>>>>> ProductSchema.post( save ',
+    product.privateData,
+    product.specialIdSitra
+  );
   if (product.specialIdSitra && product.privateData) {
     __getSitraToken(product, function (err, accessToken) {
       if (err) {
@@ -512,6 +426,7 @@ module.exports = productFactory;
  * @private
  */
 function __getSitraToken(product, callback) {
+  console.log('>>>>>>>>>>>>>>> ProductSchema. __getSitraToken ');
   var memberId = product.member ? product.member : '-',
     configAuth = config.sitra.auth.accessPerMemberId,
     access =
