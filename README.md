@@ -5,11 +5,10 @@ Passerelle permettant d'importer automatiquement des itinéraires depuis l'API d
 - Fonctionnement et correspondance des champs : https://geotrek.ecrins-parcnational.fr/ressources/technique/2022-04-Geotrek-Apidae-v2.pdf
 - Présentation aux rencontres Geotrek 2021 : https://geotrek.ecrins-parcnational.fr/rencontres/2021/presentations/09-geotrek-apidae.pdf
 
-Afin de mettre en place la passerelle, il est nécessaire :
-- de créer un projet d'API en écriture sur la plateforme Apidae en indiquant les prestataires
-- de fournir les éléments suivants :
+Afin de mettre en place la passerelle, il est nécessaire (voir PDF sur le Github):
+- côte Apidae : s'abonner au projet multi-membre n°7421 
+- côté Geotrek : fournir les éléments suivants :
   - URL du flux API Geotrek
-  - Numéro du projet créé sur la plateforme Apidae avec envoi des clef et secret Oauth
   - Pour chaque identifiant de structure Geotrek, fournir l'identifiant de l'ENT correspondant dans Apidae 
 
 Version 1 financée par la [Région Sud](https://www.maregionsud.fr), développée par [IDfr](https://www.idfr.net) et [MEDIACTEURS](https://mediacteurs.net).
