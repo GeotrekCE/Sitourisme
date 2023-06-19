@@ -61,7 +61,8 @@ exports.geotrekInstance = {
         specialIdSitra: '227589',
         statusImport: 2,
         memberId : 6696,
-        production: false
+        proprietaireId: 593,
+        production: true
       },
       9: {
         specialId: 'ENT1HauteVallée',
