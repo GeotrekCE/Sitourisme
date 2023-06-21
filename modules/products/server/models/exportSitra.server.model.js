@@ -315,7 +315,7 @@ function __exportSitraAuto(type, options, callback) {
   Product.find({
     importType: importType,
     lastUpdate: { $gte: today.toDate() },
-    statusImport: { $in: [1, 2] }
+    statusImport: { $in: [0,1,2] }
   })
     .sort({ 'linkedObject.isFather': -1 }) // on exporte les pères d'abord
     .exec(function (err, products) {
@@ -365,7 +365,7 @@ function __exportEntities(
 
   // if legalEntities exists then
   if (legalEntities && legalEntities.length) {
-    console.log('exportEntities');
+    
     let legalEntity = legalEntities.shift();
     let productId =
       legalEntity && legalEntity.product ? legalEntity.product : null;
@@ -780,7 +780,7 @@ function __doExport(product, accessToken, options, callback) {
         type: product.type
       };
 
-      console.time('Build');
+      //console.time('Build');
 
       // Status (published, hidden...)
       /*dataTmp = __buildState(product, root, rootFieldList);
@@ -944,7 +944,7 @@ function __doExport(product, accessToken, options, callback) {
         listFields.push('aspect.TOURISME_AFFAIRES.root');
       }
 
-      console.timeEnd('Build');
+      //console.timeEnd('Build');
 
       // Build sent object
       var formData = {
@@ -1040,9 +1040,16 @@ function __doExport(product, accessToken, options, callback) {
         }
       }
 
-      console.time('Send data apidae');
-      console.log('Api PUT = ', config.sitra.api.host, config.sitra.api.path);
       if (config.debug && config.debug.seeData) console.log('PromiseRequestImage > datas = ', formData);
+      
+      if (config.debug && config.debug.idGeo != 0 && config.debug.idGeo != product.specialId) 
+      {
+        return callback(null, finalData);
+      } else {
+        console.time('Send data apidae');
+        console.log('Api PUT = ', config.sitra.api.host, config.sitra.api.path);
+      }
+      
       request(
         {
           url: `https://${config.sitra.api.host}${config.sitra.api.path}`,
@@ -5059,11 +5066,11 @@ function __buildState(product, root, rootFieldList) {
 }
 
 function __getSitraToken(product, member, callback) {
-  console.log(
+  /*console.log(
     '__getSitraToken for member / ProductMember =',
     member,
     product.member
-  );
+  );*/
 
   var memberId = config.memberId,
     //var memberId = member || (product.member ? product.member : '-'),
