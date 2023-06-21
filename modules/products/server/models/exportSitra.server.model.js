@@ -4714,7 +4714,7 @@ function __buildImageDetail(images, nImage, callback) {
         image.url = image.url.replace(matchUppercase[0], replacement);
       }*/
 
-      var urlObject = Url.parse(image.url),
+      var urlObject = Url.parse('https://wsrv.nl/?w=2500&url=' + image.url),
         path = urlObject.path,
         httpProtocol,
         filename = path.replace(new RegExp('^.*/([^/]+)$'), '$1'),
