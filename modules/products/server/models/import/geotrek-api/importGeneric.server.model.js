@@ -654,14 +654,20 @@ class ImportGenericGeotrekApi extends Import {
 
   getImage(element) {
     if (element.attachments) {
-      return _(element.attachments)
-        .map((item) => ({
-          url: this.addUrlHttp(item['url']),
-          legend: item['legend'],
-          name: item['title'],
-          description: item['author']
-        }))
-        .valueOf();
+       let images = (element.attachments)
+        .filter((item) => {
+          if (item['type'] == 'image') 
+          {
+            return {
+              url: this.addUrlHttp(item['url']),
+              legend: item['legend'],
+              name: item['title'],
+              description: item['author']
+            };
+          }
+        });
+        images = _(images).valueOf();
+      return images;
     }
     return [];
   }
