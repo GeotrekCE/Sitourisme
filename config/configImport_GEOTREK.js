@@ -49,7 +49,8 @@ exports.geotrekInstance = {
         specialIdSitra: '4635720',
         statusImport: 2,
         memberId : 6705,
-        production: false
+        proprietaireId: 854,
+        production: true
       },
       7: {
         specialId: 'ENT1Poncon',
