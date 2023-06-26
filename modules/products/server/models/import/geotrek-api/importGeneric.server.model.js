@@ -137,7 +137,7 @@ class ImportGenericGeotrekApi extends Import {
         });
       }
     } else {
-      throw 'Erreur de connexion à Géotrek';
+      throw 'Erreur de connexion à Geotrek';
     }
   }
 

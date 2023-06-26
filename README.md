@@ -13,7 +13,7 @@ Afin de mettre en place la passerelle, il est nécessaire (voir PDF sur le Githu
 
 Version 1 financée par la [Région Sud](https://www.maregionsud.fr), développée par [IDfr](https://www.idfr.net) et [MEDIACTEURS](https://mediacteurs.net).
 
-Depuis 2023, l'[agence WebSenso](https://www.websenso.com) héberge la plateforme qui synchronise quotidiennement Géotrek avec Apidae et prépare la verison 1.1 de la passerelle.
+Depuis 2023, l'[agence WebSenso](https://www.websenso.com) héberge la plateforme qui synchronise quotidiennement Geotrek avec Apidae et prépare la verison 1.1 de la passerelle.
 
 ## Installation
 
@@ -68,25 +68,25 @@ $ curl "URL/api/products/import?type=geotrek-api"
 
 ## 1.1 
 - EVO Write on Apidae Multimember project
-- EVO New Géotrek configuration file with Axios renew connection
-- EVO New Géotrek configuration file to customize activities depending of Géotrek instance
+- EVO New Geotrek configuration file with Axios renew connection
+- EVO New Geotrek configuration file to customize activities depending of Geotrek instance
 - EVO Config/Apidae - Json Activity from Apidae
 - EVO FO removing auto inscription and unused views
-- EVO FO listing products - Adding status / ID Géotrek - Apidae / Errors
-- Class ImportGenericGeotrekApi refactored with deprecated Util.inherits removed by ES6 extends Géotrek import class
+- EVO FO listing products - Adding status / ID Geotrek - Apidae / Errors
+- Class ImportGenericGeotrekApi refactored with deprecated Util.inherits removed by ES6 extends Geotrek import class
 - Depcheck install & clean dependencies modules from npm project (async, elasticsearch, json2csv, mongodb, q, slug, xml2json)
 - Tests Lint Done
 - Removing unused routes & methods from controller / models
-- Removing old Géotrek import 
+- Removing old Geotrek import 
 - Removing old RegionDo import
-- Removing unused ElasticSearch on Api Géotrek import
+- Removing unused ElasticSearch on Api Geotrek import
 - Removing Ecosystem / PM2 old hosting configuration
 
 ## 1.0
 - FO Angular 1.4.14 managed by Bower
 - MongoDB 4.4.6
 - ElasticSearch
-- Géotrek / Géotrek API / RegioDo
+- Geotrek / Geotrek API / RegioDo
 
 ## Work in progress
 - Merging configuration Sitra files
