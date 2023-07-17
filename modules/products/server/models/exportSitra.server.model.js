@@ -4024,7 +4024,7 @@ function __buildLegalEntity(product, root, rootFieldList) {
 
           finalLegalEntity.informations.structureGestion = {
             type: legalEntityObj.product.type,
-            id: legalEntityObj.product.specialIdSitra
+            id: (process.env.NODE_ENV == 'production') ? legalEntityObj.product.specialIdSitra : config.specialIdSitra
           };
           rootFieldList.push('informations.structureGestion');
           break;
@@ -4036,7 +4036,7 @@ function __buildLegalEntity(product, root, rootFieldList) {
 
           finalLegalEntity.informations.structureInformation = {
             type: legalEntityObj.product.type,
-            id: legalEntityObj.product.specialIdSitra
+            id: (process.env.NODE_ENV == 'production') ? legalEntityObj.product.specialIdSitra : config.specialIdSitra
           };
           break;
 

@@ -16,7 +16,7 @@ angular.module('products').config([
         templateUrl: 'modules/products/views/list-products.client.view.html'
       })
       .state('products.import', {
-        url: '/import/:importType',
+        url: '/import/:importType/:importInstance/',
         templateUrl: 'modules/products/views/import-products.client.view.html'
       });
   }

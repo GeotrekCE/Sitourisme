@@ -341,12 +341,13 @@ ProductSchema.statics.getSITRAInternalCriteriaReference =
  * Import
  *
  * @param {String} type
+ * @param {String} instance
  * @param {function} callback
  */
-ProductSchema.statics.import = function (type, callback) {
+ProductSchema.statics.import = function (type, instance, callback) {
   if (config.debug && config.debug.logs)
     console.log('ProductSchema.statics.import');
-  ImportModel.import(type, callback);
+  ImportModel.import(type, instance, callback);
 };
 
 /**

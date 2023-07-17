@@ -91,8 +91,8 @@ angular.module('products').controller('ProductsController', [
 
     $scope.import = function () {
       var url = '/api/products/import';
-      if ($stateParams.importType) {
-        url += '?type=' + $stateParams.importType;
+      if ($stateParams.importType && $stateParams.importInstance) {
+        url += '?type=' + $stateParams.importType + '&instance=' + $stateParams.importInstance;
       }
       $http.get(url).then(
         function (response) {
