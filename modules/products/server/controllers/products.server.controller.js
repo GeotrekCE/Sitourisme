@@ -10,6 +10,7 @@ var path = require('path'),
     './modules/core/server/controllers/errors.server.controller'
   )),
   config = require(__dirname + '/../../../../config/config.js'),
+  configImportGEOTREK = require(path.resolve('config/configImport_GEOTREK.js')),
   _ = require('lodash');
 
 /**
@@ -36,17 +37,24 @@ exports.list = async function (req, res) {
  * @param {object} res
  */
 exports.import = function (req, res) {
-  var type = req.query && req.query.type ? req.query.type : null;
+  const type = req.query && req.query.type ? req.query.type : null,
+    instance = req.query && req.query.instance ? req.query.instance : null;
+  
   if (config.debug && config.debug.logs)
     console.log('Begin import auto for', type);
 
   if (!type) {
     throw 'Unable to determine type';
   }
+  
+  if (configImportGEOTREK.geotrekInstance[instance] === undefined)
+  {
+    throw 'Instance not found';
+  }
 
   try {
-    res.json({ message: 'Importing ' + type + ' flux in progress...' });
-    Product.import(type);
+    res.json({ message: 'Importing ' + type + ' flux in progress from ' + configImportGEOTREK.geotrekInstance[instance].geotrekUrl });
+    Product.import(type, instance);
   } catch (err) {
     console.log('err = ', err);
   }

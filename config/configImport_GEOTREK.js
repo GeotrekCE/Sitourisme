@@ -80,35 +80,33 @@ exports.geotrekInstance = {
       }
     }
   },
-  /*1 : {
-    geotrekUrl : 'https://admin.cheminsdesparcs.fr/api/v2x',
+  1 : {
+    geotrekUrl : 'https://admin.sportsnature.hauteloire.fr/api/v2',
     structures : {
-      3568: { // MULTI MEMBER COOKING
-        specialId: 'ENT1RandoEcrins',
-        name: 'Parc national des Écrins',
+      1: { // CD43
+        specialId: 'HauteLoire1',
+        name: 'Maison du Tourisme de la Haute-Loire',
         address1: null,
         address2: null,
-        city: '1813',
-        insee: '05061',
-        specialIdSitra: '1856',
+        city: '16901',
+        insee: '43157',
+        specialIdSitra: '4633537',
         statusImport: 2,
-        memberId : 1856,
-        production: false,
+        memberId : 1158,
+        production: true,
         activity : {
-          0: 3333,
           1: 3284,
           2: 3283,
           3: 3313,
-          4: 1992,
-          5: 5147,
+          4: 3333,
           6: 4201,
-          7: 3333,
-          8: 4201,
-          9: 3333,
-          10: 3333,
-          11: 3333,
-        } 
+          8: 3302
+        },
+        itineraireType : {
+          1: 'BOUCLE',
+          3: 'ALLER_ITINERANCE',
+        }
       },
     }
-  }*/
+  }
 };

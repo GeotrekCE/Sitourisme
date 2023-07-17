@@ -31,19 +31,12 @@ class ImportGenericGeotrekApi extends Import {
       : null;
     this.user = options.user ? options.user : null;
     this.lang = options.lang ? options.lang : 'fr';
-
-    /*this.baseURL = 'https://geotrek-admin.ecrins-parcnational.fr/api/v2';
-    this.instanceApi = axios.create({
-      baseURL: this.baseURL,
-      validateStatus(status) {
-        return status < 500;
-      }
-    });*/
+    this.importInstance = options.importInstance ? parseInt(options.importInstance) : 0;
   }
 
   import(data, next) {
     if (config.debug && config.debug.logs)
-      console.log('ImportGenericGeotrekApi.prototype.import');
+      console.log('ImportGenericGeotrekApi.prototype.import', this.importInstance);
 
     const me = this,
       nbInstanceGeotrek = Object.keys(
@@ -53,28 +46,31 @@ class ImportGenericGeotrekApi extends Import {
     Object.keys(configImportGEOTREK.geotrekInstance).forEach(function (
       structure
     ) {
-      console.log(
-        'Instance = ',
-        structure,
-        ' - GeoAdmin URL = ',
-        configImportGEOTREK.geotrekInstance[structure].geotrekUrl
-      );
-
-      me.executeQuery(
-        0,
-        configImportGEOTREK.geotrekInstance[structure].geotrekUrl,
-        structure
-      ).catch((err) => {
+      if (structure == me.importInstance)
+      {
         console.log(
-          chalk.red(
-            '>>>>>>>>>>>>>>>>>>>>>>>> ERROR = ',
-            err,
-            'For instance = ',
-            structure
-          )
+          'Instance = ',
+          structure,
+          ' - GeoAdmin URL = ',
+          configImportGEOTREK.geotrekInstance[structure].geotrekUrl
         );
-        return false;
-      });
+  
+        me.executeQuery(
+          0,
+          configImportGEOTREK.geotrekInstance[structure].geotrekUrl,
+          structure
+        ).catch((err) => {
+          console.log(
+            chalk.red(
+              '>>>>>>>>>>>>>>>>>>>>>>>> OBJ NOT FOUND IN = ',
+              err,
+              'For instance = ',
+              structure
+            )
+          );
+          return false;
+        });
+      }
     });
   }
 
@@ -99,7 +95,7 @@ class ImportGenericGeotrekApi extends Import {
         return status < 500;
       }
     });
-
+    console.log(chalk.green("Axiox Connex = ", geoTrekPath + urlNext));
     const { data, status } = await this.instanceApi.get(geoTrekPath + urlNext);
     if (status === 200) {
       this.doUpsertAsync = await pify(importUtils.doUpsert);
@@ -203,9 +199,10 @@ class ImportGenericGeotrekApi extends Import {
           break;
       }*/
 
-      /*if (process.env.NODE_ENV == 'development' && config.debug != undefined) {
-        this.member = element.structure  = 3568;
-      }*/
+      if (process.env.NODE_ENV == 'development' && config.debug != undefined) {
+        this.member = /*element.structure  =*/ 3568;
+        console.log(chalk.green('DEV MODE - Member = ', this.member));
+      }
 
       /* if (configImportGEOTREK.geotrekInstance[structure].structures[element.structure].production === false) {
          if (
@@ -215,6 +212,8 @@ class ImportGenericGeotrekApi extends Import {
           )
             console.log('ImportGenericGeotrekApi.prototype.importProduct structure instance not in production', structure, element.structure);
       } else {*/
+      
+      console.log(chalk.green('Config = ', configImportGEOTREK.geotrekInstance[structure].structures[element.structure]));
 
       if (this.member && configImportGEOTREK.geotrekInstance[structure].structures[element.structure].production) {
         this.configData = {
@@ -282,7 +281,7 @@ class ImportGenericGeotrekApi extends Import {
           complementNl: this.getComplement(element, 'nl'),
           localization: this.getLocalization(element),
           price: this.getPrice(element),
-          itinerary: await this.getItinerary(element),
+          itinerary: await this.getItinerary(element, structure),
           perimetreGeographique: this.getPerimetreGeographique(element),
           description: this.getDescription(element, 'fr'),
           descriptionEn: this.getDescription(element, 'en'),
@@ -443,7 +442,7 @@ class ImportGenericGeotrekApi extends Import {
     };
   }
 
-  async getItinerary(element) {
+  async getItinerary(element, structure) {
     const itineraire = {
       dailyDuration: null,
       distance: null,
@@ -471,8 +470,12 @@ class ImportGenericGeotrekApi extends Import {
       itineraire.negative = DataString.convertNegative(element.descent);
     }
     if (element.route) {
-      itineraire.itineraireType =
-        configImportGEOTREK.itineraireType[element.route];
+      if (configImportGEOTREK.geotrekInstance[structure].structures[element.structure].itineraireType != undefined)
+      {
+        itineraire.itineraireType = configImportGEOTREK.geotrekInstance[structure].structures[element.structure].itineraireType[element.route];
+      } else {
+        itineraire.itineraireType = configImportGEOTREK.itineraireType[element.route];
+      }
     }
     if (element.slug) {
       const slugCategory = this.getSlugCategory(element);

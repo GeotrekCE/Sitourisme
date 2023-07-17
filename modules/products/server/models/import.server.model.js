@@ -9,10 +9,12 @@ var mongoose = require('mongoose'),
 /**
  * Import
  * @param {String} type
+ * @param {String} instance
  * @param {function} callback
  */
-exports.import = function (type, callback) {
-  __importProductsbyApi(type, () => {
+exports.import = function (type, instance, callback) {
+  console.log('> import.server.model ', type, instance);
+  __importProductsbyApi(type, instance, () => {
     if (callback) {
       callback();
     }
@@ -22,10 +24,11 @@ exports.import = function (type, callback) {
 /**
  * Import product from sql
  * @param {String} type
+ * @param {String} instance
  * @param {function} callback
  * @private
  */
-function __importProductsbyApi(type, callback) {
+function __importProductsbyApi(type, instance, callback) {
   var User = mongoose.model('User');
   User.findOne({
     username: 'admin'
@@ -40,7 +43,8 @@ function __importProductsbyApi(type, callback) {
         importObj = new ImportClass({
           user: user,
           lang: 'fr',
-          importType: type
+          importType: type,
+          importInstance: instance
         });
 
         importObj.start(() => {
