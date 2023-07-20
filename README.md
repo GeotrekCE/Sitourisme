@@ -13,7 +13,7 @@ Afin de mettre en place la passerelle, il est nécessaire (voir PDF sur le Githu
 
 Version 1 financée par la [Région Sud](https://www.maregionsud.fr), développée par [IDfr](https://www.idfr.net) et [MEDIACTEURS](https://mediacteurs.net).
 
-Depuis 2023, l'[agence WebSenso](https://www.websenso.com) héberge la plateforme qui synchronise quotidiennement Geotrek avec Apidae et prépare la verison 1.1 de la passerelle.
+Depuis 2023, l'[agence WebSenso](https://www.websenso.com) héberge la plateforme qui synchronise quotidiennement Geotrek avec Apidae et effectue des évolutions de la passerelle.
 
 ## Installation
 
@@ -59,12 +59,18 @@ $ npm run prod
 ## Usage
 
 L'import des données est effectué automatiquement toutes les nuits via la commande : 
+Le paramètre instance permet de spécifier quelle instance est à synchroniser.
 
 ```
-$ curl "URL/api/products/import?type=geotrek-api"
+$ curl "URL/api/products/import?type=geotrek-api&instance=0"
 ```
 
 # Changelog
+
+## 1.2 
+- EVO Split export by instance
+- EVO Customize route type by structure
+- EVO Restrict Apidae import on each instance
 
 ## 1.1 
 - EVO Write on Apidae Multimember project

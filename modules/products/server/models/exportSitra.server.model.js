@@ -310,8 +310,10 @@ function __exportSitraAuto(type, options, callback) {
   var Product = mongoose.model('Product');
   var importType = type.toUpperCase();
 
-  // on exporte les pères d'abord
-  // HACK
+  if (config.debug && config.debug.logs) {
+    console.log('Members to export : ', options.membersToImport);
+  }
+  
   Product.find({
     importType: importType,
     lastUpdate: { $gte: today.toDate() },
@@ -323,6 +325,20 @@ function __exportSitraAuto(type, options, callback) {
         console.log('Import type = ', importType);
         console.log('Import lastdate = ', today.toDate());
         console.log('Import products = ', products.length);
+      }
+      
+      if (process.env.NODE_ENV == 'production') {
+        let productsTmp = [];
+        products.forEach(function(prod){
+          if (options.membersToImport.includes(prod.member))
+          {
+            productsTmp.push(prod);
+          }
+        });
+        products = productsTmp;
+        if (config.debug && config.debug.logs) {
+          console.log('Restrict to instance - Import products = ', products.length);
+        }
       }
 
       if (err) {

@@ -90,9 +90,10 @@ exports.geotrekInstance = {
         address2: null,
         city: '16901',
         insee: '43157',
-        specialIdSitra: '4633537',
+        specialIdSitra: '761045',
         statusImport: 2,
-        memberId : 1158,
+        memberId : 7496,
+        proprietaireId: 1158,
         production: true,
         activity : {
           1: 3284,
