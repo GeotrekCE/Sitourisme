@@ -121,9 +121,21 @@ class ImportGenericGeotrekApi extends Import {
         const report = new Report();
         report.createModule('products');
         report.createReport(`export_${new Date().getTime()}`, 1);
+        
+        const membersToImport = [];
+        Object.keys(configImportGEOTREK.geotrekInstance[structure].structures).forEach(function (
+          structureFille
+        ) {
+          membersToImport.push(configImportGEOTREK.geotrekInstance[structure].structures[structureFille].memberId);
+        });
+        if (config.debug && config.debug.logs) {
+          console.log(chalk.green("Members To Import = ",membersToImport));
+        }
+        
         const options = {
           report,
-          exportType: 'AUTO'
+          exportType: 'AUTO',
+          membersToImport: membersToImport
         };
 
         exportSitraAuto('geotrek-api', options, () => {

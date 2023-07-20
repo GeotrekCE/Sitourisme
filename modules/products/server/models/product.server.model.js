@@ -354,11 +354,6 @@ ProductSchema.statics.import = function (type, instance, callback) {
  * export privateData after saving exported product of importType
  */
 ProductSchema.post('save', function (product, next) {
-  console.log(
-    '>>>>>>>>>>>>>>> ProductSchema.post( save ',
-    product.privateData,
-    product.specialIdSitra
-  );
   if (product.specialIdSitra && product.privateData) {
     __getSitraToken(product, function (err, accessToken) {
       if (err) {
