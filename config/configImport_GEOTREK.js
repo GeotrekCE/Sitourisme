@@ -40,6 +40,9 @@ exports.geotrekInstance = {
         proprietaireId: 707,
         production: true
       },
+      4: {
+        production: false
+      },
       5: {
         specialId: 'ENT1PaysEcrin',
         name: 'Office de Tourisme Communautaire du Pays des Écrins',
@@ -66,6 +69,9 @@ exports.geotrekInstance = {
         proprietaireId: 593,
         production: true
       },
+      8: {
+        production: false
+      },
       9: {
         specialId: 'ENT1HauteVallée',
         name: "Office de Tourisme des Hautes Vallées - Bureau d'Information Touristique - La Grave",
@@ -76,6 +82,10 @@ exports.geotrekInstance = {
         specialIdSitra: '134505',
         statusImport: 2,
         memberId : 6707,
+        proprietaireId: 541,
+        production: true
+      },
+      11: {
         production: false
       }
     }
