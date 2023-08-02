@@ -19,7 +19,7 @@ Depuis 2023, l'[agence WebSenso](https://www.websenso.com) héberge la plateform
 
 Outils nécessaires :
 
-- NodeJS 15+
+- NodeJS >= 15.14
 - Docker et Docker-compose
 - MongoDB 4.4.6
 
