@@ -119,5 +119,31 @@ exports.geotrekInstance = {
         }
       },
     }
+  },
+  2 : {
+    geotrekUrl : 'https://geotrek.nature-haute-savoie.fr/api/v2/',
+    structures : {
+      1: { // CEN74
+        specialId: 'CEN74',
+        name: 'Asters - Conservatoire d Espaces Naturels de Haute-Savoie',
+        address1: '60 avenue de novel',
+        address2: null,
+        city: '30597',
+        insee: '74010',
+        specialIdSitra: '128334',
+        statusImport: 2,
+        memberId : 710,
+        proprietaireId: 710,
+        production: true,
+        activity : {
+          4: 3333,
+          5: 3302
+        },
+        itineraireType : {
+          1: 'BOUCLE',
+          2: 'ALLER_RETOUR',
+        }
+      },
+    }
   }
 };
