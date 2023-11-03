@@ -20,7 +20,9 @@ exports.itineraireType = {
   1: 'BOUCLE',
   2: 'ALLER_RETOUR',
   3: 'ALLER_ITINERANCE',
-  4: 'ALLER_ITINERANCE'
+  4: 'ALLER_ITINERANCE',
+  5: 'ALLER_ITINERANCE',
+  6: 'ALLER_ITINERANCE',
 };
 
 exports.geotrekInstance = {
