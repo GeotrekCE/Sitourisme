@@ -147,5 +147,62 @@ exports.geotrekInstance = {
         }
       },
     }
+  },
+  3 : {
+    geotrekUrl : 'https://admin.cheminsdesparcs.fr/api/v2',
+    structures : {
+      1: {
+        production:false
+      },
+      2: { // PNR_LUBERON
+        specialId: 'PNR Luberon',
+        name: 'Parc naturel régional du Luberon',
+        address1: '60, place Jean-Jaurès',
+        address2: 'BP 122',
+        city: '34196',
+        insee: '84003',
+        specialIdSitra: '779392',
+        statusImport: 2,
+        memberId : 5112,
+        proprietaireId: 1222,
+        production: true,
+        activity : {
+          1: 3284,
+          2: 3283,
+          3: 3313,
+          4: 3333
+        },
+        itineraireType : {
+          1: 'BOUCLE',
+          2: 'ALLER_RETOUR',
+          3: 'ALLER_ITINERANCE',
+          4: 'ALLER_ITINERANCE'
+        }
+      },
+      3: {
+        production:false
+      },
+      4: {
+        production:false
+      },
+      5: {
+        production:false
+      },
+      6: {
+        production:false
+      },
+      7: {
+        production:false
+      },
+      8: {
+        production:false
+      },
+      9: {
+        production:false
+      },
+      10: {
+        production:false
+      }
+    }
   }
 };
