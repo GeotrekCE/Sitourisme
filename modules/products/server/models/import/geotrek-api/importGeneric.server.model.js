@@ -564,7 +564,7 @@ class ImportGenericGeotrekApi extends Import {
       address2: null,
       address3: null,
       cedex: null,
-      zipcode: element.departure_city,
+      zipcode: configSitraTownByInsee[element.departure_city].zipcode,
       insee: null,
       city: null,
       region: null
