@@ -559,12 +559,19 @@ class ImportGenericGeotrekApi extends Import {
   }
 
   getAddress(element, additionalElement) {
+    if (element
+      && element.departure_city
+      && configSitraTownByInsee[element.departure_city] === undefined) 
+    {
+      //TODO : Add to reports
+      console.error("Zipcode missing for this Insee code city : " + element.departure_city);
+    }
     const address = {
       address1: additionalElement.street,
       address2: null,
       address3: null,
       cedex: null,
-      zipcode: configSitraTownByInsee[element.departure_city].zipcode,
+      zipcode: (element && element.departure_city && configSitraTownByInsee[element.departure_city] !== undefined) ? configSitraTownByInsee[element.departure_city].zipcode : element.departure_city,
       insee: null,
       city: null,
       region: null
