@@ -204,5 +204,54 @@ exports.geotrekInstance = {
         production:false
       }
     }
-  }
+  },
+  4 : {
+    geotrekUrl : 'https://geotrek-admin.alpesrando.net/api/v2',
+    structures : {
+      1: {
+        production: false,
+      },
+      2: { // DEP05
+        specialId: 'Dep05',
+        name: 'Communauté de Communes du Pays des Ecrins',
+        address1: null,
+        address2: null,
+        city: '1761',
+        insee: '05006',
+        specialIdSitra: '223268',
+        statusImport: 2,
+        memberId : 2398,
+        proprietaireId: 2398,
+        production: true,
+        activity : {
+          1: 3333,
+          2: 3284,
+          3: 3313,
+          5: 3333,
+          7: 3302,
+          8: 6224,
+          9: 3283
+        },
+        itineraireType : {
+          1: 'BOUCLE',
+          2: 'ALLER_ITINERANCE',
+          3: 'ALLER_ITINERANCE',
+          4: 'ALLER_ITINERANCE',
+          5: 'ALLER_RETOUR',
+        },
+      },
+      4: {
+        production: false,
+      },
+      5: {
+        production: false,
+      },
+      6: {
+        production: false,
+      },
+      9: {
+        production: false,
+      },
+    }
+  },
 };
