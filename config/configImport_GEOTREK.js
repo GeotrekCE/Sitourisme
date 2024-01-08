@@ -104,7 +104,7 @@ exports.geotrekInstance = {
         insee: '43157',
         specialIdSitra: '761045',
         statusImport: 2,
-        memberId : 7496,
+        memberId : 1158,
         proprietaireId: 1158,
         production: true,
         activity : {
@@ -251,6 +251,39 @@ exports.geotrekInstance = {
       },
       9: {
         production: false,
+      },
+    }
+  },
+  5 : {
+    geotrekUrl : 'https://admin.sisteron-buech.fr/api/v2',
+    structures : {
+      2: {
+        specialId: 'OTSisteronBuech',
+        name: 'Office de Tourisme Sisteron Buëch - bureau de Sisteron',
+        address1: null,
+        address2: null,
+        city: '1729',
+        insee: '04209',
+        specialIdSitra: '735737',
+        statusImport: 2,
+        memberId : 537,
+        proprietaireId: 537,
+        production: true,
+        activity : {
+          1: 3284,
+          2: 3283,
+          3: 3313,
+          4: 3333,
+          6: 4201,
+          7: 3333,
+          8: 6224
+        },
+        itineraireType : {
+          1: 'BOUCLE',
+          2: 'ALLER_RETOUR',
+          3: 'ALLER_ITINERANCE',
+          4: 'ALLER_ITINERANCE',
+        },
       },
     }
   },
