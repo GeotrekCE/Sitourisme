@@ -220,8 +220,8 @@ exports.geotrekInstance = {
         insee: '05061',
         specialIdSitra: '227495',
         statusImport: 2,
-        memberId : 2398,
-        proprietaireId: 2398,
+        memberId : 708,
+        proprietaireId: 708,
         production: true,
         activity : {
           1: 3333,
