@@ -95,28 +95,30 @@ exports.geotrekInstance = {
   1 : {
     geotrekUrl : 'https://admin.sportsnature.hauteloire.fr/api/v2',
     structures : {
-      1: { // CD43
+      1: {
+        production: false,
+      },
+      2: { // CD43
         specialId: 'HauteLoire1',
         name: 'Maison du Tourisme de la Haute-Loire',
         address1: null,
         address2: null,
         city: '16901',
         insee: '43157',
+        defaultEmail: 'sport@hauteloire.fr',
         specialIdSitra: '761045',
         statusImport: 2,
         memberId : 1158,
         proprietaireId: 1158,
         production: true,
         activity : {
-          1: 3284,
+          /*1: 3284,*/
           2: 3283,
-          3: 3313,
-          4: 3333,
-          6: 4201,
-          8: 3302
+          4: 3333
         },
         itineraireType : {
           1: 'BOUCLE',
+          2: 'ALLER_RETOUR',
           3: 'ALLER_ITINERANCE',
         }
       },
@@ -186,22 +188,132 @@ exports.geotrekInstance = {
         production:false
       },
       5: {
-        production:false
+        specialId: 'PNR Verdon',
+        name: 'Parc Naturel Régional du Verdon',
+        address1: 'Domaine de Valx',
+        address2: '',
+        city: '1662',
+        insee: '04135',
+        specialIdSitra: '554533',
+        statusImport: 2,
+        memberId : 831,
+        proprietaireId: 831,
+        production: true,
+        activity : {
+          1: 3284,
+          2: 3283,
+          3: 3313,
+          4: 3333,
+        },
+        itineraireType : {
+          1: 'BOUCLE',
+          2: 'ALLER_RETOUR',
+          3: 'ALLER_ITINERANCE',
+          4: 'ALLER_ITINERANCE'
+        }
       },
       6: {
-        production:false
+        specialId: 'PNR Alpilles',
+        name: 'Parc naturel régional des Alpilles',
+        address1: '2, boulevard Marceau',
+        address2: '',
+        city: '44511',
+        insee: '13100',
+        specialIdSitra: '765534',
+        statusImport: 2,
+        memberId : 5033,
+        proprietaireId: 1220,
+        production: true,
+        activity : {
+          1: 3284,
+          2: 3283,
+          3: 3313,
+          4: 3333
+        },
+        itineraireType : {
+          1: 'BOUCLE',
+          2: 'ALLER_RETOUR',
+          3: 'ALLER_ITINERANCE',
+          4: 'ALLER_ITINERANCE'
+        }
       },
       7: {
-        production:false
+        specialId: 'PNR Baronnies',
+        name: 'Parc naturel régional des Baronnies provençales',
+        address1: '575 route de Nyons',
+        address2: '',
+        city: '9731',
+        insee: '26288',
+        specialIdSitra: '92183',
+        statusImport: 2,
+        memberId : 5053,
+        proprietaireId: 1386,
+        production: true,
+        activity : {
+          1: 3284,
+          2: 3283,
+          3: 3313,
+          4: 3333
+        },
+        itineraireType : {
+          1: 'BOUCLE',
+          2: 'ALLER_RETOUR',
+          3: 'ALLER_ITINERANCE',
+          4: 'ALLER_ITINERANCE'
+        }
       },
       8: {
-        production:false
+        specialId: 'PNR Prealpes',
+        name: 'Parc naturel régional des Préalpes d’Azur',
+        address1: '1 avenue François GOBY',
+        address2: '',
+        city: '2062',
+        insee: '06130',
+        specialIdSitra: '765535',
+        statusImport: 2,
+        memberId : 5052,
+        proprietaireId: 1380,
+        production: true,
+        activity : {
+          1: 3284,
+          2: 3283,
+          3: 3313,
+          4: 3333
+        },
+        itineraireType : {
+          1: 'BOUCLE',
+          2: 'ALLER_RETOUR',
+          3: 'ALLER_ITINERANCE',
+          4: 'ALLER_ITINERANCE'
+        }
       },
       9: {
         production:false
       },
       10: {
-        production:false
+        specialId: 'PNR Ventoux',
+        name: 'Parc Naturel Régional du Mont-Ventoux',
+        address1: '1378 avenue Jean Jaurès',
+        address2: '',
+        city: '34224',
+        insee: '84031',
+        specialIdSitra: '5584767',
+        statusImport: 2,
+        memberId : 2122,
+        proprietaireId: 2122,
+        production: true,
+        activity : {
+          1: 3284,
+          2: 3283,
+          3: 3313,
+          4: 3333
+        },
+        itineraireType : {
+          1: 'BOUCLE',
+          2: 'ALLER_RETOUR',
+          3: 'ALLER_ITINERANCE',
+          4: 'ALLER_ITINERANCE'
+        }
       }
     }
   },
@@ -287,4 +399,59 @@ exports.geotrekInstance = {
       },
     }
   },
+  6 : {
+    geotrekUrl : 'https://gardpleinenature-admin.gard.fr/api/v2',
+    structures : {
+      1: {
+        specialId: 'Département',
+        name: 'Gard Tourisme',
+        address1: null,
+        address2: null,
+        city: '11732',
+        insee: '30189',
+        specialIdSitra: '5069339',
+        statusImport: 2,
+        memberId : 2255,
+        proprietaireId: 2255,
+        production: true,
+        activity : {
+          1: 3284,
+          2: 3283,
+          4: 3333,
+          8: 4201
+        },
+        itineraireType : {
+          1: 'BOUCLE',
+          2: 'ALLER_RETOUR',
+          3: 'ALLER_ITINERANCE',
+          4: 'ALLER_ITINERANCE',
+        },
+      },
+      4: {
+        production: false,
+      },
+      6: {
+        production: false,
+      },
+      7: {
+        production: false,
+      },
+      9: {
+        production: false,
+      },
+      14: {
+        production: false,
+      },
+      15: {
+        production: false,
+      },
+      16: {
+        production: false,
+      },
+      18: {
+        production: false,
+      },
+    }
+  },
+  
 };

@@ -245,7 +245,7 @@ class ImportGenericGeotrekApi extends Import {
           }
         }
         const proprietaireId = (process.env.NODE_ENV == 'production') ? configImportGEOTREK.geotrekInstance[structure].structures[element.structure].proprietaireId : config.proprietaireId;
-
+//console.log('Defaut email =',configImportGEOTREK.geotrekInstance[structure].structures[element.structure].defaultEmail);
         const product = {
           importType: this.importType,
           importSubType: null,
@@ -309,7 +309,7 @@ class ImportGenericGeotrekApi extends Import {
           shortDescriptionNl: this.getShortDescription(element, 'nl'),
           address: this.getAddress(element, additionalInformation),
           website: this.getWebsite(additionalInformation),
-          email: this.getEmail(additionalInformation),
+          email: this.getEmail(additionalInformation, configImportGEOTREK.geotrekInstance[structure].structures[element.structure].defaultEmail),
           phone: this.getPhone(additionalInformation),
           gpx: this.getGpx(element),
           kml: this.getKml(element),
@@ -436,7 +436,7 @@ class ImportGenericGeotrekApi extends Import {
 
   getLocalization(element) {
     const localization = {};
-    if (config.debug === undefined && process.env.NODE_ENV == 'production') {
+    if (process.env.NODE_ENV == 'production') {
       if (element.parking_location && element.parking_location.length) {
         localization.lat = element.parking_location[1];
         localization.lon = element.parking_location[0];
@@ -572,23 +572,10 @@ class ImportGenericGeotrekApi extends Import {
       address3: null,
       cedex: null,
       zipcode: (element && element.departure_city && configSitraTownByInsee[element.departure_city] !== undefined) ? configSitraTownByInsee[element.departure_city].zipcode : element.departure_city,
-      insee: null,
-      city: null,
+      insee: element.departure_city,
+      city: (configSitraTownByInsee[element.departure_city] && process.env.NODE_ENV == 'production') ? configSitraTownByInsee[element.departure_city].sitraId : 14707,
       region: null
     };
-
-    let city = null;
-    _.forEach(element.cities, (item) => {
-      if (item) {
-        address.insee = item;
-        city = configSitraTownByInsee[item];
-        if (city && process.env.NODE_ENV == 'production') {
-          address.city = city.sitraId;
-        } else {
-          address.city = 14707;
-        }
-      }
-    });
 
     if (!address.address1 && address.address2) {
       address.address1 = address.address2;
@@ -610,10 +597,13 @@ class ImportGenericGeotrekApi extends Import {
     return _.compact(website);
   }
 
-  getEmail(additionalElement) {
+  getEmail(additionalElement, defaultEmail) {
     let email = additionalElement.email;
     if (!_.isArray(email)) {
       email = [email];
+    }
+    if (defaultEmail !== null) {
+      email = [defaultEmail];
     }
     return DataString.cleanEmailArray(email);
   }
