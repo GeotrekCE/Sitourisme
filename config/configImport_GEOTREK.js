@@ -112,9 +112,10 @@ exports.geotrekInstance = {
         proprietaireId: 1158,
         production: true,
         activity : {
-          /*1: 3284,*/
+          1: 3284,
           2: 3283,
-          4: 3333
+          4: 3333,
+          6: 4201
         },
         itineraireType : {
           1: 'BOUCLE',
