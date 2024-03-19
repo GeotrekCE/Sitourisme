@@ -13,13 +13,14 @@ Afin de mettre en place la passerelle, il est nécessaire (voir PDF sur le Githu
 
 Version 1 financée par la [Région Sud](https://www.maregionsud.fr), développée par [IDfr](https://www.idfr.net) et [MEDIACTEURS](https://mediacteurs.net).
 
-Depuis 2023, l'[agence WebSenso](https://www.websenso.com) héberge la plateforme qui synchronise quotidiennement Geotrek avec Apidae et effectue des évolutions de la passerelle.
+Depuis 2023, l'[agence WebSenso](https://www.websenso.com) héberge la plateforme qui synchronise quotidiennement Geotrek avec Apidae et prépare la version 1.1 de la passerelle.
+Mars 2024, l'[agence WebSenso](https://www.websenso.com) publie la version 2.1 de la passerelle.
 
 ## Installation
 
 Outils nécessaires :
 
-- NodeJS >= 15.14
+- NodeJS 15+
 - Docker et Docker-compose
 - MongoDB 4.4.6
 
@@ -59,20 +60,22 @@ $ npm run prod
 ## Usage
 
 L'import des données est effectué automatiquement toutes les nuits via la commande : 
-Le paramètre instance permet de spécifier quelle instance est à synchroniser.
 
 ```
-$ curl "URL/api/products/import?type=geotrek-api&instance=0"
+$ curl "URL/api/products/import?type=geotrek-api"
 ```
 
 # Changelog
 
-## 1.2 
-- EVO Split export by instance
-- EVO Customize route type by structure
-- EVO Restrict Apidae import on each instance
+## 2.1 - Cedric Gilbert - WebSenso
+- Fix picture'author recording to author record in place of description
+- Library classes refactoring
+- Server controller refactoring
+- Models classes, entity model, entity factory & generic import refactoring
+- Removing old unused method
+- Product & Event Schema updated
 
-## 1.1 
+## 1.1 - 1.2 - Cedric Gilbert - WebSenso
 - EVO Write on Apidae Multimember project
 - EVO New Geotrek configuration file with Axios renew connection
 - EVO New Geotrek configuration file to customize activities depending of Geotrek instance
@@ -94,12 +97,7 @@ $ curl "URL/api/products/import?type=geotrek-api&instance=0"
 - ElasticSearch
 - Geotrek / Geotrek API / RegioDo
 
-## Work in progress
-- Merging configuration Sitra files
-
-
 ## To prepare
-- Refactoring model / product to use catch block over async methods
 - Update to Mangoose 7.1.x - Methods no CB allowed > refact to do 
 - Fix middleware Passeport on product api, Guest GET allowed
 - Remove Swig module - Engine templating refactoring needed

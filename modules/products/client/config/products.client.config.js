@@ -5,7 +5,7 @@ angular.module('products').run([
   'Menus',
   function (Menus) {
     Menus.addMenuItem('topbar', {
-      title: 'Equipements',
+      title: 'Trek',
       state: 'products',
       type: 'dropdown'
     });

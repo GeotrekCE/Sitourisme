@@ -1,248 +1,349 @@
-const _ = require('lodash');
+'use strict';
 
-/**
- * Class Import
- *
- * @param {object} options
- * @constructor
- */
-var Import = function (options) {
-  this.arrData = [];
-  this.options = options;
-};
+const _ = require('lodash'),
+  path = require('path'),
+  DataString = require(path.resolve('./library/data/manipulate.js')),
+  configSitraTownByInsee = require(path.resolve('./config/configSitraTownByInsee.js'));
 
-/**
- * Start process
- *
- * @param {function} callback
- */
-Import.prototype.start = function (callback) {
-  this.__initParser(function (err) {
-    if (err) {
-      throw err;
-    }
-
-    if (callback) {
-      callback();
-    }
-  });
-};
-
-/**
- * Reset data
- *
- * @param {function} next
- */
-Import.prototype.reset = function (next) {
-  next(null);
-};
-
-/**
- * Current data
- *
- * @param {function} next
- */
-Import.prototype.current = function (next) {
-  next(null, []);
-};
-
-/**
- * Import
- *
- * @param {object} data
- * @param {function} next
- */
-Import.prototype.import = function (data, next) {
-  next();
-};
-
-/**
- * Init parser
- *
- * @param {function} callback
- * @private
- */
-Import.prototype.__initParser = function (callback) {
-  var self = this;
-
-  this.reset(function (err) {
-    if (err) {
-      throw err;
-    }
-
-    self.__next(callback);
-  });
-};
-
-/**
- * Next
- *
- * @param {function} callback
- * @private
- */
-Import.prototype.__next = function (callback) {
-  var self = this;
-
-  this.current(function (err, data) {
-    if (err) {
-      throw err;
-    }
-
-    if (data) {
-      self.__import(data, callback);
-    } else {
-      if (callback) {
-        callback(err);
+class Import
+{
+  translate(key, ln) {
+    const trad = 
+    {
+      departure:
+      {
+        fr: 'Lieu de départ',
+        en: 'Departure',
+        es: 'Salida',
+        it: 'Partenza',
+        de: 'Abfahrt',
+        nl: 'Vertrek'
+      },
+      arrival:
+      {
+        fr: "Lieu d'arrivée",
+        en: 'Arrival',
+        es: 'llegada',
+        it: 'Arrivo',
+        de: 'Ankunft',
+        nl: 'Aankomst'
+      },
+      parking:
+      {
+        fr: 'Parking',
+        en: 'Parking',
+        es: 'Estacionamiento',
+        it: 'Parcheggio',
+        de: 'Parkplatz',
+        nl: 'Parkeren'
+      },
+      advised_parking:
+      {
+        fr: 'Parking conseillé',
+        en: 'Parking recommended',
+        es: 'Estacionamiento recomendado',
+        it: 'Parcheggio consigliato',
+        de: 'Parkplatz empfohlen',
+        nl: 'Parkeren aanbevolen'
       }
+    };
+    
+    if (trad[key] && trad[key][ln]) {
+      return trad[key][ln];
+    } else if (trad[key] && trad[key]['en']) {
+      return trad[key]['en'];
+    } else {
+      return key;
     }
-  });
-};
+  }
+  
+  getPrice(element) {
+    return {
+      gratuit: true
+    }
+  }
+  
+  getPerimetreGeographique(element) {
+    let perimetreGeo = _.map(element.cities, (item) => {
+      const city = configSitraTownByInsee[item];
+      if (city) {
+        return city.sitraId;
+      }
+      return null;
+    });
+    if (process.env.NODE_ENV == 'development') {
+      perimetreGeo = [];
+      perimetreGeo.push(14707);
+    }
+    return DataString.cleanArray(perimetreGeo);
+  }
+  
+  getShortDescription(element, lang) {
+    if (element.description_teaser && element.description_teaser[lang]) {
+      return DataString.stripTags(
+        DataString.strEncode(element.description_teaser[lang])
+      ).slice(0, 255);
+    }
+    return null;
+  }
+  
+  getAddress(element, additionalElement) {
+    if (element
+      && element.departure_city
+      && configSitraTownByInsee[element.departure_city] === undefined) 
+    {
+      //TODO : Add to reports
+      console.error("Zipcode missing for this Insee code city : " + element.departure_city);
+    }
+    const address = {
+      address1: (additionalElement) ? additionalElement.street : null,
+      address2: null,
+      address3: null,
+      cedex: null,
+      zipcode: (element && element.departure_city && configSitraTownByInsee[element.departure_city] !== undefined) ? configSitraTownByInsee[element.departure_city].zipcode : element.departure_city,
+      insee: element.departure_city,
+      city: (configSitraTownByInsee[element.departure_city] && process.env.NODE_ENV == 'production') ? configSitraTownByInsee[element.departure_city].sitraId : 14707,
+      region: null
+    };
 
-/**
- * Launch import
- *
- * @param {object} data
- * @param {function} callback
- * @private
- */
-Import.prototype.__import = function (data, callback) {
-  var self = this;
-
-  this.import(data, function (err) {
-    if (err) {
-      throw err;
+    if (!address.address1 && address.address2) {
+      address.address1 = address.address2;
+      address.address2 = null;
     }
 
-    self.__next(callback);
-  });
-};
+    if (!address.address2 && address.address3) {
+      address.address2 = address.address3;
+      address.address3 = null;
+    }
+    return address;
+  }
+  
+  getWebsite(element, additionalElement) {
+    if (additionalElement) {
+      let website = additionalElement.website;
+      if (!_.isArray(website)) {
+        website = [website];
+      }
+      return _.compact(website);
+    } else if (element.website) {
+      return element.website;
+    } else {
+      return null;
+    }
+  }
+  
+  getPdf(element, lang) {
+    if (element.pdf && element.pdf[lang]) {
+      let urlPdf = element.pdf[lang];
+      if (urlPdf) {
+        urlPdf = [urlPdf];
+      }
+      return _(urlPdf)
+        .map((url) => ({
+          url: this.addUrlHttp(url),
+          name: 'Pdf',
+          type: 'Pdf'
+        }))
+        .valueOf();
+    }
+    return [];
+  }
+  
+  getImage(element) {
+    if (element.attachments) {
+       let images = (element.attachments)
+        .filter((item) => {
+          if (item['type'] == 'image') 
+          {
+            return {
+              url: this.addUrlHttp(item['url']),
+              legend: item['legend'],
+              name: item['title'],
+              author: item['author']
+            };
+          }
+        });
+        images = _(images).valueOf();
+      return images;
+    }
+    return [];
+  }
+  
+  start(callback) {
+    this.__initParser(function (err) {
+      if (err)
+        throw err;
+  
+      if (callback)
+        callback();
+    });
+  }
+  
+  reset(next) {
+    next(null);
+  }
+  
+  current(next) {
+    next(null, []);
+  }
+  
+  import(data, next) {
+    next();
+  }
+  
+  __initParser(callback) {
+    const self = this;
+  
+    this.reset(function (err) {
+      if (err)
+        throw err;
+  
+      self.__next(callback);
+    });
+  }
+  
+  __next(callback) {
+    const self = this;
+    console.log('7. import geotrek > __next > __import');
+    this.current(function (err, data) {
+      if (err)
+        throw err;
+  
+      if (data) {
+        self.__import(data, callback);
+      } else {
+        if (callback) {
+          callback(err);
+        }
+      }
+    });
+  }
+  
+  __import(data, callback) {
+    const self = this;
+    console.log('8. import geotrek > __next > import');
+  
+    this.import(data, function (err) {
+      if (err)
+        throw err;
+  
+      self.__next(callback);
+    });
+  }
+  
+  calculateRateCompletion(product) {
+    let score = 0;
+  
+    if (product.type)
+      score++;
+    
+    if (product.subType)
+      score++;
+      
+    if (product.name)
+      score++;
+      
+    if (product.territory && product.territory.length)
+      score++;
 
-/**
- * Calculate rate completion
- * @param product
- * @returns {number}
- */
-Import.prototype.calculateRateCompletion = function (product) {
-  var score = 0;
+    if (product.website && product.website.length)
+      score++;
+      
+    if (product.email && product.email.length)
+      score++;
+    
+    if (product.phone && product.phone.length)
+      score++;
+    
+    if (product.shortDescription)
+      score++;
+    
+    if (product.description)
+      score++;
 
-  if (product.type) {
-    score++;
-  }
-  if (product.subType) {
-    score++;
-  }
-  if (product.name) {
-    score++;
-  }
-  if (product.territory && product.territory.length) {
-    score++;
-  }
-  if (product.website && product.website.length) {
-    score++;
-  }
-  if (product.email && product.email.length) {
-    score++;
-  }
-  if (product.phone && product.phone.length) {
-    score++;
-  }
-  if (product.shortDescription) {
-    score++;
-  }
-  if (product.description) {
-    score++;
-  }
-  if (product.complement) {
-    score++;
-  }
-  if (product.ambiance) {
-    score++;
-  }
-  if (product.passagesDelicats) {
-    score++;
-  }
-  if (product.address) {
-    if (product.address.address1) {
+    if (product.complement)
       score++;
-    }
-    if (product.address.zipcode) {
+    
+    if (product.ambiance)
       score++;
-    }
-  }
-  if (
-    product.localization &&
-    product.localization.lat !== null &&
-    product.localization.lon !== null
-  ) {
-    score++;
-  }
-  if (product.itinerary) {
-    score++;
-    if (product.itinerary.dailyDuration !== null) {
+    
+    if (product.passagesDelicats)
       score++;
-    }
-    if (product.itinerary.distance !== null) {
-      score++;
-    }
-    if (product.itinerary.positive !== null) {
-      score++;
-    }
-    if (product.itinerary.negative !== null) {
-      score++;
-    }
-    if (product.itinerary.itineraireType !== null) {
-      score++;
-    }
-    if (product.itinerary.itineraireBalise !== null) {
-      score++;
-    }
-  }
-  if (product.image && product.image.length) {
-    score++;
-    if (product.image[0].description) {
-      score++;
-    }
-  }
-  if (product.equipment && product.equipment.length) {
-    score++;
-  }
-  if (product.openingDate && product.openingDate.description) {
-    score++;
-  }
-  if (product.price && product.price.description) {
-    score++;
-  }
-  if (product.website && product.website.length) {
-    score++;
-  }
-  if (product.email && product.email.length) {
-    score++;
-  }
-  if (product.phone && product.phone.length) {
-    score++;
-  }
-  if (product.typeDetail && product.typeDetail.length) {
-    score++;
-  }
-  if (product.legalEntity && product.legalEntity.length > 0) {
-    score++;
-  }
 
-  return _.floor((score * 100) / 22);
-};
+    if (product.address) {
+      if (product.address.address1)
+        score++;
+      
+      if (product.address.zipcode)
+        score++;
+    }
+    
+    if (product.localization &&
+      product.localization.lat !== null &&
+      product.localization.lon !== null
+    )
+      score++;
 
-/**
- * add url
- *
- * @param {String} url
- * @return {String} The clean url
- * @private
- */
-Import.prototype.addUrlHttp = function (url) {
-  if (url && _.isString(url) && !url.match('^https?://|^//')) {
-    url = this.url + url;
+    if (product.itinerary) {
+      score++;
+      if (product.itinerary.dailyDuration !== null)
+        score++;
+      
+      if (product.itinerary.distance !== null)
+        score++;
+      
+      if (product.itinerary.positive !== null)
+        score++;
+      
+      if (product.itinerary.negative !== null)
+        score++;
+      
+      if (product.itinerary.itineraireType !== null)
+        score++;
+      
+      if (product.itinerary.itineraireBalise !== null)
+        score++;
+    }
+    
+    if (product.image && product.image.length) {
+      score++;
+      if (product.image[0].description)
+        score++;
+    }
+    
+    if (product.equipment && product.equipment.length)
+      score++;
+
+    if (product.openingDate && product.openingDate.description)
+      score++;
+
+    if (product.price && product.price.description)
+      score++;
+
+    if (product.website && product.website.length)
+      score++;
+  
+    if (product.email && product.email.length)
+      score++;
+
+    if (product.phone && product.phone.length)
+      score++;
+  
+    if (product.typeDetail && product.typeDetail.length)
+      score++;
+    
+    if (product.legalEntity && product.legalEntity.length > 0)
+      score++;
+  
+    return _.floor((score * 100) / 22);
   }
-  return url;
-};
+  
+  addUrlHttp(url) {
+    if (url && _.isString(url) && !url.match('^https?://|^//'))
+      url = this.url + url;
+
+    return url;
+  }
+}
 
 module.exports = Import;

@@ -1,6 +1,7 @@
 /* Used by ImportGeneric Server Model Geotrek API*/
 exports.types = {
-  EQU: 'EQUIPEMENT'
+  'EQU': 'EQUIPEMENT',
+  'F&M': 'FETE_ET_MANIFESTATION'
 };
 
 exports.activity = {
@@ -22,7 +23,10 @@ exports.itineraireType = {
   3: 'ALLER_ITINERANCE',
   4: 'ALLER_ITINERANCE',
   5: 'ALLER_ITINERANCE',
-  6: 'ALLER_ITINERANCE',
+  6: 'ALLER_ITINERANCE'
+};
+
+exports.touristicevent_type = {
 };
 
 exports.geotrekInstance = {
@@ -40,10 +44,19 @@ exports.geotrekInstance = {
         statusImport: 2,
         memberId : 4433, // to remove not used anymore
         proprietaireId: 707,
-        production: true
+        production: {
+          trek: true,
+          event: false
+        },
+        www: 'https://rando.ecrins-parcnational.fr/trek/',
+        touristicevent_type : {
+        }
       },
       4: {
-        production: false
+        production: {
+          trek: false,
+          event: false
+        },
       },
       5: {
         specialId: 'ENT1PaysEcrin',
@@ -56,7 +69,10 @@ exports.geotrekInstance = {
         statusImport: 2,
         memberId : 6705,
         proprietaireId: 854,
-        production: true
+        production: {
+          trek: false,
+          event: false
+        },
       },
       7: {
         specialId: 'ENT1Poncon',
@@ -69,10 +85,16 @@ exports.geotrekInstance = {
         statusImport: 2,
         memberId : 6696,
         proprietaireId: 593,
-        production: true
+        production: {
+          trek: false,
+          event: false
+        },
       },
       8: {
-        production: false
+        production: {
+          trek: false,
+          event: false
+        },
       },
       9: {
         specialId: 'ENT1HauteVallée',
@@ -85,10 +107,22 @@ exports.geotrekInstance = {
         statusImport: 2,
         memberId : 6707,
         proprietaireId: 541,
-        production: true
+        production: {
+          trek: false,
+          event: false
+        },
       },
       11: {
-        production: false
+        production: {
+          trek: false,
+          event: false
+        },
+      },
+      13: {
+        production: {
+          trek: false,
+          event: false
+        },
       }
     }
   },
@@ -96,7 +130,10 @@ exports.geotrekInstance = {
     geotrekUrl : 'https://admin.sportsnature.hauteloire.fr/api/v2',
     structures : {
       1: {
-        production: false,
+        production: {
+          trek: false,
+          event: false
+        },
       },
       2: { // CD43
         specialId: 'HauteLoire1',
@@ -110,18 +147,43 @@ exports.geotrekInstance = {
         statusImport: 2,
         memberId : 1158,
         proprietaireId: 1158,
-        production: true,
-        activity : {
+        production: {
+          trek: false,
+          event: false
+        },
+        activity : { // 3 : 3313, 8: 3302
           1: 3284,
           2: 3283,
           4: 3333,
           6: 4201
         },
-        itineraireType : {
+        itineraireType : { //
           1: 'BOUCLE',
           2: 'ALLER_RETOUR',
           3: 'ALLER_ITINERANCE',
+        },
+		www: 'https://gtr3demo.ecrins-parcnational.fr/event/',
+        touristicevent_type : {
+          7: 1974, // Distractions et loisirs
         }
+      },
+      7: {
+        production: {
+          trek: false,
+          event: false
+        },
+      },
+	  10: {
+        production: {
+          trek: false,
+          event: false
+        },
+      },
+	  110: {
+        production: {
+          trek: false,
+          event: false
+        },
       },
     }
   },
@@ -139,7 +201,10 @@ exports.geotrekInstance = {
         statusImport: 2,
         memberId : 710,
         proprietaireId: 710,
-        production: true,
+        production: {
+          trek: false,
+          event: false
+        },
         activity : {
           4: 3333,
           5: 3302
@@ -155,7 +220,10 @@ exports.geotrekInstance = {
     geotrekUrl : 'https://admin.cheminsdesparcs.fr/api/v2',
     structures : {
       1: {
-        production:false
+        production: {
+          trek: false,
+          event: false
+        },
       },
       2: { // PNR_LUBERON
         specialId: 'PNR Luberon',
@@ -168,7 +236,10 @@ exports.geotrekInstance = {
         statusImport: 2,
         memberId : 5112,
         proprietaireId: 1222,
-        production: true,
+        production: {
+          trek: false,
+          event: false
+        },
         activity : {
           1: 3284,
           2: 3283,
@@ -183,10 +254,16 @@ exports.geotrekInstance = {
         }
       },
       3: {
-        production:false
+        production: {
+          trek: false,
+          event: false
+        },
       },
       4: {
-        production:false
+        production: {
+          trek: false,
+          event: false
+        },
       },
       5: {
         specialId: 'PNR Verdon',
@@ -199,7 +276,10 @@ exports.geotrekInstance = {
         statusImport: 2,
         memberId : 831,
         proprietaireId: 831,
-        production: true,
+        production: {
+          trek: false,
+          event: false
+        },
         activity : {
           1: 3284,
           2: 3283,
@@ -224,7 +304,10 @@ exports.geotrekInstance = {
         statusImport: 2,
         memberId : 5033,
         proprietaireId: 1220,
-        production: true,
+        production: {
+          trek: false,
+          event: false
+        },
         activity : {
           1: 3284,
           2: 3283,
@@ -249,7 +332,10 @@ exports.geotrekInstance = {
         statusImport: 2,
         memberId : 5053,
         proprietaireId: 1386,
-        production: true,
+        production: {
+          trek: false,
+          event: false
+        },
         activity : {
           1: 3284,
           2: 3283,
@@ -274,7 +360,10 @@ exports.geotrekInstance = {
         statusImport: 2,
         memberId : 5052,
         proprietaireId: 1380,
-        production: true,
+        production: {
+          trek: false,
+          event: false
+        },
         activity : {
           1: 3284,
           2: 3283,
@@ -289,7 +378,10 @@ exports.geotrekInstance = {
         }
       },
       9: {
-        production:false
+        production: {
+          trek: false,
+          event: false
+        },
       },
       10: {
         specialId: 'PNR Ventoux',
@@ -302,7 +394,10 @@ exports.geotrekInstance = {
         statusImport: 2,
         memberId : 2122,
         proprietaireId: 2122,
-        production: true,
+        production: {
+          trek: false,
+          event: false
+        },
         activity : {
           1: 3284,
           2: 3283,
@@ -322,7 +417,10 @@ exports.geotrekInstance = {
     geotrekUrl : 'https://geotrek-admin.alpesrando.net/api/v2',
     structures : {
       1: {
-        production: false,
+        production: {
+          trek: false,
+          event: false
+        },
       },
       2: { // DEP05
         specialId: 'Dep05',
@@ -335,7 +433,10 @@ exports.geotrekInstance = {
         statusImport: 2,
         memberId : 708,
         proprietaireId: 708,
-        production: true,
+        production: {
+          trek: false,
+          event: false
+        },
         activity : {
           1: 3333,
           2: 3284,
@@ -352,18 +453,34 @@ exports.geotrekInstance = {
           4: 'ALLER_ITINERANCE',
           5: 'ALLER_RETOUR',
         },
+        www: '',
+        touristicevent_type : {
+          7: 1974, // Distractions et loisirs
+        }
       },
       4: {
-        production: false,
+        production: {
+          trek: false,
+          event: false
+        },
       },
       5: {
-        production: false,
+        production: {
+          trek: false,
+          event: false
+        },
       },
       6: {
-        production: false,
+        production: {
+          trek: false,
+          event: false
+        },
       },
       9: {
-        production: false,
+        production: {
+          trek: false,
+          event: false
+        },
       },
     }
   },
@@ -381,7 +498,10 @@ exports.geotrekInstance = {
         statusImport: 2,
         memberId : 537,
         proprietaireId: 537,
-        production: true,
+        production: {
+          trek: false,
+          event: false
+        },
         activity : {
           1: 3284,
           2: 3283,
@@ -414,7 +534,10 @@ exports.geotrekInstance = {
         statusImport: 2,
         memberId : 2255,
         proprietaireId: 2255,
-        production: true,
+        production: {
+          trek: false,
+          event: false
+        },
         activity : {
           1: 3284,
           2: 3283,
@@ -429,28 +552,58 @@ exports.geotrekInstance = {
         },
       },
       4: {
-        production: false,
+        production: {
+          trek: false,
+          event: false
+        },
       },
       6: {
-        production: false,
+        production: {
+          trek: false,
+          event: false
+        },
       },
       7: {
-        production: false,
+        production: {
+          trek: false,
+          event: false
+        },
+      },
+      8: {
+        production: {
+          trek: false,
+          event: false
+        },
       },
       9: {
-        production: false,
+        production: {
+          trek: false,
+          event: false
+        },
       },
       14: {
-        production: false,
+        production: {
+          trek: false,
+          event: false
+        },
       },
       15: {
-        production: false,
+        production: {
+          trek: false,
+          event: false
+        },
       },
       16: {
-        production: false,
+        production: {
+          trek: false,
+          event: false
+        },
       },
       18: {
-        production: false,
+        production: {
+          trek: false,
+          event: false
+        },
       },
     }
   },

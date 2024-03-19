@@ -1,0 +1,29 @@
+<section data-ng-controller="EventsController" data-ng-init="find()">
+	<div class="page-header">
+		<h1>Evénements</h1>
+	</div>
+	<div class="list-group">
+		<a data-ng-repeat="event in events" class="list-group-item"><!--data-ui-sref="products.view({productId: product._id})"//-->
+			<small class="list-group-item-text" data-ngClass="{'alert' : true}">
+				Création : 
+				<span data-ng-bind="event.created | date:'mediumDate'"></span> - 
+				Dernière MAJ : 
+				<span data-ng-bind="event.lastUpdate | date:'mediumDate'"></span> - 
+				Membre = 
+				<span data-ng-bind="event.member"></span> - 
+				Geotrek ID = 
+				<span data-ng-bind="event.specialId"></span> - 
+				Apidae ID = 
+				<span data-ng-bind="event.specialIdSitra" data-ng-if='event.specialIdSitra * 1 == event.specialIdSitra'></span>
+				<span data-ng-if='event.specialIdSitra * 1 != event.specialIdSitra'elseif>Non créé - Erreur</span>
+			</small>
+			<div style="color:white; background-color:red;" data-ng-if='event.specialIdSitra * 1 != event.specialIdSitra' data-ng-bind="event.specialIdSitra"></div>
+			<h4 class="list-group-item-heading" data-ng-bind="event.name"></h4>
+			<p class="list-group-item-text" data-ng-bind="event.description"></p>
+			<h5>Geotrek : {{event.rateCompletion}} / 100</h5>
+		</a>
+	</div>
+	<div class="alert alert-warning text-center" data-ng-if="events.$resolved && !events.length">
+		Aucun événement - Lancer un import
+	</div>
+</section>
