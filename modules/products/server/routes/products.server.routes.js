@@ -4,6 +4,7 @@ var productsPolicy = require('../policies/products.server.policy'),
   products = require('../controllers/products.server.controller');
 
 module.exports = function (app) {
+  products.init();
   app.route('/api/products').all(productsPolicy.isAllowed).get(products.list);
 
   app

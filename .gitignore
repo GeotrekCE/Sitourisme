@@ -14,3 +14,5 @@ docker-compose.*
 config/env/production.js
 config/env/development.js
 websensoZzzImportPythonToMongo/
+tools_importPythonMongoDb/
+
