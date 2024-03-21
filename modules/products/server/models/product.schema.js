@@ -479,7 +479,31 @@ const _defaultSchema = {
       },
       dateLimiteDePublication: {
         type: Date
-      }
+      },
+      author: {
+        type: String,
+        trim: true
+      },
+      authorEn: {
+        type: String,
+        trim: true
+      },
+      authorEs: {
+        type: String,
+        trim: true
+      },
+      authorIt: {
+        type: String,
+        trim: true
+      },
+      authorDe: {
+        type: String,
+        trim: true
+      },
+      authorNl: {
+        type: String,
+        trim: true
+      },
     }
   ],
   video: [
