@@ -14,7 +14,7 @@ class ImportGeotrekApi extends Import
   {
     super(options);
     if (config.debug && config.debug.logs)
-      console.log('ImportGeotrekApi constructor', options);
+      console.log('ImportGeotrekApi constructor');
 
     this.importType = options.importType
       ? options.importType.toUpperCase()
@@ -232,9 +232,11 @@ class ImportGeotrekApi extends Import
         let product = await this.importData.formatDatas(element, additionalInformation, structure, proprietaireId, this.importType, this.configData, this.user);
         console.log('ok importData formatDatas');
         product.legalEntity = this.getLegalEntity(element, product, structure);
+        product.informationSitraId = configImportGEOTREK.geotrekInstance[structure].structures[element.structure].specialIdSitra;
+        product.gestionSitraId = configImportGEOTREK.geotrekInstance[structure].structures[element.structure].specialIdSitra;
         product.rateCompletion = this.calculateRateCompletion(product);
 
-        console.log(`GeoTrek API => import specialId : ${product.specialId}`);
+        console.log(`GeoTrek API => import specialId : ${product.specialId}`, product);
 
         await this.doUpsertAsync(
           product,
