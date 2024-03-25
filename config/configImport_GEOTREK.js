@@ -70,7 +70,7 @@ exports.geotrekInstance = {
         memberId : 6705,
         proprietaireId: 854,
         production: {
-          trek: false,
+          trek: true,
           event: false
         },
       },
@@ -86,7 +86,7 @@ exports.geotrekInstance = {
         memberId : 6696,
         proprietaireId: 593,
         production: {
-          trek: false,
+          trek: true,
           event: false
         },
       },
@@ -108,7 +108,7 @@ exports.geotrekInstance = {
         memberId : 6707,
         proprietaireId: 541,
         production: {
-          trek: false,
+          trek: true,
           event: false
         },
       },
@@ -148,7 +148,7 @@ exports.geotrekInstance = {
         memberId : 1158,
         proprietaireId: 1158,
         production: {
-          trek: false,
+          trek: true,
           event: false
         },
         activity : { // 3 : 3313, 8: 3302
@@ -162,7 +162,7 @@ exports.geotrekInstance = {
           2: 'ALLER_RETOUR',
           3: 'ALLER_ITINERANCE',
         },
-		www: 'https://gtr3demo.ecrins-parcnational.fr/event/',
+		    www: 'https://gtr3demo.ecrins-parcnational.fr/event/',
         touristicevent_type : {
           7: 1974, // Distractions et loisirs
         }
@@ -237,7 +237,7 @@ exports.geotrekInstance = {
         memberId : 5112,
         proprietaireId: 1222,
         production: {
-          trek: false,
+          trek: true,
           event: false
         },
         activity : {
@@ -277,7 +277,7 @@ exports.geotrekInstance = {
         memberId : 831,
         proprietaireId: 831,
         production: {
-          trek: false,
+          trek: true,
           event: false
         },
         activity : {
@@ -305,7 +305,7 @@ exports.geotrekInstance = {
         memberId : 5033,
         proprietaireId: 1220,
         production: {
-          trek: false,
+          trek: true,
           event: false
         },
         activity : {
@@ -333,7 +333,7 @@ exports.geotrekInstance = {
         memberId : 5053,
         proprietaireId: 1386,
         production: {
-          trek: false,
+          trek: true,
           event: false
         },
         activity : {
@@ -361,7 +361,7 @@ exports.geotrekInstance = {
         memberId : 5052,
         proprietaireId: 1380,
         production: {
-          trek: false,
+          trek: true,
           event: false
         },
         activity : {
@@ -395,7 +395,7 @@ exports.geotrekInstance = {
         memberId : 2122,
         proprietaireId: 2122,
         production: {
-          trek: false,
+          trek: true,
           event: false
         },
         activity : {
@@ -434,7 +434,7 @@ exports.geotrekInstance = {
         memberId : 708,
         proprietaireId: 708,
         production: {
-          trek: false,
+          trek: true,
           event: false
         },
         activity : {
@@ -499,7 +499,7 @@ exports.geotrekInstance = {
         memberId : 537,
         proprietaireId: 537,
         production: {
-          trek: false,
+          trek: true,
           event: false
         },
         activity : {
@@ -535,7 +535,7 @@ exports.geotrekInstance = {
         memberId : 2255,
         proprietaireId: 2255,
         production: {
-          trek: false,
+          trek: true,
           event: false
         },
         activity : {
