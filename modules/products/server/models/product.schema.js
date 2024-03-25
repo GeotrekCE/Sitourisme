@@ -2030,7 +2030,13 @@ const _defaultSchema = {
   },
   displayForUser: {
     type: String
-  }
+  },
+  informationSitraId : {
+    type: Number
+  },
+  gestionSitraId : {
+    type: Number
+  },
 };
 
 exports.defaultSchema = _defaultSchema;

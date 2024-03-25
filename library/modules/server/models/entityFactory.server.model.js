@@ -189,8 +189,10 @@ class EntityFactory
   }
 
   doUpsert(datas, specialId, importType, callback) {
-    console.log('HERE', this.name);
+    console.log('>>>>>>>>>NOT USED, doUpsert FROM entityServer ', this.name);
     const Model = mongoose.model(this.name);
+//    const LegalEntity = mongoose.model('LegalEntity');
+    
     let params = {};
 
     // Avoid to duplicate legalEntities - address is the matching key
@@ -215,6 +217,16 @@ class EntityFactory
           callback(err);
         }
       } else {
+        if (datas.legalEntity && datas.legalEntity.length) {
+          _.forEach(datas.legalEntity, function (legalEntity, ind) {
+            if (legalEntity.product && !legalEntity.product._id) {
+              /*datas.legalEntity[ind].product = new LegalEntity(
+                legalEntity.product
+              );*/
+              console.log('New LegalEntitty >>>>> ', legalEntity.product);
+            }
+          });
+        }
         const data =
           docs.length > 0 ? _.extend(docs[0], datas) : new Model(datas);
         Model.save(data, callback);
