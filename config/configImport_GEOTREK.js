@@ -607,5 +607,8 @@ exports.geotrekInstance = {
       },
     }
   },
+  7 : {
+    
+  }
   
 };
