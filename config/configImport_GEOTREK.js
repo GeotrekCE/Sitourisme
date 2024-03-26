@@ -162,7 +162,7 @@ exports.geotrekInstance = {
           2: 'ALLER_RETOUR',
           3: 'ALLER_ITINERANCE',
         },
-		    www: 'https://gtr3demo.ecrins-parcnational.fr/event/',
+		    www: '', // Dev https://gtr3demo.ecrins-parcnational.fr/event/
         touristicevent_type : {
           7: 1974, // Distractions et loisirs
         }
@@ -607,8 +607,5 @@ exports.geotrekInstance = {
       },
     }
   },
-  7 : {
-    
-  }
   
 };
