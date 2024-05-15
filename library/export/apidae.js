@@ -4226,7 +4226,7 @@ class Apidae
     multimediaPdf.nom.libelleFr = 'PDF';
     arrMultimedia.push(multimediaPdf);
   }
-
+  
   if (arrMultimedia.length) {
     root.multimedias = arrMultimedia;
   } else {
@@ -4236,8 +4236,7 @@ class Apidae
 
   return !err ? { root: root, rootFieldList: rootFieldList } : false;
 }
-
- __buildImageDetail(images, nImage, callback) {
+ __buildImageDetail(images, nImage, callback,originalImage = false) {
   if (images && nImage < images.length) {
     let image = images[nImage];
     if (image.url) {
@@ -4248,9 +4247,19 @@ class Apidae
 
         image.url = image.url.replace(matchUppercase[0], replacement);
       }*/
+     
+      
+      if(originalImage)
+      {
+          var urlObject = Url.parse(image.url);
+      }
+      else
+      {
+        var urlObject = Url.parse('https://wsrv.nl/?w=2500&url=' + image.url);
+      }
 
-      let urlObject = Url.parse('https://wsrv.nl/?w=2500&url=' + image.url),
-        path = urlObject.path,
+      
+      let path = urlObject.path,
         httpProtocol,
         filename = path.replace(new RegExp('^.*/([^/]+)$'), '$1'),
         ext = filename
@@ -4300,7 +4309,17 @@ class Apidae
             };
           } else {
             console.log('Image error', urlObject, response.statusCode);
-            images.splice(nImage--, 1);
+            if(originalImage!=true)
+            {
+              
+              me.__buildImageDetail(images,nImage, callback,true);
+              return;
+            }
+            else
+            {
+              images.splice(nImage--, 1);
+              
+            }
           }
 
           me.__buildImageDetail(images, ++nImage, callback);

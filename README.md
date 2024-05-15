@@ -67,7 +67,7 @@ $ curl "URL/api/products/import?type=geotrek-api"
 
 # Changelog
 
-## 2.1 - Cedric Gilbert - WebSenso
+## 2.1 - WebSenso
 - Fix picture'author recording to author record in place of description
 - Library classes refactoring
 - Server controller refactoring
@@ -75,7 +75,7 @@ $ curl "URL/api/products/import?type=geotrek-api"
 - Removing old unused method
 - Product & Event Schema updated
 
-## 1.1 - 1.2 - Cedric Gilbert - WebSenso
+## 1.1 - 1.2  - WebSenso
 - EVO Write on Apidae Multimember project
 - EVO New Geotrek configuration file with Axios renew connection
 - EVO New Geotrek configuration file to customize activities depending of Geotrek instance
