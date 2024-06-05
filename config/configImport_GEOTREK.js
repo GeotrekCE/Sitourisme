@@ -129,11 +129,33 @@ exports.geotrekInstance = {
   1 : {
     geotrekUrl : 'https://admin.sportsnature.hauteloire.fr/api/v2',
     structures : {
-      1: {
+      1: { // CDRP43
+        specialId: 'Haute-Loire CDRP43',
+        name: 'Maison du Tourisme de la Haute-Loire',
+        address1: 'Hôtel du Département - 1 place Monseigneur de Galard',
+        address2: null,
+        city: '16901',
+        insee: '43157',
+        defaultEmail: 'sport@hauteloire.fr',
+        specialIdSitra: '761045',
+        statusImport: 2,
+        memberId : 1158,
+        proprietaireId: 1158,
         production: {
-          trek: false,
+          trek: true,
           event: false
         },
+        activity : {
+          1: 3284,
+          2: 3283,
+          4: 3333,
+          6: 4201
+        },
+        itineraireType : {
+          1: 'BOUCLE',
+          2: 'ALLER_RETOUR',
+          3: 'ALLER_ITINERANCE',
+        }
       },
       2: { // CD43
         specialId: 'HauteLoire1',
@@ -167,23 +189,313 @@ exports.geotrekInstance = {
           7: 1974, // Distractions et loisirs
         }
       },
-      7: {
+      3: { // CAPEV
+        specialId: 'Haute-Loire CAPEV',
+        name: 'Maison du Tourisme de la Haute-Loire',
+        address1: 'Hôtel du Département - 1 place Monseigneur de Galard',
+        address2: null,
+        city: '16901',
+        insee: '43157',
+        defaultEmail: 'sport@hauteloire.fr',
+        specialIdSitra: '761045',
+        statusImport: 2,
+        memberId : 1158,
+        proprietaireId: 1158,
         production: {
-          trek: false,
+          trek: true,
           event: false
         },
+        activity : {
+          1: 3284,
+          2: 3283,
+          4: 3333,
+          6: 4201
+        },
+        itineraireType : {
+          1: 'BOUCLE',
+          2: 'ALLER_RETOUR',
+          3: 'ALLER_ITINERANCE',
+        }
       },
-	  10: {
+      4: { // CC Mézenc Loire Meygal
+        specialId: 'Haute-Loire CC Mézenc Loire Meygal',
+        name: 'Maison du Tourisme de la Haute-Loire',
+        address1: 'Hôtel du Département - 1 place Monseigneur de Galard',
+        address2: null,
+        city: '16901',
+        insee: '43157',
+        defaultEmail: 'sport@hauteloire.fr',
+        specialIdSitra: '761045',
+        statusImport: 2,
+        memberId : 1158,
+        proprietaireId: 1158,
         production: {
-          trek: false,
+          trek: true,
           event: false
         },
+        activity : {
+          1: 3284,
+          2: 3283,
+          4: 3333,
+          6: 4201
+        },
+        itineraireType : {
+          1: 'BOUCLE',
+          2: 'ALLER_RETOUR',
+          3: 'ALLER_ITINERANCE',
+        }
       },
-	  110: {
+      5: { // CC Cayres Pradelles
+        specialId: 'Haute-Loire CC Cayres Pradelles',
+        name: 'Maison du Tourisme de la Haute-Loire',
+        address1: 'Hôtel du Département - 1 place Monseigneur de Galard',
+        address2: null,
+        city: '16901',
+        insee: '43157',
+        defaultEmail: 'sport@hauteloire.fr',
+        specialIdSitra: '761045',
+        statusImport: 2,
+        memberId : 1158,
+        proprietaireId: 1158,
         production: {
-          trek: false,
+          trek: true,
           event: false
         },
+        activity : {
+          1: 3284,
+          2: 3283,
+          4: 3333,
+          6: 4201
+        },
+        itineraireType : {
+          1: 'BOUCLE',
+          2: 'ALLER_RETOUR',
+          3: 'ALLER_ITINERANCE',
+        }
+      },
+      6: { // CC Brioude Sud Auvergne
+        specialId: 'Haute-Loire CC Brioude Sud Auvergne',
+        name: 'Maison du Tourisme de la Haute-Loire',
+        address1: 'Hôtel du Département - 1 place Monseigneur de Galard',
+        address2: null,
+        city: '16901',
+        insee: '43157',
+        defaultEmail: 'sport@hauteloire.fr',
+        specialIdSitra: '761045',
+        statusImport: 2,
+        memberId : 1158,
+        proprietaireId: 1158,
+        production: {
+          trek: true,
+          event: false
+        },
+        activity : {
+          1: 3284,
+          2: 3283,
+          4: 3333,
+          6: 4201
+        },
+        itineraireType : {
+          1: 'BOUCLE',
+          2: 'ALLER_RETOUR',
+          3: 'ALLER_ITINERANCE',
+        }
+      },
+      7: { // CC des SUCS
+        specialId: 'Haute-Loire CC des SUCS',
+        name: 'Maison du Tourisme de la Haute-Loire',
+        address1: 'Hôtel du Département - 1 place Monseigneur de Galard',
+        address2: null,
+        city: '16901',
+        insee: '43157',
+        defaultEmail: 'sport@hauteloire.fr',
+        specialIdSitra: '761045',
+        statusImport: 2,
+        memberId : 1158,
+        proprietaireId: 1158,
+        production: {
+          trek: true,
+          event: false
+        },
+        activity : {
+          1: 3284,
+          2: 3283,
+          4: 3333,
+          6: 4201
+        },
+        itineraireType : {
+          1: 'BOUCLE',
+          2: 'ALLER_RETOUR',
+          3: 'ALLER_ITINERANCE',
+        }
+      },
+      8: { // CC Loire Semene
+        specialId: 'Haute-Loire CC Loire Semene',
+        name: 'Maison du Tourisme de la Haute-Loire',
+        address1: 'Hôtel du Département - 1 place Monseigneur de Galard',
+        address2: null,
+        city: '16901',
+        insee: '43157',
+        defaultEmail: 'sport@hauteloire.fr',
+        specialIdSitra: '761045',
+        statusImport: 2,
+        memberId : 1158,
+        proprietaireId: 1158,
+        production: {
+          trek: true,
+          event: false
+        },
+        activity : {
+          1: 3284,
+          2: 3283,
+          4: 3333,
+          6: 4201
+        },
+        itineraireType : {
+          1: 'BOUCLE',
+          2: 'ALLER_RETOUR',
+          3: 'ALLER_ITINERANCE',
+        }
+      },
+      10: { // CC Marches du Velay Rochebaron
+        specialId: 'Haute-Loire CC Marches du Velay Rochebaron',
+        name: 'Maison du Tourisme de la Haute-Loire',
+        address1: 'Hôtel du Département - 1 place Monseigneur de Galard',
+        address2: null,
+        city: '16901',
+        insee: '43157',
+        defaultEmail: 'sport@hauteloire.fr',
+        specialIdSitra: '761045',
+        statusImport: 2,
+        memberId : 1158,
+        proprietaireId: 1158,
+        production: {
+          trek: true,
+          event: false
+        },
+        activity : {
+          1: 3284,
+          2: 3283,
+          4: 3333,
+          6: 4201
+        },
+        itineraireType : {
+          1: 'BOUCLE',
+          2: 'ALLER_RETOUR',
+          3: 'ALLER_ITINERANCE',
+        }
+      },
+      43: { // CC Haut Lignon
+        specialId: 'Haute-Loire CC Haut Lignon',
+        name: 'Maison du Tourisme de la Haute-Loire',
+        address1: 'Hôtel du Département - 1 place Monseigneur de Galard',
+        address2: null,
+        city: '16901',
+        insee: '43157',
+        defaultEmail: 'sport@hauteloire.fr',
+        specialIdSitra: '761045',
+        statusImport: 2,
+        memberId : 1158,
+        proprietaireId: 1158,
+        production: {
+          trek: true,
+          event: false
+        },
+        activity : {
+          1: 3284,
+          2: 3283,
+          4: 3333,
+          6: 4201
+        },
+        itineraireType : {
+          1: 'BOUCLE',
+          2: 'ALLER_RETOUR',
+          3: 'ALLER_ITINERANCE',
+        }
+      },
+      76: { // Auzon Communauté
+        specialId: 'Haute-Loire Auzon Communauté',
+        name: 'Maison du Tourisme de la Haute-Loire',
+        address1: 'Hôtel du Département - 1 place Monseigneur de Galard',
+        address2: null,
+        city: '16901',
+        insee: '43157',
+        defaultEmail: 'sport@hauteloire.fr',
+        specialIdSitra: '761045',
+        statusImport: 2,
+        memberId : 1158,
+        proprietaireId: 1158,
+        production: {
+          trek: true,
+          event: false
+        },
+        activity : {
+          1: 3284,
+          2: 3283,
+          4: 3333,
+          6: 4201
+        },
+        itineraireType : {
+          1: 'BOUCLE',
+          2: 'ALLER_RETOUR',
+          3: 'ALLER_ITINERANCE',
+        }
+      },
+      109: { // CC Rives du Haut Allier
+        specialId: 'Haute-Loire CC Rives du Haut Allier',
+        name: 'Maison du Tourisme de la Haute-Loire',
+        address1: 'Hôtel du Département - 1 place Monseigneur de Galard',
+        address2: null,
+        city: '16901',
+        insee: '43157',
+        defaultEmail: 'sport@hauteloire.fr',
+        specialIdSitra: '761045',
+        statusImport: 2,
+        memberId : 1158,
+        proprietaireId: 1158,
+        production: {
+          trek: true,
+          event: false
+        },
+        activity : {
+          1: 3284,
+          2: 3283,
+          4: 3333,
+          6: 4201
+        },
+        itineraireType : {
+          1: 'BOUCLE',
+          2: 'ALLER_RETOUR',
+          3: 'ALLER_ITINERANCE',
+        }
+      },
+      110: { // CC Haut Pays du Velay
+        specialId: 'Haute-Loire CC Haut Pays du Velay',
+        name: 'Maison du Tourisme de la Haute-Loire',
+        address1: 'Hôtel du Département - 1 place Monseigneur de Galard',
+        address2: null,
+        city: '16901',
+        insee: '43157',
+        defaultEmail: 'sport@hauteloire.fr',
+        specialIdSitra: '761045',
+        statusImport: 2,
+        memberId : 1158,
+        proprietaireId: 1158,
+        production: {
+          trek: true,
+          event: false
+        },
+        activity : {
+          1: 3284,
+          2: 3283,
+          4: 3333,
+          6: 4201
+        },
+        itineraireType : {
+          1: 'BOUCLE',
+          2: 'ALLER_RETOUR',
+          3: 'ALLER_ITINERANCE',
+        }
       },
     }
   },
