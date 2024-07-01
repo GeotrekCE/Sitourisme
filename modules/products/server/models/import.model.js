@@ -135,7 +135,9 @@ class importModel extends geotrek
     let ambianceLibelle = null;
     if (element.ambiance && element.ambiance[lang]) {
       ambianceLibelle = DataString.stripTags(
-        DataString.strEncode(element.ambiance[lang])
+        DataString.strEncode(
+          DataString.br2nl(element.ambiance[lang])
+        )
       );
     }
     return ambianceLibelle;
@@ -143,7 +145,11 @@ class importModel extends geotrek
 
   getPassagesDelicats(element, lang) {
     if (element.advice && element.advice[lang]) {
-      return DataString.stripTags(DataString.strEncode(element.advice[lang]));
+      return DataString.stripTags(
+        DataString.strEncode(
+          DataString.br2nl(element.advice[lang])
+        )
+      );
     }
     return null;
   }
@@ -173,7 +179,11 @@ class importModel extends geotrek
       complement += `\n${element.public_transport[lang]}`;
     }
     if (complement) {
-      complement = DataString.stripTags(DataString.strEncode(complement));
+      complement = DataString.stripTags(
+        DataString.strEncode(
+          DataString.br2nl(complement)
+        )
+      );
     }
     return complement;
   }
@@ -266,7 +276,9 @@ class importModel extends geotrek
   getDescription(element, lang) {
     if (element.description && element.description[lang]) {
       return DataString.stripTags(
-        DataString.strEncode(element.description[lang])
+        DataString.strEncode(
+          DataString.br2nl(element.description[lang])
+        )
       );
     }
     return '';

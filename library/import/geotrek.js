@@ -81,7 +81,9 @@ class Import
   getShortDescription(element, lang) {
     if (element.description_teaser && element.description_teaser[lang]) {
       return DataString.stripTags(
-        DataString.strEncode(element.description_teaser[lang])
+        DataString.strEncode(
+          DataString.br2nl(element.description_teaser[lang])
+        )
       ).slice(0, 255);
     }
     return null;
