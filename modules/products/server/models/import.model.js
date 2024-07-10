@@ -108,6 +108,10 @@ class importModel extends geotrek
         configImportGEOTREK.geotrekInstance[structure].structures[
           element.structure
         ].activity != undefined
+        &&
+        configImportGEOTREK.geotrekInstance[structure].structures[
+          element.structure
+        ].activity[element.practice] != undefined
       ) {
         activity.push(
           configImportGEOTREK.geotrekInstance[structure].structures[
