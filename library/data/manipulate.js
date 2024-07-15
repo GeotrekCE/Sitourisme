@@ -379,3 +379,17 @@ exports.stripTags = (txt) => {
 };
 
 exports.cutString = (txt, maxLength = 254) => String(txt).slice(0, maxLength);
+
+/**
+ * Replaces <br /> (and derivatives) by \n.
+ *
+ * @param {String} txt
+ * @return {String} The new txt
+ * @private
+ */
+exports.br2nl = (txt) => {
+  if (txt) {
+    return txt.replace(/<\s*\/?br\s*[\/]?>/gi, '\n');
+  }
+  return '';
+};

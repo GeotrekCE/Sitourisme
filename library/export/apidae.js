@@ -428,6 +428,7 @@ class Apidae
         me.productImage = [];
   
         if (product.image && product.image.length) {
+          console.log("/////"+product.id+"/////");
           me.__buildImageDetail(product.image.toObject(), 0, (err, newImage) => {
             if (err) {
               console.error(err);
@@ -771,6 +772,9 @@ class Apidae
           },
           function (err, httpResponse, body) {
             console.timeEnd('Send data apidae');
+            //console.log(formData);
+            console.log(body);
+            console.log("****"+product.id);
             //console.log('FormData= ',formData);
             // si erreur http (pas pour une erreur apidae)
             if (err) {
@@ -4236,7 +4240,7 @@ class Apidae
 
   return !err ? { root: root, rootFieldList: rootFieldList } : false;
 }
- __buildImageDetail(images, nImage, callback,originalImage = false) {
+ __buildImageDetail(images, nImage, callback,originalImage = false,sizeImage = 2500) {
   if (images && nImage < images.length) {
     let image = images[nImage];
     if (image.url) {
@@ -4248,92 +4252,124 @@ class Apidae
         image.url = image.url.replace(matchUppercase[0], replacement);
       }*/
      
-      
+      let me = this;
       if(originalImage)
       {
           var urlObject = Url.parse(image.url);
+          
       }
       else
       {
-        var urlObject = Url.parse('https://wsrv.nl/?w=2500&url=' + image.url);
+        var urlResize = 'https://wsrv.nl/?w='+sizeImage+'&url=' + image.url;
+        var urlObject = Url.parse(urlResize);
       }
-
-      
-      let path = urlObject.path,
-        httpProtocol,
-        filename = path.replace(new RegExp('^.*/([^/]+)$'), '$1'),
-        ext = filename
-          .replace(new RegExp('.*\\.([^\\.]+)$'), '$1')
-          .toLowerCase(),
-        contentType;
-
-      switch (ext) {
-        case 'jpg':
-        case 'jpeg':
-          contentType = 'image/jpeg';
-          break;
-
-        default:
-          contentType = 'image/' + ext;
-          break;
-      }
-
-      switch (urlObject.protocol) {
-        case 'https:':
-          httpProtocol = https;
-          break;
-        default:
-          httpProtocol = http;
-          break;
-      }
-
-      let me = this;
-      let request = httpProtocol.request(urlObject, function (response) {
-        let myBuffer = Buffer.from('');
-
-        response.on('data', function (chunk) {
-          myBuffer = Buffer.concat([myBuffer, Buffer.from(chunk, 'binary')]);
-        });
-
-        response.on('end', function () {
-          if (
-            response &&
-            response.statusCode &&
-            parseInt(response.statusCode) !== 404
-          ) {
-            images[nImage].data = {
-              path: path,
-              filename: filename,
-              contentType: contentType,
-              content: myBuffer
-            };
-          } else {
-            console.log('Image error', urlObject, response.statusCode);
-            if(originalImage!=true)
+      me.__getImageSize(urlObject.href,function(size)
+      {
+          //l'image est trop grande 
+          if(size>9500)
+          {
+            //si on voulait l'image originale et qu'elle est trop grand on passe a la prochaine
+            if(originalImage)
             {
-              
-              me.__buildImageDetail(images,nImage, callback,true);
-              return;
+                images.splice(nImage--, 1);
+                me.__buildImageDetail(images, ++nImage, callback);
             }
-            else
+            else //sinon on retente avec un image + petite
             {
-              images.splice(nImage--, 1);
+                sizeImage = sizeImage - 250;
+                //console.log("newCall");
+                me.__buildImageDetail(images,nImage, callback,false,sizeImage);
               
             }
+            return;
           }
-
-          me.__buildImageDetail(images, ++nImage, callback);
-        });
+          else
+          {
+            
+              //console.log("//////////////"+image.url+"///////////////");
+              let path = urlObject.path,
+                httpProtocol,
+                filename = path.replace(new RegExp('^.*/([^/]+)$'), '$1'),
+                ext = filename
+                  .replace(new RegExp('.*\\.([^\\.]+)$'), '$1')
+                  .toLowerCase(),
+                contentType;
+        
+              switch (ext) {
+                case 'jpg':
+                case 'jpeg':
+                  contentType = 'image/jpeg';
+                  break;
+        
+                default:
+                  contentType = 'image/' + ext;
+                  break;
+              }
+        
+              switch (urlObject.protocol) {
+                case 'https:':
+                  httpProtocol = https;
+                  break;
+                default:
+                  httpProtocol = http;
+                  break;
+              }
+        
+              
+              let request = httpProtocol.request(urlObject, function (response) {
+                let myBuffer = Buffer.from('');
+        
+                response.on('data', function (chunk) {
+                  myBuffer = Buffer.concat([myBuffer, Buffer.from(chunk, 'binary')]);
+                });
+        
+                response.on('end', function () {
+                  if (
+                    response &&
+                    response.statusCode &&
+                    parseInt(response.statusCode) !== 404
+                  ) {
+                    
+                    if(images[nImage])
+                    {
+                      images[nImage].data = {
+                        path: path,
+                        filename: filename,
+                        contentType: contentType,
+                        content: myBuffer
+                      };
+                      
+                    }
+                  } else {
+                    if(originalImage!=true)
+                    {
+                      
+                      me.__buildImageDetail(images,nImage, callback,true);
+                      return;
+                    }
+                    else
+                    {
+                      images.splice(nImage--, 1);
+                      
+                    }
+                  }
+        
+                  me.__buildImageDetail(images, ++nImage, callback);
+                });
+              });
+        
+              // Handle errors
+              request.on('error', function (error) {
+                console.log('Problem with request : ', error.message);
+                me.__buildImageDetail(images, ++nImage, callback);
+              });
+        
+              request.end();
+          }
       });
 
-      // Handle errors
-      request.on('error', function (error) {
-        console.log('Problem with request : ', error.message);
-        me.__buildImageDetail(images, ++nImage, callback);
-      });
-
-      request.end();
-    } else {
+    }
+    else {
       this.__buildImageDetail(images, ++nImage, callback);
     }
   } else {
@@ -4744,6 +4780,32 @@ class Apidae
   return !err ? { root: root, rootFieldList: rootFieldList } : false;
 }
 
+__getImageSize(url,callback)
+{
+  const fetch = require("node-fetch");
+    // Utilise fetch pour envoyer une requête HEAD
+  fetch(url, { method: 'HEAD' })
+    .then(response => {
+      if (!response.ok)
+      {
+        callback(-1)
+      }
+  
+      // Récupère la taille du contenu en octets depuis l'en-tête Content-Length
+      var contentLength = response.headers.get('Content-Length');
+      if (contentLength === null) 
+      {
+        callback(-1)
+      }
+  
+      // Convertit la taille en kilooctets
+      var sizeInKB = parseInt(contentLength, 10) / 1024;
+      callback(sizeInKB)
+    })
+    .catch(error => {
+     callback(-1)
+    });
+}
 }
 
 module.exports = Apidae;
