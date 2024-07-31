@@ -27,6 +27,8 @@ class importModel extends geotrek
       typeCode: configData.codeType,
       type: configImportGEOTREK.types[configData.codeType],
       specialId: element.id,
+      geotrekInstanceId: structure,
+      geotrekStructureId: element.structure,
       subType: configData.subType,
       member: configData.member,
       state: 'HIDDEN',
