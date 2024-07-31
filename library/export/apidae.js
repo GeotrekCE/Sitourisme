@@ -11,7 +11,8 @@ const _ = require('lodash'),
   Url = require('url'),
   DataString = require(path.resolve('./library/data/manipulate.js')),
   config = require(path.resolve('./config/config.js')),
-  configSitraReference = require(path.resolve('./config/configSitraReference.js'));
+  configSitraReference = require(path.resolve('./config/configSitraReference.js')),
+  chalk = require('chalk');
 
 class Apidae
 {
@@ -773,6 +774,11 @@ class Apidae
           function (err, httpResponse, body) {
             console.timeEnd('Send data apidae');
             //console.log(formData);
+            const statusCode = httpResponse.statusCode;
+            const success = statusCode === 200;
+            if (!success) {
+              console.log(chalk.red("##### L'export a échoué ! #####"));
+            }
             console.log(body);
             console.log("****"+product.id);
             //console.log('FormData= ',formData);
@@ -898,6 +904,11 @@ class Apidae
                 `https://${config.sitra.api.host}${config.sitra.api.path} ${accessToken}`
               );
   
+            // Log de l'export du trek vers Apidae.
+            if (config.debug && config.debug.logProductExports) {
+              me.__logExport(product, success, body);
+            }
+
             return callback(null, finalData);
           }
         );
@@ -905,6 +916,37 @@ class Apidae
       .catch(function (error) {
         console.error(error);
       });
+  }
+
+  __logExport(product, success, body) {
+    const ProductLogModel = require(path.resolve('./modules/products/server/models/product_log.model.js'));
+    // Construction du document.
+    let logData = {
+      geotrekInstanceId: product.geotrekInstanceId,
+      geotrekStructureId: product.geotrekStructureId,
+      specialId: product.specialId,
+      specialIdSitra: product.specialIdSitra,
+    };
+    const date = (new Date()).toISOString();
+    // console.dir(httpResponse, {depth: 1})
+    if (success) {
+      logData.lastSuccessDate = date;
+      logData.lastSuccessResponse = body;
+    }
+    else {
+      logData.lastErrorDate = date;
+      logData.lastErrorResponse = body;
+    }
+    // Création/mise à jour du document.
+    try {
+      ProductLogModel.findOneAndUpdate(
+        { specialId: logData.specialId }, // Condition de recherche.
+        logData, // Données à mettre à jour.
+        { upsert: true } // Créer le document s'il n'existe pas.
+      ).exec();
+    } catch (error) {
+      console.error('Error while trying to log export:', product.specialId, error);
+    }
   }
 
  __buildState(product, root, rootFieldList) {
