@@ -11,6 +11,12 @@ const _defaultSchema = {
     type: String,
     trim: true
   },
+  geotrekInstanceId: {
+    type: Number
+  },
+  geotrekStructureId: {
+    type: Number
+  },
   proprietaireId: {
     type: String,
     trim: true

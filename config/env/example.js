@@ -12,6 +12,7 @@ module.exports = {
     allpages: true, //TO USE ALL GEOTREK API PAGES
     seeData: false, //TO SEE IN LOGS THE GEOTREK & APIDAE DATAS
     logs: true, // TO ACTIVATE OR NOT LOGS
+    logProductExports: true, // TO LOG PRODUCT EXPORTS IN MONGODB
   },
   memberId: 1, //ID PROJECT APIDAE
   proprietaireId: 0, // ID OWNER APIDAE

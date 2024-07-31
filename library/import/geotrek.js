@@ -64,18 +64,21 @@ class Import
   }
   
   getPerimetreGeographique(element) {
-    let perimetreGeo = _.map(element.cities, (item) => {
-      const city = configSitraTownByInsee[item];
-      if (city) {
-        return city.sitraId;
-      }
-      return null;
-    });
-    if (process.env.NODE_ENV == 'development') {
-      perimetreGeo = [];
-      perimetreGeo.push(14707);
-    }
-    return DataString.cleanArray(perimetreGeo);
+    // let perimetreGeo = _.map(element.cities, (item) => {
+    //   const city = configSitraTownByInsee[item];
+    //   if (city) {
+    //     return city.sitraId;
+    //   }
+    //   return null;
+    // });
+    // if (process.env.NODE_ENV == 'development') {
+    //   perimetreGeo = [];
+    //   perimetreGeo.push(14707);
+    // }
+    // return DataString.cleanArray(perimetreGeo);
+    // Périmètre géographique temporairement supprimé de l'import/export :
+    // erreurs d'écriture côté Apidae.
+    return [];
   }
   
   getShortDescription(element, lang) {
