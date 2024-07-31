@@ -703,6 +703,7 @@ class Apidae
             formData.skipValidation = 'false';
           } else {
             formData.skipValidation = 'true';
+            formData.onValidationFail = 'CANCEL';
           }
         } else if (product.importType.includes('REGION')) {
           formData.skipValidation = 'false';
