@@ -775,7 +775,7 @@ class Apidae
           function (err, httpResponse, body) {
             console.timeEnd('Send data apidae');
             //console.log(formData);
-            const statusCode = httpResponse.statusCode;
+            const statusCode = httpResponse?.statusCode;
             const success = statusCode === 200;
             if (!success) {
               console.log(chalk.red("##### L'export a échoué ! #####"));
