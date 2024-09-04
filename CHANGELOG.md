@@ -1,5 +1,4 @@
-## 2.2 - August 2024 - WebSenso
-
+## 2.2 - August 2024
 - Apidae: Continuous writing in case of error
 - Apidae: Synchronization of perimetreGeographique field stopped, due to technical limitations of Apidae members
 - Various logs added to track synchronization errors
@@ -7,7 +6,7 @@
 - Support for line breaks in Apidae records
 - Addition of Haute-Loire
 
-## 2.1 - WebSenso
+## 2.1
 - Fix picture'author recording to author record in place of description
 - Library classes refactoring
 - Server controller refactoring
@@ -15,7 +14,7 @@
 - Removing old unused method
 - Product & Event Schema updated
 
-## 1.1 - 1.2 - WebSenso
+## 1.1 & 1.2 
 - EVO Write on Apidae Multimember project
 - EVO New Geotrek configuration file with Axios renew connection
 - EVO New Geotrek configuration file to customize activities depending of Geotrek instance
