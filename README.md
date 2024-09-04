@@ -1,30 +1,30 @@
 # Sitourisme (PACA-API)
 
-Passerelle permettant d'importer automatiquement des itinéraires depuis l'API d'instances Geotrek-admin vers Apidae (par API).
+Passerelle permettant d'importer automatiquement les données d'instances Geotrek vers le SIT Apidae. Lisez la [présentation aux rencontres Geotrek 2021](https://geotrek.ecrins-parcnational.fr/rencontres/2021/presentations/09-geotrek-apidae.pdf).
 
-- Fonctionnement et correspondance des champs : https://geotrek.ecrins-parcnational.fr/ressources/technique/2022-04-Geotrek-Apidae-v2.pdf
-- Présentation aux rencontres Geotrek 2021 : https://geotrek.ecrins-parcnational.fr/rencontres/2021/presentations/09-geotrek-apidae.pdf
+## Historique
+Initialement financée par la [Région Sud](https://www.maregionsud.fr), le développement a été conçu par [IDfr](https://www.idfr.net) et [MEDIACTEURS](https://mediacteurs.net).
+Depuis 2023, l'[agence WebSenso](https://www.websenso.com) héberge la plateforme qui synchronise quotidiennement plusieurs instances de Geotrek avec Apidae. Elle déploie également des évolutions de la passerelle, voir [changelog.md](changelog.md).
 
-Afin de mettre en place la passerelle, il est nécessaire (voir PDF sur le Github):
-- côte Apidae : s'abonner au projet multi-membre n°7421 
-- côté Geotrek : fournir les éléments suivants :
+## Déploiement mutualisé
+L'[agence WebSenso](https://www.websenso.com) propose une solution clé-en-main pour synchroniser vos données Geotrek vers Apidaé. Leur équipe héberge ce script et le coût est mutualisé. Reportez-vous à la documentation PDF disponible sur ce repo.
+
+# Installation de votre serveur
+Voici le fonctionnement et la correspondance des champs : <https://geotrek.ecrins-parcnational.fr/ressources/technique/2022-04-Geotrek-Apidae-v2.pdf>
+
+Afin de mettre en place la passerelle, il est nécessaire (voir PDF sur le Github) :
+- côté Apidae : d'avoir un **projet en écriture**.
+- côté Geotrek : de connaître les éléments suivants :
   - URL du flux API Geotrek
-  - Pour chaque identifiant de structure Geotrek, fournir l'identifiant de l'ENT correspondant dans Apidae 
+  - Pour chaque identifiant de structure Geotrek, fournir l'identifiant de l'ENT correspondant dans Apidae
 
-Version 1 financée par la [Région Sud](https://www.maregionsud.fr), développée par [IDfr](https://www.idfr.net) et [MEDIACTEURS](https://mediacteurs.net).
-
-Depuis 2023, l'[agence WebSenso](https://www.websenso.com) héberge la plateforme qui synchronise quotidiennement Geotrek avec Apidae et prépare la version 1.1 de la passerelle.
-Mars 2024, l'[agence WebSenso](https://www.websenso.com) publie la version 2.1 de la passerelle.
-
-## Installation
-
-Outils nécessaires :
+## Outils nécessaires :
 
 - NodeJS 15+
 - Docker et Docker-compose
 - MongoDB 4.4.6
 
-Créer la structure de dossier :
+Créez la structure de dossier :
 
 ```
 ├── Sitourisme (PACA-API)
@@ -33,14 +33,14 @@ Créer la structure de dossier :
         └── report
 ```
 
-Dans le projet effectuer les commandes d'installation : 
+Dans le projet, effectuez les commandes d'installation :
 
 ```
 $ docker-compose up -d
 ```
 Le container Docker de MongoDB est ainsi créé.
 
-Ensuite pour générer l'application :
+Ensuite, pour générer l'application :
 
 ```
 $ npm install
@@ -48,54 +48,19 @@ $ npm install
 
 Environnement de développement, connecté à apidae.cooking sur un projet en écriture / multimembre
 ```
-$ npm run dev 
+$ npm run dev
 ```
 
-Environnement de production, connecté à apidae.com 
+Environnement de production, connecté à apidae.com
 ```
-
 $ npm run prod
 ```
 
 ## Usage
-
-L'import des données est effectué automatiquement toutes les nuits via la commande : 
-
+L'import des données est effectué automatiquement toutes les nuits via la commande :
 ```
 $ curl "URL/api/products/import?type=geotrek-api"
 ```
-
-# Changelog
-
-## 2.1 - WebSenso
-- Fix picture'author recording to author record in place of description
-- Library classes refactoring
-- Server controller refactoring
-- Models classes, entity model, entity factory & generic import refactoring
-- Removing old unused method
-- Product & Event Schema updated
-
-## 1.1 - 1.2  - WebSenso
-- EVO Write on Apidae Multimember project
-- EVO New Geotrek configuration file with Axios renew connection
-- EVO New Geotrek configuration file to customize activities depending of Geotrek instance
-- EVO Config/Apidae - Json Activity from Apidae
-- EVO FO removing auto inscription and unused views
-- EVO FO listing products - Adding status / ID Geotrek - Apidae / Errors
-- Class ImportGenericGeotrekApi refactored with deprecated Util.inherits removed by ES6 extends Geotrek import class
-- Depcheck install & clean dependencies modules from npm project (async, elasticsearch, json2csv, mongodb, q, slug, xml2json)
-- Tests Lint Done
-- Removing unused routes & methods from controller / models
-- Removing old Geotrek import 
-- Removing old RegionDo import
-- Removing unused ElasticSearch on Api Geotrek import
-- Removing Ecosystem / PM2 old hosting configuration
-
-## 1.0
-- FO Angular 1.4.14 managed by Bower
-- MongoDB 4.4.6
-- ElasticSearch
-- Geotrek / Geotrek API / RegioDo
 
 ## To prepare
 - Update to Mangoose 7.1.x - Methods no CB allowed > refact to do 
