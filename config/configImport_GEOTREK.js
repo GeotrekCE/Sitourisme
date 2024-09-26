@@ -149,7 +149,8 @@ exports.geotrekInstance = {
           1: 3284,
           2: 3283,
           4: 3333,
-          6: 4201
+          6: 4201,
+          8: 3333
         },
         itineraireType : {
           1: 'BOUCLE',
@@ -177,7 +178,8 @@ exports.geotrekInstance = {
           1: 3284,
           2: 3283,
           4: 3333,
-          6: 4201
+          6: 4201,
+          8: 3333
         },
         itineraireType : { //
           1: 'BOUCLE',
@@ -209,7 +211,8 @@ exports.geotrekInstance = {
           1: 3284,
           2: 3283,
           4: 3333,
-          6: 4201
+          6: 4201,
+          8: 3333
         },
         itineraireType : {
           1: 'BOUCLE',
@@ -237,7 +240,8 @@ exports.geotrekInstance = {
           1: 3284,
           2: 3283,
           4: 3333,
-          6: 4201
+          6: 4201,
+          8: 3333
         },
         itineraireType : {
           1: 'BOUCLE',
@@ -265,7 +269,8 @@ exports.geotrekInstance = {
           1: 3284,
           2: 3283,
           4: 3333,
-          6: 4201
+          6: 4201,
+          8: 3333
         },
         itineraireType : {
           1: 'BOUCLE',
@@ -293,7 +298,8 @@ exports.geotrekInstance = {
           1: 3284,
           2: 3283,
           4: 3333,
-          6: 4201
+          6: 4201,
+          8: 3333
         },
         itineraireType : {
           1: 'BOUCLE',
@@ -321,7 +327,8 @@ exports.geotrekInstance = {
           1: 3284,
           2: 3283,
           4: 3333,
-          6: 4201
+          6: 4201,
+          8: 3333
         },
         itineraireType : {
           1: 'BOUCLE',
@@ -349,7 +356,8 @@ exports.geotrekInstance = {
           1: 3284,
           2: 3283,
           4: 3333,
-          6: 4201
+          6: 4201,
+          8: 3333
         },
         itineraireType : {
           1: 'BOUCLE',
@@ -377,7 +385,8 @@ exports.geotrekInstance = {
           1: 3284,
           2: 3283,
           4: 3333,
-          6: 4201
+          6: 4201,
+          8: 3333
         },
         itineraireType : {
           1: 'BOUCLE',
@@ -405,7 +414,8 @@ exports.geotrekInstance = {
           1: 3284,
           2: 3283,
           4: 3333,
-          6: 4201
+          6: 4201,
+          8: 3333
         },
         itineraireType : {
           1: 'BOUCLE',
@@ -433,7 +443,8 @@ exports.geotrekInstance = {
           1: 3284,
           2: 3283,
           4: 3333,
-          6: 4201
+          6: 4201,
+          8: 3333
         },
         itineraireType : {
           1: 'BOUCLE',
@@ -461,7 +472,8 @@ exports.geotrekInstance = {
           1: 3284,
           2: 3283,
           4: 3333,
-          6: 4201
+          6: 4201,
+          8: 3333
         },
         itineraireType : {
           1: 'BOUCLE',
@@ -489,7 +501,8 @@ exports.geotrekInstance = {
           1: 3284,
           2: 3283,
           4: 3333,
-          6: 4201
+          6: 4201,
+          8: 3333
         },
         itineraireType : {
           1: 'BOUCLE',
