@@ -1,5 +1,6 @@
-# Correspondance des champs "Liste de choix" \
-Geotrek:Trek – Apidae:Équipement
+# Correspondance des champs "Liste de choix"
+
+## Geotrek:Trek – Apidae:Équipement
 
 | Libellé Geotrek | Nom système | Libellé Apidae | Nom système | Remarques |
 |:--|:--|:--|:--|:--|
