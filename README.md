@@ -4,13 +4,15 @@ Passerelle permettant d'importer automatiquement les données d'instances Geotre
 
 ## Historique
 Initialement financée par la [Région Sud](https://www.maregionsud.fr), le développement a été conçu par [IDfr](https://www.idfr.net) et [MEDIACTEURS](https://mediacteurs.net).
-Depuis 2023, l'[agence WebSenso](https://www.websenso.com) héberge la plateforme qui synchronise quotidiennement plusieurs instances de Geotrek avec Apidae. Elle déploie également des évolutions de la passerelle, voir [changelog.md](changelog.md).
+Depuis 2023, l'[agence WebSenso](https://www.websenso.com) héberge la plateforme qui synchronise quotidiennement plusieurs instances de Geotrek avec Apidae. Elle déploie également des évolutions de la passerelle, voir [CHANGELOG.md](CHANGELOG.md).
 
 ## Déploiement mutualisé
 L'[agence WebSenso](https://www.websenso.com) propose une solution clé-en-main pour synchroniser vos données Geotrek vers Apidaé. Leur équipe héberge ce script et le coût est mutualisé. Reportez-vous à la documentation PDF disponible sur ce repo.
 
 # Installation de votre serveur
 Voici le fonctionnement et la correspondance des champs : <https://geotrek.ecrins-parcnational.fr/ressources/technique/2022-04-Geotrek-Apidae-v2.pdf>
+
+*Correspondance détaillée des données : [MAPPING.md](MAPPING.md)*
 
 Afin de mettre en place la passerelle, il est nécessaire (voir PDF sur le Github) :
 - côté Apidae : d'avoir un **projet en écriture**.
