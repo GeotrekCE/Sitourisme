@@ -68,4 +68,3 @@ $ curl "URL/api/products/import?type=geotrek-api"
 - Update to Mangoose 7.1.x - Methods no CB allowed > refact to do 
 - Fix middleware Passeport on product api, Guest GET allowed
 - Remove Swig module - Engine templating refactoring needed
-
