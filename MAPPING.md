@@ -22,3 +22,4 @@
 | Itinéraires liés | ? | *Non repris* |  |  |
 | Type d'accessibilité | `accessibilities` | *Non repris* |  |  |
 | Niveau d'accessibilité | `accessibility_level` | *Non repris* |  |  |
+| Coordonnées | `departure_geom` | Géolocalisation | `localisation.geolocalisation.geoJson.coordinates` | Les coordonnées Geotrek sont issues du champ departure_geom quand celui-ci est renseigné, sinon du champ parking_location |
