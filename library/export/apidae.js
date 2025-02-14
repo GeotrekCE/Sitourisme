@@ -12,7 +12,8 @@ const _ = require('lodash'),
   DataString = require(path.resolve('./library/data/manipulate.js')),
   config = require(path.resolve('./config/config.js')),
   configSitraReference = require(path.resolve('./config/configSitraReference.js')),
-  chalk = require('chalk');
+  chalk = require('chalk'),
+  fetch = require("node-fetch");
 
 class Apidae
 {
@@ -125,7 +126,7 @@ class Apidae
         }
       };
   
-    console.log('send for id =>', memberId, access.user, access.pass, 'tokenMember = ',me.tokenPerMemberId);
+    //console.log('send for id =>', memberId, access.user, access.pass, 'tokenMember = ',me.tokenPerMemberId);
   
     if (me.tokenPerMemberId[memberId] && me.tokenPerMemberId[memberId].expire > now) {
       if (callback) {
@@ -4283,7 +4284,8 @@ class Apidae
 
   return !err ? { root: root, rootFieldList: rootFieldList } : false;
 }
- __buildImageDetail(images, nImage, callback,originalImage = false,sizeImage = 2500) {
+ 
+__buildImageDetail(images, nImage, callback,originalImage = false,sizeImage = 2500) {
   if (images && nImage < images.length) {
     let image = images[nImage];
     if (image.url) {
@@ -4306,8 +4308,14 @@ class Apidae
         var urlResize = 'https://wsrv.nl/?w='+sizeImage+'&url=' + image.url;
         var urlObject = Url.parse(urlResize);
       }
+      if (config.debug && config.debug.logs) {
+        console.log('urlResize = ',urlResize);
+      }
       me.__getImageSize(urlObject.href,function(size)
       {
+          if (config.debug && config.debug.logs) {
+            console.log('urlResize response = ',size);
+          }
           //l'image est trop grande 
           if(size>9500)
           {
@@ -4328,8 +4336,9 @@ class Apidae
           }
           else
           {
-            
-              //console.log("//////////////"+image.url+"///////////////");
+              if (config.debug && config.debug.logs) {
+                console.log("Image url = ", image.url);
+              }
               let path = urlObject.path,
                 httpProtocol,
                 filename = path.replace(new RegExp('^.*/([^/]+)$'), '$1'),
@@ -4360,13 +4369,29 @@ class Apidae
         
               
               let request = httpProtocol.request(urlObject, function (response) {
+                if (config.debug && config.debug.logs) {
+                  console.log("starting requesting Image");
+                }
                 let myBuffer = Buffer.from('');
         
                 response.on('data', function (chunk) {
                   myBuffer = Buffer.concat([myBuffer, Buffer.from(chunk, 'binary')]);
                 });
+
+                response.on('error', function (err) {
+                    console.error(`Response error: ${err.message}`);
+                    // Catch error and store on obj' errMessage 
+                    me.__buildImageDetail(images, ++nImage, callback);
+                });
+            
+                response.on('aborted', function () {
+                    console.error("Request was aborted by the server.");
+                });
         
                 response.on('end', function () {
+                  if (config.debug && config.debug.logs) {
+                    console.log("end requesting Image checking for next one");
+                  }
                   if (
                     response &&
                     response.statusCode &&
@@ -4406,7 +4431,9 @@ class Apidae
                 console.log('Problem with request : ', error.message);
                 me.__buildImageDetail(images, ++nImage, callback);
               });
-        
+              if (config.debug && config.debug.logs) {
+                console.log("end requesting Image");
+              }
               request.end();
           }
       });
@@ -4825,7 +4852,6 @@ class Apidae
 
 __getImageSize(url,callback)
 {
-  const fetch = require("node-fetch");
     // Utilise fetch pour envoyer une requête HEAD
   fetch(url, { method: 'HEAD' })
     .then(response => {
