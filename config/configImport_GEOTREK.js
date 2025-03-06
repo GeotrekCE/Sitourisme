@@ -932,5 +932,567 @@ exports.geotrekInstance = {
       },
     }
   },
-  
+  7 : {
+    geotrekUrl : 'https://geotrekadmin.tarn.fr/api/v2',
+    structures : {
+      1: {
+        specialId: 'SITRA2_STR_574511',
+        name: 'Tarn Attractivité',
+        address1: '10 rue des Grenadiers',
+        address2: null,
+        city: '33523',
+        insee: '81004',
+        specialIdSitra: '574511',
+        statusImport: 2,
+        memberId : 862,
+        proprietaireId: 862,
+        production: {
+          trek: true,
+          event: false
+        },
+        activity : {
+          1: 3284,
+          2: 3283,
+          4: 3333,
+          5: 3333,
+          6: 4201,
+          11: 5446,
+          12: 6224,
+          13: 3333
+        },
+        itineraireType : {
+          1: 'BOUCLE',
+          2: 'ALLER_RETOUR',
+          3: 'ALLER_ITINERANCE',
+        },
+      },
+      3: {
+        specialId: 'SITRA2_STR_827413',
+        name: 'Conseil Départemental du Tarn',
+        address1: '35 Lices Georges Pompidou',
+        address2: null,
+        city: '33523',
+        insee: '81004',
+        specialIdSitra: '827413',
+        statusImport: 2,
+        memberId : 862,
+        proprietaireId: 862,
+        production: {
+          trek: true,
+          event: false
+        },
+        activity : {
+          1: 3284,
+          2: 3283,
+          4: 3333,
+          5: 3333,
+          6: 4201,
+          11: 5446,
+          12: 6224,
+          13: 3333
+        },
+        itineraireType : {
+          1: 'BOUCLE',
+          2: 'ALLER_RETOUR',
+          3: 'ALLER_ITINERANCE',
+        },
+      },
+      9: {
+        specialId: 'SITRA2_STR_844260',
+        name: 'Communauté de Communes Centre Tarn',
+        address1: '2 bis Boulevard Carnot',
+        address2: null,
+        city: '33739',
+        insee: '81222',
+        specialIdSitra: '844260',
+        statusImport: 2,
+        memberId : 862,
+        proprietaireId: 862,
+        production: {
+          trek: true,
+          event: false
+        },
+        activity : {
+          1: 3284,
+          2: 3283,
+          4: 3333,
+          5: 3333,
+          6: 4201,
+          11: 5446,
+          12: 6224,
+          13: 3333
+        },
+        itineraireType : {
+          1: 'BOUCLE',
+          2: 'ALLER_RETOUR',
+          3: 'ALLER_ITINERANCE',
+        },
+      },
+      10: {
+        specialId: 'SITRA2_STR_799407',
+        name: 'Communauté de Communes Sidobre Vals et Plateaux',
+        address1: 'Vialavert',
+        address2: null,
+        city: '33550',
+        insee: '81031',
+        specialIdSitra: '799407',
+        statusImport: 2,
+        memberId : 862,
+        proprietaireId: 862,
+        production: {
+          trek: true,
+          event: false
+        },
+        activity : {
+          1: 3284,
+          2: 3283,
+          4: 3333,
+          5: 3333,
+          6: 4201,
+          11: 5446,
+          12: 6224,
+          13: 3333
+        },
+        itineraireType : {
+          1: 'BOUCLE',
+          2: 'ALLER_RETOUR',
+          3: 'ALLER_ITINERANCE',
+        },
+      },
+      11: {
+        specialId: 'SITRA2_STR_6437334',
+        name: 'Communauté de communes du Cordais et du Causse (4C)',
+        address1: "33, promenade de l'Autan",
+        address2: null,
+        city: '33564',
+        insee: '81045',
+        specialIdSitra: '6437334',
+        statusImport: 2,
+        memberId : 862,
+        proprietaireId: 862,
+        production: {
+          trek: true,
+          event: false
+        },
+        activity : {
+          1: 3284,
+          2: 3283,
+          4: 3333,
+          5: 3333,
+          6: 4201,
+          11: 5446,
+          12: 6224,
+          13: 3333
+        },
+        itineraireType : {
+          1: 'BOUCLE',
+          2: 'ALLER_RETOUR',
+          3: 'ALLER_ITINERANCE',
+        },
+      },
+      12: {
+        specialId: 'SITRA2_STR_826400',
+        name: 'Parc Naturel Régional du Haut Languedoc',
+        address1: '1 place du Foirail',
+        address2: null,
+        city: '13775',
+        insee: '34284',
+        specialIdSitra: '826400',
+        statusImport: 2,
+        memberId : 862,
+        proprietaireId: 862,
+        production: {
+          trek: true,
+          event: false
+        },
+        activity : {
+          1: 3284,
+          2: 3283,
+          4: 3333,
+          5: 3333,
+          6: 4201,
+          11: 5446,
+          12: 6224,
+          13: 3333
+        },
+        itineraireType : {
+          1: 'BOUCLE',
+          2: 'ALLER_RETOUR',
+          3: 'ALLER_ITINERANCE',
+        },
+      },
+      13: {
+        specialId: 'SITRA2_STR_6146219',
+        name: "Communauté d'Agglomération Gaillac-Graulhet",
+        address1: 'Le Nay',
+        address2: 'BP 81133',
+        city: '33811',
+        insee: '81294',
+        specialIdSitra: '6146219',
+        statusImport: 2,
+        memberId : 862,
+        proprietaireId: 862,
+        production: {
+          trek: true,
+          event: false
+        },
+        activity : {
+          1: 3284,
+          2: 3283,
+          4: 3333,
+          5: 3333,
+          6: 4201,
+          11: 5446,
+          12: 6224,
+          13: 3333
+        },
+        itineraireType : {
+          1: 'BOUCLE',
+          2: 'ALLER_RETOUR',
+          3: 'ALLER_ITINERANCE',
+        },
+      },
+      14: {
+        specialId: 'SITRA2_STR_763673',
+        name: "Office de Tourisme Vallée du Tarn & Monts de l'Albigeois",
+        address1: '149 route de Villefranche',
+        address2: null,
+        city: '33529',
+        insee: '81010',
+        specialIdSitra: '763673',
+        statusImport: 2,
+        memberId : 862,
+        proprietaireId: 862,
+        production: {
+          trek: true,
+          event: false
+        },
+        activity : {
+          1: 3284,
+          2: 3283,
+          4: 3333,
+          5: 3333,
+          6: 4201,
+          11: 5446,
+          12: 6224,
+          13: 3333
+        },
+        itineraireType : {
+          1: 'BOUCLE',
+          2: 'ALLER_RETOUR',
+          3: 'ALLER_ITINERANCE',
+        },
+      },
+      15: {
+        specialId: 'SITRA2_STR_6150073',
+        name: 'Office de Tourisme de Castres-Mazamet',
+        address1: '2 place de la République',
+        address2: null,
+        city: '33583',
+        insee: '81065',
+        specialIdSitra: '6150073',
+        statusImport: 2,
+        memberId : 862,
+        proprietaireId: 862,
+        production: {
+          trek: true,
+          event: false
+        },
+        activity : {
+          1: 3284,
+          2: 3283,
+          4: 3333,
+          5: 3333,
+          6: 4201,
+          11: 5446,
+          12: 6224,
+          13: 3333
+        },
+        itineraireType : {
+          1: 'BOUCLE',
+          2: 'ALLER_RETOUR',
+          3: 'ALLER_ITINERANCE',
+        },
+      },
+      16: {
+        specialId: 'SITRA2_STR_5303931',
+        name: "Communauté d'Agglomération de l'Albigeois",
+        address1: 'Parc François Mitterrand',
+        address2: null,
+        city: '33774',
+        insee: '81257',
+        specialIdSitra: '5303931',
+        statusImport: 2,
+        memberId : 862,
+        proprietaireId: 862,
+        production: {
+          trek: true,
+          event: false
+        },
+        activity : {
+          1: 3284,
+          2: 3283,
+          4: 3333,
+          5: 3333,
+          6: 4201,
+          11: 5446,
+          12: 6224,
+          13: 3333
+        },
+        itineraireType : {
+          1: 'BOUCLE',
+          2: 'ALLER_RETOUR',
+          3: 'ALLER_ITINERANCE',
+        },
+      },
+      17: {
+        specialId: 'SITRA2_STR_785720',
+        name: 'Office de tourisme intercommunal Tarn-Agout',
+        address1: 'rond point de Gabor',
+        address2: null,
+        city: '33788',
+        insee: '81271',
+        specialIdSitra: '785720',
+        statusImport: 2,
+        memberId : 862,
+        proprietaireId: 862,
+        production: {
+          trek: true,
+          event: false
+        },
+        activity : {
+          1: 3284,
+          2: 3283,
+          4: 3333,
+          5: 3333,
+          6: 4201,
+          11: 5446,
+          12: 6224,
+          13: 3333
+        },
+        itineraireType : {
+          1: 'BOUCLE',
+          2: 'ALLER_RETOUR',
+          3: 'ALLER_ITINERANCE',
+        },
+      },
+      18: {
+        specialId: 'SITRA2_STR_777024',
+        name: "Office de Tourisme Intercommunal du Lautrécois - Pays d'Agout",
+        address1: 'Rue du mercadial',
+        address2: null,
+        city: '33657',
+        insee: '81139',
+        specialIdSitra: '777024',
+        statusImport: 2,
+        memberId : 862,
+        proprietaireId: 862,
+        production: {
+          trek: true,
+          event: false
+        },
+        activity : {
+          1: 3284,
+          2: 3283,
+          4: 3333,
+          5: 3333,
+          6: 4201,
+          11: 5446,
+          12: 6224,
+          13: 3333
+        },
+        itineraireType : {
+          1: 'BOUCLE',
+          2: 'ALLER_RETOUR',
+          3: 'ALLER_ITINERANCE',
+        },
+      },
+      19: {
+        specialId: 'SITRA2_STR_777005',
+        name: "Office de tourisme Terres d'Autan - Montagne Noire",
+        address1: 'la Serre',
+        address2: null,
+        city: '33790',
+        insee: '81273',
+        specialIdSitra: '777005',
+        statusImport: 2,
+        memberId : 862,
+        proprietaireId: 862,
+        production: {
+          trek: true,
+          event: false
+        },
+        activity : {
+          1: 3284,
+          2: 3283,
+          4: 3333,
+          5: 3333,
+          6: 4201,
+          11: 5446,
+          12: 6224,
+          13: 3333
+        },
+        itineraireType : {
+          1: 'BOUCLE',
+          2: 'ALLER_RETOUR',
+          3: 'ALLER_ITINERANCE',
+        },
+      },
+      22: {
+        specialId: 'SITRA2_STR_811484',
+        name: 'Communauté de Communes du Haut-Languedoc',
+        address1: "5 Rue de l'Artisanat",
+        address2: null,
+        city: '33642',
+        insee: '81124',
+        specialIdSitra: '811484',
+        statusImport: 2,
+        memberId : 862,
+        proprietaireId: 862,
+        production: {
+          trek: true,
+          event: false
+        },
+        activity : {
+          1: 3284,
+          2: 3283,
+          4: 3333,
+          5: 3333,
+          6: 4201,
+          11: 5446,
+          12: 6224,
+          13: 3333
+        },
+        itineraireType : {
+          1: 'BOUCLE',
+          2: 'ALLER_RETOUR',
+          3: 'ALLER_ITINERANCE',
+        },
+      },
+      23: {
+        specialId: 'SITRA2_STR_802217',
+        name: 'Office de tourisme Ségala Tarnais',
+        address1: '2 rue du Gaz',
+        address2: null,
+        city: '33578',
+        insee: '81060',
+        specialIdSitra: '802217',
+        statusImport: 2,
+        memberId : 862,
+        proprietaireId: 862,
+        production: {
+          trek: true,
+          event: false
+        },
+        activity : {
+          1: 3284,
+          2: 3283,
+          4: 3333,
+          5: 3333,
+          6: 4201,
+          11: 5446,
+          12: 6224,
+          13: 3333
+        },
+        itineraireType : {
+          1: 'BOUCLE',
+          2: 'ALLER_RETOUR',
+          3: 'ALLER_ITINERANCE',
+        },
+      },
+      24: {
+        specialId: 'SITRA2_STR_4767989',
+        name: 'Office de Tourisme Intercommunal Aux sources du canal du Midi',
+        address1: 'Place Philippe VI de Valois',
+        address2: null,
+        city: '12345',
+        insee: '31451',
+        specialIdSitra: '4767989',
+        statusImport: 2,
+        memberId : 862,
+        proprietaireId: 862,
+        production: {
+          trek: true,
+          event: false
+        },
+        activity : {
+          1: 3284,
+          2: 3283,
+          4: 3333,
+          5: 3333,
+          6: 4201,
+          11: 5446,
+          12: 6224,
+          13: 3333
+        },
+        itineraireType : {
+          1: 'BOUCLE',
+          2: 'ALLER_RETOUR',
+          3: 'ALLER_ITINERANCE',
+        },
+      },
+      25: {
+        specialId: 'SITRA2_STR_4594085',
+        name: "Office de Tourisme d'Albi",
+        address1: '42 rue Mariès',
+        address2: null,
+        city: '33523',
+        insee: '81004',
+        specialIdSitra: '4594085',
+        statusImport: 2,
+        memberId : 862,
+        proprietaireId: 862,
+        production: {
+          trek: true,
+          event: false
+        },
+        activity : {
+          1: 3284,
+          2: 3283,
+          4: 3333,
+          5: 3333,
+          6: 4201,
+          11: 5446,
+          12: 6224,
+          13: 3333
+        },
+        itineraireType : {
+          1: 'BOUCLE',
+          2: 'ALLER_RETOUR',
+          3: 'ALLER_ITINERANCE',
+        },
+      },
+      26: {
+        specialId: 'SITRA2_STR_4934753',
+        name: 'Communauté de communes Thoré Montagne Noire',
+        address1: '13 avenue de la Ribaute',
+        address2: null,
+        city: '33524',
+        insee: '81005',
+        specialIdSitra: '4934753',
+        statusImport: 2,
+        memberId : 862,
+        proprietaireId: 862,
+        production: {
+          trek: true,
+          event: false
+        },
+        activity : {
+          1: 3284,
+          2: 3283,
+          4: 3333,
+          5: 3333,
+          6: 4201,
+          11: 5446,
+          12: 6224,
+          13: 3333
+        },
+        itineraireType : {
+          1: 'BOUCLE',
+          2: 'ALLER_RETOUR',
+          3: 'ALLER_ITINERANCE',
+        },
+      },
+    }
+  },
 };
