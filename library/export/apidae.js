@@ -162,6 +162,18 @@ class Apidae
           }
         });
       });
+
+      req.on('error', function (err) {
+        console.error('Request error:', err);
+        if (err.code === 'ENOTFOUND') {
+          console.error('DNS lookup failed for:', options.hostname || options.host);
+        }
+        if (callback) {
+          setTimeout(() => {
+            this.__getSitraToken(product, member, callback);
+          }, 15000);
+        }
+      });
   
       req.end();
     }
