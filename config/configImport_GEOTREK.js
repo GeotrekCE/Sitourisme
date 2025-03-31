@@ -1495,4 +1495,393 @@ exports.geotrekInstance = {
       },
     }
   },
+  /*8 : {
+    geotrekUrl : 'https://admin.destination-parc-monts-ardeche.fr/api/v2/',
+    structures : {
+      1: {
+        specialId: '07AASOR100506_struct',
+        name: "Parc naturel régional des monts d'Ardèche",
+        address1: "Maison du Parc",
+        address2: "Domaine de Rochemure",
+        city: '2201',
+        insee: '07107',
+        specialIdSitra: '73816',
+        statusImport: 2,
+        memberId : 96,
+        proprietaireId: 96,
+        production: {
+          trek: true,
+          event: false
+        },
+        activity : {
+          1: 3284,
+          2: 3283,
+          4: 3333,
+          5: 3333,
+          6: 4201,
+          9: 6224,
+          10: 3333,
+          11: 3333
+        },
+        itineraireType : {
+          1: 'BOUCLE',
+          2: 'ALLER_RETOUR',
+          3: 'ALLER_ITINERANCE',
+          5: 'ALLER_ITINERANCE',
+        },
+      },
+      5: {
+        specialId: 'sitraSTR710498',
+        name: "Communauté de communes Val'Eyrieux",
+        address1: "21 avenue de Saunier",
+        address2: null,
+        city: '2158',
+        insee: '07064',
+        specialIdSitra: '114485',
+        statusImport: 2,
+        memberId : 96,
+        proprietaireId: 96,
+        production: {
+          trek: true,
+          event: false
+        },
+        activity : {
+          1: 3284,
+          2: 3283,
+          4: 3333,
+          5: 3333,
+          6: 4201,
+          9: 6224,
+          10: 3333,
+          11: 3333
+        },
+        itineraireType : {
+          1: 'BOUCLE',
+          2: 'ALLER_RETOUR',
+          3: 'ALLER_ITINERANCE',
+          5: 'ALLER_ITINERANCE',
+        },
+      },
+      6: {
+        specialId: '07ABOTS100014_struct',
+        name: "Office de Tourisme Sources & Volcans",
+        address1: "2 place du bosquet Neyrac-les-Bains",
+        address2: null,
+        city: '2250',
+        insee: '07156',
+        specialIdSitra: '64747',
+        statusImport: 2,
+        memberId : 96,
+        proprietaireId: 96,
+        production: {
+          trek: true,
+          event: false
+        },
+        activity : {
+          1: 3284,
+          2: 3283,
+          4: 3333,
+          5: 3333,
+          6: 4201,
+          9: 6224,
+          10: 3333,
+          11: 3333
+        },
+        itineraireType : {
+          1: 'BOUCLE',
+          2: 'ALLER_RETOUR',
+          3: 'ALLER_ITINERANCE',
+          5: 'ALLER_ITINERANCE',
+        },
+      },
+      7: {
+        specialId: 'sitraSTR726611',
+        name: "Communauté de Communes Rhône Crussol",
+        address1: "1278 rue Henri Dunant",
+        address2: "BP 249",
+        city: '2196',
+        insee: '07102',
+        specialIdSitra: '117593',
+        statusImport: 2,
+        memberId : 96,
+        proprietaireId: 96,
+        production: {
+          trek: true,
+          event: false
+        },
+        activity : {
+          1: 3284,
+          2: 3283,
+          4: 3333,
+          5: 3333,
+          6: 4201,
+          9: 6224,
+          10: 3333,
+          11: 3333
+        },
+        itineraireType : {
+          1: 'BOUCLE',
+          2: 'ALLER_RETOUR',
+          3: 'ALLER_ITINERANCE',
+          5: 'ALLER_ITINERANCE',
+        },
+      },
+      8: {
+        specialId: '07ABOTS100002_struct',
+        name: "Société Publique Locale Cévennes d'Ardèche",
+        address1: "17 place Léopold Ollier",
+        address2: null,
+        city: '2426',
+        insee: '07334',
+        specialIdSitra: '154163',
+        statusImport: 2,
+        memberId : 96,
+        proprietaireId: 96,
+        production: {
+          trek: true,
+          event: false
+        },
+        activity : {
+          1: 3284,
+          2: 3283,
+          4: 3333,
+          5: 3333,
+          6: 4201,
+          9: 6224,
+          10: 3333,
+          11: 3333
+        },
+        itineraireType : {
+          1: 'BOUCLE',
+          2: 'ALLER_RETOUR',
+          3: 'ALLER_ITINERANCE',
+          5: 'ALLER_ITINERANCE',
+        },
+      },
+      9: {
+        specialId: '07ABOTS100015_struct',
+        name: "Office de tourisme 'Privas Centre Ardèche' (destination 'Cœur d'Ardèche')",
+        address1: "2 Cours du Palais",
+        address2: null,
+        city: '2279',
+        insee: '07186',
+        specialIdSitra: '170981',
+        statusImport: 2,
+        memberId : 96,
+        proprietaireId: 96,
+        production: {
+          trek: true,
+          event: false
+        },
+        activity : {
+          1: 3284,
+          2: 3283,
+          4: 3333,
+          5: 3333,
+          6: 4201,
+          9: 6224,
+          10: 3333,
+          11: 3333
+        },
+        itineraireType : {
+          1: 'BOUCLE',
+          2: 'ALLER_RETOUR',
+          3: 'ALLER_ITINERANCE',
+          5: 'ALLER_ITINERANCE',
+        },
+      },
+      12: {
+        specialId: 'sitraSTR553461',
+        name: "Office de tourisme Montagne d'Ardèche",
+        address1: "1 place Jacques Chirac",
+        address2: null,
+        city: '2165',
+        insee: '07071',
+        specialIdSitra: '162317',
+        statusImport: 2,
+        memberId : 96,
+        proprietaireId: 96,
+        production: {
+          trek: true,
+          event: false
+        },
+        activity : {
+          1: 3284,
+          2: 3283,
+          4: 3333,
+          5: 3333,
+          6: 4201,
+          9: 6224,
+          10: 3333,
+          11: 3333
+        },
+        itineraireType : {
+          1: 'BOUCLE',
+          2: 'ALLER_RETOUR',
+          3: 'ALLER_ITINERANCE',
+          5: 'ALLER_ITINERANCE',
+        },
+      },
+      13: {
+        specialId: '07ABOTS100008_struct',
+        name: "Office de Tourisme du Pays de Lamastre",
+        address1: "22 avenue Boissy d'Anglas",
+        address2: null,
+        city: '2223',
+        insee: '07129',
+        specialIdSitra: '32358',
+        statusImport: 2,
+        memberId : 96,
+        proprietaireId: 96,
+        production: {
+          trek: true,
+          event: false
+        },
+        activity : {
+          1: 3284,
+          2: 3283,
+          4: 3333,
+          5: 3333,
+          6: 4201,
+          9: 6224,
+          10: 3333,
+          11: 3333
+        },
+        itineraireType : {
+          1: 'BOUCLE',
+          2: 'ALLER_RETOUR',
+          3: 'ALLER_ITINERANCE',
+          5: 'ALLER_ITINERANCE',
+        },
+      },
+      14: {
+        specialId: '07ABOTS100010_struct',
+        name: "*Office de Tourisme du Pays d'Aubenas-Vals-Antraigues",
+        address1: "7 rue Jean Jaurés",
+        address2: null,
+        city: '2423',
+        insee: '07331',
+        specialIdSitra: '122134',
+        statusImport: 2,
+        memberId : 96,
+        proprietaireId: 96,
+        production: {
+          trek: true,
+          event: false
+        },
+        activity : {
+          1: 3284,
+          2: 3283,
+          4: 3333,
+          5: 3333,
+          6: 4201,
+          9: 6224,
+          10: 3333,
+          11: 3333
+        },
+        itineraireType : {
+          1: 'BOUCLE',
+          2: 'ALLER_RETOUR',
+          3: 'ALLER_ITINERANCE',
+          5: 'ALLER_ITINERANCE',
+        },
+      },
+      15: {
+        specialId: 'SITRA2_STR_784479',
+        name: "Office de Tourisme Ardèche Hautes Vallées",
+        address1: "4 B rue Saint-Joseph",
+        address2: null,
+        city: '2158',
+        insee: '07064',
+        specialIdSitra: '784479',
+        statusImport: 2,
+        memberId : 96,
+        proprietaireId: 96,
+        production: {
+          trek: true,
+          event: false
+        },
+        activity : {
+          1: 3284,
+          2: 3283,
+          4: 3333,
+          5: 3333,
+          6: 4201,
+          9: 6224,
+          10: 3333,
+          11: 3333
+        },
+        itineraireType : {
+          1: 'BOUCLE',
+          2: 'ALLER_RETOUR',
+          3: 'ALLER_ITINERANCE',
+          5: 'ALLER_ITINERANCE',
+        },
+      },
+      16: {
+        specialId: '07ABOTS100001_struct',
+        name: "Office de Tourisme Gorges de l'Ardèche - Pont d'Arc",
+        address1: "16 rue des Abeilles",
+        address2: null,
+        city: '2422',
+        insee: '07330',
+        specialIdSitra: '102431',
+        statusImport: 2,
+        memberId : 96,
+        proprietaireId: 96,
+        production: {
+          trek: true,
+          event: false
+        },
+        activity : {
+          1: 3284,
+          2: 3283,
+          4: 3333,
+          5: 3333,
+          6: 4201,
+          9: 6224,
+          10: 3333,
+          11: 3333
+        },
+        itineraireType : {
+          1: 'BOUCLE',
+          2: 'ALLER_RETOUR',
+          3: 'ALLER_ITINERANCE',
+          5: 'ALLER_ITINERANCE',
+        },
+      },
+      17: {
+        specialId: '07ABOTS100011_struct',
+        name: "Office de Tourisme Ardèche Grand Air",
+        address1: "Place des Cordeliers",
+        address2: null,
+        city: '2105',
+        insee: '07010',
+        specialIdSitra: '173276',
+        statusImport: 2,
+        memberId : 96,
+        proprietaireId: 96,
+        production: {
+          trek: true,
+          event: false
+        },
+        activity : {
+          1: 3284,
+          2: 3283,
+          4: 3333,
+          5: 3333,
+          6: 4201,
+          9: 6224,
+          10: 3333,
+          11: 3333
+        },
+        itineraireType : {
+          1: 'BOUCLE',
+          2: 'ALLER_RETOUR',
+          3: 'ALLER_ITINERANCE',
+          5: 'ALLER_ITINERANCE',
+        },
+      },
+    }
+  },*/
 };
