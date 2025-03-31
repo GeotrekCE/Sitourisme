@@ -2746,7 +2746,7 @@ class Apidae
 
     rootFieldList.push('localisation.geolocalisation.complement');
   }
-  if (product.perimetreGeographique && product.perimetreGeographique.length) {
+  /*if (product.perimetreGeographique && product.perimetreGeographique.length) {
     localization.perimetreGeographique = [];
     _.forEach(product.perimetreGeographique, function (item) {
       localization.perimetreGeographique.push({
@@ -2754,7 +2754,22 @@ class Apidae
       });
     });
     rootFieldList.push('localisation.perimetreGeographique');
+  }*/
+ 
+ /*localization.perimetreGeographique = [];
+  if (product.address.city) {
+    localization.perimetreGeographique.push({
+      id: product.address.city
+    });
   }
+  rootFieldList.push('localisation.perimetreGeographique');*/
+  /*if (product.perimetreGeographique && product.perimetreGeographique.length) {
+    _.forEach(product.perimetreGeographique, function (item) {
+      localization.perimetreGeographique.push({
+        id: item
+      });
+    });
+  }*/
 
   if (product.environment && product.environment.length) {
     environment = this.buildTypeKeyArray(product.environment, null, unwantedTypes, context);
