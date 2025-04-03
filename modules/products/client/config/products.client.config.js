@@ -18,7 +18,7 @@ angular.module('products').run([
     Menus.addSubMenuItem('topbar', 'products', {
       title: 'Import Geotrek API',
       state: 'products.import',
-      stateParams: { importType: 'geotrek-api', importInstance: '7' }
+      stateParams: { importType: 'geotrek-api', importInstance: '8' }
     });
   }
 ]);
