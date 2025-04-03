@@ -2499,12 +2499,8 @@ class Apidae
   let descriptifsThematises = [],
     err = false;
 
-  if (product.ambianceIdSitra) {
-    let theme = {
-        elementReferenceType: 'DescriptifTheme',
-        id: product.ambianceIdSitra
-      },
-      description = {};
+  if (product.ambianceLibelle) {
+    let description = {};
       
     description.libelleFr = product.ambianceLibelle;
     if (product.ambianceLibelleEn) {
@@ -2524,7 +2520,10 @@ class Apidae
     }
 
     descriptifsThematises.push({
-      theme: theme,
+      theme: {
+        elementReferenceType: 'DescriptifTheme',
+        id: 6527, //Topo/pas à pas : 6527 / cooking 5536
+      },
       description: description
     });
   }

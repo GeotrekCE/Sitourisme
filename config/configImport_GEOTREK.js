@@ -1495,7 +1495,7 @@ exports.geotrekInstance = {
       },
     }
   },
-  /*8 : {
+  8 : {
     geotrekUrl : 'https://admin.destination-parc-monts-ardeche.fr/api/v2/',
     structures : {
       1: {
@@ -1510,7 +1510,7 @@ exports.geotrekInstance = {
         memberId : 96,
         proprietaireId: 96,
         production: {
-          trek: true,
+          trek: false,
           event: false
         },
         activity : {
@@ -1542,7 +1542,7 @@ exports.geotrekInstance = {
         memberId : 96,
         proprietaireId: 96,
         production: {
-          trek: true,
+          trek: false,
           event: false
         },
         activity : {
@@ -1574,7 +1574,7 @@ exports.geotrekInstance = {
         memberId : 96,
         proprietaireId: 96,
         production: {
-          trek: true,
+          trek: false,
           event: false
         },
         activity : {
@@ -1606,7 +1606,7 @@ exports.geotrekInstance = {
         memberId : 96,
         proprietaireId: 96,
         production: {
-          trek: true,
+          trek: false,
           event: false
         },
         activity : {
@@ -1638,7 +1638,7 @@ exports.geotrekInstance = {
         memberId : 96,
         proprietaireId: 96,
         production: {
-          trek: true,
+          trek: false,
           event: false
         },
         activity : {
@@ -1670,7 +1670,7 @@ exports.geotrekInstance = {
         memberId : 96,
         proprietaireId: 96,
         production: {
-          trek: true,
+          trek: false,
           event: false
         },
         activity : {
@@ -1702,7 +1702,7 @@ exports.geotrekInstance = {
         memberId : 96,
         proprietaireId: 96,
         production: {
-          trek: true,
+          trek: false,
           event: false
         },
         activity : {
@@ -1734,7 +1734,7 @@ exports.geotrekInstance = {
         memberId : 96,
         proprietaireId: 96,
         production: {
-          trek: true,
+          trek: false,
           event: false
         },
         activity : {
@@ -1766,7 +1766,7 @@ exports.geotrekInstance = {
         memberId : 96,
         proprietaireId: 96,
         production: {
-          trek: true,
+          trek: false,
           event: false
         },
         activity : {
@@ -1798,7 +1798,7 @@ exports.geotrekInstance = {
         memberId : 96,
         proprietaireId: 96,
         production: {
-          trek: true,
+          trek: false,
           event: false
         },
         activity : {
@@ -1830,7 +1830,7 @@ exports.geotrekInstance = {
         memberId : 96,
         proprietaireId: 96,
         production: {
-          trek: true,
+          trek: false,
           event: false
         },
         activity : {
@@ -1862,7 +1862,7 @@ exports.geotrekInstance = {
         memberId : 96,
         proprietaireId: 96,
         production: {
-          trek: true,
+          trek: false,
           event: false
         },
         activity : {
@@ -1883,5 +1883,5 @@ exports.geotrekInstance = {
         },
       },
     }
-  },*/
+  },
 };
