@@ -2498,7 +2498,7 @@ class Apidae
  __buildDescriptifsThematises(product, root, rootFieldList) {
   let descriptifsThematises = [],
     err = false;
-
+  // Retrieving the Geotrek ambiance field from the Apidae themed description
   if (product.ambianceLibelle) {
     let description = {};
       
@@ -2522,7 +2522,7 @@ class Apidae
     descriptifsThematises.push({
       theme: {
         elementReferenceType: 'DescriptifTheme',
-        id: 6527, //Topo/pas à pas : 6527 / cooking 5536
+        id: 5536, //Topo/pas à pas : 6527 / cooking 5536
       },
       description: description
     });
