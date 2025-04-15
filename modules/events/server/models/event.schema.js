@@ -659,10 +659,12 @@ const _defaultSchema = {
           type: Date
         },
         horaireOuverture: {
-          type: Date
+          type: String,
+          trim: true
         },
         horaireFermeture: {
-          type: Date
+          type: String,
+          trim: true
         },
         complementHoraire: {
           type: String,
@@ -699,10 +701,12 @@ const _defaultSchema = {
               trim: true
             },
             horaireOuverture: {
-              type: Date
+              type: String,
+              trim: true
             },
             horaireFermeture: {
-              type: Date
+              type: String,
+              trim: true
             }
           }
         ]

@@ -126,7 +126,7 @@ class importModel extends geotrek
         if (element.end_time) {
           horaireOuverture = element.start_time;
           horaireFermeture = element.end_time;
-        } else if (element.duration) {
+        } else if (element.duration != '') {
           let horaireOuvertureTmp = moment(element.begin_date + ' ' + element.start_time, 'YYYY-MM-DD HH:mm:ss');
           let horaireFermetureTmp = moment(element.begin_date + ' ' + element.duration, 'YYYY-MM-DD HH:mm:ss');
           
@@ -146,6 +146,7 @@ class importModel extends geotrek
             ((horaireFermetureTmp2.seconds() < 10) ? "0" + horaireFermetureTmp2.seconds() : horaireFermetureTmp2.seconds())
           );
         }
+        console.log('>>>>>>>>> StartTime =', horaireOuverture, horaireFermeture);
       }
 
       return {

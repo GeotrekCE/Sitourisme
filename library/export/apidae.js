@@ -183,9 +183,9 @@ class Apidae
     return moment(date).format('YYYY-MM-DD');
   }
 
-  __getHoraire(date) {
+  /*__getHoraire(date) {
     return moment(date).format('HH:mm:ss');
-  }
+  }*/
 
   __traitePeriode(arrPeriodes) {
     let dateStartPrec = null,
@@ -209,29 +209,33 @@ class Apidae
       ) {
         if (description) descriptionFinal += description;
         if (horaireO) {
-          descriptionFinal += ' - Ouverture : ' + this.__getHoraire(horaireO);
+          //descriptionFinal += ' - Ouverture : ' + this.__getHoraire(horaireO);
+          descriptionFinal += ' - Ouverture : ' + horaireO;
         }
         if (horaireF) {
-          descriptionFinal += ' - Fermeture : ' + this.__getHoraire(horaireF);
+          //descriptionFinal += ' - Fermeture : ' + this.__getHoraire(horaireF);
+          descriptionFinal += ' - Fermeture : ' + horaireF;
         }
         descriptionFinal += '\r\n';
       } else {
         if (descriptionFinal) {
           let descriptionFinal2 = '';
           if (arrPeriodesFinal[arrPeriodesFinal.length - 1].horaireOuverture) {
-            descriptionFinal2 =
+            /*descriptionFinal2 =
               ' - Ouverture : ' +
               this.__getHoraire(
                 arrPeriodesFinal[arrPeriodesFinal.length - 1].horaireOuverture
-              );
+              );*/
+            descriptionFinal2 = ' - Ouverture : ' + arrPeriodesFinal[arrPeriodesFinal.length - 1].horaireOuverture;
             arrPeriodesFinal[arrPeriodesFinal.length - 1].horaireOuverture = null;
           }
           if (arrPeriodesFinal[arrPeriodesFinal.length - 1].horaireFermeture) {
-            descriptionFinal2 =
+            /*descriptionFinal2 =
               ' - Fermeture : ' +
               this.__getHoraire(
                 arrPeriodesFinal[arrPeriodesFinal.length - 1].horaireFermeture
-              );
+              );*/
+            descriptionFinal2 = ' - Fermeture : ' + arrPeriodesFinal[arrPeriodesFinal.length - 1].horaireFermeture;
             arrPeriodesFinal[arrPeriodesFinal.length - 1].horaireFermeture = null;
           }
           if (descriptionFinal2) {
@@ -4763,14 +4767,16 @@ __buildImageDetail(images, nImage, callback,originalImage = false,sizeImage = 25
           );
 
           if (allEqualhoraireOuverture && horaireOuvertureArr.length) {
-            period.horaireOuverture = context.__getHoraire(
+            /*period.horaireOuverture = context.__getHoraire(
               periodData.ouverturesJourDuMois[0].horaireOuverture
-            );
+            );*/
+            period.horaireOuverture = periodData.ouverturesJourDuMois[0].horaireOuverture;
           }
           if (allEqualhoraireFermeture && horaireFermetureArr.length) {
-            period.horaireFermeture = context.__getHoraire(
+            /*period.horaireFermeture = context.__getHoraire(
               periodData.ouverturesJourDuMois[0].horaireFermeture
-            );
+            );*/
+            period.horaireFermeture = periodData.ouverturesJourDuMois[0].horaireFermeture;
           }
 
           period.ouverturesJournalieres = [];
@@ -4778,10 +4784,12 @@ __buildImageDetail(images, nImage, callback,originalImage = false,sizeImage = 25
         }
 
         if (periodData.horaireOuverture) {
-          period.horaireOuverture = context.__getHoraire(periodData.horaireOuverture);
+          //period.horaireOuverture = context.__getHoraire(periodData.horaireOuverture);
+          period.horaireOuverture = periodData.horaireOuverture;
         }
         if (periodData.horaireFermeture) {
-          period.horaireFermeture = context.__getHoraire(periodData.horaireFermeture);
+          //period.horaireFermeture = context.__getHoraire(periodData.horaireFermeture);
+          period.horaireFermeture = periodData.horaireFermeture;
         }
         
         // TODO EVENT
@@ -4833,7 +4841,7 @@ __buildImageDetail(images, nImage, callback,originalImage = false,sizeImage = 25
     }
     
     // TODO EVENT
-    if (product.openingDate.expiration) {
+    /*if (product.openingDate.expiration) {
        _.forEach(product.openingDate.expiration, function (periodDataExpiration) {
         root.expiration = {
           dateExpiration : moment(periodDataExpiration.expirationDate).format('YYYY-MM-DD'),
@@ -4841,7 +4849,7 @@ __buildImageDetail(images, nImage, callback,originalImage = false,sizeImage = 25
         };
        });  
       rootFieldList.push('expiration');
-    }    // TODO EVENT
+    }*/    // TODO EVENT
     
     if (
       product.openingDate.fermeturesExceptionnelles &&

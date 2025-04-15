@@ -46,7 +46,7 @@ exports.geotrekInstance = {
         proprietaireId: 707,
         production: {
           trek: true,
-          event: false
+          event: true
         },
         www: 'https://rando.ecrins-parcnational.fr/trek/',
         touristicevent_type : {

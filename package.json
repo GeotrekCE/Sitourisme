@@ -8,7 +8,7 @@
     "url": "https://github.com/GeotrekCE/Sitourisme"
   },
   "scripts": {
-    "dev": "NODE_ENV=development nodemon server.js",
+    "dev": "NODE_ENV=development PORT=3005 nodemon server.js",
     "prod": "NODE_ENV=production PORT=3003 nodemon server.js",
     "postinstall": "bower install --config.interactive=true --allow-root",
     "lint": "eslint modules/**/*.js library/import/geotrek.js --fix"
