@@ -58,9 +58,9 @@ class Import
   }
   
   getPrice(element) {
-    return {
-      gratuit: true
-    }
+    return element.price > 0
+    ? { gratuit: false, description: element.price }
+    : { gratuit: true };
   }
   
   getPerimetreGeographique(element) {
