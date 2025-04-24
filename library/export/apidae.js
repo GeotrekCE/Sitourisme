@@ -105,8 +105,8 @@ class Apidae
     return block;
   }
 
-  __getSitraToken(product, member, callback) {
-    const me = this,
+  __getSitraToken(context, product, member, callback) {
+    const me = context,
       memberId = config.memberId,
       //var memberId = member || (product.member ? product.member : '-'),
       configAuth = config.sitra.auth.accessPerMemberId,
@@ -170,7 +170,7 @@ class Apidae
         }
         if (callback) {
           setTimeout(() => {
-            this.__getSitraToken(product, member, callback);
+            me.__getSitraToken(me, product, member, callback);
           }, 15000);
         }
       });
