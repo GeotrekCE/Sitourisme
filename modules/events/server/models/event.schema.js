@@ -253,9 +253,8 @@ const _defaultSchema = {
       type: {
         type: String
       },
-      name: {
-        type: String,
-        trim: true
+      title: {
+        type: String
       },
       nameEn: {
         type: String,

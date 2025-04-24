@@ -3780,10 +3780,9 @@ class Apidae
         image.type = 'IMAGE';
         image.traductionFichiers = arrImageData;
       }
-
       // Name
-      if (imageData.name) {
-        name.libelleFr = imageData.name;
+      if (imageData.title) {
+        name.libelleFr = imageData.title;
       }
       if (imageData.nameEn) {
         name.libelleEn = imageData.nameEn;
@@ -3858,7 +3857,6 @@ class Apidae
       }
     });
   }
-
   if (arrImage.length) {
     root.illustrations = arrImage;
   } else {

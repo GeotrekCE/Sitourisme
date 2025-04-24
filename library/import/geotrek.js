@@ -163,7 +163,7 @@ class Import
             return {
               url: this.addUrlHttp(item['url']),
               legend: item['legend'],
-              name: item['title'],
+              title: item['title'],
               author: item['author']
             };
           }
