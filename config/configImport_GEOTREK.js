@@ -1884,4 +1884,26 @@ exports.geotrekInstance = {
       },
     }
   },
+  9 : {
+    geotrekUrl : 'https://geotrek-admin.portcros-parcnational.fr/api/v2/',
+    structures : {
+      1: {
+        specialId: '07AASOR100506_struct', xxxxxxxx
+        name: "Parc national de Port-Cros",
+        address1: null,
+        address2: null,
+        city: '34106',
+        insee: '83069',
+        specialIdSitra: '73816', xxxxxx
+        statusImport: 2, xxxx
+        memberId : 5193,
+        proprietaireId: 96, xxxx
+        production: {
+          trek: true,
+          event: false
+        },
+	www: 'https://destination.portcros-parcnational.fr/trek/',
+      },
+    }
+  },
 };
