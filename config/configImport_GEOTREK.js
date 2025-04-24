@@ -1895,11 +1895,11 @@ exports.geotrekInstance = {
         city: '34106',
         insee: '83069',
         specialIdSitra: '73816', xxxxxx
-        statusImport: 2, xxxx
-        memberId : 5193,
-        proprietaireId: 96, xxxx
+        statusImport: 2,
+        memberId : 1764,
+        proprietaireId: 1764,
         production: {
-          trek: true,
+          trek: false,
           event: false
         },
 	www: 'https://destination.portcros-parcnational.fr/trek/',
