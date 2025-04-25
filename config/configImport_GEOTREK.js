@@ -1888,13 +1888,13 @@ exports.geotrekInstance = {
     geotrekUrl : 'https://geotrek-admin.portcros-parcnational.fr/api/v2/',
     structures : {
       1: {
-        specialId: '07AASOR100506_struct', xxxxxxxx
+        specialId: 'ENT1PortCros',
         name: "Parc national de Port-Cros",
         address1: null,
         address2: null,
         city: '34106',
         insee: '83069',
-        specialIdSitra: '73816', xxxxxx
+        specialIdSitra: '5214782',
         statusImport: 2,
         memberId : 1764,
         proprietaireId: 1764,
