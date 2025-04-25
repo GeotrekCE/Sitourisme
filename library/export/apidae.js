@@ -3186,7 +3186,7 @@ class Apidae
     reservation.complement.libelleFr = product.reservation.complementFr;
     
     root.reservation = reservation;
-    rootFieldList.push('reservation');
+    rootFieldList.push('reservation.complement');
   }
   return { root: root, rootFieldList: rootFieldList };
 }
