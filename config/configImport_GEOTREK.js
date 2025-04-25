@@ -110,7 +110,7 @@ exports.geotrekInstance = {
         memberId : 6707,
         proprietaireId: 541,
         production: {
-          trek: true,
+          trek: false,
           event: false
         },
       },
