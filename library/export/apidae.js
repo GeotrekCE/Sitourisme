@@ -3422,13 +3422,6 @@ class Apidae
   }
   rootFieldList.push('prestations.labelsTourismeHandicap');
 
-  if (product.tailleGroupe) {
-    prestation.tailleGroupeMin = product.tailleGroupe.min;
-    rootFieldList.push('prestations.tailleGroupeMin');
-    prestation.tailleGroupeMax = product.tailleGroupe.max;
-    rootFieldList.push('prestations.tailleGroupeMax');
-  }
-
   if (
     root.informationsPrestataireActivites &&
     root.informationsPrestataireActivites.prestataireActivites
@@ -3468,11 +3461,10 @@ class Apidae
     rootFieldList.push('informationsPrestataireActivites.activitesCulturelles');
   }
 	
-	/* TODO speical event*/
   if (product.capacity) {
     prestation.tailleGroupeMax = product.capacity.value;
     rootFieldList.push('prestations.tailleGroupeMax');
-  }/* TODO speical event*/
+  }
 
   if (Object.keys(prestation).length) {
     root.prestations = prestation;
