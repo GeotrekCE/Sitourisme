@@ -34,7 +34,7 @@ exports.geotrekInstance = {
     geotrekUrl : 'https://geotrek-admin.ecrins-parcnational.fr/api/v2',
     structures : {
       1: {
-        specialId: 'ENT1RandoEcrins',
+        specialId: 'SITRA2_STR_5411158',
         name: 'Parc national des Écrins',
         address1: null,
         address2: null,
@@ -1888,7 +1888,7 @@ exports.geotrekInstance = {
     geotrekUrl : 'https://geotrek-admin.portcros-parcnational.fr/api/v2/',
     structures : {
       1: {
-        specialId: 'ENT1PortCros',
+        specialId: 'SITRA2_STR_5214782',
         name: "Parc national de Port-Cros",
         address1: null,
         address2: null,
@@ -1899,10 +1899,17 @@ exports.geotrekInstance = {
         memberId : 1764,
         proprietaireId: 1764,
         production: {
-          trek: false,
+          trek: true,
           event: false
         },
 	www: 'https://destination.portcros-parcnational.fr/trek/',
+	activity : {
+          2: 3284,
+          4: 3333,
+        },
+        itineraireType : {
+          1: 'BOUCLE',
+        },
       },
     }
   },
