@@ -114,11 +114,8 @@ class importModel extends geotrek
   
   getOuverture(element) {
     let duration = null,
-    dureeSeance = null;
-    
-    if (element.duration) {
-      duration = element.duration;
-    }
+      dureeSeance = null;
+
     if (element.begin_date && element.end_date) {
       let horaireOuverture = null,
         horaireFermeture = null;
@@ -149,7 +146,10 @@ class importModel extends geotrek
         }
       }
 
-      if (element.begin_date == element.end_date && element.start_time && element.end_time) {
+      if (element.duration) {
+        const [durationHour, durationMinute] = element.duration.split(':').map(Number);
+        dureeSeance = (durationHour * 60 + durationMinute);
+      } else if (element.begin_date == element.end_date && element.start_time && element.end_time) {
         const [startHour, startMinute] = element.start_time.split(':').map(Number);
         const [endHour, endMinute] = element.end_time.split(':').map(Number);
     
@@ -163,7 +163,6 @@ class importModel extends geotrek
           type: "OUVERTURE_TOUS_LES_JOURS",
           horaireOuverture: horaireOuverture,
           horaireFermeture: horaireFermeture,
-          complementHoraire: duration,
         }],
         expiration: [{
           expirationDate: moment(element.end_date),

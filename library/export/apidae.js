@@ -4778,11 +4778,6 @@ __buildImageDetail(images, nImage, callback,originalImage = false,sizeImage = 25
           period.horaireFermeture = periodData.horaireFermeture;
         }
         
-        if (periodData.complementHoraire) {
-          period.complementHoraire = {};
-          period.complementHoraire.libelleFr = "Durée : " + periodData.complementHoraire;
-        }
-        
         if (periodData.type) {
           period.type = periodData.type;
         }

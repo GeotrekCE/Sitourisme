@@ -657,10 +657,6 @@ const _defaultSchema = {
           type: String,
           trim: true
         },
-        complementHoraire: {
-          type: String,
-          trim: true
-        },
         description: {
           type: String,
           trim: true
