@@ -4661,7 +4661,7 @@ __buildImageDetail(images, nImage, callback,originalImage = false,sizeImage = 25
     arrPeriod = [],
     period = {},
     periodLabel,
-    endDateMax = null, // TODO EVENT
+    endDateMax = null,
     identifiantTemporaire = 100,
     err = false;
 
@@ -4702,6 +4702,10 @@ __buildImageDetail(images, nImage, callback,originalImage = false,sizeImage = 25
         }));
     }
 
+    if (product.openingDate.dureeSeance) {
+      openingDate.dureeSeance = product.openingDate.dureeSeance;
+    }
+
     // Build periodesOuvertures
     if (
       product.openingDate.periodesOuvertures &&
@@ -4724,7 +4728,7 @@ __buildImageDetail(images, nImage, callback,originalImage = false,sizeImage = 25
         }
         if (periodData.dateEnd) {
           period.dateFin = context.__getDate(periodData.dateEnd);
-          endDateMax = period.dateFin; // TODO EVENT
+          endDateMax = period.dateFin;
         }
 
         //jours de la semaine
@@ -4757,15 +4761,9 @@ __buildImageDetail(images, nImage, callback,originalImage = false,sizeImage = 25
           );
 
           if (allEqualhoraireOuverture && horaireOuvertureArr.length) {
-            /*period.horaireOuverture = context.__getHoraire(
-              periodData.ouverturesJourDuMois[0].horaireOuverture
-            );*/
             period.horaireOuverture = periodData.ouverturesJourDuMois[0].horaireOuverture;
           }
           if (allEqualhoraireFermeture && horaireFermetureArr.length) {
-            /*period.horaireFermeture = context.__getHoraire(
-              periodData.ouverturesJourDuMois[0].horaireFermeture
-            );*/
             period.horaireFermeture = periodData.ouverturesJourDuMois[0].horaireFermeture;
           }
 
@@ -4774,19 +4772,16 @@ __buildImageDetail(images, nImage, callback,originalImage = false,sizeImage = 25
         }
 
         if (periodData.horaireOuverture) {
-          //period.horaireOuverture = context.__getHoraire(periodData.horaireOuverture);
           period.horaireOuverture = periodData.horaireOuverture;
         }
         if (periodData.horaireFermeture) {
-          //period.horaireFermeture = context.__getHoraire(periodData.horaireFermeture);
           period.horaireFermeture = periodData.horaireFermeture;
         }
         
-        // TODO EVENT
         if (periodData.complementHoraire) {
           period.complementHoraire = {};
           period.complementHoraire.libelleFr = "Durée : " + periodData.complementHoraire;
-        }// TODO EVENT
+        }
         
         if (periodData.type) {
           period.type = periodData.type;
@@ -4851,7 +4846,6 @@ __buildImageDetail(images, nImage, callback,originalImage = false,sizeImage = 25
       );
     }
   }
-  
 
   // ouvert toute l'année
   if (product.openingEveryDay) {
@@ -4867,6 +4861,7 @@ __buildImageDetail(images, nImage, callback,originalImage = false,sizeImage = 25
     rootFieldList.push('ouverture.ouverturesComplementaires');
     rootFieldList.push('ouverture.periodesOuvertures');
     rootFieldList.push('ouverture.fermeturesExceptionnelles');
+    rootFieldList.push('ouverture.dureeSeance');
   } else {
     err = true;
   }

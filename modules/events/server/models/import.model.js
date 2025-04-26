@@ -113,7 +113,8 @@ class importModel extends geotrek
   }
   
   getOuverture(element) {
-    let duration = null;
+    let duration = null,
+    dureeSeance = null;
     
     if (element.duration) {
       duration = element.duration;
@@ -146,7 +147,13 @@ class importModel extends geotrek
             ((horaireFermetureTmp2.seconds() < 10) ? "0" + horaireFermetureTmp2.seconds() : horaireFermetureTmp2.seconds())
           );
         }
-        console.log('>>>>>>>>> StartTime =', horaireOuverture, horaireFermeture);
+      }
+
+      if (element.begin_date == element.end_date && element.start_time && element.end_time) {
+        const [startHour, startMinute] = element.start_time.split(':').map(Number);
+        const [endHour, endMinute] = element.end_time.split(':').map(Number);
+    
+        dureeSeance = (endHour * 60 + endMinute) - (startHour * 60 + startMinute);
       }
 
       return {
@@ -161,7 +168,8 @@ class importModel extends geotrek
         expiration: [{
           expirationDate: moment(element.end_date),
           expirationAction: "MASQUER_AUTOMATIQUEMENT",
-        }]
+        }],
+        dureeSeance: dureeSeance
       }
     }
   }

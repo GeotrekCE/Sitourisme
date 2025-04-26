@@ -595,14 +595,6 @@ const _defaultSchema = {
     type: String,
     trim: true
   },
-  tailleGroupe: {
-    min: {
-      type: Number
-    },
-    max: {
-      type: Number
-    }
-  },
   openingEveryDay: {
     type: Boolean
   },
@@ -722,7 +714,10 @@ const _defaultSchema = {
       {
         type: Number
       }
-    ]
+    ],
+    dureeSeance : {
+      type: Number
+    }
   },
   price: {
     gratuit: {
