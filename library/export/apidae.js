@@ -2649,6 +2649,7 @@ class Apidae
     address = {},
     geoLocalization = {},
     environment = null,
+    lieu = {},
     err = false;
 
   if (product.address) {
@@ -2749,6 +2750,10 @@ class Apidae
 
     rootFieldList.push('localisation.geolocalisation.complement');
   }
+  if (product.idLieu) {
+    lieu.id= product.idLieu;
+    rootFieldList.push('localisation.lieu');
+  }
   /*if (product.perimetreGeographique && product.perimetreGeographique.length) {
     localization.perimetreGeographique = [];
     _.forEach(product.perimetreGeographique, function (item) {
@@ -2784,6 +2789,9 @@ class Apidae
   }
   if (Object.keys(geoLocalization).length) {
     localization.geolocalisation = geoLocalization;
+  }
+  if (Object.keys(lieu).length) {
+    localization.lieu = lieu;
   }
   if (environment && environment.length) {
     localization.environnements = environment;
@@ -3574,18 +3582,6 @@ class Apidae
  buildLegalEntity(product, root, rootFieldList) {
   let finalLegalEntity = {},
     err = false;
-    
-// TODO SPECIAL TREK
-  if (product.importSubType === 'DRACENIE') {
-    finalLegalEntity.informations = {};
-    finalLegalEntity.informations.structureGestion = {
-      type: 'STRUCTURE',
-      id: product.idSitraCity
-    };
-
-    rootFieldList.push('informations.structureGestion');
-  }
-// TODO SPECIAL TREK
 
   if (product.legalEntity && product.legalEntity.length) {
     _.forEach(product.legalEntity, function (legalEntityObj) {

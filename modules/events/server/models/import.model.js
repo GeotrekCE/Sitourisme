@@ -7,6 +7,7 @@ const path = require('path'),
   DataString = require(path.resolve('./library/data/manipulate.js')),
   config = require(path.resolve('./config/config.js')),
   configImportGEOTREK = require(path.resolve('./config/configImport_GEOTREK.js')),
+  { placeApidae } = require(path.resolve('./config/configPlaceApidae.js')),
   configSitraTownByInsee = require(path.resolve('./config/configSitraTownByInsee.js')),
   geotrek = require(path.resolve('./library/import/geotrek.js'));
 
@@ -69,6 +70,7 @@ class importModel extends geotrek
       reservation: this.getBooking(element),
       capacity: this.getCapacity(element),
       complementAccueil: this.getComplementAccueil(element),
+      idLieu: this.getLieu(element)
     };
   }
   
@@ -110,6 +112,17 @@ class importModel extends geotrek
     }
     
     return description;
+  }
+
+  getLieu(element) {
+    if (element.place) {
+      let placeId = placeApidae(element.place);
+      if (placeId) {
+        //if (process.env.NODE_ENV !== 'production') placeId = 11219; //#120 - EQU définissant un lieu (source)
+        return placeId;
+      }
+    }
+    return null;
   }
   
   getOuverture(element) {
@@ -202,9 +215,11 @@ class importModel extends geotrek
       );
     }
     if (element.place) {
-      accueil = DataString.stripTags(
-        DataString.strEncode(accueil + "Lieu : " + element.place + "\r\n\r\n")
-      );
+      if (placeApidae(element.place) === null) {
+        accueil = DataString.stripTags(
+          DataString.strEncode(accueil + "Lieu : " + element.place + "\r\n\r\n")
+        );
+      }
     }
     
     if (element.practical_info) {

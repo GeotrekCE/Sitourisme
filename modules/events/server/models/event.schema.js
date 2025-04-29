@@ -575,6 +575,9 @@ const _defaultSchema = {
     type: String,
     trim: true
   },
+  idLieu: {
+    type: Number
+  },
   complementAccueil: {
     type: String,
     trim: true
