@@ -222,7 +222,7 @@ class importModel extends geotrek
       }
     }
     
-    if (element.practical_info) {
+    if (element.practical_info['fr']) {
       accueil = DataString.stripTags(
         DataString.strEncode(accueil + "Informations pratiques : " + element.practical_info['fr'].replaceAll("<br>", "\r\n") + "\r\n\r\n")
       );
