@@ -184,8 +184,10 @@ class ImportGeotrekApi extends Import
           );
       }
 
-      delete element.steps;
-      delete element.geometry;
+      if (this.moduleName == 'products') {
+        delete element.steps;
+        delete element.geometry;
+      }
       
       console.log(
         chalk.green('struc = ', structure, ' elem = ', element.structure)
