@@ -26,8 +26,9 @@ exports.itineraireType = {
   6: 'ALLER_ITINERANCE'
 };
 
-exports.touristicevent_type = {
-};
+exports.touristicevent_type = {}
+
+exports.touristicevent_entities = {}
 
 exports.geotrekInstance = {
   0: {
@@ -126,7 +127,17 @@ exports.geotrekInstance = {
           event: false
         },
       }
-    }
+    },
+    touristicevent_districtToEntities : {
+      1: 771883,  //Briançonnais > Parc national des Écrins - Briançonnais
+      2: 225837,  //Vallouise > Parc national des Ecrins - Vallouise
+      3: 615667,  //Embrunais > Parc national des Ecrins - Embrunais
+      4: 5049092, //Champsaur > Parc national des Ecrins - Champsaur
+      5: 5049077, //Valgaudemar > Parc national des Ecrins - Valgaudemar
+      6: 5049103, //Valbonnais > Parc national des Ecrins - Valbonnais
+      7: 73900,   //Oisans > Parc national des Ecrins - Oisans
+    },
+    touristicevent_defaultEntity: 5308520, //Siège du Parc national des Ecrins
   },
   1 : {
     geotrekUrl : 'https://admin.sportsnature.hauteloire.fr/api/v2',

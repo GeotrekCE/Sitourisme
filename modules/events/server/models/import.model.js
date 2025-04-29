@@ -28,6 +28,7 @@ class importModel extends geotrek
       typeCode: configData.codeType,
       type: configImportGEOTREK.types[configData.codeType],
       specialId: element.id,
+      district: this.getDistrict(element, structure),
       subType: this.getSubType(element, structure),
       member: configData.member,
       state: 'HIDDEN',
@@ -74,6 +75,20 @@ class importModel extends geotrek
     };
   }
   
+  getDistrict(element, structure) {
+    let entity = null,
+      entityTmp = null
+
+    if (element.districts && element.districts.length && configImportGEOTREK.geotrekInstance[structure].touristicevent_districtToEntities) {
+      element.districts.forEach((districtId) => {
+        entityTmp = configImportGEOTREK.geotrekInstance[structure].touristicevent_districtToEntities[districtId]
+        if (entityTmp !== undefined) entity = entityTmp
+      })
+    }
+    if (entity === null) entity = configImportGEOTREK.geotrekInstance[structure].touristicevent_defaultEntity
+    return entity
+  }
+
   getSubType(element, structure) {
     if (configImportGEOTREK.geotrekInstance[structure].structures[element.structure].touristicevent_type) {
       return configImportGEOTREK.geotrekInstance[structure].structures[element.structure].touristicevent_type[element.type];

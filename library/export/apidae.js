@@ -3584,6 +3584,12 @@ class Apidae
     err = false;
 
   if (product.legalEntity && product.legalEntity.length) {
+
+    let gestionSitraId = product.gestionSitraId
+    if (product.type != 'FETE_ET_MANIFESTATION' && process.env.NODE_ENV != 'production') {
+      gestionSitraId = 223268
+    }
+
     _.forEach(product.legalEntity, function (legalEntityObj) {
       
       switch (legalEntityObj.type) {
@@ -3594,7 +3600,7 @@ class Apidae
 
           finalLegalEntity.informations.structureGestion = {
             type: 'STRUCTURE',
-            id: (process.env.NODE_ENV == 'production') ? product.gestionSitraId : 223268
+            id: gestionSitraId
           };
 
           rootFieldList.push('informations.structureGestion');
@@ -3607,7 +3613,7 @@ class Apidae
 
           finalLegalEntity.informations.structureGestion = {
             type: 'STRUCTURE',
-            id:  (process.env.NODE_ENV == 'production') ? product.gestionSitraId : 223268
+            id:  gestionSitraId
           };
           rootFieldList.push('informations.structureGestion');
           break;
@@ -3619,7 +3625,7 @@ class Apidae
           
           finalLegalEntity.informations.structureInformation = {
             type: 'STRUCTURE',
-            id:  (process.env.NODE_ENV == 'production') ? product.gestionSitraId : 223268
+            id: gestionSitraId
           };
           break;
 
@@ -3720,7 +3726,7 @@ class Apidae
             moyensCommunication: moyensCommunication,
             structureReference: {
               type: 'STRUCTURE',
-              id:  (process.env.NODE_ENV == 'production') ? product.gestionSitraId : 223268,
+              id:  gestionSitraId,
               nom: {
                 libelleFr: resa.name
               }

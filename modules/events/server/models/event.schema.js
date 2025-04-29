@@ -26,6 +26,9 @@ const _defaultSchema = {
   specialIdSitra: {
     type: String
   },
+  district: {
+    type: Number
+  },
   legalEntity : [
     {
       type: {
@@ -841,6 +844,12 @@ const _defaultSchema = {
     }
   ],
   rateCompletion: {
+    type: Number
+  },
+  informationSitraId : {
+    type: Number
+  },
+  gestionSitraId : {
     type: Number
   },
 };
