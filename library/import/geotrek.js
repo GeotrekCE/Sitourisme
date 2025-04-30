@@ -59,7 +59,7 @@ class Import
   
   getPrice(element) {
     return element.price > 0
-    ? { gratuit: false, description: element.price }
+    ? { gratuit: false, description: element.price.toString().replace('.', ',') + ' €' }
     : { gratuit: true };
   }
   
