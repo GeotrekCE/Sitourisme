@@ -66,7 +66,7 @@ class importModel extends geotrek
       pdfDe: this.getPdf(element, 'de'),
       pdfNl: this.getPdf(element, 'nl'),
       image: this.getImage(element),
-      url: configImportGEOTREK.geotrekInstance[structure].structures[element.structure].www + element.id,
+      url: configImportGEOTREK.geotrekInstance[structure].structures[element.structure].www_events + element.id,
       openingDate: this.getOuverture(element),
       reservation: this.getBooking(element),
       capacity: this.getCapacity(element),

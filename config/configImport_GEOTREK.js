@@ -50,6 +50,7 @@ exports.geotrekInstance = {
           event: true
         },
         www: 'https://rando.ecrins-parcnational.fr/trek/',
+        www_events: 'https://rando.ecrins-parcnational.fr/exemple_page_events/',
         touristicevent_type : {
           1: 1958, // Exposition > Culturelle
           4: 1974, // Rendez-vous avec le Parc national > Distractions et loisirs 
