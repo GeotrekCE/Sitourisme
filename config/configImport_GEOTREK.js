@@ -159,18 +159,6 @@ exports.geotrekInstance = {
           trek: true,
           event: false
         },
-        activity : {
-          1: 3284,
-          2: 3283,
-          4: 3333,
-          6: 4201,
-          8: 3333
-        },
-        itineraireType : {
-          1: 'BOUCLE',
-          2: 'ALLER_RETOUR',
-          3: 'ALLER_ITINERANCE',
-        }
       },
       2: { // CD43
         specialId: 'HauteLoire1',
@@ -187,18 +175,6 @@ exports.geotrekInstance = {
         production: {
           trek: true,
           event: false
-        },
-        activity : { // 3 : 3313, 8: 3302
-          1: 3284,
-          2: 3283,
-          4: 3333,
-          6: 4201,
-          8: 3333
-        },
-        itineraireType : { //
-          1: 'BOUCLE',
-          2: 'ALLER_RETOUR',
-          3: 'ALLER_ITINERANCE',
         },
 		    www: '', // Dev https://gtr3demo.ecrins-parcnational.fr/event/
       },
@@ -218,18 +194,6 @@ exports.geotrekInstance = {
           trek: true,
           event: false
         },
-        activity : {
-          1: 3284,
-          2: 3283,
-          4: 3333,
-          6: 4201,
-          8: 3333
-        },
-        itineraireType : {
-          1: 'BOUCLE',
-          2: 'ALLER_RETOUR',
-          3: 'ALLER_ITINERANCE',
-        }
       },
       4: { // CC Mézenc Loire Meygal
         specialId: 'Haute-Loire CC Mézenc Loire Meygal',
@@ -247,18 +211,6 @@ exports.geotrekInstance = {
           trek: true,
           event: false
         },
-        activity : {
-          1: 3284,
-          2: 3283,
-          4: 3333,
-          6: 4201,
-          8: 3333
-        },
-        itineraireType : {
-          1: 'BOUCLE',
-          2: 'ALLER_RETOUR',
-          3: 'ALLER_ITINERANCE',
-        }
       },
       5: { // CC Cayres Pradelles
         specialId: 'Haute-Loire CC Cayres Pradelles',
@@ -276,18 +228,6 @@ exports.geotrekInstance = {
           trek: true,
           event: false
         },
-        activity : {
-          1: 3284,
-          2: 3283,
-          4: 3333,
-          6: 4201,
-          8: 3333
-        },
-        itineraireType : {
-          1: 'BOUCLE',
-          2: 'ALLER_RETOUR',
-          3: 'ALLER_ITINERANCE',
-        }
       },
       6: { // CC Brioude Sud Auvergne
         specialId: 'Haute-Loire CC Brioude Sud Auvergne',
@@ -305,18 +245,6 @@ exports.geotrekInstance = {
           trek: true,
           event: false
         },
-        activity : {
-          1: 3284,
-          2: 3283,
-          4: 3333,
-          6: 4201,
-          8: 3333
-        },
-        itineraireType : {
-          1: 'BOUCLE',
-          2: 'ALLER_RETOUR',
-          3: 'ALLER_ITINERANCE',
-        }
       },
       7: { // CC des SUCS
         specialId: 'Haute-Loire CC des SUCS',
@@ -334,18 +262,6 @@ exports.geotrekInstance = {
           trek: true,
           event: false
         },
-        activity : {
-          1: 3284,
-          2: 3283,
-          4: 3333,
-          6: 4201,
-          8: 3333
-        },
-        itineraireType : {
-          1: 'BOUCLE',
-          2: 'ALLER_RETOUR',
-          3: 'ALLER_ITINERANCE',
-        }
       },
       8: { // CC Loire Semene
         specialId: 'Haute-Loire CC Loire Semene',
@@ -363,18 +279,6 @@ exports.geotrekInstance = {
           trek: true,
           event: false
         },
-        activity : {
-          1: 3284,
-          2: 3283,
-          4: 3333,
-          6: 4201,
-          8: 3333
-        },
-        itineraireType : {
-          1: 'BOUCLE',
-          2: 'ALLER_RETOUR',
-          3: 'ALLER_ITINERANCE',
-        }
       },
       10: { // CC Marches du Velay Rochebaron
         specialId: 'Haute-Loire CC Marches du Velay Rochebaron',
@@ -392,18 +296,6 @@ exports.geotrekInstance = {
           trek: true,
           event: false
         },
-        activity : {
-          1: 3284,
-          2: 3283,
-          4: 3333,
-          6: 4201,
-          8: 3333
-        },
-        itineraireType : {
-          1: 'BOUCLE',
-          2: 'ALLER_RETOUR',
-          3: 'ALLER_ITINERANCE',
-        }
       },
       43: { // CC Haut Lignon
         specialId: 'Haute-Loire CC Haut Lignon',
@@ -421,18 +313,6 @@ exports.geotrekInstance = {
           trek: true,
           event: false
         },
-        activity : {
-          1: 3284,
-          2: 3283,
-          4: 3333,
-          6: 4201,
-          8: 3333
-        },
-        itineraireType : {
-          1: 'BOUCLE',
-          2: 'ALLER_RETOUR',
-          3: 'ALLER_ITINERANCE',
-        }
       },
       76: { // Auzon Communauté
         specialId: 'Haute-Loire Auzon Communauté',
@@ -450,18 +330,6 @@ exports.geotrekInstance = {
           trek: true,
           event: false
         },
-        activity : {
-          1: 3284,
-          2: 3283,
-          4: 3333,
-          6: 4201,
-          8: 3333
-        },
-        itineraireType : {
-          1: 'BOUCLE',
-          2: 'ALLER_RETOUR',
-          3: 'ALLER_ITINERANCE',
-        }
       },
       109: { // CC Rives du Haut Allier
         specialId: 'Haute-Loire CC Rives du Haut Allier',
@@ -479,18 +347,6 @@ exports.geotrekInstance = {
           trek: true,
           event: false
         },
-        activity : {
-          1: 3284,
-          2: 3283,
-          4: 3333,
-          6: 4201,
-          8: 3333
-        },
-        itineraireType : {
-          1: 'BOUCLE',
-          2: 'ALLER_RETOUR',
-          3: 'ALLER_ITINERANCE',
-        }
       },
       110: { // CC Haut Pays du Velay
         specialId: 'Haute-Loire CC Haut Pays du Velay',
@@ -508,23 +364,23 @@ exports.geotrekInstance = {
           trek: true,
           event: false
         },
-        activity : {
-          1: 3284,
-          2: 3283,
-          4: 3333,
-          6: 4201,
-          8: 3333
-        },
-        itineraireType : {
-          1: 'BOUCLE',
-          2: 'ALLER_RETOUR',
-          3: 'ALLER_ITINERANCE',
-        }
       },
+    },
+    activity : {
+      1: 3284,
+      2: 3283,
+      4: 3333,
+      6: 4201,
+      8: 3333
+    },
+    itineraireType : {
+      1: 'BOUCLE',
+      2: 'ALLER_RETOUR',
+      3: 'ALLER_ITINERANCE',
     },
     touristicevent_type : {
       7: 1974, // Distractions et loisirs
-    }
+    },
   },
   2 : {
     geotrekUrl : 'https://geotrek.nature-haute-savoie.fr/api/v2/',
@@ -544,15 +400,15 @@ exports.geotrekInstance = {
           trek: false,
           event: false
         },
-        activity : {
-          4: 3333,
-          5: 3302
-        },
-        itineraireType : {
-          1: 'BOUCLE',
-          2: 'ALLER_RETOUR',
-        }
       },
+    },
+    activity : {
+      4: 3333,
+      5: 3302
+    },
+    itineraireType : {
+      1: 'BOUCLE',
+      2: 'ALLER_RETOUR',
     }
   },
   3 : {
@@ -579,18 +435,6 @@ exports.geotrekInstance = {
           trek: true,
           event: false
         },
-        activity : {
-          1: 3284,
-          2: 3283,
-          3: 3313,
-          4: 3333
-        },
-        itineraireType : {
-          1: 'BOUCLE',
-          2: 'ALLER_RETOUR',
-          3: 'ALLER_ITINERANCE',
-          4: 'ALLER_ITINERANCE'
-        }
       },
       3: {
         production: {
@@ -619,18 +463,6 @@ exports.geotrekInstance = {
           trek: true,
           event: false
         },
-        activity : {
-          1: 3284,
-          2: 3283,
-          3: 3313,
-          4: 3333,
-        },
-        itineraireType : {
-          1: 'BOUCLE',
-          2: 'ALLER_RETOUR',
-          3: 'ALLER_ITINERANCE',
-          4: 'ALLER_ITINERANCE'
-        }
       },
       6: {
         specialId: 'PNR Alpilles',
@@ -647,18 +479,6 @@ exports.geotrekInstance = {
           trek: true,
           event: false
         },
-        activity : {
-          1: 3284,
-          2: 3283,
-          3: 3313,
-          4: 3333
-        },
-        itineraireType : {
-          1: 'BOUCLE',
-          2: 'ALLER_RETOUR',
-          3: 'ALLER_ITINERANCE',
-          4: 'ALLER_ITINERANCE'
-        }
       },
       7: {
         specialId: 'PNR Baronnies',
@@ -675,18 +495,6 @@ exports.geotrekInstance = {
           trek: true,
           event: false
         },
-        activity : {
-          1: 3284,
-          2: 3283,
-          3: 3313,
-          4: 3333
-        },
-        itineraireType : {
-          1: 'BOUCLE',
-          2: 'ALLER_RETOUR',
-          3: 'ALLER_ITINERANCE',
-          4: 'ALLER_ITINERANCE'
-        }
       },
       8: {
         specialId: 'PNR Prealpes',
@@ -703,18 +511,6 @@ exports.geotrekInstance = {
           trek: true,
           event: false
         },
-        activity : {
-          1: 3284,
-          2: 3283,
-          3: 3313,
-          4: 3333
-        },
-        itineraireType : {
-          1: 'BOUCLE',
-          2: 'ALLER_RETOUR',
-          3: 'ALLER_ITINERANCE',
-          4: 'ALLER_ITINERANCE'
-        }
       },
       9: {
         production: {
@@ -737,20 +533,20 @@ exports.geotrekInstance = {
           trek: true,
           event: false
         },
-        activity : {
-          1: 3284,
-          2: 3283,
-          3: 3313,
-          4: 3333
-        },
-        itineraireType : {
-          1: 'BOUCLE',
-          2: 'ALLER_RETOUR',
-          3: 'ALLER_ITINERANCE',
-          4: 'ALLER_ITINERANCE'
-        }
       }
-    }
+    },
+    activity : {
+      1: 3284,
+      2: 3283,
+      3: 3313,
+      4: 3333
+    },
+    itineraireType : {
+      1: 'BOUCLE',
+      2: 'ALLER_RETOUR',
+      3: 'ALLER_ITINERANCE',
+      4: 'ALLER_ITINERANCE'
+    },
   },
   4 : {
     geotrekUrl : 'https://geotrek-admin.alpesrando.net/api/v2',
@@ -775,22 +571,6 @@ exports.geotrekInstance = {
         production: {
           trek: true,
           event: false
-        },
-        activity : {
-          1: 3333,
-          2: 3284,
-          3: 3313,
-          5: 3333,
-          7: 3302,
-          8: 6224,
-          9: 3283
-        },
-        itineraireType : {
-          1: 'BOUCLE',
-          2: 'ALLER_ITINERANCE',
-          3: 'ALLER_ITINERANCE',
-          4: 'ALLER_ITINERANCE',
-          5: 'ALLER_RETOUR',
         },
         www: '',
       },
@@ -819,9 +599,25 @@ exports.geotrekInstance = {
         },
       },
     },
+    activity : {
+      1: 3333,
+      2: 3284,
+      3: 3313,
+      5: 3333,
+      7: 3302,
+      8: 6224,
+      9: 3283
+    },
+    itineraireType : {
+      1: 'BOUCLE',
+      2: 'ALLER_ITINERANCE',
+      3: 'ALLER_ITINERANCE',
+      4: 'ALLER_ITINERANCE',
+      5: 'ALLER_RETOUR',
+    },
     touristicevent_type : {
       7: 1974, // Distractions et loisirs
-    }
+    },
   },
   5 : {
     geotrekUrl : 'https://admin.sisteron-buech.fr/api/v2',
@@ -841,23 +637,23 @@ exports.geotrekInstance = {
           trek: true,
           event: false
         },
-        activity : {
-          1: 3284,
-          2: 3283,
-          3: 3313,
-          4: 3333,
-          6: 4201,
-          7: 3333,
-          8: 6224
-        },
-        itineraireType : {
-          1: 'BOUCLE',
-          2: 'ALLER_RETOUR',
-          3: 'ALLER_ITINERANCE',
-          4: 'ALLER_ITINERANCE',
-        },
       },
-    }
+    },
+    activity : {
+      1: 3284,
+      2: 3283,
+      3: 3313,
+      4: 3333,
+      6: 4201,
+      7: 3333,
+      8: 6224
+    },
+    itineraireType : {
+      1: 'BOUCLE',
+      2: 'ALLER_RETOUR',
+      3: 'ALLER_ITINERANCE',
+      4: 'ALLER_ITINERANCE',
+    },
   },
   6 : {
     geotrekUrl : 'https://gardpleinenature-admin.gard.fr/api/v2',
@@ -876,18 +672,6 @@ exports.geotrekInstance = {
         production: {
           trek: true,
           event: false
-        },
-        activity : {
-          1: 3284,
-          2: 3283,
-          4: 3333,
-          8: 4201
-        },
-        itineraireType : {
-          1: 'BOUCLE',
-          2: 'ALLER_RETOUR',
-          3: 'ALLER_ITINERANCE',
-          4: 'ALLER_ITINERANCE',
         },
       },
       4: {
@@ -944,7 +728,19 @@ exports.geotrekInstance = {
           event: false
         },
       },
-    }
+    },
+    activity : {
+      1: 3284,
+      2: 3283,
+      4: 3333,
+      8: 4201
+    },
+    itineraireType : {
+      1: 'BOUCLE',
+      2: 'ALLER_RETOUR',
+      3: 'ALLER_ITINERANCE',
+      4: 'ALLER_ITINERANCE',
+    },
   },
   7 : {
     geotrekUrl : 'https://geotrekadmin.tarn.fr/api/v2',
@@ -964,21 +760,6 @@ exports.geotrekInstance = {
           trek: true,
           event: false
         },
-        activity : {
-          1: 3284,
-          2: 3283,
-          4: 3333,
-          5: 3333,
-          6: 4201,
-          11: 5446,
-          12: 6224,
-          13: 3333
-        },
-        itineraireType : {
-          1: 'BOUCLE',
-          2: 'ALLER_RETOUR',
-          3: 'ALLER_ITINERANCE',
-        },
       },
       3: {
         specialId: 'SITRA2_STR_827413',
@@ -994,21 +775,6 @@ exports.geotrekInstance = {
         production: {
           trek: true,
           event: false
-        },
-        activity : {
-          1: 3284,
-          2: 3283,
-          4: 3333,
-          5: 3333,
-          6: 4201,
-          11: 5446,
-          12: 6224,
-          13: 3333
-        },
-        itineraireType : {
-          1: 'BOUCLE',
-          2: 'ALLER_RETOUR',
-          3: 'ALLER_ITINERANCE',
         },
       },
       9: {
@@ -1026,21 +792,6 @@ exports.geotrekInstance = {
           trek: true,
           event: false
         },
-        activity : {
-          1: 3284,
-          2: 3283,
-          4: 3333,
-          5: 3333,
-          6: 4201,
-          11: 5446,
-          12: 6224,
-          13: 3333
-        },
-        itineraireType : {
-          1: 'BOUCLE',
-          2: 'ALLER_RETOUR',
-          3: 'ALLER_ITINERANCE',
-        },
       },
       10: {
         specialId: 'SITRA2_STR_799407',
@@ -1056,21 +807,6 @@ exports.geotrekInstance = {
         production: {
           trek: true,
           event: false
-        },
-        activity : {
-          1: 3284,
-          2: 3283,
-          4: 3333,
-          5: 3333,
-          6: 4201,
-          11: 5446,
-          12: 6224,
-          13: 3333
-        },
-        itineraireType : {
-          1: 'BOUCLE',
-          2: 'ALLER_RETOUR',
-          3: 'ALLER_ITINERANCE',
         },
       },
       11: {
@@ -1088,21 +824,6 @@ exports.geotrekInstance = {
           trek: true,
           event: false
         },
-        activity : {
-          1: 3284,
-          2: 3283,
-          4: 3333,
-          5: 3333,
-          6: 4201,
-          11: 5446,
-          12: 6224,
-          13: 3333
-        },
-        itineraireType : {
-          1: 'BOUCLE',
-          2: 'ALLER_RETOUR',
-          3: 'ALLER_ITINERANCE',
-        },
       },
       12: {
         specialId: 'SITRA2_STR_826400',
@@ -1118,21 +839,6 @@ exports.geotrekInstance = {
         production: {
           trek: true,
           event: false
-        },
-        activity : {
-          1: 3284,
-          2: 3283,
-          4: 3333,
-          5: 3333,
-          6: 4201,
-          11: 5446,
-          12: 6224,
-          13: 3333
-        },
-        itineraireType : {
-          1: 'BOUCLE',
-          2: 'ALLER_RETOUR',
-          3: 'ALLER_ITINERANCE',
         },
       },
       13: {
@@ -1150,21 +856,6 @@ exports.geotrekInstance = {
           trek: true,
           event: false
         },
-        activity : {
-          1: 3284,
-          2: 3283,
-          4: 3333,
-          5: 3333,
-          6: 4201,
-          11: 5446,
-          12: 6224,
-          13: 3333
-        },
-        itineraireType : {
-          1: 'BOUCLE',
-          2: 'ALLER_RETOUR',
-          3: 'ALLER_ITINERANCE',
-        },
       },
       14: {
         specialId: 'SITRA2_STR_763673',
@@ -1180,21 +871,6 @@ exports.geotrekInstance = {
         production: {
           trek: true,
           event: false
-        },
-        activity : {
-          1: 3284,
-          2: 3283,
-          4: 3333,
-          5: 3333,
-          6: 4201,
-          11: 5446,
-          12: 6224,
-          13: 3333
-        },
-        itineraireType : {
-          1: 'BOUCLE',
-          2: 'ALLER_RETOUR',
-          3: 'ALLER_ITINERANCE',
         },
       },
       15: {
@@ -1212,21 +888,6 @@ exports.geotrekInstance = {
           trek: true,
           event: false
         },
-        activity : {
-          1: 3284,
-          2: 3283,
-          4: 3333,
-          5: 3333,
-          6: 4201,
-          11: 5446,
-          12: 6224,
-          13: 3333
-        },
-        itineraireType : {
-          1: 'BOUCLE',
-          2: 'ALLER_RETOUR',
-          3: 'ALLER_ITINERANCE',
-        },
       },
       16: {
         specialId: 'SITRA2_STR_5303931',
@@ -1242,21 +903,6 @@ exports.geotrekInstance = {
         production: {
           trek: true,
           event: false
-        },
-        activity : {
-          1: 3284,
-          2: 3283,
-          4: 3333,
-          5: 3333,
-          6: 4201,
-          11: 5446,
-          12: 6224,
-          13: 3333
-        },
-        itineraireType : {
-          1: 'BOUCLE',
-          2: 'ALLER_RETOUR',
-          3: 'ALLER_ITINERANCE',
         },
       },
       17: {
@@ -1274,21 +920,6 @@ exports.geotrekInstance = {
           trek: true,
           event: false
         },
-        activity : {
-          1: 3284,
-          2: 3283,
-          4: 3333,
-          5: 3333,
-          6: 4201,
-          11: 5446,
-          12: 6224,
-          13: 3333
-        },
-        itineraireType : {
-          1: 'BOUCLE',
-          2: 'ALLER_RETOUR',
-          3: 'ALLER_ITINERANCE',
-        },
       },
       18: {
         specialId: 'SITRA2_STR_777024',
@@ -1304,21 +935,6 @@ exports.geotrekInstance = {
         production: {
           trek: true,
           event: false
-        },
-        activity : {
-          1: 3284,
-          2: 3283,
-          4: 3333,
-          5: 3333,
-          6: 4201,
-          11: 5446,
-          12: 6224,
-          13: 3333
-        },
-        itineraireType : {
-          1: 'BOUCLE',
-          2: 'ALLER_RETOUR',
-          3: 'ALLER_ITINERANCE',
         },
       },
       19: {
@@ -1336,21 +952,6 @@ exports.geotrekInstance = {
           trek: true,
           event: false
         },
-        activity : {
-          1: 3284,
-          2: 3283,
-          4: 3333,
-          5: 3333,
-          6: 4201,
-          11: 5446,
-          12: 6224,
-          13: 3333
-        },
-        itineraireType : {
-          1: 'BOUCLE',
-          2: 'ALLER_RETOUR',
-          3: 'ALLER_ITINERANCE',
-        },
       },
       22: {
         specialId: 'SITRA2_STR_811484',
@@ -1366,21 +967,6 @@ exports.geotrekInstance = {
         production: {
           trek: true,
           event: false
-        },
-        activity : {
-          1: 3284,
-          2: 3283,
-          4: 3333,
-          5: 3333,
-          6: 4201,
-          11: 5446,
-          12: 6224,
-          13: 3333
-        },
-        itineraireType : {
-          1: 'BOUCLE',
-          2: 'ALLER_RETOUR',
-          3: 'ALLER_ITINERANCE',
         },
       },
       23: {
@@ -1398,21 +984,6 @@ exports.geotrekInstance = {
           trek: true,
           event: false
         },
-        activity : {
-          1: 3284,
-          2: 3283,
-          4: 3333,
-          5: 3333,
-          6: 4201,
-          11: 5446,
-          12: 6224,
-          13: 3333
-        },
-        itineraireType : {
-          1: 'BOUCLE',
-          2: 'ALLER_RETOUR',
-          3: 'ALLER_ITINERANCE',
-        },
       },
       24: {
         specialId: 'SITRA2_STR_4767989',
@@ -1428,21 +999,6 @@ exports.geotrekInstance = {
         production: {
           trek: true,
           event: false
-        },
-        activity : {
-          1: 3284,
-          2: 3283,
-          4: 3333,
-          5: 3333,
-          6: 4201,
-          11: 5446,
-          12: 6224,
-          13: 3333
-        },
-        itineraireType : {
-          1: 'BOUCLE',
-          2: 'ALLER_RETOUR',
-          3: 'ALLER_ITINERANCE',
         },
       },
       25: {
@@ -1460,21 +1016,6 @@ exports.geotrekInstance = {
           trek: true,
           event: false
         },
-        activity : {
-          1: 3284,
-          2: 3283,
-          4: 3333,
-          5: 3333,
-          6: 4201,
-          11: 5446,
-          12: 6224,
-          13: 3333
-        },
-        itineraireType : {
-          1: 'BOUCLE',
-          2: 'ALLER_RETOUR',
-          3: 'ALLER_ITINERANCE',
-        },
       },
       26: {
         specialId: 'SITRA2_STR_4934753',
@@ -1491,23 +1032,23 @@ exports.geotrekInstance = {
           trek: true,
           event: false
         },
-        activity : {
-          1: 3284,
-          2: 3283,
-          4: 3333,
-          5: 3333,
-          6: 4201,
-          11: 5446,
-          12: 6224,
-          13: 3333
-        },
-        itineraireType : {
-          1: 'BOUCLE',
-          2: 'ALLER_RETOUR',
-          3: 'ALLER_ITINERANCE',
-        },
       },
-    }
+    },
+    activity : {
+      1: 3284,
+      2: 3283,
+      4: 3333,
+      5: 3333,
+      6: 4201,
+      11: 5446,
+      12: 6224,
+      13: 3333
+    },
+    itineraireType : {
+      1: 'BOUCLE',
+      2: 'ALLER_RETOUR',
+      3: 'ALLER_ITINERANCE',
+    },
   },
   8 : {
     geotrekUrl : 'https://admin.destination-parc-monts-ardeche.fr/api/v2/',
@@ -1527,22 +1068,6 @@ exports.geotrekInstance = {
           trek: false,
           event: false
         },
-        activity : {
-          1: 3284,
-          2: 3283,
-          4: 3333,
-          5: 3333,
-          6: 4201,
-          9: 6224,
-          10: 3333,
-          11: 3333
-        },
-        itineraireType : {
-          1: 'BOUCLE',
-          2: 'ALLER_RETOUR',
-          3: 'ALLER_ITINERANCE',
-          5: 'ALLER_ITINERANCE',
-        },
       },
       5: {
         specialId: 'sitraSTR710498',
@@ -1558,22 +1083,6 @@ exports.geotrekInstance = {
         production: {
           trek: false,
           event: false
-        },
-        activity : {
-          1: 3284,
-          2: 3283,
-          4: 3333,
-          5: 3333,
-          6: 4201,
-          9: 6224,
-          10: 3333,
-          11: 3333
-        },
-        itineraireType : {
-          1: 'BOUCLE',
-          2: 'ALLER_RETOUR',
-          3: 'ALLER_ITINERANCE',
-          5: 'ALLER_ITINERANCE',
         },
       },
       6: {
@@ -1591,22 +1100,6 @@ exports.geotrekInstance = {
           trek: false,
           event: false
         },
-        activity : {
-          1: 3284,
-          2: 3283,
-          4: 3333,
-          5: 3333,
-          6: 4201,
-          9: 6224,
-          10: 3333,
-          11: 3333
-        },
-        itineraireType : {
-          1: 'BOUCLE',
-          2: 'ALLER_RETOUR',
-          3: 'ALLER_ITINERANCE',
-          5: 'ALLER_ITINERANCE',
-        },
       },
       7: {
         specialId: 'sitraSTR726611',
@@ -1622,22 +1115,6 @@ exports.geotrekInstance = {
         production: {
           trek: false,
           event: false
-        },
-        activity : {
-          1: 3284,
-          2: 3283,
-          4: 3333,
-          5: 3333,
-          6: 4201,
-          9: 6224,
-          10: 3333,
-          11: 3333
-        },
-        itineraireType : {
-          1: 'BOUCLE',
-          2: 'ALLER_RETOUR',
-          3: 'ALLER_ITINERANCE',
-          5: 'ALLER_ITINERANCE',
         },
       },
       8: {
@@ -1655,22 +1132,6 @@ exports.geotrekInstance = {
           trek: false,
           event: false
         },
-        activity : {
-          1: 3284,
-          2: 3283,
-          4: 3333,
-          5: 3333,
-          6: 4201,
-          9: 6224,
-          10: 3333,
-          11: 3333
-        },
-        itineraireType : {
-          1: 'BOUCLE',
-          2: 'ALLER_RETOUR',
-          3: 'ALLER_ITINERANCE',
-          5: 'ALLER_ITINERANCE',
-        },
       },
       9: {
         specialId: '07ABOTS100015_struct',
@@ -1686,22 +1147,6 @@ exports.geotrekInstance = {
         production: {
           trek: false,
           event: false
-        },
-        activity : {
-          1: 3284,
-          2: 3283,
-          4: 3333,
-          5: 3333,
-          6: 4201,
-          9: 6224,
-          10: 3333,
-          11: 3333
-        },
-        itineraireType : {
-          1: 'BOUCLE',
-          2: 'ALLER_RETOUR',
-          3: 'ALLER_ITINERANCE',
-          5: 'ALLER_ITINERANCE',
         },
       },
       12: {
@@ -1719,22 +1164,6 @@ exports.geotrekInstance = {
           trek: false,
           event: false
         },
-        activity : {
-          1: 3284,
-          2: 3283,
-          4: 3333,
-          5: 3333,
-          6: 4201,
-          9: 6224,
-          10: 3333,
-          11: 3333
-        },
-        itineraireType : {
-          1: 'BOUCLE',
-          2: 'ALLER_RETOUR',
-          3: 'ALLER_ITINERANCE',
-          5: 'ALLER_ITINERANCE',
-        },
       },
       13: {
         specialId: '07ABOTS100008_struct',
@@ -1750,22 +1179,6 @@ exports.geotrekInstance = {
         production: {
           trek: false,
           event: false
-        },
-        activity : {
-          1: 3284,
-          2: 3283,
-          4: 3333,
-          5: 3333,
-          6: 4201,
-          9: 6224,
-          10: 3333,
-          11: 3333
-        },
-        itineraireType : {
-          1: 'BOUCLE',
-          2: 'ALLER_RETOUR',
-          3: 'ALLER_ITINERANCE',
-          5: 'ALLER_ITINERANCE',
         },
       },
       14: {
@@ -1783,22 +1196,6 @@ exports.geotrekInstance = {
           trek: false,
           event: false
         },
-        activity : {
-          1: 3284,
-          2: 3283,
-          4: 3333,
-          5: 3333,
-          6: 4201,
-          9: 6224,
-          10: 3333,
-          11: 3333
-        },
-        itineraireType : {
-          1: 'BOUCLE',
-          2: 'ALLER_RETOUR',
-          3: 'ALLER_ITINERANCE',
-          5: 'ALLER_ITINERANCE',
-        },
       },
       15: {
         specialId: 'SITRA2_STR_784479',
@@ -1814,22 +1211,6 @@ exports.geotrekInstance = {
         production: {
           trek: false,
           event: false
-        },
-        activity : {
-          1: 3284,
-          2: 3283,
-          4: 3333,
-          5: 3333,
-          6: 4201,
-          9: 6224,
-          10: 3333,
-          11: 3333
-        },
-        itineraireType : {
-          1: 'BOUCLE',
-          2: 'ALLER_RETOUR',
-          3: 'ALLER_ITINERANCE',
-          5: 'ALLER_ITINERANCE',
         },
       },
       16: {
@@ -1847,22 +1228,6 @@ exports.geotrekInstance = {
           trek: false,
           event: false
         },
-        activity : {
-          1: 3284,
-          2: 3283,
-          4: 3333,
-          5: 3333,
-          6: 4201,
-          9: 6224,
-          10: 3333,
-          11: 3333
-        },
-        itineraireType : {
-          1: 'BOUCLE',
-          2: 'ALLER_RETOUR',
-          3: 'ALLER_ITINERANCE',
-          5: 'ALLER_ITINERANCE',
-        },
       },
       17: {
         specialId: '07ABOTS100011_struct',
@@ -1879,24 +1244,24 @@ exports.geotrekInstance = {
           trek: false,
           event: false
         },
-        activity : {
-          1: 3284,
-          2: 3283,
-          4: 3333,
-          5: 3333,
-          6: 4201,
-          9: 6224,
-          10: 3333,
-          11: 3333
-        },
-        itineraireType : {
-          1: 'BOUCLE',
-          2: 'ALLER_RETOUR',
-          3: 'ALLER_ITINERANCE',
-          5: 'ALLER_ITINERANCE',
-        },
       },
-    }
+    },
+    activity : {
+      1: 3284,
+      2: 3283,
+      4: 3333,
+      5: 3333,
+      6: 4201,
+      9: 6224,
+      10: 3333,
+      11: 3333
+    },
+    itineraireType : {
+      1: 'BOUCLE',
+      2: 'ALLER_RETOUR',
+      3: 'ALLER_ITINERANCE',
+      5: 'ALLER_ITINERANCE',
+    },
   },
   9 : {
     geotrekUrl : 'https://geotrek-admin.portcros-parcnational.fr/api/v2/',
@@ -1917,14 +1282,14 @@ exports.geotrekInstance = {
           event: false
         },
 	      www: 'https://destination.portcros-parcnational.fr/trek/',
-        activity : {
-          2: 3284,
-          4: 3333,
-        },
-        itineraireType : {
-          1: 'BOUCLE',
-        },
       },
-    }
+    },
+    activity : {
+      2: 3284,
+      4: 3333,
+    },
+    itineraireType : {
+      1: 'BOUCLE',
+    },
   },
 };
