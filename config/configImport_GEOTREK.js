@@ -51,10 +51,6 @@ exports.geotrekInstance = {
         },
         www: 'https://rando.ecrins-parcnational.fr/trek/',
         www_events: 'https://rando.ecrins-parcnational.fr/exemple_page_events/',
-        touristicevent_type : {
-          1: 1958, // Exposition > Culturelle
-          4: 1974, // Rendez-vous avec le Parc national > Distractions et loisirs 
-        }
       },
       4: {
         production: {
@@ -129,6 +125,10 @@ exports.geotrekInstance = {
         },
       }
     },
+    touristicevent_type : {
+      1: 1958, // Exposition > Culturelle
+      4: 1974, // Rendez-vous avec le Parc national > Distractions et loisirs 
+    },
     touristicevent_districtToEntities : {
       1: 771883,  //Briançonnais > Parc national des Écrins - Briançonnais
       2: 225837,  //Vallouise > Parc national des Ecrins - Vallouise
@@ -201,9 +201,6 @@ exports.geotrekInstance = {
           3: 'ALLER_ITINERANCE',
         },
 		    www: '', // Dev https://gtr3demo.ecrins-parcnational.fr/event/
-        touristicevent_type : {
-          7: 1974, // Distractions et loisirs
-        }
       },
       3: { // CAPEV
         specialId: 'Haute-Loire CAPEV',
@@ -524,6 +521,9 @@ exports.geotrekInstance = {
           3: 'ALLER_ITINERANCE',
         }
       },
+    },
+    touristicevent_type : {
+      7: 1974, // Distractions et loisirs
     }
   },
   2 : {
@@ -793,9 +793,6 @@ exports.geotrekInstance = {
           5: 'ALLER_RETOUR',
         },
         www: '',
-        touristicevent_type : {
-          7: 1974, // Distractions et loisirs
-        }
       },
       4: {
         production: {
@@ -821,6 +818,9 @@ exports.geotrekInstance = {
           event: false
         },
       },
+    },
+    touristicevent_type : {
+      7: 1974, // Distractions et loisirs
     }
   },
   5 : {

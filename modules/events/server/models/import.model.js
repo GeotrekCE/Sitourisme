@@ -92,8 +92,8 @@ class importModel extends geotrek
   }
 
   getSubType(element, structure) {
-    if (configImportGEOTREK.geotrekInstance[structure].structures[element.structure].touristicevent_type) {
-      return configImportGEOTREK.geotrekInstance[structure].structures[element.structure].touristicevent_type[element.type];
+    if (configImportGEOTREK.geotrekInstance[structure].touristicevent_type) {
+      return configImportGEOTREK.geotrekInstance[structure].touristicevent_type[element.type];
     } else {
       return configImportGEOTREK.touristicevent_type[element.type];
     }
