@@ -4,6 +4,8 @@ const path = require('path'),
   _ = require('lodash'),
   pify = require('pify'),
   moment = require('moment'),
+  striptags = require('striptags'),
+  he = require('he'),
   DataString = require(path.resolve('./library/data/manipulate.js')),
   config = require(path.resolve('./config/config.js')),
   configImportGEOTREK = require(path.resolve('./config/configImport_GEOTREK.js')),
@@ -204,7 +206,7 @@ class importModel extends geotrek
   getBooking(element) {
     if (element.booking) {
       return {
-        complementFr: element.booking,
+        complementFr: he.decode(striptags(element.booking)),
       }
     }
   }
