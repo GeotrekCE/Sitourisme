@@ -49,8 +49,8 @@ exports.geotrekInstance = {
           trek: true,
           event: true
         },
-        www: 'https://rando.ecrins-parcnational.fr/trek/',
-        www_events: 'https://rando.ecrins-parcnational.fr/exemple_page_events/',
+        www: 'https://destination.ecrins-parcnational.fr/trek/',
+        www_events: 'https://destinartion.ecrins-parcnational.fr/event/',
       },
       4: {
         production: {
