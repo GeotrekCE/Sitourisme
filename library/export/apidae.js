@@ -2502,8 +2502,9 @@ class Apidae
  __buildDescriptifsThematises(product, root, rootFieldList) {
   let descriptifsThematises = [],
     err = false;
+
   // Retrieving the Geotrek ambiance field from the Apidae themed description
-  if (product.ambianceLibelle) {
+  /*if (product.ambianceLibelle) {
     let description = {};
       
     description.libelleFr = product.ambianceLibelle;
@@ -2527,6 +2528,25 @@ class Apidae
       theme: {
         elementReferenceType: 'DescriptifTheme',
         id: 5536, //Topo/pas à pas : 6527 / cooking 5536
+      },
+      description: description
+    });
+  }*/
+
+  if (product.ambianceLibelle) {
+    let description = {};
+      
+    description.libelleFr = '';
+    description.libelleEn = '';
+    description.libelleEs = '';
+    description.libelleIt = '';
+    description.libelleDe = ''; 
+    description.libelleNl = '';
+
+    descriptifsThematises.push({
+      theme: {
+        elementReferenceType: 'DescriptifTheme',
+        id: 6527, //Topo/pas à pas : 6527 / cooking 5536
       },
       description: description
     });
@@ -4329,11 +4349,12 @@ __buildImageDetail(images, nImage, callback,originalImage = false,sizeImage = 25
       {
         var urlResize = 'https://wsrv.nl/?w='+sizeImage+'&url=' + image.url;
         var urlObject = Url.parse(urlResize);
+        if (config.debug && config.debug.logs) {
+          console.log('urlResize = ',urlResize);
+        }
       }
-      if (config.debug && config.debug.logs) {
-        console.log('urlResize = ',urlResize);
-      }
-      me.__getImageSize(urlObject.href,function(size)
+      
+      me.__getImageSize(urlObject.href, function(size)
       {
           if (config.debug && config.debug.logs) {
             console.log('urlResize response = ',size);
@@ -4412,7 +4433,7 @@ __buildImageDetail(images, nImage, callback,originalImage = false,sizeImage = 25
         
                 response.on('end', function () {
                   if (config.debug && config.debug.logs) {
-                    console.log("end requesting Image checking for next one");
+                    console.log("end requesting Image checking for next one", response?.statusCode);
                   }
                   if (
                     response &&
