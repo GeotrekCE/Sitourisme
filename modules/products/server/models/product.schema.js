@@ -1321,14 +1321,6 @@ const _defaultSchema = {
       type: Number
     }
   ],
-  tailleGroupe: {
-    min: {
-      type: Number
-    },
-    max: {
-      type: Number
-    }
-  },
   service: [
     {
       type: Number
@@ -1649,7 +1641,10 @@ const _defaultSchema = {
       {
         type: Number
       }
-    ]
+    ],
+    dureeSeance : {
+      type: Number
+    }
   },
   price: {
     gratuit: {

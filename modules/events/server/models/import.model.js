@@ -4,9 +4,12 @@ const path = require('path'),
   _ = require('lodash'),
   pify = require('pify'),
   moment = require('moment'),
+  striptags = require('striptags'),
+  he = require('he'),
   DataString = require(path.resolve('./library/data/manipulate.js')),
   config = require(path.resolve('./config/config.js')),
   configImportGEOTREK = require(path.resolve('./config/configImport_GEOTREK.js')),
+  { placeApidae } = require(path.resolve('./config/configPlaceApidae.js')),
   configSitraTownByInsee = require(path.resolve('./config/configSitraTownByInsee.js')),
   geotrek = require(path.resolve('./library/import/geotrek.js'));
 
@@ -27,6 +30,7 @@ class importModel extends geotrek
       typeCode: configData.codeType,
       type: configImportGEOTREK.types[configData.codeType],
       specialId: element.id,
+      district: this.getDistrict(element, structure),
       subType: this.getSubType(element, structure),
       member: configData.member,
       state: 'HIDDEN',
@@ -64,17 +68,32 @@ class importModel extends geotrek
       pdfDe: this.getPdf(element, 'de'),
       pdfNl: this.getPdf(element, 'nl'),
       image: this.getImage(element),
-      url: configImportGEOTREK.geotrekInstance[structure].structures[element.structure].www + element.id,
+      url: configImportGEOTREK.geotrekInstance[structure].structures[element.structure].www_events + element.id,
       openingDate: this.getOuverture(element),
       reservation: this.getBooking(element),
       capacity: this.getCapacity(element),
       complementAccueil: this.getComplementAccueil(element),
+      idLieu: this.getLieu(element)
     };
   }
   
+  getDistrict(element, structure) {
+    let entity = null,
+      entityTmp = null
+
+    if (element.districts && element.districts.length && configImportGEOTREK.geotrekInstance[structure].touristicevent_districtToEntities) {
+      element.districts.forEach((districtId) => {
+        entityTmp = configImportGEOTREK.geotrekInstance[structure].touristicevent_districtToEntities[districtId]
+        if (entityTmp !== undefined) entity = entityTmp
+      })
+    }
+    if (entity === null) entity = configImportGEOTREK.geotrekInstance[structure].touristicevent_defaultEntity
+    return entity
+  }
+
   getSubType(element, structure) {
-    if (configImportGEOTREK.geotrekInstance[structure].structures[element.structure].touristicevent_type) {
-      return configImportGEOTREK.geotrekInstance[structure].structures[element.structure].touristicevent_type[element.type];
+    if (configImportGEOTREK.geotrekInstance[structure].touristicevent_type) {
+      return configImportGEOTREK.geotrekInstance[structure].touristicevent_type[element.type];
     } else {
       return configImportGEOTREK.touristicevent_type[element.type];
     }
@@ -111,13 +130,22 @@ class importModel extends geotrek
     
     return description;
   }
+
+  getLieu(element) {
+    if (element.place) {
+      let placeId = placeApidae(element.place);
+      if (placeId) {
+        //if (process.env.NODE_ENV !== 'production') placeId = 11219; //#120 - EQU définissant un lieu (source)
+        return placeId;
+      }
+    }
+    return null;
+  }
   
   getOuverture(element) {
-    let duration = null;
-    
-    if (element.duration) {
-      duration = element.duration;
-    }
+    let duration = null,
+      dureeSeance = null;
+
     if (element.begin_date && element.end_date) {
       let horaireOuverture = null,
         horaireFermeture = null;
@@ -126,7 +154,7 @@ class importModel extends geotrek
         if (element.end_time) {
           horaireOuverture = element.start_time;
           horaireFermeture = element.end_time;
-        } else if (element.duration) {
+        } else if (element.duration != '') {
           let horaireOuvertureTmp = moment(element.begin_date + ' ' + element.start_time, 'YYYY-MM-DD HH:mm:ss');
           let horaireFermetureTmp = moment(element.begin_date + ' ' + element.duration, 'YYYY-MM-DD HH:mm:ss');
           
@@ -148,6 +176,16 @@ class importModel extends geotrek
         }
       }
 
+      if (element.duration) {
+        const [durationHour, durationMinute] = element.duration.split(':').map(Number);
+        dureeSeance = (durationHour * 60 + durationMinute);
+      } else if (element.begin_date == element.end_date && element.start_time && element.end_time) {
+        const [startHour, startMinute] = element.start_time.split(':').map(Number);
+        const [endHour, endMinute] = element.end_time.split(':').map(Number);
+    
+        dureeSeance = (endHour * 60 + endMinute) - (startHour * 60 + startMinute);
+      }
+
       return {
         periodesOuvertures : [{
           dateStart: element.begin_date,
@@ -155,12 +193,12 @@ class importModel extends geotrek
           type: "OUVERTURE_TOUS_LES_JOURS",
           horaireOuverture: horaireOuverture,
           horaireFermeture: horaireFermeture,
-          complementHoraire: duration,
         }],
         expiration: [{
           expirationDate: moment(element.end_date),
           expirationAction: "MASQUER_AUTOMATIQUEMENT",
-        }]
+        }],
+        dureeSeance: dureeSeance
       }
     }
   }
@@ -168,7 +206,7 @@ class importModel extends geotrek
   getBooking(element) {
     if (element.booking) {
       return {
-        complementFr: element.booking,
+        complementFr: he.decode(striptags(element.booking)),
       }
     }
   }
@@ -194,12 +232,14 @@ class importModel extends geotrek
       );
     }
     if (element.place) {
-      accueil = DataString.stripTags(
-        DataString.strEncode(accueil + "Lieu : " + element.place + "\r\n\r\n")
-      );
+      if (placeApidae(element.place) === null) {
+        accueil = DataString.stripTags(
+          DataString.strEncode(accueil + "Lieu : " + element.place + "\r\n\r\n")
+        );
+      }
     }
     
-    if (element.practical_info) {
+    if (element.practical_info['fr']) {
       accueil = DataString.stripTags(
         DataString.strEncode(accueil + "Informations pratiques : " + element.practical_info['fr'].replaceAll("<br>", "\r\n") + "\r\n\r\n")
       );

@@ -8,7 +8,7 @@
     "url": "https://github.com/GeotrekCE/Sitourisme"
   },
   "scripts": {
-    "dev": "NODE_ENV=development nodemon server.js",
+    "dev": "NODE_ENV=development PORT=3005 nodemon server.js",
     "prod": "NODE_ENV=production PORT=3003 nodemon server.js",
     "postinstall": "bower install --config.interactive=true --allow-root",
     "lint": "eslint modules/**/*.js library/import/geotrek.js --fix"
@@ -30,6 +30,7 @@
     "express": "^4.17.1",
     "express-session": "^1.17.2",
     "glob": "^7.2.0",
+    "he": "^1.2.0",
     "helmet": "^4.6.0",
     "lodash": "^3.10.1",
     "method-override": "^3.0.0",
@@ -42,6 +43,7 @@
     "pify": "^5.0.0",
     "request": "^2.88.2",
     "socket.io": "^2.3.0",
+    "striptags": "^3.2.0",
     "swig": "^1.4.2"
   },
   "devDependencies": {

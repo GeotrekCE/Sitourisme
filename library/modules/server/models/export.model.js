@@ -30,6 +30,7 @@ class ExportApidae
         console.log('-> Export vers APIDAE id : ' + entity.specialId + 'type = ' + entity.type);
         
         ApidaeLib.__getSitraToken(
+          ApidaeLib,
           entity,
           null,
           function (accessToken) {

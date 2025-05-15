@@ -106,20 +106,10 @@ class importModel extends geotrek
   getActivity(element, structure) {
     var activity = [];
     if (element.practice) {
-      if (
-        configImportGEOTREK.geotrekInstance[structure].structures[
-          element.structure
-        ].activity != undefined
-        &&
-        configImportGEOTREK.geotrekInstance[structure].structures[
-          element.structure
-        ].activity[element.practice] != undefined
+      if (configImportGEOTREK.geotrekInstance[structure].activity != undefined &&
+        configImportGEOTREK.geotrekInstance[structure].activity[element.practice] != undefined
       ) {
-        activity.push(
-          configImportGEOTREK.geotrekInstance[structure].structures[
-            element.structure
-          ].activity[element.practice]
-        );
+        activity.push(configImportGEOTREK.geotrekInstance[structure].activity[element.practice]);
       } else {
         activity.push(configImportGEOTREK.activity[element.practice]);
       }
@@ -139,6 +129,7 @@ class importModel extends geotrek
 
   getAmbianceLibelle(element, lang) {
     let ambianceLibelle = null;
+    // Using the Geotrek description to populate the Apidae ambiance field
     if (element.description && element.description[lang]) {
       ambianceLibelle = DataString.stripTags(
         DataString.strEncode(
@@ -236,9 +227,9 @@ class importModel extends geotrek
       itineraire.negative = DataString.convertNegative(element.descent);
     }
     if (element.route) {
-      if (configImportGEOTREK.geotrekInstance[structure].structures[element.structure].itineraireType != undefined)
+      if (configImportGEOTREK.geotrekInstance[structure].itineraireType != undefined)
       {
-        itineraire.itineraireType = configImportGEOTREK.geotrekInstance[structure].structures[element.structure].itineraireType[element.route];
+        itineraire.itineraireType = configImportGEOTREK.geotrekInstance[structure].itineraireType[element.route];
       } else {
         itineraire.itineraireType = configImportGEOTREK.itineraireType[element.route];
       }
@@ -280,6 +271,7 @@ class importModel extends geotrek
   }
 
   getDescription(element, lang) {
+    // Using the Geotrek ambiance in the Apidae description field
     if (element.ambiance && element.ambiance[lang]) {
       return DataString.stripTags(
         DataString.strEncode(

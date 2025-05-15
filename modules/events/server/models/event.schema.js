@@ -26,6 +26,9 @@ const _defaultSchema = {
   specialIdSitra: {
     type: String
   },
+  district: {
+    type: Number
+  },
   legalEntity : [
     {
       type: {
@@ -253,9 +256,8 @@ const _defaultSchema = {
       type: {
         type: String
       },
-      name: {
-        type: String,
-        trim: true
+      title: {
+        type: String
       },
       nameEn: {
         type: String,
@@ -576,6 +578,9 @@ const _defaultSchema = {
     type: String,
     trim: true
   },
+  idLieu: {
+    type: Number
+  },
   complementAccueil: {
     type: String,
     trim: true
@@ -595,14 +600,6 @@ const _defaultSchema = {
   complementAccueilIt: {
     type: String,
     trim: true
-  },
-  tailleGroupe: {
-    min: {
-      type: Number
-    },
-    max: {
-      type: Number
-    }
   },
   openingEveryDay: {
     type: Boolean
@@ -659,12 +656,10 @@ const _defaultSchema = {
           type: Date
         },
         horaireOuverture: {
-          type: Date
+          type: String,
+          trim: true
         },
         horaireFermeture: {
-          type: Date
-        },
-        complementHoraire: {
           type: String,
           trim: true
         },
@@ -699,10 +694,12 @@ const _defaultSchema = {
               trim: true
             },
             horaireOuverture: {
-              type: Date
+              type: String,
+              trim: true
             },
             horaireFermeture: {
-              type: Date
+              type: String,
+              trim: true
             }
           }
         ]
@@ -719,7 +716,10 @@ const _defaultSchema = {
       {
         type: Number
       }
-    ]
+    ],
+    dureeSeance : {
+      type: Number
+    }
   },
   price: {
     gratuit: {
@@ -844,6 +844,12 @@ const _defaultSchema = {
     }
   ],
   rateCompletion: {
+    type: Number
+  },
+  informationSitraId : {
+    type: Number
+  },
+  gestionSitraId : {
     type: Number
   },
 };

@@ -58,9 +58,9 @@ class Import
   }
   
   getPrice(element) {
-    return {
-      gratuit: true
-    }
+    return element.price > 0
+    ? { gratuit: false, description: element.price.toString().replace('.', ',') + ' €' }
+    : { gratuit: true };
   }
   
   getPerimetreGeographique(element) {
@@ -163,7 +163,7 @@ class Import
             return {
               url: this.addUrlHttp(item['url']),
               legend: item['legend'],
-              name: item['title'],
+              title: item['title'],
               author: item['author']
             };
           }

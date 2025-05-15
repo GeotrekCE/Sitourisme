@@ -105,8 +105,8 @@ class Apidae
     return block;
   }
 
-  __getSitraToken(product, member, callback) {
-    const me = this,
+  __getSitraToken(context, product, member, callback) {
+    const me = context,
       memberId = config.memberId,
       //var memberId = member || (product.member ? product.member : '-'),
       configAuth = config.sitra.auth.accessPerMemberId,
@@ -170,7 +170,7 @@ class Apidae
         }
         if (callback) {
           setTimeout(() => {
-            this.__getSitraToken(product, member, callback);
+            me.__getSitraToken(me, product, member, callback);
           }, 15000);
         }
       });
@@ -183,9 +183,9 @@ class Apidae
     return moment(date).format('YYYY-MM-DD');
   }
 
-  __getHoraire(date) {
+  /*__getHoraire(date) {
     return moment(date).format('HH:mm:ss');
-  }
+  }*/
 
   __traitePeriode(arrPeriodes) {
     let dateStartPrec = null,
@@ -209,29 +209,33 @@ class Apidae
       ) {
         if (description) descriptionFinal += description;
         if (horaireO) {
-          descriptionFinal += ' - Ouverture : ' + this.__getHoraire(horaireO);
+          //descriptionFinal += ' - Ouverture : ' + this.__getHoraire(horaireO);
+          descriptionFinal += ' - Ouverture : ' + horaireO;
         }
         if (horaireF) {
-          descriptionFinal += ' - Fermeture : ' + this.__getHoraire(horaireF);
+          //descriptionFinal += ' - Fermeture : ' + this.__getHoraire(horaireF);
+          descriptionFinal += ' - Fermeture : ' + horaireF;
         }
         descriptionFinal += '\r\n';
       } else {
         if (descriptionFinal) {
           let descriptionFinal2 = '';
           if (arrPeriodesFinal[arrPeriodesFinal.length - 1].horaireOuverture) {
-            descriptionFinal2 =
+            /*descriptionFinal2 =
               ' - Ouverture : ' +
               this.__getHoraire(
                 arrPeriodesFinal[arrPeriodesFinal.length - 1].horaireOuverture
-              );
+              );*/
+            descriptionFinal2 = ' - Ouverture : ' + arrPeriodesFinal[arrPeriodesFinal.length - 1].horaireOuverture;
             arrPeriodesFinal[arrPeriodesFinal.length - 1].horaireOuverture = null;
           }
           if (arrPeriodesFinal[arrPeriodesFinal.length - 1].horaireFermeture) {
-            descriptionFinal2 =
+            /*descriptionFinal2 =
               ' - Fermeture : ' +
               this.__getHoraire(
                 arrPeriodesFinal[arrPeriodesFinal.length - 1].horaireFermeture
-              );
+              );*/
+            descriptionFinal2 = ' - Fermeture : ' + arrPeriodesFinal[arrPeriodesFinal.length - 1].horaireFermeture;
             arrPeriodesFinal[arrPeriodesFinal.length - 1].horaireFermeture = null;
           }
           if (descriptionFinal2) {
@@ -2498,7 +2502,7 @@ class Apidae
  __buildDescriptifsThematises(product, root, rootFieldList) {
   let descriptifsThematises = [],
     err = false;
-
+  // Retrieving the Geotrek ambiance field from the Apidae themed description
   if (product.ambianceLibelle) {
     let description = {};
       
@@ -2522,7 +2526,7 @@ class Apidae
     descriptifsThematises.push({
       theme: {
         elementReferenceType: 'DescriptifTheme',
-        id: 6527, //Topo/pas à pas : 6527 / cooking 5536
+        id: 5536, //Topo/pas à pas : 6527 / cooking 5536
       },
       description: description
     });
@@ -2645,6 +2649,7 @@ class Apidae
     address = {},
     geoLocalization = {},
     environment = null,
+    lieu = {},
     err = false;
 
   if (product.address) {
@@ -2745,6 +2750,10 @@ class Apidae
 
     rootFieldList.push('localisation.geolocalisation.complement');
   }
+  if (product.idLieu) {
+    lieu.id= product.idLieu;
+    rootFieldList.push('localisation.lieu');
+  }
   /*if (product.perimetreGeographique && product.perimetreGeographique.length) {
     localization.perimetreGeographique = [];
     _.forEach(product.perimetreGeographique, function (item) {
@@ -2780,6 +2789,9 @@ class Apidae
   }
   if (Object.keys(geoLocalization).length) {
     localization.geolocalisation = geoLocalization;
+  }
+  if (Object.keys(lieu).length) {
+    localization.lieu = lieu;
   }
   if (environment && environment.length) {
     localization.environnements = environment;
@@ -3182,7 +3194,7 @@ class Apidae
     reservation.complement.libelleFr = product.reservation.complementFr;
     
     root.reservation = reservation;
-    rootFieldList.push('reservation');
+    rootFieldList.push('reservation.complement');
   }
   return { root: root, rootFieldList: rootFieldList };
 }
@@ -3418,13 +3430,6 @@ class Apidae
   }
   rootFieldList.push('prestations.labelsTourismeHandicap');
 
-  if (product.tailleGroupe) {
-    prestation.tailleGroupeMin = product.tailleGroupe.min;
-    rootFieldList.push('prestations.tailleGroupeMin');
-    prestation.tailleGroupeMax = product.tailleGroupe.max;
-    rootFieldList.push('prestations.tailleGroupeMax');
-  }
-
   if (
     root.informationsPrestataireActivites &&
     root.informationsPrestataireActivites.prestataireActivites
@@ -3464,11 +3469,10 @@ class Apidae
     rootFieldList.push('informationsPrestataireActivites.activitesCulturelles');
   }
 	
-	/* TODO speical event*/
   if (product.capacity) {
     prestation.tailleGroupeMax = product.capacity.value;
     rootFieldList.push('prestations.tailleGroupeMax');
-  }/* TODO speical event*/
+  }
 
   if (Object.keys(prestation).length) {
     root.prestations = prestation;
@@ -3578,20 +3582,14 @@ class Apidae
  buildLegalEntity(product, root, rootFieldList) {
   let finalLegalEntity = {},
     err = false;
-    
-// TODO SPECIAL TREK
-  if (product.importSubType === 'DRACENIE') {
-    finalLegalEntity.informations = {};
-    finalLegalEntity.informations.structureGestion = {
-      type: 'STRUCTURE',
-      id: product.idSitraCity
-    };
-
-    rootFieldList.push('informations.structureGestion');
-  }
-// TODO SPECIAL TREK
 
   if (product.legalEntity && product.legalEntity.length) {
+
+    let gestionSitraId = product.gestionSitraId
+    if (product.type != 'FETE_ET_MANIFESTATION' && process.env.NODE_ENV != 'production') {
+      gestionSitraId = 223268
+    }
+
     _.forEach(product.legalEntity, function (legalEntityObj) {
       
       switch (legalEntityObj.type) {
@@ -3602,7 +3600,7 @@ class Apidae
 
           finalLegalEntity.informations.structureGestion = {
             type: 'STRUCTURE',
-            id: (process.env.NODE_ENV == 'production') ? product.gestionSitraId : 223268
+            id: gestionSitraId
           };
 
           rootFieldList.push('informations.structureGestion');
@@ -3615,7 +3613,7 @@ class Apidae
 
           finalLegalEntity.informations.structureGestion = {
             type: 'STRUCTURE',
-            id:  (process.env.NODE_ENV == 'production') ? product.gestionSitraId : 223268
+            id:  gestionSitraId
           };
           rootFieldList.push('informations.structureGestion');
           break;
@@ -3627,7 +3625,7 @@ class Apidae
           
           finalLegalEntity.informations.structureInformation = {
             type: 'STRUCTURE',
-            id:  (process.env.NODE_ENV == 'production') ? product.gestionSitraId : 223268
+            id: gestionSitraId
           };
           break;
 
@@ -3728,7 +3726,7 @@ class Apidae
             moyensCommunication: moyensCommunication,
             structureReference: {
               type: 'STRUCTURE',
-              id:  (process.env.NODE_ENV == 'production') ? product.gestionSitraId : 223268,
+              id:  gestionSitraId,
               nom: {
                 libelleFr: resa.name
               }
@@ -3776,10 +3774,9 @@ class Apidae
         image.type = 'IMAGE';
         image.traductionFichiers = arrImageData;
       }
-
       // Name
-      if (imageData.name) {
-        name.libelleFr = imageData.name;
+      if (imageData.title) {
+        name.libelleFr = imageData.title;
       }
       if (imageData.nameEn) {
         name.libelleEn = imageData.nameEn;
@@ -3854,7 +3851,6 @@ class Apidae
       }
     });
   }
-
   if (arrImage.length) {
     root.illustrations = arrImage;
   } else {
@@ -4667,7 +4663,7 @@ __buildImageDetail(images, nImage, callback,originalImage = false,sizeImage = 25
     arrPeriod = [],
     period = {},
     periodLabel,
-    endDateMax = null, // TODO EVENT
+    endDateMax = null,
     identifiantTemporaire = 100,
     err = false;
 
@@ -4708,6 +4704,10 @@ __buildImageDetail(images, nImage, callback,originalImage = false,sizeImage = 25
         }));
     }
 
+    if (product.openingDate.dureeSeance) {
+      openingDate.dureeSeance = product.openingDate.dureeSeance;
+    }
+
     // Build periodesOuvertures
     if (
       product.openingDate.periodesOuvertures &&
@@ -4730,7 +4730,7 @@ __buildImageDetail(images, nImage, callback,originalImage = false,sizeImage = 25
         }
         if (periodData.dateEnd) {
           period.dateFin = context.__getDate(periodData.dateEnd);
-          endDateMax = period.dateFin; // TODO EVENT
+          endDateMax = period.dateFin;
         }
 
         //jours de la semaine
@@ -4763,14 +4763,10 @@ __buildImageDetail(images, nImage, callback,originalImage = false,sizeImage = 25
           );
 
           if (allEqualhoraireOuverture && horaireOuvertureArr.length) {
-            period.horaireOuverture = context.__getHoraire(
-              periodData.ouverturesJourDuMois[0].horaireOuverture
-            );
+            period.horaireOuverture = periodData.ouverturesJourDuMois[0].horaireOuverture;
           }
           if (allEqualhoraireFermeture && horaireFermetureArr.length) {
-            period.horaireFermeture = context.__getHoraire(
-              periodData.ouverturesJourDuMois[0].horaireFermeture
-            );
+            period.horaireFermeture = periodData.ouverturesJourDuMois[0].horaireFermeture;
           }
 
           period.ouverturesJournalieres = [];
@@ -4778,17 +4774,11 @@ __buildImageDetail(images, nImage, callback,originalImage = false,sizeImage = 25
         }
 
         if (periodData.horaireOuverture) {
-          period.horaireOuverture = context.__getHoraire(periodData.horaireOuverture);
+          period.horaireOuverture = periodData.horaireOuverture;
         }
         if (periodData.horaireFermeture) {
-          period.horaireFermeture = context.__getHoraire(periodData.horaireFermeture);
+          period.horaireFermeture = periodData.horaireFermeture;
         }
-        
-        // TODO EVENT
-        if (periodData.complementHoraire) {
-          period.complementHoraire = {};
-          period.complementHoraire.libelleFr = "Durée : " + periodData.complementHoraire;
-        }// TODO EVENT
         
         if (periodData.type) {
           period.type = periodData.type;
@@ -4833,7 +4823,7 @@ __buildImageDetail(images, nImage, callback,originalImage = false,sizeImage = 25
     }
     
     // TODO EVENT
-    if (product.openingDate.expiration) {
+    /*if (product.openingDate.expiration) {
        _.forEach(product.openingDate.expiration, function (periodDataExpiration) {
         root.expiration = {
           dateExpiration : moment(periodDataExpiration.expirationDate).format('YYYY-MM-DD'),
@@ -4841,7 +4831,7 @@ __buildImageDetail(images, nImage, callback,originalImage = false,sizeImage = 25
         };
        });  
       rootFieldList.push('expiration');
-    }    // TODO EVENT
+    }*/    // TODO EVENT
     
     if (
       product.openingDate.fermeturesExceptionnelles &&
@@ -4853,7 +4843,6 @@ __buildImageDetail(images, nImage, callback,originalImage = false,sizeImage = 25
       );
     }
   }
-  
 
   // ouvert toute l'année
   if (product.openingEveryDay) {
@@ -4869,6 +4858,7 @@ __buildImageDetail(images, nImage, callback,originalImage = false,sizeImage = 25
     rootFieldList.push('ouverture.ouverturesComplementaires');
     rootFieldList.push('ouverture.periodesOuvertures');
     rootFieldList.push('ouverture.fermeturesExceptionnelles');
+    rootFieldList.push('ouverture.dureeSeance');
   } else {
     err = true;
   }

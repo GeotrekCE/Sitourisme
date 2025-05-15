@@ -184,8 +184,10 @@ class ImportGeotrekApi extends Import
           );
       }
 
-      delete element.steps;
-      delete element.geometry;
+      if (this.moduleName == 'products') {
+        delete element.steps;
+        delete element.geometry;
+      }
       
       console.log(
         chalk.green('struc = ', structure, ' elem = ', element.structure)
@@ -231,9 +233,16 @@ class ImportGeotrekApi extends Import
         
         let product = await this.importData.formatDatas(element, additionalInformation, structure, proprietaireId, this.importType, this.configData, this.user);
         console.log('ok importData formatDatas');
-        product.legalEntity = this.getLegalEntity(element, product, structure);
+        
+        if (this.moduleName == 'events') {
+          product.legalEntity = this.getLegalEntity(element, product, structure, product.district)
+          product.gestionSitraId = product.district
+        } else {
+          product.legalEntity = this.getLegalEntity(element, product, structure)
+          product.gestionSitraId = configImportGEOTREK.geotrekInstance[structure].structures[element.structure].specialIdSitra
+        }
         product.informationSitraId = configImportGEOTREK.geotrekInstance[structure].structures[element.structure].specialIdSitra;
-        product.gestionSitraId = configImportGEOTREK.geotrekInstance[structure].structures[element.structure].specialIdSitra;
+
         product.rateCompletion = this.calculateRateCompletion(product);
 
         console.log(`GeoTrek API => import specialId : ${product.specialId}`, product);
@@ -259,7 +268,7 @@ class ImportGeotrekApi extends Import
     }
   }
   
-  getLegalEntity(element, product, structure)
+  getLegalEntity(element, product, structure, district)
   {
     if (config.debug && config.debug.logs)
       console.log('ImportGeotrekApi.getLegalEntity pour la structure = ', structure);
@@ -276,6 +285,9 @@ class ImportGeotrekApi extends Import
       : null;
 
     if (conf) {
+      
+      if (district) conf.specialIdSitra = district
+
       legalEntity = {
         specialId: conf.specialId,
         importType: product.importType,
