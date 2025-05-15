@@ -6,7 +6,7 @@ const placeApidae = (lieuTxt) => {
         'Maison du Parc national des Ecrins, Entraigues':                   6765,  //Maison du Parc du Valbonnais
         'Maison du Parc national des Ecrins, La Chapelle-en-Valgaudemar':   11437, //Maison du Parc du Valgaudemar
         'Maison du Parc national des Ecrins, Le Bourg d’Oisans':            11463, //Maison du Parc de l'Oisans
-        'Maison du Parc national des Ecrins, Vallouise':                    6765,  //Maison du Parc du Valbonnais
+        'Maison du Parc national des Ecrins, Vallouise':                    8421,  //Maison du parc national des Ecrins - Vallouise
     }
     return places[lieuTxt] || null
 }
