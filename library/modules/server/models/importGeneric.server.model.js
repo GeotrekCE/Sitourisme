@@ -215,8 +215,8 @@ class ImportGeotrekApi extends Import
       if (this.member && configImportGEOTREK.geotrekInstance[structure].structures[element.structure].production.trek) {
         this.configData = {
           specialId: null,
-          codeType: (this.moduleName == 'events') ? 'F&M' : 'EQU', // HERE TODO EQU & F&M CGT
-          subType: '2988', // Loisirs sportifs 
+          codeType: (this.moduleName == 'events') ? 'F&M' : 'EQU',
+          subType: (this.moduleName == 'events') ? '1974' : '2988', // 1974="Distractions et loisirs" 2988="Loisirs sportifs"
           member: this.member
         };
 

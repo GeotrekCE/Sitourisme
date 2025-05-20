@@ -1,26 +1,350 @@
 [
   {
-    "Identifiant": 1958,
-    "Nom": "Culturelle"
+    "Catégorie": "Commémoration",
+    "ApidaeId": "2066"
   },
   {
-    "Identifiant": 1974,
-    "Nom": "Distractions et loisirs"
+    "Catégorie": "Concertation",
+    "ApidaeId": "7155"
   },
   {
-    "Identifiant": 1962,
-    "Nom": "Manifestations commerciales"
+    "Catégorie": "Forum",
+    "ApidaeId": "6977"
   },
   {
-    "Identifiant": 1966,
-    "Nom": "Nature et détente"
+    "Catégorie": "Don du sang",
+    "ApidaeId": "3829"
   },
   {
-    "Identifiant": 1971,
-    "Nom": "Sports"
+    "Catégorie": "Kermesse",
+    "ApidaeId": "3870"
   },
   {
-    "Identifiant": 1973,
-    "Nom": "Traditions et folklore"
+    "Catégorie": "Loto",
+    "ApidaeId": "2114"
   },
+  {
+    "Catégorie": "Réunion publique",
+    "ApidaeId": "3854"
+  },
+  {
+    "Catégorie": "Café-théâtre",
+    "ApidaeId": "2138"
+  },
+  {
+    "Catégorie": "Cirque",
+    "ApidaeId": "2147"
+  },
+  {
+    "Catégorie": "Comédie musicale",
+    "ApidaeId": "2142"
+  },
+  {
+    "Catégorie": "Concert",
+    "ApidaeId": "2128"
+  },
+  {
+    "Catégorie": "Conférence / Débat / Rencontre",
+    "ApidaeId": "2072"
+  },
+  {
+    "Catégorie": "Danse",
+    "ApidaeId": "2151"
+  },
+  {
+    "Catégorie": "Exposition",
+    "ApidaeId": "2080"
+  },
+  {
+    "Catégorie": "Festival",
+    "ApidaeId": "2081"
+  },
+  {
+    "Catégorie": "One man Show / One woman show",
+    "ApidaeId": "2145"
+  },
+  {
+    "Catégorie": "Opéra",
+    "ApidaeId": "2132"
+  },
+  {
+    "Catégorie": "Opérette",
+    "ApidaeId": "2150"
+  },
+  {
+    "Catégorie": "Performance artistique",
+    "ApidaeId": "5651"
+  },
+  {
+    "Catégorie": "Spectacle",
+    "ApidaeId": "2091"
+  },
+  {
+    "Catégorie": "Théâtre",
+    "ApidaeId": "2134"
+  },
+  {
+    "Catégorie": "Traditions",
+    "ApidaeId": "6886"
+  },
+  {
+    "Catégorie": "Vernissage / Inauguration",
+    "ApidaeId": "5754"
+  },
+  {
+    "Catégorie": "Visite guidée et/ou commentée",
+    "ApidaeId": "2101"
+  },
+  {
+    "Catégorie": "Visite avec un support numérique",
+    "ApidaeId": "6206"
+  },
+  {
+    "Catégorie": "Apéro",
+    "ApidaeId": "6843"
+  },
+  {
+    "Catégorie": "Brunch",
+    "ApidaeId": "5874"
+  },
+  {
+    "Catégorie": "Dégustation",
+    "ApidaeId": "3717"
+  },
+  {
+    "Catégorie": "Dîner / Repas spectacle",
+    "ApidaeId": "2121"
+  },
+  {
+    "Catégorie": "Goûter",
+    "ApidaeId": "2123"
+  },
+  {
+    "Catégorie": "Pique-nique/repas proposés par les producteurs",
+    "ApidaeId": "6844"
+  },
+  {
+    "Catégorie": "Vente à emporter",
+    "ApidaeId": "6900"
+  },
+  {
+    "Catégorie": "Repas organisé par une association",
+    "ApidaeId": "3853"
+  },
+  {
+    "Catégorie": "Bal",
+    "ApidaeId": "2093"
+  },
+  {
+    "Catégorie": "Chasse aux oeufs",
+    "ApidaeId": "4641"
+  },
+  {
+    "Catégorie": "Concours / Tournois",
+    "ApidaeId": "2095"
+  },
+  {
+    "Catégorie": "Course de caisses à savon",
+    "ApidaeId": "6777"
+  },
+  {
+    "Catégorie": "Défilé Cortège Parade",
+    "ApidaeId": "2079"
+  },
+  {
+    "Catégorie": "Démonstration",
+    "ApidaeId": "3871"
+  },
+  {
+    "Catégorie": "Descente aux flambeaux",
+    "ApidaeId": "2108"
+  },
+  {
+    "Catégorie": "Fête foraine / Manège / Vogue",
+    "ApidaeId": "2110"
+  },
+  {
+    "Catégorie": "Fête locale",
+    "ApidaeId": "2096"
+  },
+  {
+    "Catégorie": "Feux d'artifice",
+    "ApidaeId": "2109"
+  },
+  {
+    "Catégorie": "Illuminations",
+    "ApidaeId": "7247"
+  },
+  {
+    "Catégorie": "Initiation / découverte dans le cadre d'un événement",
+    "ApidaeId": "5879"
+  },
+  {
+    "Catégorie": "Jeu de piste / Chasse au trésor",
+    "ApidaeId": "2112"
+  },
+  {
+    "Catégorie": "Karaoké",
+    "ApidaeId": "5594"
+  },
+  {
+    "Catégorie": "Pot d'accueil",
+    "ApidaeId": "2113"
+  },
+  {
+    "Catégorie": "Rassemblement",
+    "ApidaeId": "2084"
+  },
+  {
+    "Catégorie": "Retransmission d’événement sportif",
+    "ApidaeId": "4652"
+  },
+  {
+    "Catégorie": "Séance / Projection cinéma",
+    "ApidaeId": "3818"
+  },
+  {
+    "Catégorie": "Séances de dédicaces",
+    "ApidaeId": "3783"
+  },
+  {
+    "Catégorie": "Soirée à thème",
+    "ApidaeId": "6794"
+  },
+  {
+    "Catégorie": "Soirée dansante",
+    "ApidaeId": "2111"
+  },
+  {
+    "Catégorie": "Son et lumière",
+    "ApidaeId": "4526"
+  },
+  {
+    "Catégorie": "Thé dansant",
+    "ApidaeId": "3873"
+  },
+  {
+    "Catégorie": "Toro piscine / jeux taurins",
+    "ApidaeId": "2120"
+  },
+  {
+    "Catégorie": "Tombola",
+    "ApidaeId": "5740"
+  },
+  {
+    "Catégorie": "Célébration religieuse",
+    "ApidaeId": "3786"
+  },
+  {
+    "Catégorie": "Pèlerinage et procession",
+    "ApidaeId": "2085"
+  },
+  {
+    "Catégorie": "Animation dans les commerces",
+    "ApidaeId": "2125"
+  },
+  {
+    "Catégorie": "Bourse d'échange",
+    "ApidaeId": "2094"
+  },
+  {
+    "Catégorie": "Braderie",
+    "ApidaeId": "3872"
+  },
+  {
+    "Catégorie": "Brocante",
+    "ApidaeId": "2062"
+  },
+  {
+    "Catégorie": "Foire ou salon",
+    "ApidaeId": "2082"
+  },
+  {
+    "Catégorie": "Marché",
+    "ApidaeId": "2083"
+  },
+  {
+    "Catégorie": "Marché aux puces",
+    "ApidaeId": "2099"
+  },
+  {
+    "Catégorie": "Marché régulier",
+    "ApidaeId": "2107"
+  },
+  {
+    "Catégorie": "Portes ouvertes",
+    "ApidaeId": "2086"
+  },
+  {
+    "Catégorie": "Vente aux enchères",
+    "ApidaeId": "3817"
+  },
+  {
+    "Catégorie": "Vide greniers",
+    "ApidaeId": "2092"
+  },
+  {
+    "Catégorie": "Compétition sportive",
+    "ApidaeId": "2068"
+  },
+  {
+    "Catégorie": "Congrès",
+    "ApidaeId": "2078"
+  },
+  {
+    "Catégorie": "Carnaval",
+    "ApidaeId": "2065"
+  },
+  {
+    "Catégorie": "Fête traditionnelle",
+    "ApidaeId": "2105"
+  },
+  {
+    "Catégorie": "Transhumance/montée et descente des troupeaux à l’alpage",
+    "ApidaeId": "6017"
+  },
+  {
+    "Catégorie": "Tauromachie",
+    "ApidaeId": "6106"
+  },
+  {
+    "Catégorie": "Abrivado - Bandido",
+    "ApidaeId": "6107"
+  },
+  {
+    "Catégorie": "Corrida - Novillada",
+    "ApidaeId": "6110"
+  },
+  {
+    "Catégorie": "Course landaise",
+    "ApidaeId": "7064"
+  },
+  {
+    "Catégorie": "Course camarguaise",
+    "ApidaeId": "6108"
+  },
+  {
+    "Catégorie": "Encierro",
+    "ApidaeId": "6111"
+  },
+  {
+    "Catégorie": "Féria",
+    "ApidaeId": "6109"
+  },
+  {
+    "Catégorie": "Journée taurine",
+    "ApidaeId": "6112"
+  },
+  {
+    "Catégorie": "Tienta - Capea",
+    "ApidaeId": "6113"
+  },
+  {
+    "Catégorie": "Ouverture exceptionnelle dans le cadre d'événements ponctuels",
+    "ApidaeId": "4546"
+  },
+  {
+    "Catégorie": "Semaine à thème",
+    "ApidaeId": "3869"
+  }
 ]

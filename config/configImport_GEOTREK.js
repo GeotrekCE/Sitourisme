@@ -26,7 +26,7 @@ exports.itineraireType = {
   6: 'ALLER_ITINERANCE'
 };
 
-exports.touristicevent_type = {}
+exports.touristicevent_cat = {}
 
 exports.touristicevent_entities = {}
 
@@ -125,9 +125,9 @@ exports.geotrekInstance = {
         },
       }
     },
-    touristicevent_type : {
-      1: 1958, // Exposition > Culturelle
-      4: 1974, // Rendez-vous avec le Parc national > Distractions et loisirs 
+    touristicevent_cat : {
+      1: 2080, // Exposition > Exposition
+      4: 2072, // Rendez-vous avec le Parc national > Conférence / Débat / Rencontre
     },
     touristicevent_districtToEntities : {
       1: 771883,  //Briançonnais > Parc national des Écrins - Briançonnais
@@ -378,8 +378,14 @@ exports.geotrekInstance = {
       2: 'ALLER_RETOUR',
       3: 'ALLER_ITINERANCE',
     },
-    touristicevent_type : {
-      7: 1974, // Distractions et loisirs
+    touristicevent_cat : {
+      2: 2084, // Randonnée > Rassemblement	
+      7: 2084, // Distractions et loisirs > Rassemblement	
+      9: 2068, // Sports > Compétition sportive
+      10: 2084, // Nature et détente > Rassemblement	
+      11: 2082, // Manifestations commerciales > Foire ou salon	
+      12: 2072, // Culturelle > Conférence / Débat / Rencontre
+      13: 2082, // Manifestation de portée départementale ou plus  > Foire ou salon	
     },
   },
   2 : {
@@ -614,9 +620,6 @@ exports.geotrekInstance = {
       3: 'ALLER_ITINERANCE',
       4: 'ALLER_ITINERANCE',
       5: 'ALLER_RETOUR',
-    },
-    touristicevent_type : {
-      7: 1974, // Distractions et loisirs
     },
   },
   5 : {
