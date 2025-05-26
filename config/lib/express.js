@@ -8,7 +8,7 @@ var config = require('../config'),
   morgan = require('morgan'),
   bodyParser = require('body-parser'),
   session = require('express-session'),
-  MongoStore = require('connect-mongo')(session),
+  MongoStore = require('connect-mongo'),
   compress = require('compression'),
   methodOverride = require('method-override'),
   cookieParser = require('cookie-parser'),
@@ -116,7 +116,7 @@ module.exports.initSession = function (app, db) {
       store: new MongoStore({
         mongooseConnection: db.connection,
         collection: config.sessionCollection,
-        url: config.db
+        mongoUrl: config.db
       })
     })
   );

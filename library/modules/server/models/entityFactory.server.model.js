@@ -69,7 +69,7 @@ class EntityFactory
     });
   }
 
-  save(datas, callback) {
+  async save(datas, callback) {
     console.log('SAVE3 DATAS',datas.name, this.name);
     let Model = mongoose.model(this.name),
       address = datas.address ? datas.address : null,
@@ -118,21 +118,29 @@ class EntityFactory
     // Init alert
     datas.alert = __checkAlert(datas, this.name);
 
-    datas.save((err) => {
-      if (err) {
-        // Fix problem with unique url
-        if (err.code === 11000) {
-          datas.url = datas.url + 'A';
-          return Model.save(datas, callback);
+    try {
+      await datas.save()
+
+      if (callback) {
+        callback(null, datas)
+      }
+    } catch (err) {
+      // Fix problem with unique url
+      if (err.code === 11000) {
+        datas.url = datas.url + 'A'
+        try {
+          await datas.save();
+          if (callback) callback(null, datas)
+        } catch (err2) {
+          console.log('Error retrying save with modified URL:', err2)
+          if (callback) callback(err2)
         }
-
-        console.log('Error in ' + this.name + ' save() : ', err);
+        return
       }
 
-      if (callback && !err) {
-        callback(err, datas);
-      }
-    });
+      console.log('Error in ' + this.name + ' save():', err)
+      if (callback) callback(err)
+    }
   }
 
   buildUrl(datas) {

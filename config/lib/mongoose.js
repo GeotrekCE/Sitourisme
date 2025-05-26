@@ -17,7 +17,7 @@ module.exports.loadModels = function () {
 };
 
 // Initialize Mongoose
-module.exports.connect = function (cb) {
+/*module.exports.connect = function (cb) {
   mongoose.Promise = require('bluebird');
   var db = mongoose.connect(config.db, { useMongoClient: true }, (err) => {
     // Log Error
@@ -32,7 +32,21 @@ module.exports.connect = function (cb) {
       if (cb) cb(db);
     }
   });
-};
+};*/
+module.exports.connect = function (cb) {
+  mongoose.Promise = require('bluebird')
+  console.error(chalk.green('Mongoose connect CB on ', cb))
+  const db = mongoose.connect(config.db)
+    .then(() => {
+      this.loadModels()
+    console.error(chalk.green('Mongoose Db ', db))
+      if (cb) cb(db)
+    })
+    .catch((err) => {
+      console.error(chalk.red('Could not connect to MongoDB!'))
+      console.log(err)
+    })
+}
 
 
 module.exports.disconnect = function (cb) {

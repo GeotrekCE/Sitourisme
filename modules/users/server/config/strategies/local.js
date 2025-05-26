@@ -15,25 +15,21 @@ module.exports = function () {
         usernameField: 'username',
         passwordField: 'password'
       },
-      function (username, password, done) {
-        User.findOne(
-          {
-            username: username
-          },
-          function (err, user) {
-            if (err) {
-              return done(err);
-            }
-            if (!user || !user.authenticate(password)) {
-              return done(null, false, {
-                message: 'Invalid username or password'
-              });
-            }
+      async function (username, password, done) {
+        try {
+          const user = await User.findOne({ username: username })
 
-            return done(null, user);
+          if (!user || !user.authenticate(password)) {
+            return done(null, false, {
+              message: 'Invalid username or password'
+            })
           }
-        );
+
+          return done(null, user)
+        } catch (err) {
+          return done(err)
+        }
       }
     )
-  );
-};
+  )
+}

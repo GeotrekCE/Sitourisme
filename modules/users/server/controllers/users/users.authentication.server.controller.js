@@ -102,7 +102,7 @@ exports.oauthCallback = function (strategy) {
 /**
  * Helper function to save or update a OAuth user profile
  */
-exports.saveOAuthUserProfile = function (req, providerUserProfile, done) {
+exports.saveOAuthUserProfile = async function (req, providerUserProfile, done) {
   if (!req.user) {
     // Define a search query fields
     var searchMainProviderIdentifierField =
@@ -133,43 +133,37 @@ exports.saveOAuthUserProfile = function (req, providerUserProfile, done) {
       $or: [mainProviderSearchQuery, additionalProviderSearchQuery]
     };
 
-    User.findOne(searchQuery, function (err, user) {
-      if (err) {
+    const user = await User.findOne(searchQuery);
+
+    if (!user) {
+      const possibleUsername =
+        providerUserProfile.username ||
+        (providerUserProfile.email
+          ? providerUserProfile.email.split('@')[0]
+          : '');
+
+      const availableUsername = await User.findUniqueUsername(possibleUsername);
+
+      const newUser = new User({
+        firstName: providerUserProfile.firstName,
+        lastName: providerUserProfile.lastName,
+        username: availableUsername,
+        displayName: providerUserProfile.displayName,
+        email: providerUserProfile.email,
+        profileImageURL: providerUserProfile.profileImageURL,
+        provider: providerUserProfile.provider,
+        providerData: providerUserProfile.providerData
+      });
+
+      try {
+        await newUser.save();
+        return done(null, newUser);
+      } catch (err) {
         return done(err);
-      } else {
-        if (!user) {
-          var possibleUsername =
-            providerUserProfile.username ||
-            (providerUserProfile.email
-              ? providerUserProfile.email.split('@')[0]
-              : '');
-
-          User.findUniqueUsername(
-            possibleUsername,
-            null,
-            function (availableUsername) {
-              user = new User({
-                firstName: providerUserProfile.firstName,
-                lastName: providerUserProfile.lastName,
-                username: availableUsername,
-                displayName: providerUserProfile.displayName,
-                email: providerUserProfile.email,
-                profileImageURL: providerUserProfile.profileImageURL,
-                provider: providerUserProfile.provider,
-                providerData: providerUserProfile.providerData
-              });
-
-              // And save the user
-              user.save(function (err) {
-                return done(err, user);
-              });
-            }
-          );
-        } else {
-          return done(err, user);
-        }
       }
-    });
+    } else {
+      return done(null, user);
+    }
   } else {
     // User is already logged in, join the provider data to the existing user
     var user = req.user;

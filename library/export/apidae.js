@@ -460,31 +460,25 @@ class Apidae
       });
     });
   
-    let PromiseRequestFather = Promise.method(() => {
-      return new Promise((resolve, reject) => {
-        if (product.linkedObject.specialIdFather) {
-          Product.findOne(
-            {
-              specialId: product.linkedObject.specialIdFather,
-              importType: product.importType
-            },
-            (err, docs) => {
-              if (err) {
-                console.error(err);
-              }
-              if (docs && docs.specialIdSitra) {
-                product.linkedObject.idFatherSitra = docs.specialIdSitra;
-                product.linkedObject.idFatherType = docs.type;
-                product.linkedObject.idFatherName = docs.name;
-              }
-              resolve(product);
-            }
-          );
-        } else {
-          resolve(product);
+    const PromiseRequestFather = async () => {
+      if (product.linkedObject.specialIdFather) {
+        try {
+          const docs = await Product.findOne({
+            specialId: product.linkedObject.specialIdFather,
+            importType: product.importType
+          })
+
+          if (docs && docs.specialIdSitra) {
+            product.linkedObject.idFatherSitra = docs.specialIdSitra
+            product.linkedObject.idFatherType = docs.type
+            product.linkedObject.idFatherName = docs.name
+          }
+        } catch (err) {
+          console.error(err)
         }
-      });
-    });
+      }
+      return product;
+    }
   
     PromiseRequestImage()
       .then(function () {
@@ -789,7 +783,7 @@ class Apidae
               Authorization: `Bearer ${accessToken}`
             }
           },
-          function (err, httpResponse, body) {
+          async function (err, httpResponse, body) {
             console.timeEnd('Send data apidae');
             //console.log(formData);
             const statusCode = httpResponse?.statusCode;
@@ -836,22 +830,25 @@ class Apidae
                 specialIdSitra: product.specialIdSitra
               };
   
-              return Product.update(
-                {
-                  _id: product.id
-                },
-                {
-                  $set: {
-                    statusImport: 2,
-                    specialIdSitra: product.specialIdSitra
+              try {
+                await Product.updateOne(
+                  { _id: product.id },
+                  {
+                    $set: {
+                      statusImport: 2,
+                      specialIdSitra: product.specialIdSitra
+                    }
                   }
-                }
-              ).exec(async () => {
+                )
+
                 console.log(
                   `change statusImport and add specialIdSitra for ${product.name}`
-                );
-                return callback(null, finalData);
-              });
+                )
+
+                return callback(null, finalData)
+              } catch (err) {
+                return callback(err)
+              }
             } else if (!doUpdate) {
               finalData[product.id] = {
                 name: product.name,
@@ -859,25 +856,32 @@ class Apidae
                 err: 'no message Apidae',
                 errMessage: body.message,
                 specialIdSitra: 0
-              };
-              return Product.update(
-                {
-                  _id: product.id
-                },
-                {
-                  $set: {
-                    statusImport: 4,
-                    specialIdSitra: body.message
+              }
+
+              try {
+                await Product.updateOne(
+                  { _id: product.id },
+                  {
+                    $set: {
+                      statusImport: 4,
+                      specialIdSitra: body.message
+                    }
                   }
+                )
+
+                if (config.debug && config.debug.logs) {
+                  console.log('body = ', body)
                 }
-              ).exec(async () => {
-                if (config.debug && config.debug.logs)
-                  console.log('body = ', body);
+
                 console.log(
-                  `Error on creation - ${body} ${body.message} from Apidae > change statusImport = 3 for ${product.name}`
-                );
-                return callback(null, finalData);
-              });
+                  `Error on creation - ${body} ${body.message} from Apidae > change statusImport = 4 for ${product.name}`
+                )
+
+                return callback(null, finalData)
+              } catch (err) {
+                console.error('Update failed:', err)
+                return callback(err)
+              }
             } else if (
               doUpdate &&
               body.errorType == 'OBJET_TOURISTIQUE_NOT_FOUND'
@@ -889,23 +893,28 @@ class Apidae
                 err: 'not found on Apidae',
                 errMessage: body.message,
                 specialIdSitra: 0
-              };
-              return Product.update(
-                {
-                  _id: product.id
-                },
-                {
-                  $set: {
-                    statusImport: 4,
-                    specialIdSitra: body.message
+              }
+              
+              try {
+                await Product.updateOne(
+                  { _id: product.id },
+                  {
+                    $set: {
+                      statusImport: 4,
+                      specialIdSitra: body.message
+                    }
                   }
-                }
-              ).exec(async () => {
+                )
+
                 console.log(
                   `Error on creation - ${body.message} from Apidae > change statusImport = 4 for ${product.name}`
-                );
-                return callback(null, finalData);
-              });
+                )
+
+                return callback(null, finalData)
+              } catch (err) {
+                console.error('Error updating product status:', err)
+                return callback(err)
+              }
             }
   
             // sinon update
@@ -913,30 +922,30 @@ class Apidae
               name: product.name,
               data: body,
               specialIdSitra: product.specialIdSitra
-            };
+            }
   
             if (config.debug && config.debug.logs)
               console.log(
                 'body [.errorType] body = ',
                 body,
                 `https://${config.sitra.api.host}${config.sitra.api.path} ${accessToken}`
-              );
+              )
   
             // Log de l'export du trek vers Apidae.
             if (config.debug && config.debug.logProductExports) {
-              me.__logExport(product, success, body);
+              me.__logExport(product, success, body)
             }
 
-            return callback(null, finalData);
+            return callback(null, finalData)
           }
         );
       })
       .catch(function (error) {
-        console.error(error);
-      });
+        console.error(error)
+      })
   }
 
-  __logExport(product, success, body) {
+  async __logExport(product, success, body) {
     const ProductLogModel = require(path.resolve('./modules/products/server/models/product_log.model.js'));
     // Construction du document.
     let logData = {
@@ -957,11 +966,11 @@ class Apidae
     }
     // Création/mise à jour du document.
     try {
-      ProductLogModel.findOneAndUpdate(
+      await ProductLogModel.findOneAndUpdate(
         { specialId: logData.specialId }, // Condition de recherche.
         logData, // Données à mettre à jour.
         { upsert: true } // Créer le document s'il n'existe pas.
-      ).exec();
+      )
     } catch (error) {
       console.error('Error while trying to log export:', product.specialId, error);
     }
