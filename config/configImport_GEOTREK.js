@@ -127,7 +127,13 @@ exports.geotrekInstance = {
     },
     touristicevent_cat : {
       1: 2080, // Exposition > Exposition
+      /*2:null,// not mapped*/
+      3: 2101, // Sortie accompagnée > Visite guidée et/ou commentée
       4: 2072, // Rendez-vous avec le Parc national > Conférence / Débat / Rencontre
+      5: 3818, // Projection > Séances / Projection cinéma
+      6: 3871, // Atelier jeu > Démonstration
+      7: 2091, // Spectacle > Spectacle
+      8: 2072, // Conférence causerie > Conférence / Débat / Rencontre
     },
     touristicevent_districtToEntities : {
       1: 771883,  //Briançonnais > Parc national des Écrins - Briançonnais
