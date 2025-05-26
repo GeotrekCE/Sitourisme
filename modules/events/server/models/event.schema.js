@@ -67,6 +67,11 @@ const _defaultSchema = {
   subType: {
     type: Number
   },
+  category: [
+    {
+      type: Number
+    }
+  ],
   linkedObject: {
     isFather: { type: Boolean },
     specialIdFather: { type: String, trim: true },

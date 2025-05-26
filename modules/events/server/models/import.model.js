@@ -31,7 +31,8 @@ class importModel extends geotrek
       type: configImportGEOTREK.types[configData.codeType],
       specialId: element.id,
       district: this.getDistrict(element, structure),
-      subType: this.getSubType(element, structure),
+      subType: configData.subType, 
+      category: this.getCategory(element, structure),
       member: configData.member,
       state: 'HIDDEN',
       user: user,
@@ -91,11 +92,11 @@ class importModel extends geotrek
     return entity
   }
 
-  getSubType(element, structure) {
-    if (configImportGEOTREK.geotrekInstance[structure].touristicevent_type) {
-      return configImportGEOTREK.geotrekInstance[structure].touristicevent_type[element.type];
+  getCategory(element, structure) {
+    if (configImportGEOTREK.geotrekInstance[structure].touristicevent_cat) {
+      return configImportGEOTREK.geotrekInstance[structure].touristicevent_cat[element.type];
     } else {
-      return configImportGEOTREK.touristicevent_type[element.type];
+      return configImportGEOTREK.touristicevent_cat[element.type];
     }
   }
   
