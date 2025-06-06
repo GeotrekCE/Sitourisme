@@ -1,4 +1,4 @@
-'use strict';
+'use strict'
 
 // Load the module dependencies
 var config = require('../config'),
@@ -6,28 +6,32 @@ var config = require('../config'),
   fs = require('fs'),
   http = require('http'),
   https = require('https'),
-  socketio = require('socket.io');
+  socketio = require('socket.io')
 
 // Define the Socket.io configuration method
 module.exports = function (app, db) {
-  var server;
+  var server
   if (config.secure === true) {
     // Load SSL key and certificate
-    var privateKey = fs.readFileSync('./config/sslcerts/key.pem', 'utf8');
-    var certificate = fs.readFileSync('./config/sslcerts/cert.pem', 'utf8');
+    var privateKey = fs.readFileSync('./config/sslcerts/key.pem', 'utf8')
+    var certificate = fs.readFileSync('./config/sslcerts/cert.pem', 'utf8')
     var options = {
       key: privateKey,
       cert: certificate
-    };
+    }
 
     // Create new HTTPS Server
-    server = https.createServer(options, app);
+    server = https.createServer(options, app)
   } else {
     // Create a new HTTP server
-    server = http.createServer(app);
+    server = http.createServer(app)
   }
-  // Create a new Socket.io server
-  var io = socketio.listen(server);
+  const io = socketio(server, {
+    cors: {
+      origin: "*",
+      methods: ["GET", "POST"]
+    }
+  })
 
   // Create a MongoDB storage object
   //var mongoStore = new MongoStore({
@@ -62,11 +66,11 @@ module.exports = function (app, db) {
   //});
 
   // Add an event listener to the 'connection' event
-  io.on('connection', function (socket) {
-    config.files.server.sockets.forEach(function (socketConfiguration) {
-      require(path.resolve(socketConfiguration))(io, socket);
-    });
-  });
+  io.on('connection', (socket) => {
+    config.files.server.sockets.forEach((socketConfiguration) => {
+      require(path.resolve(socketConfiguration))(io, socket)
+    })
+  })
 
-  return server;
-};
+  return server
+}
