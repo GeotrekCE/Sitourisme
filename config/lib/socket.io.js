@@ -6,8 +6,6 @@ var config = require('../config'),
   fs = require('fs'),
   http = require('http'),
   https = require('https'),
-  cookieParser = require('cookie-parser'),
-  passport = require('passport'),
   socketio = require('socket.io');
 
 // Define the Socket.io configuration method

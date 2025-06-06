@@ -75,9 +75,13 @@ exports.signin = function (req, res, next) {
  * Signout
  */
 exports.signout = function (req, res) {
-  req.logout();
-  res.redirect('/');
-};
+  req.logout(function(err) {
+    if (err) {
+      return next(err)
+    }
+    res.redirect('/')
+  })
+}
 
 /**
  * OAuth callback
