@@ -4843,8 +4843,7 @@ __buildImageDetail(images, nImage, callback,originalImage = false,sizeImage = 25
       }
     }
     
-    // TODO EVENT
-    /*if (product.openingDate.expiration) {
+    if (product.openingDate.expiration) {
        _.forEach(product.openingDate.expiration, function (periodDataExpiration) {
         root.expiration = {
           dateExpiration : moment(periodDataExpiration.expirationDate).format('YYYY-MM-DD'),
@@ -4852,7 +4851,7 @@ __buildImageDetail(images, nImage, callback,originalImage = false,sizeImage = 25
         };
        });  
       rootFieldList.push('expiration');
-    }*/    // TODO EVENT
+    }
     
     if (
       product.openingDate.fermeturesExceptionnelles &&
