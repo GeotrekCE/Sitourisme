@@ -17,23 +17,19 @@ module.exports.loadModels = function () {
 };
 
 // Initialize Mongoose
+
 module.exports.connect = function (cb) {
-  mongoose.Promise = require('bluebird');
-  var db = mongoose.connect(config.db, { useMongoClient: true }, (err) => {
-    // Log Error
-    if (err) {
-      console.error(chalk.red('Could not connect to MongoDB!'));
-      console.log(err);
-    } else {
-      // Load modules
-      this.loadModels();
-
-      // Call callback FN
-      if (cb) cb(db);
-    }
-  });
-};
-
+  mongoose.Promise = require('bluebird')
+  const db = mongoose.connect(config.db)
+    .then(() => {
+      this.loadModels()
+      if (cb) cb(db)
+    })
+    .catch((err) => {
+      console.error(chalk.red('Could not connect to MongoDB!'))
+      console.log(err)
+    })
+}
 
 module.exports.disconnect = function (cb) {
   mongoose.disconnect(function (err) {

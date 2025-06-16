@@ -61,58 +61,50 @@ class ExportApidae
       }
     }
     
-    __exportSitraAuto(type, options, callback)
+    async __exportSitraAuto(type, options, callback)
     {
       
       let today = moment().startOf('day'),
         Entity = /*mongoose.model('Product')*/this.entity,
-        importType = type.toUpperCase();
+        importType = type.toUpperCase()
     
-      console.log('Members to export : ', options.membersToImport, 'importType = ',importType);
+      console.log('Members to export : ', options.membersToImport, 'importType = ',importType)
     
-      Entity.find({
-        importType: importType,
-        lastUpdate: { $gte: today.toDate() },
-        statusImport: { $in: [0,1,2] }
-      })
-        .sort({ 'linkedObject.isFather': -1 })
-        .exec(function (err, entities) {
+      try {
+        let entities = await Entity.find({
+          importType: importType,
+          lastUpdate: { $gte: today.toDate() },
+          statusImport: { $in: [0, 1, 2] }
+        }).sort({ 'linkedObject.isFather': -1 })
+
+        if (config.debug && config.debug.logs) {
+          console.log('Import type =', importType)
+          console.log('Import lastdate =', today.toDate())
+          console.log('Import products =', entities.length)
+        }
+
+        if (process.env.NODE_ENV === 'production') {
+          entities = entities.filter(prod =>
+            options.membersToImport.includes(prod.member)
+          )
+
           if (config.debug && config.debug.logs) {
-            console.log('Import type = ', importType);
-            console.log('Import lastdate = ', today.toDate());
-            console.log('Import products = ', entities.length);
+            console.log('Import entities for instance =', entities.length)
           }
-          
-          if (process.env.NODE_ENV == 'production') {
-            let entitiesTmp = [];
-            entities.forEach(function(prod){
-              if (options.membersToImport.includes(prod.member))
-              {
-                entitiesTmp.push(prod);
-              }
-            });
-            entities = entitiesTmp;
-            if (config.debug && config.debug.logs) {
-              console.log('Import entities for instance = ', entities.length);
-            }
-          }
-    
-          if (err) {
-            console.error('Error in exportSitraAuto : ' + err);
-          } else {
-            const total = entities.length;
-            console.log(`${total} à exporter vers APIDAE`);
-            if (total > 0) {
-              Entity.exportSitra(entities, options, function (err2) {
-                if (err2 && err2.error400) {
-                  console.log(`Error in exportSitraAuto : ' ${err2}`);
-                }
-              });
-            }
-          }
-        });
+        }
+
+        const total = entities.length
+        console.log(`${total} à exporter vers APIDAE`)
+
+        if (total > 0) {
+          await Entity.exportSitra(entities, options)
+        }
+      } catch (err) {
+        console.error('Error in exportSitraAuto:', err)
+      }
+
       if (callback) {
-        callback();
+        callback()
       }
     }
 }

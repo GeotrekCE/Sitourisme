@@ -3,10 +3,10 @@
 /**
  * Module dependencies.
  */
-var acl = require('acl');
+var ACL = require('acl2');
 
 // Using the memory backend
-acl = new acl(new acl.memoryBackend());
+const acl = new ACL(new ACL.memoryBackend());
 
 /**
  * Invoke Products Permissions
@@ -58,8 +58,14 @@ exports.invokeRolesPolicies = function () {
 /**
  * Check If Products Policy Allows
  */
-exports.isAllowed = function (req, res, next) {
-  var roles = req.user ? req.user.roles : ['guest'];
+exports.isAllowed = async function (req, res, next) {
+  const roles = req.user && Array.isArray(req.user.roles) ? req.user.roles : ['guest']
+  const method = req.method.toLowerCase()
+  const path = req.baseUrl + (req.route?.path || '')
+
+  if (!Array.isArray(roles) || !path || typeof method !== 'string') {
+    return res.status(500).send('Invalid ACL parameters')
+  }
 
   // If an product is being processed and the current user created it then allow any manipulation
   if (
@@ -68,28 +74,18 @@ exports.isAllowed = function (req, res, next) {
     req.user &&
     req.product.data.user.id === req.user.id
   ) {
-    return next();
+    return next()
   }
 
   // Check for user roles
-  acl.areAnyRolesAllowed(
-    roles,
-    req.route.path,
-    req.method.toLowerCase(),
-    function (err, isAllowed) {
-      if (err) {
-        // An authorization error occurred.
-        return res.status(500).send('Unexpected authorization error');
-      } else {
-        if (isAllowed) {
-          // Access granted! Invoke next middleware
-          return next();
-        } else {
-          return res.status(403).json({
-            message: 'User is not authorized'
-          });
-        }
-      }
+  try {
+    const isAllowed = await acl.areAnyRolesAllowed(roles, path, method);
+    if (isAllowed) {
+      return next();
+    } else {
+      return res.status(403).json({ message: 'User is not authorized' });
     }
-  );
-};
+  } catch (err) {
+    return res.status(500).send('Unexpected authorization error');
+  }
+}
