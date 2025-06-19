@@ -2672,7 +2672,23 @@ class Apidae
 
   return !err ? { root: root, rootFieldList: rootFieldList } : false;
 }
+/*__buildAddressReset(product, root, rootFieldList, unwantedTypes) {
+  let err = false;
 
+  root.localisation = {
+    "adresse": null,
+    "lieu": null,
+    "geolocalisation": null,
+    "perimetreGeographique": null,
+    "lieuObjetTouristique": null,
+  };
+  rootFieldList.push('localisation.adresse');
+  rootFieldList.push('localisation.lieu');
+  rootFieldList.push('localisation.geolocalisation');
+  rootFieldList.push('localisation.adresse');
+  rootFieldList.push('localisation.perimetreGeographique');
+  return !err ? { root: root, rootFieldList: rootFieldList } : false;
+}*/
  __buildAddress(product, root, rootFieldList, unwantedTypes) {
   let localization = {},
     address = {},
