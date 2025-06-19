@@ -142,6 +142,30 @@ class importModel extends geotrek
     }
     return null;
   }
+
+  getAddress(element) {
+    if (
+      element &&
+      Array.isArray(element.cities) &&
+      element.cities[0] &&
+      configSitraTownByInsee[element.cities[0]]
+    ) {
+      const cityCode = element.cities[0]
+      const cityConfig = configSitraTownByInsee[cityCode]
+
+      return {
+        address1: null,
+        address2: null,
+        address3: null,
+        cedex: null,
+        zipcode: cityConfig.zipcode || cityCode,
+        insee: cityCode,
+        city: cityConfig.sitraId,
+        region: null
+      }
+    }
+    return null
+  }
   
   getOuverture(element) {
     let duration = null,
