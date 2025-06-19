@@ -375,9 +375,11 @@ exports.geotrekInstance = {
     activity : {
       1: 3284,
       2: 3283,
+      3: 3313,
       4: 3333,
       6: 4201,
-      8: 3333
+      8: 3333,
+      15: 3283
     },
     itineraireType : {
       1: 'BOUCLE',
@@ -655,7 +657,8 @@ exports.geotrekInstance = {
       4: 3333,
       6: 4201,
       7: 3333,
-      8: 6224
+      8: 6224,
+      9: 3283
     },
     itineraireType : {
       1: 'BOUCLE',
@@ -742,7 +745,8 @@ exports.geotrekInstance = {
       1: 3284,
       2: 3283,
       4: 3333,
-      8: 4201
+      8: 4201,
+      12: 3333
     },
     itineraireType : {
       1: 'BOUCLE',
@@ -1300,34 +1304,5 @@ exports.geotrekInstance = {
     itineraireType : {
       1: 'BOUCLE',
     },
-  },
-  9 : {
-    geotrekUrl : 'https://geotrek-admin.portcros-parcnational.fr/api/v2/',
-    structures : {
-      1: {
-        specialId: 'SITRA2_STR_5214782',
-        name: "Parc national de Port-Cros",
-        address1: null,
-        address2: null,
-        city: '34106',
-        insee: '83069',
-        specialIdSitra: '5214782',
-        statusImport: 2,
-        memberId : 1764,
-        proprietaireId: 1764,
-        production: {
-          trek: true,
-          event: false
-        },
-	www: 'https://destination.portcros-parcnational.fr/trek/',
-	activity : {
-          2: 3284,
-          4: 3333,
-        },
-        itineraireType : {
-          1: 'BOUCLE',
-        },
-      },
-    }
   },
 };
