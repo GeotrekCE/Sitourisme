@@ -527,8 +527,18 @@ exports.geotrekInstance = {
         },
       },
       9: {
+        specialId: 'PNR Sainte-Baume',
+        name: 'Parc naturel régional de la Sainte-Baume',
+        address1: null,
+        address2: null,
+        city: '34130',
+        insee: '83640',
+        specialIdSitra: '910618',
+        statusImport: 2,
+        memberId : xxxx,
+        proprietaireId: xxxxx,
         production: {
-          trek: false,
+          trek: true,
           event: false
         },
       },
