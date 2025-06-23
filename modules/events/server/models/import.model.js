@@ -62,6 +62,7 @@ class importModel extends geotrek
       address: this.getAddress(element),
       website: this.getWebsite(element),
       email: element.email,
+      phone: this.getPhone(element, structure),
       pdf: this.getPdf(element, 'fr'),
       pdfEn: this.getPdf(element, 'en'),
       pdfEs: this.getPdf(element, 'es'),
@@ -90,6 +91,20 @@ class importModel extends geotrek
     }
     if (entity === null) entity = configImportGEOTREK.geotrekInstance[structure].touristicevent_defaultEntity
     return entity
+  }
+
+  getPhone(element, structure) {
+    let phone = null,
+      phoneTmp = null
+
+    if (element.districts && element.districts.length && configImportGEOTREK.geotrekInstance[structure].touristicevent_districtToEntitiesPhone) {
+      element.districts.forEach((districtId) => {
+        phoneTmp = configImportGEOTREK.geotrekInstance[structure].touristicevent_districtToEntitiesPhone[districtId]
+        if (phoneTmp !== undefined) phone = phoneTmp
+      })
+    }
+    if (phone === null) phone = configImportGEOTREK.geotrekInstance[structure].touristicevent_defaultPhone
+    return DataString.cleanPhoneArray(phone)
   }
 
   getCategory(element, structure) {

@@ -203,6 +203,12 @@ const _defaultSchema = {
       trim: true
     }
   ],
+  phone: [
+    {
+      type: String,
+      trim: true
+    }
+  ],
   email: [
     {
       type: String,
