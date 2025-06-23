@@ -144,7 +144,17 @@ exports.geotrekInstance = {
       6: 5049103, //Valbonnais > Parc national des Ecrins - Valbonnais
       7: 73900,   //Oisans > Parc national des Ecrins - Oisans
     },
+    touristicevent_districtToEntitiesPhone : {
+      1: "04 92 21 42 15",
+      2: "04 92 23 58 08",
+      3: "04 92 43 23 31",
+      4: "04 92 55 95 44",
+      5: "04 92 57 11 11",
+      6: "04 76 30 20 61",
+      7: "04 76 80 00 51",
+    },
     touristicevent_defaultEntity: 5308520, //Siège du Parc national des Ecrins
+    touristicevent_defaultPhone: "04 92 40 20 10"
   },
   1 : {
     geotrekUrl : 'https://admin.sportsnature.hauteloire.fr/api/v2',
