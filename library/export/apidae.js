@@ -2555,7 +2555,7 @@ class Apidae
     descriptifsThematises.push({
       theme: {
         elementReferenceType: 'DescriptifTheme',
-        id: 6527, //Topo/pas à pas : 6527 / cooking 5536
+        id: (process.env.NODE_ENV == 'production') ? 6527 : 5536, //Topo/pas à pas : 6527 / cooking 5536
       },
       description: description
     });

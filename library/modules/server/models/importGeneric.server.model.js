@@ -6,7 +6,7 @@ const path = require('path'),
     Import = require(path.resolve('./library/import/geotrek.js')),
     config = require(path.resolve('./config/config.js')),
     configImportGEOTREK = require(path.resolve('./config/configImport_GEOTREK.js')),
-    exportApidae = require(path.resolve('./library/modules/server/models/export.model.js'));
+    exportApidae = require(path.resolve('./library/modules/server/models/export.model.js'))
 
 class ImportGeotrekApi extends Import
 {
@@ -14,130 +14,135 @@ class ImportGeotrekApi extends Import
   {
     super(options);
     if (config.debug && config.debug.logs)
-      console.log('ImportGeotrekApi constructor');
+      console.log('ImportGeotrekApi constructor')
 
     this.importType = options.importType
       ? options.importType.toUpperCase()
-      : null;
-    this.user = options.user ? options.user : null;
-    this.lang = options.lang ? options.lang : 'fr';
-    this.importInstance = options.importInstance ? parseInt(options.importInstance, 10) : 0;
-    this.importApi = options.importApi;
+      : null
+    this.user = options.user ? options.user : null
+    this.lang = options.lang ? options.lang : 'fr'
+    this.importInstance = options.importInstance ? parseInt(options.importInstance, 10) : 0
+    this.importApi = options.importApi
     
-    this.Model = options.Model;
-    this.moduleName = options.moduleName;
-    this.EntityServer = options.EntityServer;
-    this.cgt = options.cgt;
+    this.Model = options.Model
+    this.moduleName = options.moduleName
+    this.EntityServer = options.EntityServer
+    this.cgt = options.cgt
     
-    this.importModule = require(path.resolve('./modules/' + options.moduleName + '/server/models/import.model.js'));
+    this.importModule = require(path.resolve('./modules/' + options.moduleName + '/server/models/import.model.js'))
   }
   
   import(data, next)
   {
     if (config.debug && config.debug.logs)
-      console.log('ImportGeotrekApi.import', this.importInstance);
+      console.log('ImportGeotrekApi.import', this.importInstance)
 
-    const me = this;
+    const me = this
 
     Object.keys(configImportGEOTREK.geotrekInstance).forEach(function (
-      structure
+      instance
     ) {
-      if (structure == me.importInstance) {
+      if (instance == me.importInstance) {
         console.log(
           'Instance = ',
-          structure,
+          instance,
           ' - GeoAdmin URL = ',
-          configImportGEOTREK.geotrekInstance[structure].geotrekUrl
-        );
+          configImportGEOTREK.geotrekInstance[instance].geotrekUrl
+        )
   
         me.executeQuery(
           0,
-          configImportGEOTREK.geotrekInstance[structure].geotrekUrl,
-          structure
+          configImportGEOTREK.geotrekInstance[instance].geotrekUrl,
+          instance
         ).catch((err) => {
           console.log(
             chalk.red(
               '>>>>>>>>>>>>>>>>>>>>>>>> OBJ NOT FOUND IN = ',
               err,
               'For instance = ',
-              structure
+              instance
             )
-          );
-          return false;
-        });
+          )
+          return false
+        })
       }
-    });
+    })
   }
   
-  async executeQuery(page, instanceGeo, structure)
+  async executeQuery(page, instanceGeo, instance)
   {
     if (config.debug && config.debug.logs)
-      console.log('ImportGenericGeotrekApi.prototype.executeQuery');
+      console.log('ImportGenericGeotrekApi.prototype.executeQuery')
 
-    let geoTrekPath = '/'+ this.importApi +'?format=json';
-    let urlNext = '';
+    let trekFiltering = null
+    if (this.importApi == 'trek' && configImportGEOTREK.geotrekInstance[instance].trek_filtering) {
+      console.log('ImportGenericGeotrekApi.prototype.executeQuery - Trek Filtering on ', configImportGEOTREK.geotrekInstance[instance].trek_filtering)
+      trekFiltering = configImportGEOTREK.geotrekInstance[instance].trek_filtering
+    }
+    let geoTrekPath = '/' + this.importApi + '?format=json&' + trekFiltering
+    let urlNext = ''
 
     if (config.debug != undefined && config.debug.idGeo != 0) {
-      geoTrekPath = '/'+ this.importApi +'/' + config.debug.idGeo + '?format=json';
+      geoTrekPath = '/'+ this.importApi +'/' + config.debug.idGeo + '?format=json'
       if (config.debug && config.debug.logs)
-        console.log('GeoPath = ', geoTrekPath);
+        console.log('GeoPath = ', geoTrekPath)
     } else {
-      urlNext = page != 0 ? '&page=' + page : '';
+      urlNext = page != 0 ? '&page=' + page : ''
     }
 
     this.instanceApi = axios.create({
       baseURL: instanceGeo,
       validateStatus(status) {
-        return status < 500;
+        return status < 500
       }
-    });
+    })
     
-    this.importData = new this.importModule(this.instanceApi);
+    this.importData = new this.importModule(this.instanceApi)
     
-    console.log(chalk.green("Axiox Connex = ", geoTrekPath + urlNext));
-    const { data, status } = await this.instanceApi.get(geoTrekPath + urlNext);
+    console.log(chalk.green("Axiox Connex = ", geoTrekPath + urlNext))
+    const { data, status } = await this.instanceApi.get(geoTrekPath + urlNext)
     if (status === 200) {
-      this.doUpsertAsync = await pify(this.doUpsert);
+      this.doUpsertAsync = await pify(this.doUpsert)
 
-      if (config.debug && config.debug.logs) console.log('Import page ' + page);
+      if (config.debug && config.debug.logs) console.log('Import page ' + page)
 
       if (config.debug != undefined && config.debug.idGeo != 0) {
-        data.results = data;
+        data.results = data
       }
 
-      await this.importDatas(data.results, structure);
+      await this.importDatas(data.results, instance)
 
-      if (config.debug && config.debug.seeData) console.log('Data = ', data);
+      if (config.debug && config.debug.seeData) console.log('Data = ', data)
 
       if (
         (data.next && config.debug == undefined) ||
         (data.next && config.debug.allpages == true && config.debug.idGeo == 0)
       ) {
-        page++;
-        this.executeQuery(page, instanceGeo, structure);
+        page++
+        this.executeQuery(page, instanceGeo, instance)
       } else {
-        const membersToImport = [];
-        Object.keys(configImportGEOTREK.geotrekInstance[structure].structures).forEach(function (
-          structureFille
+        const membersToImport = []
+        Object.keys(configImportGEOTREK.geotrekInstance[instance].structures).forEach(function (
+          structure
         ) {
-          membersToImport.push(configImportGEOTREK.geotrekInstance[structure].structures[structureFille].memberId);
-        });
-        console.log(chalk.green("Members To Import = ",membersToImport));
+          membersToImport.push(configImportGEOTREK.geotrekInstance[instance].structures[structure].memberId)
+        })
+        console.log(chalk.green("Members To Import = ",membersToImport))
 
         const options = {
           exportType: 'AUTO',
           membersToImport: membersToImport
-        };
+        }
 
-        const ExportApidae = new exportApidae(this.Model);
+        const ExportApidae = new exportApidae(this.Model)
         ExportApidae.__exportSitraAuto('geotrek-api', options, () => {
           if (config.debug && config.debug.logs)
-            console.log('end of export sitra auto!');
-          return;
-        });
+            console.log('end of export sitra auto!')
+          return
+        })
       }
     } else {
-      throw 'Erreur de connexion à Geotrek';
+      throw 'Erreur de connexion à Geotrek'
     }
   }
   

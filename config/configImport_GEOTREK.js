@@ -1098,7 +1098,7 @@ exports.geotrekInstance = {
         memberId : 96,
         proprietaireId: 96,
         production: {
-          trek: false,
+          trek: true,
           event: false
         },
       },
@@ -1114,7 +1114,7 @@ exports.geotrekInstance = {
         memberId : 96,
         proprietaireId: 96,
         production: {
-          trek: false,
+          trek: true,
           event: false
         },
       },
@@ -1130,7 +1130,7 @@ exports.geotrekInstance = {
         memberId : 96,
         proprietaireId: 96,
         production: {
-          trek: false,
+          trek: true,
           event: false
         },
       },
@@ -1146,7 +1146,7 @@ exports.geotrekInstance = {
         memberId : 96,
         proprietaireId: 96,
         production: {
-          trek: false,
+          trek: true,
           event: false
         },
       },
@@ -1162,7 +1162,7 @@ exports.geotrekInstance = {
         memberId : 96,
         proprietaireId: 96,
         production: {
-          trek: false,
+          trek: true,
           event: false
         },
       },
@@ -1178,7 +1178,7 @@ exports.geotrekInstance = {
         memberId : 96,
         proprietaireId: 96,
         production: {
-          trek: false,
+          trek: true,
           event: false
         },
       },
@@ -1194,7 +1194,7 @@ exports.geotrekInstance = {
         memberId : 96,
         proprietaireId: 96,
         production: {
-          trek: false,
+          trek: true,
           event: false
         },
       },
@@ -1210,7 +1210,7 @@ exports.geotrekInstance = {
         memberId : 96,
         proprietaireId: 96,
         production: {
-          trek: false,
+          trek: true,
           event: false
         },
       },
@@ -1226,7 +1226,7 @@ exports.geotrekInstance = {
         memberId : 96,
         proprietaireId: 96,
         production: {
-          trek: false,
+          trek: true,
           event: false
         },
       },
@@ -1242,7 +1242,7 @@ exports.geotrekInstance = {
         memberId : 96,
         proprietaireId: 96,
         production: {
-          trek: false,
+          trek: true,
           event: false
         },
       },
@@ -1258,7 +1258,7 @@ exports.geotrekInstance = {
         memberId : 96,
         proprietaireId: 96,
         production: {
-          trek: false,
+          trek: true,
           event: false
         },
       },
@@ -1274,7 +1274,7 @@ exports.geotrekInstance = {
         memberId : 96,
         proprietaireId: 96,
         production: {
-          trek: false,
+          trek: true,
           event: false
         },
       },
@@ -1295,6 +1295,7 @@ exports.geotrekInstance = {
       3: 'ALLER_ITINERANCE',
       5: 'ALLER_ITINERANCE',
     },
+    trek_filtering: 'portals=16',
   },
   9 : {
     geotrekUrl : 'https://geotrek-admin.portcros-parcnational.fr/api/v2/',
