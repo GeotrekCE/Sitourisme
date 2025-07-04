@@ -4875,7 +4875,8 @@ __buildImageDetail(images, nImage, callback,originalImage = false,sizeImage = 25
           expirationAction : periodDataExpiration.expirationAction,
         };
        });  
-      rootFieldList.push('expiration');
+      rootFieldList.push('expiration.dateExpiration');
+      rootFieldList.push('expiration.expirationAction');
     }
     
     if (
