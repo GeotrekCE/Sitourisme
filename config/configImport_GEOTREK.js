@@ -1098,23 +1098,23 @@ exports.geotrekInstance = {
         memberId : 96,
         proprietaireId: 96,
         production: {
-          trek: false,
+          trek: true,
           event: false
         },
       },
       5: {
-        specialId: 'sitraSTR710498',
-        name: "Communauté de communes Val'Eyrieux",
-        address1: "21 avenue de Saunier",
+        specialId: 'SITRA2_STR_784479',
+        name: "Office de Tourisme Ardèche Hautes Vallées",
+        address1: "4 B rue Saint-Joseph",
         address2: null,
         city: '2158',
         insee: '07064',
-        specialIdSitra: '114485',
+        specialIdSitra: '784479',
         statusImport: 2,
         memberId : 96,
         proprietaireId: 96,
         production: {
-          trek: false,
+          trek: true,
           event: false
         },
       },
@@ -1130,23 +1130,23 @@ exports.geotrekInstance = {
         memberId : 96,
         proprietaireId: 96,
         production: {
-          trek: false,
+          trek: true,
           event: false
         },
       },
       7: {
-        specialId: 'sitraSTR726611',
-        name: "Communauté de Communes Rhône Crussol",
-        address1: "1278 rue Henri Dunant",
-        address2: "BP 249",
-        city: '2196',
-        insee: '07102',
-        specialIdSitra: '117593',
+        specialId: 'sitraSTR234031',
+        name: "Rhône Crussol Tourisme",
+        address1: "2 rue de la République",
+        address2: null,
+        city: '2373',
+        insee: '07281',
+        specialIdSitra: '175100',
         statusImport: 2,
         memberId : 96,
         proprietaireId: 96,
         production: {
-          trek: false,
+          trek: true,
           event: false
         },
       },
@@ -1162,7 +1162,7 @@ exports.geotrekInstance = {
         memberId : 96,
         proprietaireId: 96,
         production: {
-          trek: false,
+          trek: true,
           event: false
         },
       },
@@ -1178,7 +1178,7 @@ exports.geotrekInstance = {
         memberId : 96,
         proprietaireId: 96,
         production: {
-          trek: false,
+          trek: true,
           event: false
         },
       },
@@ -1194,7 +1194,7 @@ exports.geotrekInstance = {
         memberId : 96,
         proprietaireId: 96,
         production: {
-          trek: false,
+          trek: true,
           event: false
         },
       },
@@ -1210,7 +1210,7 @@ exports.geotrekInstance = {
         memberId : 96,
         proprietaireId: 96,
         production: {
-          trek: false,
+          trek: true,
           event: false
         },
       },
@@ -1226,23 +1226,23 @@ exports.geotrekInstance = {
         memberId : 96,
         proprietaireId: 96,
         production: {
-          trek: false,
+          trek: true,
           event: false
         },
       },
       15: {
-        specialId: 'SITRA2_STR_784479',
-        name: "Office de Tourisme Ardèche Hautes Vallées",
-        address1: "4 B rue Saint-Joseph",
+        specialId: '07ABOTS100020_struct',
+        name: "Office intercommunal du tourisme en Val de Ligne",
+        address1: "3 rue du Maréchal Suchet",
         address2: null,
-        city: '2158',
-        insee: '07064',
-        specialIdSitra: '784479',
+        city: '2226',
+        insee: '07132',
+        specialIdSitra: '128318',
         statusImport: 2,
         memberId : 96,
         proprietaireId: 96,
         production: {
-          trek: false,
+          trek: true,
           event: false
         },
       },
@@ -1258,7 +1258,7 @@ exports.geotrekInstance = {
         memberId : 96,
         proprietaireId: 96,
         production: {
-          trek: false,
+          trek: true,
           event: false
         },
       },
@@ -1274,7 +1274,7 @@ exports.geotrekInstance = {
         memberId : 96,
         proprietaireId: 96,
         production: {
-          trek: false,
+          trek: true,
           event: false
         },
       },
@@ -1295,6 +1295,7 @@ exports.geotrekInstance = {
       3: 'ALLER_ITINERANCE',
       5: 'ALLER_ITINERANCE',
     },
+    trek_filtering: 'portals=16',
   },
   9 : {
     geotrekUrl : 'https://geotrek-admin.portcros-parcnational.fr/api/v2/',
