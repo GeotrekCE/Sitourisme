@@ -8,7 +8,7 @@ const _ = require('lodash'),
 class Import
 {
   translate(key, ln) {
-    const trad = 
+    const trad =
     {
       departure:
       {
@@ -47,7 +47,7 @@ class Import
         nl: 'Parkeren aanbevolen'
       }
     };
-    
+
     if (trad[key] && trad[key][ln]) {
       return trad[key][ln];
     } else if (trad[key] && trad[key]['en']) {
@@ -56,15 +56,15 @@ class Import
       return key;
     }
   }
-  
+
   getPrice(element) {
     return element.price > 0
     ? { gratuit: false, description: element.price.toString().replace('.', ',') + ' €' }
     : { gratuit: true };
   }
-  
+
   getPerimetreGeographique(element) {
-    // let perimetreGeo = _.map(element.cities, (item) => {
+    // let perimetreGeo = _.map(element?.city_codes || element.cities, (item) => {
     //   const city = configSitraTownByInsee[item];
     //   if (city) {
     //     return city.sitraId;
@@ -80,7 +80,7 @@ class Import
     // erreurs d'écriture côté Apidae.
     return [];
   }
-  
+
   getShortDescription(element, lang) {
     if (element.description_teaser && element.description_teaser[lang]) {
       return DataString.stripTags(
@@ -91,23 +91,24 @@ class Import
     }
     return null;
   }
-  
+
   getAddress(element, additionalElement) {
+    const insee_field = element?.departure_city_code || element.departure_city;
     if (element
-      && element.departure_city
-      && configSitraTownByInsee[element.departure_city] === undefined) 
+      && insee_field
+      && configSitraTownByInsee[insee_field] === undefined)
     {
       //TODO : Add to reports
-      console.error("Zipcode missing for this Insee code city : " + element.departure_city);
+      console.error("Zipcode missing for this Insee code city : " + insee_field);
     }
     const address = {
       address1: (additionalElement) ? additionalElement.street : null,
       address2: null,
       address3: null,
       cedex: null,
-      zipcode: (element && element.departure_city && configSitraTownByInsee[element.departure_city] !== undefined) ? configSitraTownByInsee[element.departure_city].zipcode : element.departure_city,
-      insee: element.departure_city,
-      city: (configSitraTownByInsee[element.departure_city] && process.env.NODE_ENV == 'production') ? configSitraTownByInsee[element.departure_city].sitraId : 14707,
+      zipcode: (element && insee_field && configSitraTownByInsee[insee_field] !== undefined) ? configSitraTownByInsee[insee_field].zipcode : insee_field,
+      insee: insee_field,
+      city: (configSitraTownByInsee[insee_field] && process.env.NODE_ENV == 'production') ? configSitraTownByInsee[insee_field].sitraId : 14707,
       region: null
     };
 
@@ -122,7 +123,7 @@ class Import
     }
     return address;
   }
-  
+
   getWebsite(element, additionalElement) {
     if (additionalElement) {
       let website = additionalElement.website;
@@ -136,7 +137,7 @@ class Import
       return null;
     }
   }
-  
+
   getPdf(element, lang) {
     if (element.pdf && element.pdf[lang]) {
       let urlPdf = element.pdf[lang];
@@ -153,12 +154,12 @@ class Import
     }
     return [];
   }
-  
+
   getImage(element) {
     if (element.attachments) {
        let images = (element.attachments)
         .filter((item) => {
-          if (item['type'] == 'image') 
+          if (item['type'] == 'image')
           {
             return {
               url: this.addUrlHttp(item['url']),
@@ -173,47 +174,47 @@ class Import
     }
     return [];
   }
-  
+
   start(callback) {
     this.__initParser(function (err) {
       if (err)
         throw err;
-  
+
       if (callback)
         callback();
     });
   }
-  
+
   reset(next) {
     next(null);
   }
-  
+
   current(next) {
     next(null, []);
   }
-  
+
   import(data, next) {
     next();
   }
-  
+
   __initParser(callback) {
     const self = this;
-  
+
     this.reset(function (err) {
       if (err)
         throw err;
-  
+
       self.__next(callback);
     });
   }
-  
+
   __next(callback) {
     const self = this;
     console.log('7. import geotrek > __next > __import');
     this.current(function (err, data) {
       if (err)
         throw err;
-  
+
       if (data) {
         self.__import(data, callback);
       } else {
@@ -223,66 +224,66 @@ class Import
       }
     });
   }
-  
+
   __import(data, callback) {
     const self = this;
     console.log('8. import geotrek > __next > import');
-  
+
     this.import(data, function (err) {
       if (err)
         throw err;
-  
+
       self.__next(callback);
     });
   }
-  
+
   calculateRateCompletion(product) {
     let score = 0;
-  
+
     if (product.type)
       score++;
-    
+
     if (product.subType)
       score++;
-      
+
     if (product.name)
       score++;
-      
+
     if (product.territory && product.territory.length)
       score++;
 
     if (product.website && product.website.length)
       score++;
-      
+
     if (product.email && product.email.length)
       score++;
-    
+
     if (product.phone && product.phone.length)
       score++;
-    
+
     if (product.shortDescription)
       score++;
-    
+
     if (product.description)
       score++;
 
     if (product.complement)
       score++;
-    
+
     if (product.ambiance)
       score++;
-    
+
     if (product.passagesDelicats)
       score++;
 
     if (product.address) {
       if (product.address.address1)
         score++;
-      
+
       if (product.address.zipcode)
         score++;
     }
-    
+
     if (product.localization &&
       product.localization.lat !== null &&
       product.localization.lon !== null
@@ -293,29 +294,29 @@ class Import
       score++;
       if (product.itinerary.dailyDuration !== null)
         score++;
-      
+
       if (product.itinerary.distance !== null)
         score++;
-      
+
       if (product.itinerary.positive !== null)
         score++;
-      
+
       if (product.itinerary.negative !== null)
         score++;
-      
+
       if (product.itinerary.itineraireType !== null)
         score++;
-      
+
       if (product.itinerary.itineraireBalise !== null)
         score++;
     }
-    
+
     if (product.image && product.image.length) {
       score++;
       if (product.image[0].description)
         score++;
     }
-    
+
     if (product.equipment && product.equipment.length)
       score++;
 
@@ -327,22 +328,22 @@ class Import
 
     if (product.website && product.website.length)
       score++;
-  
+
     if (product.email && product.email.length)
       score++;
 
     if (product.phone && product.phone.length)
       score++;
-  
+
     if (product.typeDetail && product.typeDetail.length)
       score++;
-    
+
     if (product.legalEntity && product.legalEntity.length > 0)
       score++;
-  
+
     return _.floor((score * 100) / 22);
   }
-  
+
   addUrlHttp(url) {
     if (url && _.isString(url) && !url.match('^https?://|^//'))
       url = this.url + url;

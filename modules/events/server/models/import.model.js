@@ -21,7 +21,7 @@ class importModel extends geotrek
     this.event = null;
     this.instanceApi = instanceApi;
   }
-  
+
   async formatDatas(element, additionalInformation, structure, proprietaireId, importType, configData, user)
   {
     return this.event = {
@@ -31,7 +31,7 @@ class importModel extends geotrek
       type: configImportGEOTREK.types[configData.codeType],
       specialId: element.id,
       district: this.getDistrict(element, structure),
-      subType: configData.subType, 
+      subType: configData.subType,
       category: this.getCategory(element, structure),
       member: configData.member,
       state: 'HIDDEN',
@@ -78,7 +78,7 @@ class importModel extends geotrek
       idLieu: this.getLieu(element)
     };
   }
-  
+
   getDistrict(element, structure) {
     let entity = null,
       entityTmp = null
@@ -114,7 +114,7 @@ class importModel extends geotrek
       return configImportGEOTREK.touristicevent_cat[element.type];
     }
   }
-  
+
   getLocalization(element) {
     const localization = {};
     if (element.geometry && element.geometry.coordinates && element.geometry.coordinates.length) {
@@ -123,7 +123,7 @@ class importModel extends geotrek
     }
     return localization;
   }
-  
+
   getDescription(element, lang) {
     let description = '';
     if (element.description && element.description[lang]) {
@@ -131,19 +131,19 @@ class importModel extends geotrek
         DataString.strEncode(element.description[lang] + "\r\n\r\n")
       );
     }
-    
+
     if (element.speaker) {
       description = DataString.stripTags(
         DataString.strEncode(description + "Intervenant : " + element.speaker + "\r\n\r\n")
       );
     }
-    
+
     if (element.target_audience) {
       description = DataString.stripTags(
         DataString.strEncode(description + "Public : " + element.target_audience + "\r\n\r\n")
       );
     }
-    
+
     return description;
   }
 
@@ -160,30 +160,32 @@ class importModel extends geotrek
 
   getAddress(element) {
     if (this.getLieu(element) === null) {
-      if (
-        element &&
-        Array.isArray(element.cities) &&
-        element.cities[0] &&
-        configSitraTownByInsee[element.cities[0]]
-      ) {
-        const cityCode = element.cities[0]
-        const cityConfig = configSitraTownByInsee[cityCode]
+      if (element) {
+        const city_codes =  element?.city_codes || element.cities;
+        if (
+          Array.isArray(city_codes) &&
+          city_codes[0] &&
+          configSitraTownByInsee[city_codes[0]]
+        ) {
+          const cityCode = city_codes[0]
+          const cityConfig = configSitraTownByInsee[cityCode]
 
-        return {
-          address1: null,
-          address2: null,
-          address3: null,
-          cedex: null,
-          zipcode: cityConfig.zipcode || cityCode,
-          insee: cityCode,
-          city: cityConfig.sitraId,
-          region: null
+          return {
+            address1: null,
+            address2: null,
+            address3: null,
+            cedex: null,
+            zipcode: cityConfig.zipcode || cityCode,
+            insee: cityCode,
+            city: cityConfig.sitraId,
+            region: null
+          }
         }
       }
     }
     return null
   }
-  
+
   getOuverture(element) {
     let duration = null,
       dureeSeance = null;
@@ -191,7 +193,7 @@ class importModel extends geotrek
     if (element.begin_date && element.end_date) {
       let horaireOuverture = null,
         horaireFermeture = null;
-        
+
       if (element.start_time) {
         if (element.end_time) {
           horaireOuverture = element.start_time;
@@ -199,20 +201,20 @@ class importModel extends geotrek
         } else if (element.duration != '') {
           let horaireOuvertureTmp = moment(element.begin_date + ' ' + element.start_time, 'YYYY-MM-DD HH:mm:ss');
           let horaireFermetureTmp = moment(element.begin_date + ' ' + element.duration, 'YYYY-MM-DD HH:mm:ss');
-          
+
           let horaireFermetureTmp2 = moment();
           horaireFermetureTmp2.hours(horaireOuvertureTmp.hours() + horaireFermetureTmp.hours());
           horaireFermetureTmp2.minutes(horaireOuvertureTmp.minutes() + horaireFermetureTmp.minutes());
           horaireFermetureTmp2.seconds(horaireOuvertureTmp.seconds() + horaireFermetureTmp.seconds());
-          
+
           horaireOuverture = new Date(element.begin_date + ' ' + element.start_time);
           horaireFermeture = new Date(
-            element.end_date + 
-            ' ' + 
-            horaireFermetureTmp2.hours() + 
-            ':' + 
-            horaireFermetureTmp2.minutes() + 
-            ':' + 
+            element.end_date +
+            ' ' +
+            horaireFermetureTmp2.hours() +
+            ':' +
+            horaireFermetureTmp2.minutes() +
+            ':' +
             ((horaireFermetureTmp2.seconds() < 10) ? "0" + horaireFermetureTmp2.seconds() : horaireFermetureTmp2.seconds())
           );
         }
@@ -224,7 +226,7 @@ class importModel extends geotrek
       } else if (element.begin_date == element.end_date && element.start_time && element.end_time) {
         const [startHour, startMinute] = element.start_time.split(':').map(Number);
         const [endHour, endMinute] = element.end_time.split(':').map(Number);
-    
+
         dureeSeance = (endHour * 60 + endMinute) - (startHour * 60 + startMinute);
       }
 
@@ -244,7 +246,7 @@ class importModel extends geotrek
       }
     }
   }
-  
+
   getBooking(element) {
     if (element.booking) {
       return {
@@ -252,7 +254,7 @@ class importModel extends geotrek
       }
     }
   }
-  
+
   getCapacity(element) {
     if (element.capacity) {
       return {
@@ -260,7 +262,7 @@ class importModel extends geotrek
       }
     }
   }
-  
+
   getComplementAccueil(element) {
     let accueil = '';
     if (element.meeting_point) {
@@ -280,7 +282,7 @@ class importModel extends geotrek
         );
       }
     }
-    
+
     if (element.practical_info['fr']) {
       accueil = DataString.stripTags(
         DataString.strEncode(accueil + "Informations pratiques : " + element.practical_info['fr'].replaceAll("<br>", "\r\n") + "\r\n\r\n")
