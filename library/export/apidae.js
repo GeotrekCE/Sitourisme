@@ -1169,68 +1169,72 @@ class Apidae
         break;
   
       case 'EQUIPEMENT':
-        blockCategory = 'informationsEquipement';
+        blockCategory = 'informationsEquipement'
   
         // Sub type
         if (product.subType) {
-          blockField = 'rubrique';
+          blockField = 'rubrique'
   
           blockData[blockField] = context.__buildTypeKey(
             product.subType,
             ['EquipementRubrique'],
             null,
             context
-          );
-          fieldList.push(blockCategory + '.' + blockField);
+          )
+          fieldList.push(blockCategory + '.' + blockField)
         }
         // Activity
         if (product.activity && product.activity.length) {
-          blockField = 'activites';
+          blockField = 'activites'
   
           blockData[blockField] = context.buildTypeKeyArray(
-            _.take(product.activity, 3), // only 3 categories because apidae is shit
+            _.take(product.activity, 3),
             ['EquipementActivite'],
             null,
             context
-          );
+          )
         }
-        fieldList.push(blockCategory + '.activites');
+        fieldList.push(blockCategory + '.activites')
         // Itinerary
         if (product.itinerary) {
-          blockField = 'itineraire';
+          blockField = 'itineraire'
   
           var itinerary = product.itinerary,
-            blockItinerary = {};
+            blockItinerary = {}
   
           if (typeof itinerary.positive === 'number') {
-            blockItinerary.denivellationPositive = product.itinerary.positive;
+            blockItinerary.denivellationPositive = product.itinerary.positive
             fieldList.push(
               blockCategory + '.' + blockField + '.denivellationPositive'
-            );
+            )
           }
           if (typeof itinerary.negative === 'number') {
-            blockItinerary.denivellationNegative = product.itinerary.negative;
+            blockItinerary.denivellationNegative = product.itinerary.negative
             fieldList.push(
               blockCategory + '.' + blockField + '.denivellationNegative'
-            );
+            )
           }
           if (typeof itinerary.distance === 'number') {
-            blockItinerary.distance = product.itinerary.distance;
-            fieldList.push(blockCategory + '.' + blockField + '.distance');
+            blockItinerary.distance = product.itinerary.distance
+            fieldList.push(blockCategory + '.' + blockField + '.distance')
           }
           if (typeof itinerary.dailyDuration === 'number') {
-            blockItinerary.dureeJournaliere = product.itinerary.dailyDuration;
+            blockItinerary.dureeJournaliere = product.itinerary.dailyDuration
             fieldList.push(
               blockCategory + '.' + blockField + '.dureeJournaliere'
-            );
+            )
           }
           if (typeof itinerary.altitudeMaximum === 'number') {
-            blockItinerary.altitudeMaximum = product.itinerary.altitudeMaximum;
-            fieldList.push(blockCategory + '.' + blockField + '.altitudeMaximum');
+            blockItinerary.altitudeMaximum = product.itinerary.altitudeMaximum
+            fieldList.push(blockCategory + '.' + blockField + '.altitudeMaximum')
           }
           if (typeof itinerary.altitudeMoyenne === 'number') {
-            blockItinerary.altitudeMoyenne = product.itinerary.altitudeMoyenne;
-            fieldList.push(blockCategory + '.' + blockField + '.altitudeMoyenne');
+            blockItinerary.altitudeMoyenne = product.itinerary.altitudeMoyenne
+            fieldList.push(blockCategory + '.' + blockField + '.altitudeMoyenne')
+          }
+          if (typeof itinerary.altitudeMinimum === 'number') {
+            blockItinerary.altitudeMinimum = product.itinerary.altitudeMinimum
+            fieldList.push(blockCategory + '.' + blockField + '.altitudeMinimum')
           }
           if (product.passagesDelicats) {
             blockItinerary.passagesDelicats = {
@@ -1240,25 +1244,25 @@ class Apidae
               libelleIt: product.passagesDelicatsIt,
               libelleDe: product.passagesDelicatsDe,
               libelleNl: product.passagesDelicatsNl
-            };
+            }
           }
-          fieldList.push(blockCategory + '.' + blockField + '.passagesDelicats');
+          fieldList.push(blockCategory + '.' + blockField + '.passagesDelicats')
           if (itinerary.itineraireType && itinerary.itineraireType.length) {
-            blockItinerary.itineraireType = product.itinerary.itineraireType;
-            fieldList.push(blockCategory + '.' + blockField + '.itineraireType');
+            blockItinerary.itineraireType = product.itinerary.itineraireType
+            fieldList.push(blockCategory + '.' + blockField + '.itineraireType')
           }
           if (itinerary.itineraireBalise && itinerary.itineraireBalise.length) {
-            blockItinerary.itineraireBalise = product.itinerary.itineraireBalise;
+            blockItinerary.itineraireBalise = product.itinerary.itineraireBalise
             fieldList.push(
               blockCategory + '.' + blockField + '.itineraireBalise'
-            );
+            )
             if (itinerary.precisionsBalisage) {
               blockItinerary.precisionsBalisage = {
                 libelleFr: product.itinerary.precisionsBalisage
-              };
+              }
               fieldList.push(
                 blockCategory + '.' + blockField + '.precisionsBalisage'
-              );
+              )
             }
           }
           if (itinerary.referencesTopoguides) {
@@ -1269,10 +1273,10 @@ class Apidae
               libelleIt: product.itinerary.referencesTopoguides,
               libelleDe: product.itinerary.referencesTopoguides,
               libelleNl: product.itinerary.referencesTopoguides
-            };
+            }
             fieldList.push(
               blockCategory + '.' + blockField + '.referencesTopoguides'
-            );
+            )
           }
           if (itinerary.referencesCartographiques) {
             blockItinerary.referencesCartographiques = {
@@ -1282,16 +1286,16 @@ class Apidae
               libelleIt: product.itinerary.referencesCartographiques,
               libelleDe: product.itinerary.referencesCartographiques,
               libelleNl: product.itinerary.referencesCartographiques
-            };
+            }
             fieldList.push(
               blockCategory + '.' + blockField + '.referencesCartographiques'
-            );
+            )
           }
           if (Object.keys(blockItinerary).length) {
-            blockData[blockField] = blockItinerary;
+            blockData[blockField] = blockItinerary
           }
         }
-        break;
+        break
   
       case 'FETE_ET_MANIFESTATION':
         blockCategory = 'informationsFeteEtManifestation';
@@ -2763,12 +2767,16 @@ class Apidae
   }
   if (product.geolocalisation) {
     if (product.geolocalisation.altitudeMaximum) {
-      geoLocalization.altitudeMaxi = product.geolocalisation.altitudeMaximum;
-      rootFieldList.push('localisation.geolocalisation.altitudeMaxi');
+      geoLocalization.altitudeMaxi = product.geolocalisation.altitudeMaximum
+      rootFieldList.push('localisation.geolocalisation.altitudeMaxi')
     }
     if (product.geolocalisation.altitudeMoyenne) {
-      geoLocalization.altitudeMini = product.geolocalisation.altitudeMoyenne;
-      rootFieldList.push('localisation.geolocalisation.altitudeMini');
+      geoLocalization.altitudeMini = product.geolocalisation.altitudeMoyenne
+      rootFieldList.push('localisation.geolocalisation.altitudeMini')
+    }
+    if (product.geolocalisation.altitudeMinimum) {
+      geoLocalization.altitudeMinimum = product.geolocalisation.altitudeMinimum
+      rootFieldList.push('localisation.geolocalisation.altitudeMinimum')
     }
   }
   if (product.complement) {

@@ -30,6 +30,11 @@
 | Etiquettes | `labels` | Descriptifs thématisés / Conseils et suggestions  | `presentation.descriptifsThematises`  | Ici est retourné le(s) id(s) des labels. Les labels sont disonible sur  /api/v2/label ou :api/label/{id}. Le texte des éventuelles étiquettes sera concaténé aux recommandations et aura la forme suivant "Nom de l'étiquette : Texte de l'étiquette nettoyé". Il peut y avoir du contenu HTML, s'il y a des images ou photos, elles ne seront alors pas prises en compte dans l'import/|
 | Geotrek-trek-id | `id` | ??? | ???  | Le but est de récupérer l'id de l'itinéraire au sein du Geotrek pour pouvoir l'appeler depuis l'API Geotrek via le widget ou sur une page d'un OT |
 | Geotrek-api-url | `url` | ??? | ???  | Il est aussi possible de récupérer l'id et l'url en parsant ce champ. L'idée est la même que ci-dessus pour l'id |
+| Lieu de départ | `departure` | Complément localisation | `geoLocalization.complement`  | 'Lieu de départ : ' (FR/EN/IT/ES/DE/NL) + departure  |
+| Lieu d'arrivée | `arrival` | Complément localisation | `geoLocalization.complement`  | 'Lieu d'arrivée : ' (FR/EN/IT/ES/DE/NL) + arrival  |
+| Accès routier | `access` | Complément localisation | `geoLocalization.complement`  | 'Accès routier' : ' (FR/EN/IT/ES/DE/NL) + access  |
+| Parking conseillé | `advised_parking` | Complément localisation | `geoLocalization.complement`  | 'Parking conseillé' : ' (FR/EN/IT/ES/DE/NL) + advised_parking  |
+| Transports en commun | `public_transport` | Complément localisation | `geoLocalization.complement`  | 'Transports en commun' : ' (FR/EN/IT/ES/DE/NL) + public_transport  |
 
 ## Geotrek:Touristicevent → Apidae:Fête et manifestation (Mapping des champs)
 

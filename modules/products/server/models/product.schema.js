@@ -1882,6 +1882,9 @@ const _defaultSchema = {
     altitudeMoyenne: {
       type: Number
     },
+    altitudeMinimum: {
+      type: Number
+    },
     itineraireType: {
       type: String,
       trim: true
