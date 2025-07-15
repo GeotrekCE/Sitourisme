@@ -158,37 +158,41 @@ class importModel extends geotrek
   }
 
   getComplement(element, lang) {
-    let complement = '';
+    let complement = ''
 
     if (element.departure && element.departure[lang]) {
       complement += `${this.translate('departure', lang)} : ${
         element.departure[lang]
-      }.`;
+      }.`
     }
     if (element.arrival && element.arrival[lang]) {
       complement += `\n${this.translate('arrival', lang)} : ${
         element.arrival[lang]
-      }.`;
+      }.`
     }
     if (element.access && element.access[lang]) {
-      complement += `\n${element.access[lang]}`;
+      complement += `\n${this.translate('access', lang)} : ${
+        element.access[lang]
+      }.`
     }
     if (element.advised_parking && element.advised_parking[lang]) {
       complement += `\n${this.translate('advised_parking', lang)} : ${
         element.advised_parking[lang]
-      } .`;
+      } .`
     }
     if (element.public_transport && element.public_transport[lang]) {
-      complement += `\n${element.public_transport[lang]}`;
+      complement += `\n${this.translate('public_transport', lang)} : ${
+        element.public_transport[lang]
+      } .`
     }
     if (complement) {
       complement = DataString.stripTags(
         DataString.strEncode(
           DataString.br2nl(complement)
         )
-      );
+      )
     }
-    return complement;
+    return complement
   }
 
   getLocalization(element) {
@@ -216,36 +220,39 @@ class importModel extends geotrek
       itineraireType: null,
       itineraireBalise: null,
       precisionsBalisage: ''
-    };
+    }
     if (element.max_elevation) {
-      itineraire.altitudeMaximum = element.max_elevation;
+      itineraire.altitudeMaximum = element.max_elevation
+    }
+    if (element.min_elevation) {
+      itineraire.altitudeMinimum = element.min_elevation
     }
     if (element.duration) {
-      itineraire.dailyDuration = DataString.convertDuration(element.duration);
+      itineraire.dailyDuration = DataString.convertDuration(element.duration)
     }
     if (element.length_2d) {
-      itineraire.distance = DataString.convertDistance(element.length_2d);
+      itineraire.distance = DataString.convertDistance(element.length_2d)
     }
     if (element.ascent) {
-      itineraire.positive = element.ascent;
+      itineraire.positive = element.ascent
     }
     if (element.descent) {
-      itineraire.negative = DataString.convertNegative(element.descent);
+      itineraire.negative = DataString.convertNegative(element.descent)
     }
     if (element.route) {
       if (configImportGEOTREK.geotrekInstance[structure].itineraireType != undefined)
       {
-        itineraire.itineraireType = configImportGEOTREK.geotrekInstance[structure].itineraireType[element.route];
+        itineraire.itineraireType = configImportGEOTREK.geotrekInstance[structure].itineraireType[element.route]
       } else {
-        itineraire.itineraireType = configImportGEOTREK.itineraireType[element.route];
+        itineraire.itineraireType = configImportGEOTREK.itineraireType[element.route]
       }
     }
     if (element.slug) {
-      const slugCategory = this.getSlugCategory(element);
+      const slugCategory = this.getSlugCategory(element)
       if (slugCategory) {
         itineraire.referencesTopoguides = this.addUrlHttp(
           `/${slugCategory}/${element.slug}/`
-        );
+        )
       }
     }
     if (element.networks && element.networks.length) {
@@ -253,27 +260,27 @@ class importModel extends geotrek
         element.networks.map((id) =>
           this.instanceApi.get(`/trek_network/${id}`)
         )
-      );
-      const labelNetworks = _(trekNetwork).map('data').map('label').valueOf();
+      )
+      const labelNetworks = _(trekNetwork).map('data').map('label').valueOf()
 
-      itineraire.itineraireBalise = 'BALISE';
-      let sep = '';
+      itineraire.itineraireBalise = 'BALISE'
+      let sep = ''
       _.forEach(labelNetworks, (label) => {
         if (label[this.lang] === 'PR') {
-          itineraire.precisionsBalisage += `${sep}Balisage Petite Randonée`;
+          itineraire.precisionsBalisage += `${sep}Balisage Petite Randonée`
         } else if (label[this.lang] === 'GR') {
-          itineraire.precisionsBalisage += `${sep}Balisage Grande Randonée`;
+          itineraire.precisionsBalisage += `${sep}Balisage Grande Randonée`
         } else if (label[this.lang] === 'GRP') {
-          itineraire.precisionsBalisage += `${sep}Balisage Grande Randonnée de Pays`;
+          itineraire.precisionsBalisage += `${sep}Balisage Grande Randonnée de Pays`
         } else if (label[this.lang] === 'VTT') {
-          itineraire.precisionsBalisage += `${sep}Balisage VTT`;
+          itineraire.precisionsBalisage += `${sep}Balisage VTT`
         } else {
-          itineraire.precisionsBalisage += `${sep} ${label[this.lang]}`;
+          itineraire.precisionsBalisage += `${sep} ${label[this.lang]}`
         }
-        sep += ' - ';
-      });
+        sep += ' - '
+      })
     }
-    return itineraire;
+    return itineraire
   }
 
   getDescription(element, lang) {

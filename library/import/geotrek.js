@@ -1,9 +1,9 @@
-'use strict';
+'use strict'
 
 const _ = require('lodash'),
   path = require('path'),
   DataString = require(path.resolve('./library/data/manipulate.js')),
-  configSitraTownByInsee = require(path.resolve('./config/configSitraTownByInsee.js'));
+  configSitraTownByInsee = require(path.resolve('./config/configSitraTownByInsee.js'))
 
 class Import
 {
@@ -45,15 +45,33 @@ class Import
         it: 'Parcheggio consigliato',
         de: 'Parkplatz empfohlen',
         nl: 'Parkeren aanbevolen'
+      },
+      access:
+      {
+        fr: 'Accès routier', 
+        en: 'Road access',
+        es: 'Acceso por carretera',
+        it: 'Accesso stradale',
+        de: 'Straßenzugang',
+        nl: 'Toegang via de weg'
+      },
+      public_transport:
+      {
+        fr: 'Transports en commun', 
+        en: 'Public transport',
+        es: 'Transporte público',
+        it: 'Trasporto pubblico',
+        de: 'Öffentliche Verkehrsmittel',
+        nl: 'Openbaar vervoer'
       }
-    };
+    }
 
     if (trad[key] && trad[key][ln]) {
-      return trad[key][ln];
+      return trad[key][ln]
     } else if (trad[key] && trad[key]['en']) {
-      return trad[key]['en'];
+      return trad[key]['en']
     } else {
-      return key;
+      return key
     }
   }
 
