@@ -461,11 +461,20 @@ exports.geotrekInstance = {
         },
       },
       3: {
+        specialId: 'PNR Camargue',
+        name: 'Parc Naturel Régional de Camargue',
+        address1: 'Mas du Pont de Rousty',
+        address2: '',
+        city: '4415',
+        insee: '13004',
+        specialIdSitra: '765530',
+        statusImport: 2,
+        memberId : 2122,
+        proprietaireId: 2122,
         production: {
-          trek: false,
+          trek: true,
           event: false
         },
-      },
       4: {
         production: {
           trek: false,
@@ -560,21 +569,6 @@ exports.geotrekInstance = {
         city: '34224',
         insee: '84031',
         specialIdSitra: '5584767',
-        statusImport: 2,
-        memberId : 2122,
-        proprietaireId: 2122,
-        production: {
-          trek: true,
-          event: false
-        },
-      11: {
-        specialId: 'PNR Camargue',
-        name: 'Parc Naturel Régional de Camargue',
-        address1: 'Mas du Pont de Rousty',
-        address2: '',
-        city: '4415',
-        insee: '13004',
-        specialIdSitra: '765530',
         statusImport: 2,
         memberId : 2122,
         proprietaireId: 2122,
