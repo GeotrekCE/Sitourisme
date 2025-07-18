@@ -461,7 +461,7 @@ exports.geotrekInstance = {
         },
       },
       3: {
-        specialId: 'PNR Camargue',
+        specialId: 'SITRA2_STR_765530',
         name: 'Parc Naturel Régional de Camargue',
         address1: 'Mas du Pont de Rousty',
         address2: '',
@@ -475,6 +475,7 @@ exports.geotrekInstance = {
           trek: true,
           event: false
         },
+      },
       4: {
         production: {
           trek: false,
