@@ -469,8 +469,8 @@ exports.geotrekInstance = {
         insee: '13004',
         specialIdSitra: '765530',
         statusImport: 2,
-        memberId : 2122,
-        proprietaireId: 2122,
+        memberId : 1221,
+        proprietaireId: 1221,
         production: {
           trek: true,
           event: false
