@@ -1336,4 +1336,31 @@ exports.geotrekInstance = {
       1: 'BOUCLE',
     },
   },
+  10 : {
+    geotrekUrl : 'https://snvadmin.var.fr/api/v2',
+    structures : {
+      1: {
+        specialId: 'SITRA2_STR_5171183',
+        name: "Conseil départemental du Var",
+        address1: "390 avenue des Lices",
+        address2: "BP 1303",
+        city: '34174',
+        insee: '83137',
+        specialIdSitra: '5171183',
+        statusImport: 2,
+        memberId : 1894,
+        proprietaireId: 1894,
+        production: {
+          trek: false,
+          event: false
+        },
+      },
+    },
+    activity : {
+      2: 3284,
+      3: 3313,
+      4: 3333,
+      8: 3283
+    },
+  },
 };
