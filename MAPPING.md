@@ -23,8 +23,8 @@
 | Type d'accessibilité | `accessibilities` | *Non repris* |  |  |
 | Niveau d'accessibilité | `accessibility_level` | *Non repris* |  |  |
 | Coordonnées | `departure_geom` | Géolocalisation | `localisation.geolocalisation.geoJson.coordinates` | Les coordonnées Geotrek sont issues du champ departure_geom quand celui-ci est renseigné, sinon du champ parking_location |
-| Chapeau | `description_teaser` | Description courte | `presentation.descriptifCourt`  | Il y est déjà et il y reste. Mais il n'y aurait plus que lui |
-| Ambiance | `ambiance` | Description détaillé | `presentation.descriptifDetaille`  | Il n'était pas repris auparavant |
+| Chapeau | `description_teaser` | Description courte | `presentation.descriptifCourt`  | |
+| Ambiance | `ambiance` | Description détaillé | `presentation.descriptifDetaille`  | |
 | Description | `description` | Descriptifs thématisés / Topo/pas à pas  | `presentation.descriptifsThematises`  |  |
 | Recommandations | `advice` | Descriptifs thématisés / Conseils et suggestions  | `presentation.descriptifsThematises`  |  |
 | Etiquettes | `labels` | Descriptifs thématisés / Conseils et suggestions  | `presentation.descriptifsThematises`  | Ici est retourné le(s) id(s) des labels. Les labels sont disonible sur  /api/v2/label ou :api/label/{id}. Le texte des éventuelles étiquettes sera concaténé aux recommandations et aura la forme suivant "Nom de l'étiquette : Texte de l'étiquette nettoyé". Il peut y avoir du contenu HTML, s'il y a des images ou photos, elles ne seront alors pas prises en compte dans l'import/|

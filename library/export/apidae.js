@@ -2514,47 +2514,28 @@ class Apidae
 
  __buildDescriptifsThematises(product, root, rootFieldList) {
   let descriptifsThematises = [],
-    err = false;
+    err = false
 
   // Retrieving the Geotrek ambiance field from the Apidae themed description
-  /*if (product.ambianceLibelle) {
-    let description = {};
+  if (product.ambianceLibelle) {
+    let description = {}
       
-    description.libelleFr = product.ambianceLibelle;
+    description.libelleFr = product.ambianceLibelle
     if (product.ambianceLibelleEn) {
-      description.libelleEn = product.ambianceLibelleEn;
+      description.libelleEn = product.ambianceLibelleEn
     }
     if (product.ambianceLibelleEs) {
-      description.libelleEs = product.ambianceLibelleEs;
+      description.libelleEs = product.ambianceLibelleEs
     }
     if (product.ambianceLibelleIt) {
-      description.libelleIt = product.ambianceLibelleIt;
+      description.libelleIt = product.ambianceLibelleIt
     }
     if (product.ambianceLibelleDe) {
-      description.libelleDe = product.ambianceLibelleDe;
+      description.libelleDe = product.ambianceLibelleDe
     }
     if (product.ambianceLibelleNl) {
-      description.libelleNl = product.ambianceLibelleNl;
+      description.libelleNl = product.ambianceLibelleNl
     }
-
-    descriptifsThematises.push({
-      theme: {
-        elementReferenceType: 'DescriptifTheme',
-        id: 5536, //Topo/pas à pas : 6527 / cooking 5536
-      },
-      description: description
-    });
-  }*/
-
-  if (product.ambianceLibelle) {
-    let description = {};
-      
-    description.libelleFr = '';
-    description.libelleEn = '';
-    description.libelleEs = '';
-    description.libelleIt = '';
-    description.libelleDe = ''; 
-    description.libelleNl = '';
 
     descriptifsThematises.push({
       theme: {
@@ -2562,20 +2543,20 @@ class Apidae
         id: (process.env.NODE_ENV == 'production') ? 6527 : 5536, //Topo/pas à pas : 6527 / cooking 5536
       },
       description: description
-    });
+    })
   }
 
   if (descriptifsThematises.length) {
     if (!root.presentation) {
-      root.presentation = {};
+      root.presentation = {}
     }
-    root.presentation.descriptifsThematises = descriptifsThematises;
-    rootFieldList.push('presentation.descriptifsThematises');
+    root.presentation.descriptifsThematises = descriptifsThematises
+    rootFieldList.push('presentation.descriptifsThematises')
   } else {
-    err = true;
+    err = true
   }
 
-  return !err ? { root: root, rootFieldList: rootFieldList } : false;
+  return !err ? { root: root, rootFieldList: rootFieldList } : false
 }
 
  __buildAspectGroupes(product) {
