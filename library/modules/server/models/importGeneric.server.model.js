@@ -105,9 +105,12 @@ class ImportGeotrekApi extends Import
     if (status === 200) {
       data.results.forEach(item => {
         this.labels[item.id] = {
-          fr: he.decode(striptags(item.name.fr)) + ' : ' +  he.decode(striptags(item.advice.fr)).replace(/[\r\n]+/g, ''),
-          en: he.decode(striptags(item.name.en)) + ' : ' +  he.decode(striptags(item.advice.en)).replace(/[\r\n]+/g, ''),
-          it: he.decode(striptags(item.name.it)) + ' : ' +  he.decode(striptags(item.advice.it)).replace(/[\r\n]+/g, ''),
+          fr: item.name.fr ? he.decode(striptags(item.name.fr)) + ' : ' +  he.decode(striptags(item.advice.fr)).replace(/[\r\n]+/g, '') : null,
+          en: item.name.en ? he.decode(striptags(item.name.en)) + ' : ' +  he.decode(striptags(item.advice.en)).replace(/[\r\n]+/g, '') : null,
+          es: item.name.es ? he.decode(striptags(item.name.es)) + ' : ' +  he.decode(striptags(item.advice.es)).replace(/[\r\n]+/g, '') : null,
+          it: item.name.it ? he.decode(striptags(item.name.it)) + ' : ' +  he.decode(striptags(item.advice.it)).replace(/[\r\n]+/g, '') : null,
+          de: item.name.de ? he.decode(striptags(item.name.de)) + ' : ' +  he.decode(striptags(item.advice.de)).replace(/[\r\n]+/g, '') : null,
+          nl: item.name.nl ? he.decode(striptags(item.name.nl)) + ' : ' +  he.decode(striptags(item.advice.nl)).replace(/[\r\n]+/g, '') : null,
         }
       })
     }
