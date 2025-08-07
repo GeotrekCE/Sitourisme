@@ -1236,7 +1236,8 @@ class Apidae
             blockItinerary.altitudeMinimum = product.itinerary.altitudeMinimum
             fieldList.push(blockCategory + '.' + blockField + '.altitudeMinimum')
           }
-          if (product.passagesDelicats) {
+
+          /*if (product.passagesDelicats) {
             blockItinerary.passagesDelicats = {
               libelleFr: product.passagesDelicats,
               libelleEn: product.passagesDelicatsEn,
@@ -1245,12 +1246,15 @@ class Apidae
               libelleDe: product.passagesDelicatsDe,
               libelleNl: product.passagesDelicatsNl
             }
+            //(process.env.NODE_ENV == 'production') ? 6527 : 5536, //Topo/pas à pas : 6527 / cooking 5536
           }
-          fieldList.push(blockCategory + '.' + blockField + '.passagesDelicats')
+          fieldList.push(blockCategory + '.' + blockField + '.passagesDelicats')*/
+
           if (itinerary.itineraireType && itinerary.itineraireType.length) {
             blockItinerary.itineraireType = product.itinerary.itineraireType
             fieldList.push(blockCategory + '.' + blockField + '.itineraireType')
           }
+
           if (itinerary.itineraireBalise && itinerary.itineraireBalise.length) {
             blockItinerary.itineraireBalise = product.itinerary.itineraireBalise
             fieldList.push(
@@ -2514,47 +2518,28 @@ class Apidae
 
  __buildDescriptifsThematises(product, root, rootFieldList) {
   let descriptifsThematises = [],
-    err = false;
+    err = false
 
   // Retrieving the Geotrek ambiance field from the Apidae themed description
-  /*if (product.ambianceLibelle) {
-    let description = {};
+  if (product.ambianceLibelle) {
+    let description = {}
       
-    description.libelleFr = product.ambianceLibelle;
+    description.libelleFr = product.ambianceLibelle
     if (product.ambianceLibelleEn) {
-      description.libelleEn = product.ambianceLibelleEn;
+      description.libelleEn = product.ambianceLibelleEn
     }
     if (product.ambianceLibelleEs) {
-      description.libelleEs = product.ambianceLibelleEs;
+      description.libelleEs = product.ambianceLibelleEs
     }
     if (product.ambianceLibelleIt) {
-      description.libelleIt = product.ambianceLibelleIt;
+      description.libelleIt = product.ambianceLibelleIt
     }
     if (product.ambianceLibelleDe) {
-      description.libelleDe = product.ambianceLibelleDe;
+      description.libelleDe = product.ambianceLibelleDe
     }
     if (product.ambianceLibelleNl) {
-      description.libelleNl = product.ambianceLibelleNl;
+      description.libelleNl = product.ambianceLibelleNl
     }
-
-    descriptifsThematises.push({
-      theme: {
-        elementReferenceType: 'DescriptifTheme',
-        id: 5536, //Topo/pas à pas : 6527 / cooking 5536
-      },
-      description: description
-    });
-  }*/
-
-  if (product.ambianceLibelle) {
-    let description = {};
-      
-    description.libelleFr = '';
-    description.libelleEn = '';
-    description.libelleEs = '';
-    description.libelleIt = '';
-    description.libelleDe = ''; 
-    description.libelleNl = '';
 
     descriptifsThematises.push({
       theme: {
@@ -2562,20 +2547,49 @@ class Apidae
         id: (process.env.NODE_ENV == 'production') ? 6527 : 5536, //Topo/pas à pas : 6527 / cooking 5536
       },
       description: description
-    });
+    })
+  }
+
+  if (product.passagesDelicats) {
+    let descriptifsThematisesConseilsSuggest = {}
+      
+    descriptifsThematisesConseilsSuggest.libelleFr = product.passagesDelicats
+    if (product.passagesDelicatsEn) {
+      descriptifsThematisesConseilsSuggest.libelleEn = product.passagesDelicatsEn
+    }
+    if (product.passagesDelicatsEs) {
+      descriptifsThematisesConseilsSuggest.libelleEs = product.passagesDelicatsEs
+    }
+    if (product.passagesDelicatsIt) {
+      descriptifsThematisesConseilsSuggest.libelleIt = product.passagesDelicatsIt
+    }
+    if (product.passagesDelicatsDe) {
+      descriptifsThematisesConseilsSuggest.libelleDe = product.passagesDelicatsDe
+    }
+    if (product.passagesDelicatsNl) {
+      descriptifsThematisesConseilsSuggest.libelleNl = product.passagesDelicatsNl
+    }
+
+    descriptifsThematises.push({
+      theme: {
+        elementReferenceType: 'DescriptifTheme',
+        id: 5154, //5154 - Descriptifs thématisés > Conseils et suggestions / cooking 5154 - Bons plans	 
+      },
+      description: descriptifsThematisesConseilsSuggest
+    })
   }
 
   if (descriptifsThematises.length) {
     if (!root.presentation) {
-      root.presentation = {};
+      root.presentation = {}
     }
-    root.presentation.descriptifsThematises = descriptifsThematises;
-    rootFieldList.push('presentation.descriptifsThematises');
+    root.presentation.descriptifsThematises = descriptifsThematises
+    rootFieldList.push('presentation.descriptifsThematises')
   } else {
-    err = true;
+    err = true
   }
 
-  return !err ? { root: root, rootFieldList: rootFieldList } : false;
+  return !err ? { root: root, rootFieldList: rootFieldList } : false
 }
 
  __buildAspectGroupes(product) {

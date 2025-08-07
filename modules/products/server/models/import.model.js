@@ -53,12 +53,12 @@ class importModel extends geotrek
       ambianceLibelleIt: this.getAmbianceLibelle(element, 'it'),
       ambianceLibelleDe: this.getAmbianceLibelle(element, 'de'),
       ambianceLibelleNl: this.getAmbianceLibelle(element, 'nl'),
-      passagesDelicats: this.getPassagesDelicats(element, 'fr'),
-      passagesDelicatsEn: this.getPassagesDelicats(element, 'en'),
-      passagesDelicatsEs: this.getPassagesDelicats(element, 'es'),
-      passagesDelicatsIt: this.getPassagesDelicats(element, 'it'),
-      passagesDelicatsDe: this.getPassagesDelicats(element, 'de'),
-      passagesDelicatsNl: this.getPassagesDelicats(element, 'nl'),
+      passagesDelicats: this.getPassagesDelicats(element, 'fr', additionalInformation.labels),
+      passagesDelicatsEn: this.getPassagesDelicats(element, 'en', additionalInformation.labels),
+      passagesDelicatsEs: this.getPassagesDelicats(element, 'es', additionalInformation.labels),
+      passagesDelicatsIt: this.getPassagesDelicats(element, 'it', additionalInformation.labels),
+      passagesDelicatsDe: this.getPassagesDelicats(element, 'de', additionalInformation.labels),
+      passagesDelicatsNl: this.getPassagesDelicats(element, 'nl', additionalInformation.labels),
       complement: this.getComplement(element, 'fr'),
       complementEn: this.getComplement(element, 'en'),
       complementEs: this.getComplement(element, 'es'),
@@ -129,32 +129,36 @@ class importModel extends geotrek
 
   getAmbianceLibelle(element, lang) {
     let ambianceLibelle = null;
-    /*if (element.description && element.description[lang]) {
+    if (element.description && element.description[lang]) {
       ambianceLibelle = DataString.stripTags(
         DataString.strEncode(
           DataString.br2nl(element.description[lang])
         )
-      );
-    }*/
-      if (element.ambiance && element.ambiance[lang]) {
-        ambianceLibelle = DataString.stripTags(
-          DataString.strEncode(
-            DataString.br2nl(element.ambiance[lang])
-          )
-        );
-      }
-    return ambianceLibelle;
+      )
+    }
+    return ambianceLibelle
   }
 
-  getPassagesDelicats(element, lang) {
+  getPassagesDelicats(element, lang, labels) {
+    let passagesDelicats = null
+
     if (element.advice && element.advice[lang]) {
-      return DataString.stripTags(
+      passagesDelicats = DataString.stripTags(
         DataString.strEncode(
           DataString.br2nl(element.advice[lang])
         )
-      );
+      ) + '\r\n\r\n'
     }
-    return null;
+
+    if (element.labels && element.labels.length) {
+      element.labels.forEach(id => {
+        if (labels[id][lang]) {
+          if (passagesDelicats === null) passagesDelicats = ''
+          passagesDelicats += labels[id][lang] + '\r\n'
+        }
+      })
+    }
+    return passagesDelicats
   }
 
   getComplement(element, lang) {
@@ -267,9 +271,9 @@ class importModel extends geotrek
       let sep = ''
       _.forEach(labelNetworks, (label) => {
         if (label[this.lang] === 'PR') {
-          itineraire.precisionsBalisage += `${sep}Balisage Petite Randonée`
+          itineraire.precisionsBalisage += `${sep}Balisage Petite Randonnée`
         } else if (label[this.lang] === 'GR') {
-          itineraire.precisionsBalisage += `${sep}Balisage Grande Randonée`
+          itineraire.precisionsBalisage += `${sep}Balisage Grande Randonnée`
         } else if (label[this.lang] === 'GRP') {
           itineraire.precisionsBalisage += `${sep}Balisage Grande Randonnée de Pays`
         } else if (label[this.lang] === 'VTT') {
@@ -284,21 +288,14 @@ class importModel extends geotrek
   }
 
   getDescription(element, lang) {
-    /*if (element.ambiance && element.ambiance[lang]) {
+    if (element.ambiance && element.ambiance[lang]) {
       return DataString.stripTags(
         DataString.strEncode(
           DataString.br2nl(element.ambiance[lang])
         )
       );
-    }*/
-      if (element.description && element.description[lang]) {
-        return DataString.stripTags(
-          DataString.strEncode(
-            DataString.br2nl(element.description[lang])
-          )
-        );
-      }
-    return '';
+    }
+    return ''
   }
 
   getEmail(additionalElement, defaultEmail) {
