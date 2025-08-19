@@ -4391,7 +4391,7 @@ __buildImageDetail(images, nImage, callback, originalImage = false, sizeImage = 
           console.log('urlResize = ', urlResize)
         }
       }
-      
+
       me.__getImageSize(urlObject.href, function(size) {
           if (config.debug && config.debug.logs) {
             console.log('urlResize response = ', size)
@@ -4409,9 +4409,9 @@ __buildImageDetail(images, nImage, callback, originalImage = false, sizeImage = 
             }
           } else {
               if (config.debug && config.debug.logs) {
-                console.log("Image url = ", image.url);
+                console.log("Image url = ", urlObject.href)
               }
-              let path = urlObject.path,
+              let path = image.url,
                 httpProtocol,
                 filename = path.replace(new RegExp('^.*/([^/]+)$'), '$1'),
                 ext = filename
@@ -4436,8 +4436,7 @@ __buildImageDetail(images, nImage, callback, originalImage = false, sizeImage = 
                 default:
                   httpProtocol = http
                   break
-              }
-              
+              }  
               let request = httpProtocol.request(urlObject, function (response) {
                 if (config.debug && config.debug.logs) {
                   console.log("starting requesting Image")
@@ -4903,9 +4902,8 @@ __buildImageDetail(images, nImage, callback, originalImage = false, sizeImage = 
   return !err ? { root: root, rootFieldList: rootFieldList } : false;
 }
 
-__getImageSize(url,callback)
+__getImageSize(url, callback)
 {
-    // Utilise fetch pour envoyer une requête HEAD
   fetch(url, { method: 'HEAD' })
     .then(response => {
       if (!response.ok)
