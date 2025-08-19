@@ -47,6 +47,7 @@ class importModel extends geotrek
       complementAccueilIt: await this.getComplementAccueil(element, 'it'),
       complementAccueilDe: await this.getComplementAccueil(element, 'de'),
       complementAccueilNl: await this.getComplementAccueil(element, 'nl'),
+      typeClient: this.getDifficulty(element, additionalInformation.difficulties),
       ambianceLibelle: this.getAmbianceLibelle(element, 'fr'),
       ambianceLibelleEn: this.getAmbianceLibelle(element, 'en'),
       ambianceLibelleEs: this.getAmbianceLibelle(element, 'es'),
@@ -125,6 +126,13 @@ class importModel extends geotrek
       return data.label[lang];
     }
     return null;
+  }
+
+  getDifficulty(element, difficulties) {
+    if (element.difficulty && difficulties[element.difficulty]) {
+        return difficulties[element.difficulty]
+    }
+    return null
   }
 
   getAmbianceLibelle(element, lang) {

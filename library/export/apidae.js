@@ -3476,13 +3476,13 @@ class Apidae
   }
   rootFieldList.push('prestations.languesDocumentation');
 
-  if (product.typeClient && product.typeClient.length) {
+  if (product.typeClient) {
     prestation.typesClientele = this.buildTypeKeyArray(
       product.typeClient,
-      null,
+      'TypeClientele',
       unwantedTypes,
-      context
-    );
+      this
+    )
   }
   rootFieldList.push('prestations.typesClientele');
 

@@ -5,6 +5,7 @@
 | Libellé Geotrek | Nom système | Libellé Apidae | Nom système | Remarques |
 |:--|:--|:--|:--|:--|
 | Difficulté | `difficulty` | Complément accueil | `prestations.complementAccueil` | Les valeurs Geotrek sont écrites en texte dans Apidae, cf. [https://geotrek.ecrins-parcnational.fr/ressources/technique/2022-04-Geotrek-Apidae-v2.pdf](https://geotrek.ecrins-parcnational.fr/ressources/technique/2022-04-Geotrek-Apidae-v2.pdf) |
+| Difficulté | `difficulty` | Types de clientèle | `prestations.typesClientele` | Une correspondance suivant le niveau de difficulté Geotrek est faite avec les éléments de références Apidae de type TypeClientele  |
 | Pratique | `practice` | Types d'activité / d'équipement | `informationsEquipement.activites` | Correspondance définie dans la configuration de la passerelle, pour l'instance/la structure Geotrek souhaitée. Valeurs Apidae : [/config/apidae/equipement_activity.json](https://github.com/GeotrekCE/Sitourisme/blob/main/config/apidae/equipement_activity.json) |
 | Parcours | `route` | Type d'itinéraire | `informationsEquipement.itineraire.itineraireType` | Correspondance définie dans la configuration de la passerelle, pour l'instance/la structure Geotrek souhaitée. Valeurs Apidae : **BOUCLE**, **ALLER_RETOUR**, **ALLER_ITINERANCE** |
 | Thèmes | `themes` | *Non repris* |  |  |

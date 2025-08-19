@@ -30,6 +30,13 @@ exports.touristicevent_cat = {}
 
 exports.touristicevent_entities = {}
 
+exports.trek_difficulty = {
+  1: 587, // Niveau vert - Facile
+  2: 588, // Niveau bleu - Modéré
+  3: 6669,// Niveau orange - assez difficile	
+  4: 589, //Niveau rouge - Difficile
+}
+
 exports.geotrekInstance = {
   0: {
     geotrekUrl : 'https://geotrek-admin.ecrins-parcnational.fr/api/v2',
@@ -124,6 +131,13 @@ exports.geotrekInstance = {
           event: false
         },
       }
+    },
+    trek_difficulty : {
+      1: 587, // Niveau vert - Facile
+      2: 588, // Niveau bleu - Modéré
+      3: 6669,// Niveau orange - assez difficile	
+      4: 589, //Niveau rouge - Difficile
+      5: 590, //Niveau noir - Très difficile
     },
     touristicevent_cat : {
       1: 2080, // Exposition > Exposition
@@ -405,6 +419,13 @@ exports.geotrekInstance = {
       12: 2072, // Culturelle > Conférence / Débat / Rencontre
       13: 2082, // Manifestation de portée départementale ou plus  > Foire ou salon	
     },
+    trek_difficulty : {
+      1: 587, // Niveau vert - Facile
+      2: 588, // Niveau bleu - Modéré
+      3: 6669,// Niveau orange - assez difficile	
+      4: 589, //Niveau rouge - Difficile
+      5: 590, //Niveau noir - Très difficile
+    },
   },
   2 : {
     geotrekUrl : 'https://geotrek.nature-haute-savoie.fr/api/v2/',
@@ -433,7 +454,14 @@ exports.geotrekInstance = {
     itineraireType : {
       1: 'BOUCLE',
       2: 'ALLER_RETOUR',
-    }
+    },
+    trek_difficulty : {
+      1: 587, // Niveau vert - Facile
+      2: 588, // Niveau bleu - Modéré
+      3: 6669,// Niveau orange - assez difficile	
+      4: 589, //Niveau rouge - Difficile
+      5: 590, //Niveau noir - Très difficile
+    },
   },
   3 : {
     geotrekUrl : 'https://admin.cheminsdesparcs.fr/api/v2',
@@ -659,6 +687,11 @@ exports.geotrekInstance = {
       4: 'ALLER_ITINERANCE',
       5: 'ALLER_RETOUR',
     },
+    trek_difficulty : {
+      1: 587, // Niveau vert - Facile
+      2: 588, // Niveau bleu - Modéré
+      3: 589, //Niveau rouge - Difficile
+    },
   },
   5 : {
     geotrekUrl : 'https://admin.sisteron-buech.fr/api/v2',
@@ -783,6 +816,13 @@ exports.geotrekInstance = {
       2: 'ALLER_RETOUR',
       3: 'ALLER_ITINERANCE',
       4: 'ALLER_ITINERANCE',
+    },
+    trek_difficulty : {
+      1: 587, // Niveau vert - Facile
+      2: 588, // Niveau bleu - Modéré
+      3: 6669,// Niveau orange - assez difficile	
+      4: 589, //Niveau rouge - Difficile
+      5: 590, //Niveau noir - Très difficile
     },
   },
   7 : {
@@ -1092,6 +1132,13 @@ exports.geotrekInstance = {
       2: 'ALLER_RETOUR',
       3: 'ALLER_ITINERANCE',
     },
+    trek_difficulty : {
+      1: 587, // Niveau vert - Facile
+      2: 588, // Niveau bleu - Modéré
+      3: 6669,// Niveau orange - assez difficile	
+      4: 589, //Niveau rouge - Difficile
+      5: 590, //Niveau noir - Très difficile
+    },
   },
   8 : {
     geotrekUrl : 'https://admin.destination-parc-monts-ardeche.fr/api/v2/',
@@ -1306,6 +1353,13 @@ exports.geotrekInstance = {
       5: 'ALLER_ITINERANCE',
     },
     trek_filtering: 'portals=16',
+    trek_difficulty : {
+      1: 587, // Niveau vert - Facile
+      2: 588, // Niveau bleu - Modéré
+      3: 6669,// Niveau orange - assez difficile	
+      4: 589, //Niveau rouge - Difficile
+      5: 590, //Niveau noir - Très difficile
+    },
   },
   9 : {
     geotrekUrl : 'https://geotrek-admin.portcros-parcnational.fr/api/v2/',
@@ -1361,6 +1415,13 @@ exports.geotrekInstance = {
       3: 3313,
       4: 3333,
       8: 3283
+    },
+    trek_difficulty : {
+      1: 587, // Niveau vert - Facile
+      2: 588, // Niveau bleu - Modéré
+      3: 589, //Niveau rouge - Difficile
+      4: 590, //Niveau noir - Très difficile
+      5: 587, // Niveau vert - Facile
     },
   },
 };
