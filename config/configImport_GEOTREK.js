@@ -1424,4 +1424,58 @@ exports.geotrekInstance = {
       5: 587, // Niveau vert - Facile
     },
   },
+  11 : {
+    geotrekUrl : 'https://geotrek.guadeloupe-parcnational.fr/api/v2',
+    structures : {
+      1: {
+        specialId: 'SITRA2_STR_7045769',
+        name: "Comité du Tourisme des Iles de Guadeloupe",
+        address1: "Rue Goerges Biras",
+        address2: "La Providence",
+        city: '36686',
+        insee: '97101',
+        specialIdSitra: '7045769',
+        statusImport: 2,
+        memberId : 2484,
+        proprietaireId: 2484,
+        production: {
+          trek: true,
+          event: false
+        },
+      },
+      2: {
+        production: {
+          trek: false,
+          event: false
+        },
+      },
+      4: {
+        production: {
+          trek: false,
+          event: false
+        },
+      },
+      5: {
+        production: {
+          trek: false,
+          event: false
+        },
+      },
+      29: {
+        production: {
+          trek: false,
+          event: false
+        },
+      },
+    },
+    activity : {
+      1: 3333,
+      2: 3284,
+    },
+    itineraireType : {
+      1: 'ALLER_RETOUR',
+      2: 'BOUCLE',
+      3: 'ALLER_ITINERANCE',
+    },
+  },
 };
