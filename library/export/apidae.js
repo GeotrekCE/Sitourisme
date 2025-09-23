@@ -1,5 +1,7 @@
 'use strict';
 
+//const { exit } = require('process');
+
 const _ = require('lodash'),
   path = require('path'),
   moment = require('moment'),
@@ -7,22 +9,24 @@ const _ = require('lodash'),
   https = require('https'),
   request = require('request'),
   Promise = require('bluebird'),
-  mongoose = require('mongoose'),
+  //mongoose = require('mongoose'),
   Url = require('url'),
-  DataString = require(path.resolve('./library/data/manipulate.js')),
+  //DataString = require(path.resolve('./library/data/manipulate.js')),
   config = require(path.resolve('./config/config.js')),
   configSitraReference = require(path.resolve('./config/configSitraReference.js')),
   chalk = require('chalk'),
-  fetch = require("node-fetch");
+  fetch = require("node-fetch")
+  //fxp = require("fast-xml-parser")
 
 class Apidae
 {
   constructor(entity)
   {
-    this.productImage = null;
-    this.productMultimedia = null;
-    this.tokenPerMemberId = {};
-    this.configSitraReferencePerId = this.__initSitraReferencePerId(require(path.resolve('./config/configSitraReference.js')));
+    this.productImage = null
+    this.productMultimedia = null
+    this.gpxData = null
+    this.tokenPerMemberId = {}
+    this.configSitraReferencePerId = this.__initSitraReferencePerId(require(path.resolve('./config/configSitraReference.js')))
   }
 
   __initSitraReferencePerId(configSitraReference)
@@ -458,6 +462,31 @@ class Apidae
         }
       });
     });
+
+    const PromiseRequestGpx = () => {
+      me.gpxData = []
+      return Promise.all(
+        (product.gpx || [])
+          .filter(Boolean)
+          .map(async (url, nPlan) => {
+            const res = await fetch(url)
+            if (!res.ok) throw new Error(`HTTP ${res.status} for ${url}`)
+            const xml = await res.text()
+
+            /*const parser = new fxp.XMLParser()
+            const gpx = parser.parse(xml)*/
+
+            me.gpxData.push({
+              data: {
+                path: url,
+                filename: url.replace(/.*\/([^/]+)$/, '$1'),
+                contentType: 'application/gpx+xml',
+                content: xml
+              }
+            })
+          })
+      )
+    }
   
     const PromiseRequestFather = async () => {
       if (product.linkedObject.specialIdFather) {
@@ -478,11 +507,10 @@ class Apidae
       }
       return product;
     }
-  
+
     PromiseRequestImage()
-      .then(function () {
-        return PromiseRequestFather();
-      })
+      .then(() => PromiseRequestGpx())
+      .then(() =>PromiseRequestFather())
       .then(async (product) => {
         // Built root
         root = {
@@ -761,9 +789,22 @@ class Apidae
             }
           }
         }
-  
+
+        if (me.gpxData && me.gpxData.length) {
+          _.forEach(me.gpxData, function (gpxData, nPlan) {
+            if (gpxData && gpxData.data) {
+              formData['multimedia.plan-' + nPlan] = {
+                value: gpxData.data.content,
+                options: {
+                  filename: gpxData.data.filename,
+                  contentType: gpxData.data.contentType
+                }
+              }
+            }
+          })
+        }
+
         if (config.debug && config.debug.seeData) console.log('PromiseRequestImage > datas = ', formData);
-        
         if (config.debug && config.debug.idGeo != 0 && config.debug.idGeo != product.specialId) 
         {
           return callback(null, finalData);
@@ -4222,15 +4263,16 @@ class Apidae
   // Add GPX
   let arrMultimediaDataGpx = [];
   if (product.gpx && product.gpx.length) {
-    _.forEach(product.gpx, function (url) {
+    product.gpx.forEach((url, nPlan) => {
       if (url) {
         arrMultimediaDataGpx.push({
           locale: 'fr',
-          url: url
-        });
+          url: 'MULTIMEDIA#plan-' + (nPlan)
+        })
       }
-    });
+    })   
   }
+
   if (product.gpxEn && product.gpxEn.length) {
     _.forEach(product.gpxEn, function (url) {
       if (url) {
@@ -4284,7 +4326,7 @@ class Apidae
   if (arrMultimediaDataGpx && arrMultimediaDataGpx.length) {
     let multimediaGpx = {};
     multimediaGpx.nom = {};
-    multimediaGpx.link = 'true';
+    multimediaGpx.link = 'false';
     multimediaGpx.type = 'PLAN';
     multimediaGpx.traductionFichiers = arrMultimediaDataGpx;
     multimediaGpx.nom.libelleFr = 'GPX';
@@ -4926,6 +4968,7 @@ __getImageSize(url, callback)
      callback(-1)
     });
 }
+
 }
 
 module.exports = Apidae;

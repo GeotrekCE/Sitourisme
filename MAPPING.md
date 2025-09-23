@@ -36,6 +36,8 @@
 | Accès routier | `access` | Complément localisation | `geoLocalization.complement`  | 'Accès routier' : ' (FR/EN/IT/ES/DE/NL) + access  |
 | Parking conseillé | `advised_parking` | Complément localisation | `geoLocalization.complement`  | 'Parking conseillé' : ' (FR/EN/IT/ES/DE/NL) + advised_parking  |
 | Transports en commun | `public_transport` | Complément localisation | `geoLocalization.complement`  | 'Transports en commun' : ' (FR/EN/IT/ES/DE/NL) + public_transport  |
+| Tracé KML | `kml` | Multimédia  | `multimedia.plan`  | Plans et tracés GPS, en lien (.KML) |
+| Tracé GPX | `gpx` | Multimédia  | `multimedia.plan`  | Plans et tracés GPS hébergés sur Apidae (.GPX + carte)  |
 
 ## Geotrek:Touristicevent → Apidae:Fête et manifestation (Mapping des champs)
 
