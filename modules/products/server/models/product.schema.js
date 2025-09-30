@@ -1922,6 +1922,11 @@ const _defaultSchema = {
     type: String,
     trim: true
   },
+  labelsMapping: [
+    {
+      type: Number
+    }
+  ],
   complement: {
     type: String,
     trim: true

@@ -37,6 +37,8 @@ exports.trek_difficulty = {
   4: 589, //Niveau rouge - Difficile
 }
 
+exports.trek_label = {}
+
 exports.geotrekInstance = {
   0: {
     geotrekUrl : 'https://geotrek-admin.ecrins-parcnational.fr/api/v2',
@@ -1139,6 +1141,15 @@ exports.geotrekInstance = {
       4: 589, //Niveau rouge - Difficile
       5: 590, //Niveau noir - Très difficile
     },
+    trek_label : {
+      2: 4830, //Labellisé FFRandonnée®	> FFRandonnée
+      4: 7449, //Oenorando®	> Oenorando
+      6: 7450, //Espace naturel sensible	> Espace Naturel Sensible
+      8: 29577, //Qualité Espaces Sports Nature	> Qualité Espaces Sports Nature
+      9: 1582, //Labellisé Site VTT-FFC® >Label VTT - FFC
+      11: 5538, //Labellisé Base VTT de randonnée	> Label VTT - FFCT
+      10: 29578, //Partager l'espace > Partager l'espace
+    }
   },
   8 : {
     geotrekUrl : 'https://admin.destination-parc-monts-ardeche.fr/api/v2/',

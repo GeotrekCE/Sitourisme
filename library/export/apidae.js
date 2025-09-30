@@ -854,6 +854,18 @@ class Apidae
               }
             }
   
+            // Critères internes
+            console.log('crit interne pour ', body.id, product.specialIdSitra)
+            let specialIdSitraForCI = null
+            if (body.id !== undefined && body.id !== null) {
+              specialIdSitraForCI = body.id;
+            } else if (product.specialIdSitra !== '') {
+              specialIdSitraForCI = product.specialIdSitra;
+            }
+            if (specialIdSitraForCI) {
+              me.__syncCriteresInternes(product, specialIdSitraForCI, accessToken)
+            }
+            
             options.iteration = options.iteration || 0;
   
             if (config.debug && config.debug.logs)
@@ -2632,6 +2644,40 @@ class Apidae
   return !err ? { root: root, rootFieldList: rootFieldList } : false
 }
 
+ __syncCriteresInternes(product, specialIdSitra, accessToken) {
+  let criteresInternes = {
+    'id': [specialIdSitra],
+    'criteresInternesAAjouter': []
+  }
+
+  product.labelsMapping.forEach(labelMapping => {
+      console.log('LabelMapping = ', labelMapping)
+      criteresInternes.criteresInternesAAjouter.push(labelMapping)
+  })
+
+  const form = new FormData()
+  form.append("criteres", JSON.stringify(criteresInternes))
+  
+  console.log(`__syncCriteresInternes https://${config.sitra.apiCriteriaInternal.host}${config.sitra.apiCriteriaInternal.path}`, criteresInternes, accessToken)
+  console.time('Send data apiCriteriaInternal');
+  //https://dev.apidae-tourisme.com/documentation-technique/api-decriture/v002criteres-internes/
+  request(
+  {
+    url: `https://${config.sitra.apiCriteriaInternal.host}${config.sitra.apiCriteriaInternal.path}`,
+    method: 'PUT',
+    body: form,
+    json: true,
+    headers: {
+      Authorization: `Bearer ${accessToken}`
+    }
+  },
+  async function (err, httpResponse, body) {
+    console.log('end = __syncCriteresInternes', err, body?.message)
+    console.timeEnd('Send data apiCriteriaInternal');
+  })
+  console.log('end = __syncCriteresInternes')
+}
+            
  __buildAspectGroupes(product) {
   let descriptionAspectGroupe = {},
     err = false,
