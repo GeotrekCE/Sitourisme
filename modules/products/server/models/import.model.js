@@ -61,6 +61,7 @@ class importModel extends geotrek
       passagesDelicatsDe: this.getPassagesDelicats(element, 'de', additionalInformation.labels),
       passagesDelicatsNl: this.getPassagesDelicats(element, 'nl', additionalInformation.labels),
       labelsMapping: this.getLabelsMapping(element, additionalInformation.labels),
+      typePromoSitra: this.getTypologieMapping(element, additionalInformation.labels),
       complement: this.getComplement(element, 'fr'),
       complementEn: this.getComplement(element, 'en'),
       complementEs: this.getComplement(element, 'es'),
@@ -180,6 +181,18 @@ class importModel extends geotrek
       })
     }
     return labelMapping
+  }
+
+  getTypologieMapping(element, labels) {
+    let typologieMapping = []
+    if (element.labels && element.labels.length) {
+      element.labels.forEach(id => {
+        if (labels[id]['typologieMappingId']) {
+         typologieMapping.push(labels[id]['typologieMappingId'])
+        }
+      })
+    }
+    return typologieMapping
   }
 
   getComplement(element, lang) {

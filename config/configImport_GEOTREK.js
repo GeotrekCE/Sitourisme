@@ -38,6 +38,7 @@ exports.trek_difficulty = {
 }
 
 exports.trek_label = {}
+exports.trek_typologie = {}
 
 exports.geotrekInstance = {
   0: {
@@ -1145,10 +1146,12 @@ exports.geotrekInstance = {
       2: 4830, //Labellisé FFRandonnée®	> FFRandonnée
       4: 7449, //Oenorando®	> Oenorando
       6: 7450, //Espace naturel sensible	> Espace Naturel Sensible
-      8: 29577, //Qualité Espaces Sports Nature	> Qualité Espaces Sports Nature
       9: 1582, //Labellisé Site VTT-FFC® >Label VTT - FFC
       11: 5538, //Labellisé Base VTT de randonnée	> Label VTT - FFCT
-      10: 29578, //Partager l'espace > Partager l'espace
+    },
+    trek_typologie : {
+       8: 29577, //Qualité Espaces Sports Nature	> Qualité Espaces Sports Nature
+       10: 29578, //Partager l'espace > Partager l'espace
     }
   },
   8 : {
