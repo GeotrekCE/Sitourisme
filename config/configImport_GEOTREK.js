@@ -1351,7 +1351,7 @@ exports.geotrekInstance = {
         memberId : 1894,
         proprietaireId: 1894,
         production: {
-          trek: false,
+          trek: true,
           event: false
         },
       },
@@ -1361,6 +1361,13 @@ exports.geotrekInstance = {
       3: 3313,
       4: 3333,
       8: 3283
+    },
+    trek_difficulty : {
+      1: 587, // Niveau vert - Facile
+      2: 588, // Niveau bleu - Modéré
+      3: 589, //Niveau rouge - Difficile
+      4: 590, //Niveau noir - Très difficile
+      5: 587, // Niveau vert - Facile
     },
   },
 };
