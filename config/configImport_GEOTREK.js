@@ -39,10 +39,7 @@ exports.trek_difficulty = {
 
 exports.trek_label = {}
 exports.trek_typologie = {}
-<<<<<<< HEAD
 exports.trek_theme = {}
-=======
->>>>>>> 0b8ae2690918df06fb17c9aeab354a554654dbdc
 
 exports.geotrekInstance = {
   0: {
