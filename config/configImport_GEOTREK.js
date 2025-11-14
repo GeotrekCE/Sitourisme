@@ -39,7 +39,10 @@ exports.trek_difficulty = {
 
 exports.trek_label = {}
 exports.trek_typologie = {}
+<<<<<<< HEAD
 exports.trek_theme = {}
+=======
+>>>>>>> 0b8ae2690918df06fb17c9aeab354a554654dbdc
 
 exports.geotrekInstance = {
   0: {
@@ -1164,7 +1167,7 @@ exports.geotrekInstance = {
       151: 31131, //Au bord de l'eau
       152: 31132, //En famille
       153: 31133, //Sport aventure
-    }
+    },
   },
   8 : {
     geotrekUrl : 'https://admin.destination-parc-monts-ardeche.fr/api/v2/',
