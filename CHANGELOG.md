@@ -1,3 +1,17 @@
+## 2.4.0 - 2025
+
+- Mapping champs ambiances & descriptifs (#43)
+- Déplacer les recommandations et ajouter le texte des étiquettes (#50)
+- Supporter les images en PNG / WEBP (#41)
+- Import randos / Mieux gérer les niveaux de difficulté (#22)
+- Uploader les GPX sur Apidae (#49)
+- Ajout de critères internes (#57)
+- Import randos / Amélioration du mapping indications Localisation (#67)
+- Gravel Bike Activity added to configSitraRef
+- Take care of new geotrek admin API to handle city codes (@submarcos)
+- Adding Mapping Events informations about District, Place and Geotrek Cities
+- Improve Geotrek events mapping and import
+
 ## 2.2 - August 2024
 - Apidae: Continuous writing in case of error
 - Apidae: Synchronization of perimetreGeographique field stopped, due to technical limitations of Apidae members
