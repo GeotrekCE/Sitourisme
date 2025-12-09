@@ -1,7 +1,7 @@
 ## [2.4.0](https://github.com/GeotrekCE/Sitourisme/releases/tag/2.4.0) - December 2025
 - EVO 5.4 - Uploader les GPX sur Apidae [#49](https://github.com/GeotrekCE/Sitourisme/issues/49)
 - EVO 5.2 - Ajouter des critères internes à Apidae [#57](https://github.com/GeotrekCE/Sitourisme/issues/57)
-- EVO 3.4 - Mapping des lieux > Changement d'ID [#](https://github.com/GeotrekCE/Sitourisme/commit/c7f1e555138e572fc788717b716b79349626d3e4)
+- EVO 3.4 - Mapping des lieux d'événements du PNE > Changement d'ID [#](https://github.com/GeotrekCE/Sitourisme/commit/c7f1e555138e572fc788717b716b79349626d3e4)
 - EVO 3.3 - Déplacer les Recommandations et ajouter le texte des étiquettes [#50](https://github.com/GeotrekCE/Sitourisme/issues/50)
 - EVO 3.2 - Revoir le mapping des champs ambiances et descriptif [#43](https://github.com/GeotrekCE/Sitourisme/issues/43)
 - EVO 3.1.1 - Updating Config for Monts d'Ardeche [#](https://github.com/GeotrekCE/Sitourisme/commit/9eaeb96b40e3a6429138021e42e649336ef9b33b)
@@ -9,7 +9,7 @@
 - EVO - Import randos / Mieux gérer les niveaux de difficulté [#22](https://github.com/GeotrekCE/Sitourisme/issues/22)
 - EVO - Supporter les images en PNG / WEBP [#41](https://github.com/GeotrekCE/Sitourisme/issues/41)
 - EVO - Import randos / Amélioration du mapping indications Localisation [#67](https://github.com/GeotrekCE/Sitourisme/issues/67), [#](https://github.com/GeotrekCE/Sitourisme/commit/974d89a992e5e7f70e41a955ae4719727bfc2fe4)
-- EVO - Take care of new geotrek admin API to handle city codes [@submarcos](https://github.com/GeotrekCE/Sitourisme/commits?author=submarcos)
+- EVO - Take care of new Geotrek-admin API to handle city codes [@submarcos](https://github.com/GeotrekCE/Sitourisme/commits?author=submarcos)
 - Conf - Guadeloupe [#](https://github.com/websenso-team/Sitourisme/commit/b26d595fe68fd67a8ccbefb7e6d50000976469d8)
 - Conf - Var [#](https://github.com/GeotrekCE/Sitourisme/commit/3caa78e1f0b8ac8b7090872a5b5181e03920569b), [#](https://github.com/GeotrekCE/Sitourisme/commit/a4311536bb7b7ec3ddf3b3f0f786a05421b6c732), [#](https://github.com/GeotrekCE/Sitourisme/commit/01631c0765e938393d5fbe8dbe68e8d2c2bbeaf7)
 - Conf - Gravel Bike Activity added to configSitraRef [#](https://github.com/GeotrekCE/Sitourisme/commit/392cb8dcca60814d9ea8d40eb1faaecd0e76896a)
@@ -18,7 +18,7 @@
 - Improve Geotrek events mapping and import 
 
 ## [2.3.1](https://github.com/GeotrekCE/Sitourisme/releases/tag/2.3.1) - June 2025
-- EVO 0.1 - Upgrades to Mongoose 7.8.7, Connect-Mongo 4.6, Express Session 1.18.1, support NodeJS 18.2
+- EVO 0.1 - Upgrade to Mongoose 7.8.7, Connect-Mongo 4.6, Express Session 1.18.1, support NodeJS 18.2
 
 ## [2.3.0](https://github.com/GeotrekCE/Sitourisme/releases/tag/2.3.0) - May 2025
 - EVO 3.5 - Events - Entite de gestion et d'information [#](https://github.com/GeotrekCE/Sitourisme/commit/62d5af588d4f526db812d1c99a48236422add1a2)
@@ -31,7 +31,7 @@
 - Conf - Add PNR Sainte-Baume trek import [#](https://github.com/GeotrekCE/Sitourisme/commit/386276c2a9e18733da4e21616b0b08cac77555d0), [#](https://github.com/GeotrekCE/Sitourisme/commit/04cf2c82fe02a235b1415864697735ec4b8a9003)
 - Conf - Import_GEOTREK - Fix PNE Geotrek-rando new URL [#](https://github.com/GeotrekCE/Sitourisme/commit/b28436ef0a43697a86a8d6771c8d8931c0e3e1b5), [#](https://github.com/GeotrekCE/Sitourisme/commit/55cd74707e644a42cc526f837d2beca6be96e0d2)
 - Conf - OT Hautes Vallées arrêt [#](https://github.com/GeotrekCE/Sitourisme/commit/bd4b168ce95059818aa13bb0a08025246eb3ad3f), [#](https://github.com/GeotrekCE/Sitourisme/commit/2df94b230acde3e23c3da73eb92730054c288949)
-- Conf - PNPC [#](https://github.com/GeotrekCE/Sitourisme/commit/3d9805ccffe35df8fc3ade0b2d8f58c7f2cd941e), [#](https://github.com/GeotrekCE/Sitourisme/commit/87ffd70345a36fbc787f80d6b2239cadef805179), [#](https://github.com/GeotrekCE/Sitourisme/commit/854ee64ab8021da7dbd300f7b83284bcbfc490ef), [#](https://github.com/GeotrekCE/Sitourisme/commit/9f7d7a26c80ff56c79388c04b744757c62123dc0), [#](https://github.com/GeotrekCE/Sitourisme/commit/e3e4ee307cb0477b48c38d0fcb486d25309815c0), [#](https://github.com/GeotrekCE/Sitourisme/commit/f36fc9db7dff0f395ad2229ee291c21b5b02c98f), [#](https://github.com/GeotrekCE/Sitourisme/commit/544205f3cdd6466eda7c04cf06aac15456121592)
+- Conf - PNPC [#66](https://github.com/GeotrekCE/Sitourisme/pull/66)
 - Conf - Events Type mapping - Reference nd instance 0 config [#](https://github.com/GeotrekCE/Sitourisme/commit/9002d1866ad91f4c201e40fc0c44beaca624c292)
 - Conf - Tarn structures configuration [#](https://github.com/GeotrekCE/Sitourisme/commit/f56bc0f16078880050e82cf5944c281f1c793543), [#](https://github.com/GeotrekCE/Sitourisme/commit/a8408107434566a6896953e22bd561a09e2e511f)
 - Conf - MaJ mapping activity Haute-Loire [#](https://github.com/GeotrekCE/Sitourisme/commit/1c548fcfdf24a8d211fe0f5686be0d3e00e55fd7)
