@@ -123,10 +123,14 @@ class importModel extends geotrek
 
   async getComplementAccueil(element, lang) {
     if (element.difficulty) {
-      const { data } = await this.instanceApi.get(
-        `trek_difficulty/${element.difficulty}/?format=json`
-      );
-      return data.label[lang];
+      try {
+        const { data } = await this.instanceApi.get(
+          `trek_difficulty/${element.difficulty}/?format=json`
+        );
+        return data.label[lang];
+      } catch (err) {
+        return null;
+      }
     }
     return null;
   }
