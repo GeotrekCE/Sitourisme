@@ -1,4 +1,4 @@
-## 2.4.0 - December 2025
+## [2.4.0](https://github.com/GeotrekCE/Sitourisme/releases/tag/2.4.0) - December 2025
 - EVO 5.4 - Uploader les GPX sur Apidae [#49](https://github.com/GeotrekCE/Sitourisme/issues/49)
 - EVO 5.2 - Ajouter des critères internes à Apidae [#57](https://github.com/GeotrekCE/Sitourisme/issues/57)
 - EVO 3.4 - Mapping des lieux > Changement d'ID [#](https://github.com/GeotrekCE/Sitourisme/commit/c7f1e555138e572fc788717b716b79349626d3e4)
