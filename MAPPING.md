@@ -8,8 +8,8 @@
 | Pratique | `practice` | Types d'activité / d'équipement | `informationsEquipement.activites` | Correspondance définie dans la configuration de la passerelle, pour l'instance/la structure Geotrek souhaitée. Valeurs Apidae : [/config/apidae/equipement_activity.json](https://github.com/GeotrekCE/Sitourisme/blob/main/config/apidae/equipement_activity.json) |
 | Parcours | `route` | Type d'itinéraire | `informationsEquipement.itineraire.itineraireType` | Correspondance définie dans la configuration de la passerelle, pour l'instance/la structure Geotrek souhaitée. Valeurs Apidae : **BOUCLE**, **ALLER_RETOUR**, **ALLER_ITINERANCE** |
 | Thèmes | `themes` | *Non repris* |  |  |
-| Étiquettes | `labels` | *Non repris* |  |  |
-| Réseaux | `networks` | Précisions balisage | `informationsEquipement.itineraire.precisionsBalisage` | Les valeurs Geotrek sont écrites en texte dans Apidae, séparées par des tirets. Certaines valeurs sont réécrites : **PR → Balisage Petite Randonée**, **GR → Balisage Grande Randonée**, **GRP → Balisage Grande Randonnée de Pays**, **VTT → Balisage VTT** |
+| Étiquettes | `labels` | Descriptifs thématisés / Conseils et suggestions  | `presentation.descriptifsThematises`  |  |
+| Réseaux | `networks` | Précisions balisage | `informationsEquipement.itineraire.precisionsBalisage` | Les valeurs Geotrek sont écrites en texte dans Apidae, séparées par des tirets. Certaines valeurs sont réécrites : **PR → Balisage Petite Randonnée**, **GR → Balisage Grande Randonnée**, **GRP → Balisage Grande Randonnée de Pays**, **VTT → Balisage VTT** |
 | Lien web | `web_links` | *Non repris* |  |  |
 | Lieu de renseignement → Rue | `information_desks` (référence) → `street` | Adresse | `localisation.adresse` | Les coordonnées du lieu de renseignement sont réparties dans plusieurs champs de la fiche Apidae. |
 | Lieu de renseignement → Site web | `information_desks` (référence) → `website` | Moyens de communication | `informations.moyensCommunication` | Les coordonnées du lieu de renseignement sont réparties dans plusieurs champs de la fiche Apidae. |

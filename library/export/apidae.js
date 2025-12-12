@@ -1236,7 +1236,8 @@ class Apidae
             blockItinerary.altitudeMinimum = product.itinerary.altitudeMinimum
             fieldList.push(blockCategory + '.' + blockField + '.altitudeMinimum')
           }
-          if (product.passagesDelicats) {
+
+          /*if (product.passagesDelicats) {
             blockItinerary.passagesDelicats = {
               libelleFr: product.passagesDelicats,
               libelleEn: product.passagesDelicatsEn,
@@ -1245,12 +1246,15 @@ class Apidae
               libelleDe: product.passagesDelicatsDe,
               libelleNl: product.passagesDelicatsNl
             }
+            //(process.env.NODE_ENV == 'production') ? 6527 : 5536, //Topo/pas à pas : 6527 / cooking 5536
           }
-          fieldList.push(blockCategory + '.' + blockField + '.passagesDelicats')
+          fieldList.push(blockCategory + '.' + blockField + '.passagesDelicats')*/
+
           if (itinerary.itineraireType && itinerary.itineraireType.length) {
             blockItinerary.itineraireType = product.itinerary.itineraireType
             fieldList.push(blockCategory + '.' + blockField + '.itineraireType')
           }
+
           if (itinerary.itineraireBalise && itinerary.itineraireBalise.length) {
             blockItinerary.itineraireBalise = product.itinerary.itineraireBalise
             fieldList.push(
@@ -2543,6 +2547,35 @@ class Apidae
         id: (process.env.NODE_ENV == 'production') ? 6527 : 5536, //Topo/pas à pas : 6527 / cooking 5536
       },
       description: description
+    })
+  }
+
+  if (product.passagesDelicats) {
+    let descriptifsThematisesConseilsSuggest = {}
+      
+    descriptifsThematisesConseilsSuggest.libelleFr = product.passagesDelicats
+    if (product.passagesDelicatsEn) {
+      descriptifsThematisesConseilsSuggest.libelleEn = product.passagesDelicatsEn
+    }
+    if (product.passagesDelicatsEs) {
+      descriptifsThematisesConseilsSuggest.libelleEs = product.passagesDelicatsEs
+    }
+    if (product.passagesDelicatsIt) {
+      descriptifsThematisesConseilsSuggest.libelleIt = product.passagesDelicatsIt
+    }
+    if (product.passagesDelicatsDe) {
+      descriptifsThematisesConseilsSuggest.libelleDe = product.passagesDelicatsDe
+    }
+    if (product.passagesDelicatsNl) {
+      descriptifsThematisesConseilsSuggest.libelleNl = product.passagesDelicatsNl
+    }
+
+    descriptifsThematises.push({
+      theme: {
+        elementReferenceType: 'DescriptifTheme',
+        id: 5154, //5154 - Descriptifs thématisés > Conseils et suggestions / cooking 5154 - Bons plans	 
+      },
+      description: descriptifsThematisesConseilsSuggest
     })
   }
 
