@@ -24,7 +24,7 @@ Afin de mettre en place la passerelle, il est nécessaire (voir PDF sur le Githu
 
 ## Outils nécessaires :
 
-- NodeJS 15+
+- NodeJS 18.2
 - Docker et Docker-compose
 - MongoDB 4.4.6
 
@@ -61,12 +61,14 @@ $ npm run prod
 ```
 
 ## Usage
-L'import des données est effectué automatiquement toutes les nuits via la commande :
+L'import des données d'une instance X est effectué automatiquement toutes les nuits.
+
+Pour les Treks via la commande :
 ```
-$ curl "URL/api/products/import?type=geotrek-api"
+$ curl "URL/api/products/import?instance=X&type=geotrek-api""
 ```
 
-## To prepare
-- Update to Mangoose 7.1.x - Methods no CB allowed > refact to do 
-- Fix middleware Passeport on product api, Guest GET allowed
-- Remove Swig module - Engine templating refactoring needed
+Pour les Events via la commande :
+```
+$ curl "URL/api/events/import?instance=X&type=geotrek-api""
+```
