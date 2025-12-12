@@ -19851,6 +19851,10 @@ module.exports = {
       labelFr: 'Niveau vert - Très facile'
     },
     {
+      id: 6669,
+      labelFr: 'Niveau orange - assez difficile'
+    },
+    {
       id: 5588,
       labelFr: 'PADI Advanced open water diver'
     },

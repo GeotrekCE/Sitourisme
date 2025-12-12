@@ -47,6 +47,7 @@ class importModel extends geotrek
       complementAccueilIt: await this.getComplementAccueil(element, 'it'),
       complementAccueilDe: await this.getComplementAccueil(element, 'de'),
       complementAccueilNl: await this.getComplementAccueil(element, 'nl'),
+      typeClient: this.getDifficulty(element, additionalInformation.difficulties),
       ambianceLibelle: this.getAmbianceLibelle(element, 'fr'),
       ambianceLibelleEn: this.getAmbianceLibelle(element, 'en'),
       ambianceLibelleEs: this.getAmbianceLibelle(element, 'es'),
@@ -59,6 +60,7 @@ class importModel extends geotrek
       passagesDelicatsIt: this.getPassagesDelicats(element, 'it', additionalInformation.labels),
       passagesDelicatsDe: this.getPassagesDelicats(element, 'de', additionalInformation.labels),
       passagesDelicatsNl: this.getPassagesDelicats(element, 'nl', additionalInformation.labels),
+      labelsMapping: this.getLabelsMapping(element, additionalInformation.labels),
       complement: this.getComplement(element, 'fr'),
       complementEn: this.getComplement(element, 'en'),
       complementEs: this.getComplement(element, 'es'),
@@ -127,6 +129,13 @@ class importModel extends geotrek
     return null;
   }
 
+  getDifficulty(element, difficulties) {
+    if (element.difficulty && difficulties[element.difficulty]) {
+        return difficulties[element.difficulty]
+    }
+    return null
+  }
+
   getAmbianceLibelle(element, lang) {
     let ambianceLibelle = null;
     if (element.description && element.description[lang]) {
@@ -159,6 +168,18 @@ class importModel extends geotrek
       })
     }
     return passagesDelicats
+  }
+
+  getLabelsMapping(element, labels) {
+    let labelMapping = []
+    if (element.labels && element.labels.length) {
+      element.labels.forEach(id => {
+        if (labels[id]['labelMappingId']) {
+         labelMapping.push(labels[id]['labelMappingId'])
+        }
+      })
+    }
+    return labelMapping
   }
 
   getComplement(element, lang) {

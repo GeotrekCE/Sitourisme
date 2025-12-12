@@ -30,6 +30,15 @@ exports.touristicevent_cat = {}
 
 exports.touristicevent_entities = {}
 
+exports.trek_difficulty = {
+  1: 587, // Niveau vert - Facile
+  2: 588, // Niveau bleu - Modéré
+  3: 6669,// Niveau orange - assez difficile	
+  4: 589, //Niveau rouge - Difficile
+}
+
+exports.trek_label = {}
+
 exports.geotrekInstance = {
   0: {
     geotrekUrl : 'https://geotrek-admin.ecrins-parcnational.fr/api/v2',
@@ -124,6 +133,13 @@ exports.geotrekInstance = {
           event: false
         },
       }
+    },
+    trek_difficulty : {
+      1: 587, // Niveau vert - Facile
+      2: 588, // Niveau bleu - Modéré
+      3: 6669,// Niveau orange - assez difficile	
+      4: 589, //Niveau rouge - Difficile
+      5: 590, //Niveau noir - Très difficile
     },
     touristicevent_cat : {
       1: 2080, // Exposition > Exposition
@@ -405,6 +421,13 @@ exports.geotrekInstance = {
       12: 2072, // Culturelle > Conférence / Débat / Rencontre
       13: 2082, // Manifestation de portée départementale ou plus  > Foire ou salon	
     },
+    trek_difficulty : {
+      1: 587, // Niveau vert - Facile
+      2: 588, // Niveau bleu - Modéré
+      3: 6669,// Niveau orange - assez difficile	
+      4: 589, //Niveau rouge - Difficile
+      5: 590, //Niveau noir - Très difficile
+    },
   },
   2 : {
     geotrekUrl : 'https://geotrek.nature-haute-savoie.fr/api/v2/',
@@ -433,7 +456,14 @@ exports.geotrekInstance = {
     itineraireType : {
       1: 'BOUCLE',
       2: 'ALLER_RETOUR',
-    }
+    },
+    trek_difficulty : {
+      1: 587, // Niveau vert - Facile
+      2: 588, // Niveau bleu - Modéré
+      3: 6669,// Niveau orange - assez difficile	
+      4: 589, //Niveau rouge - Difficile
+      5: 590, //Niveau noir - Très difficile
+    },
   },
   3 : {
     geotrekUrl : 'https://admin.cheminsdesparcs.fr/api/v2',
@@ -659,6 +689,11 @@ exports.geotrekInstance = {
       4: 'ALLER_ITINERANCE',
       5: 'ALLER_RETOUR',
     },
+    trek_difficulty : {
+      1: 587, // Niveau vert - Facile
+      2: 588, // Niveau bleu - Modéré
+      3: 589, //Niveau rouge - Difficile
+    },
   },
   5 : {
     geotrekUrl : 'https://admin.sisteron-buech.fr/api/v2',
@@ -783,6 +818,13 @@ exports.geotrekInstance = {
       2: 'ALLER_RETOUR',
       3: 'ALLER_ITINERANCE',
       4: 'ALLER_ITINERANCE',
+    },
+    trek_difficulty : {
+      1: 587, // Niveau vert - Facile
+      2: 588, // Niveau bleu - Modéré
+      3: 6669,// Niveau orange - assez difficile	
+      4: 589, //Niveau rouge - Difficile
+      5: 590, //Niveau noir - Très difficile
     },
   },
   7 : {
@@ -1092,6 +1134,22 @@ exports.geotrekInstance = {
       2: 'ALLER_RETOUR',
       3: 'ALLER_ITINERANCE',
     },
+    trek_difficulty : {
+      1: 587, // Niveau vert - Facile
+      2: 588, // Niveau bleu - Modéré
+      3: 6669,// Niveau orange - assez difficile	
+      4: 589, //Niveau rouge - Difficile
+      5: 590, //Niveau noir - Très difficile
+    },
+    trek_label : {
+      2: 4830, //Labellisé FFRandonnée®	> FFRandonnée
+      4: 7449, //Oenorando®	> Oenorando
+      6: 7450, //Espace naturel sensible	> Espace Naturel Sensible
+      8: 29577, //Qualité Espaces Sports Nature	> Qualité Espaces Sports Nature
+      9: 1582, //Labellisé Site VTT-FFC® >Label VTT - FFC
+      11: 5538, //Labellisé Base VTT de randonnée	> Label VTT - FFCT
+      10: 29578, //Partager l'espace > Partager l'espace
+    }
   },
   8 : {
     geotrekUrl : 'https://admin.destination-parc-monts-ardeche.fr/api/v2/',
@@ -1306,6 +1364,13 @@ exports.geotrekInstance = {
       5: 'ALLER_ITINERANCE',
     },
     trek_filtering: 'portals=16',
+    trek_difficulty : {
+      1: 587, // Niveau vert - Facile
+      2: 588, // Niveau bleu - Modéré
+      3: 6669,// Niveau orange - assez difficile	
+      4: 589, //Niveau rouge - Difficile
+      5: 590, //Niveau noir - Très difficile
+    },
   },
   9 : {
     geotrekUrl : 'https://geotrek-admin.portcros-parcnational.fr/api/v2/',
@@ -1368,6 +1433,60 @@ exports.geotrekInstance = {
       3: 589, //Niveau rouge - Difficile
       4: 590, //Niveau noir - Très difficile
       5: 587, // Niveau vert - Facile
+    },
+  },
+  11 : {
+    geotrekUrl : 'https://geotrek.guadeloupe-parcnational.fr/api/v2',
+    structures : {
+      1: {
+        specialId: 'SITRA2_STR_7045769',
+        name: "Comité du Tourisme des Iles de Guadeloupe",
+        address1: "Rue Goerges Biras",
+        address2: "La Providence",
+        city: '36686',
+        insee: '97101',
+        specialIdSitra: '7045769',
+        statusImport: 2,
+        memberId : 2484,
+        proprietaireId: 2484,
+        production: {
+          trek: true,
+          event: false
+        },
+      },
+      2: {
+        production: {
+          trek: false,
+          event: false
+        },
+      },
+      4: {
+        production: {
+          trek: false,
+          event: false
+        },
+      },
+      5: {
+        production: {
+          trek: false,
+          event: false
+        },
+      },
+      29: {
+        production: {
+          trek: false,
+          event: false
+        },
+      },
+    },
+    activity : {
+      1: 3333,
+      2: 3284,
+    },
+    itineraireType : {
+      1: 'ALLER_RETOUR',
+      2: 'BOUCLE',
+      3: 'ALLER_ITINERANCE',
     },
   },
 };
