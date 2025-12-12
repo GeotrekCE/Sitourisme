@@ -1,7 +1,7 @@
 ## [2.4.0](https://github.com/GeotrekCE/Sitourisme/releases/tag/2.4.0) - December 2025
 - EVO 5.4 - Uploader les GPX sur Apidae [#49](https://github.com/GeotrekCE/Sitourisme/issues/49)
 - EVO 5.2 - Ajouter des critères internes à Apidae [#57](https://github.com/GeotrekCE/Sitourisme/issues/57)
-- EVO 3.4 - Mapping des lieux d'événements du PNE > Changement d'ID [#](https://github.com/GeotrekCE/Sitourisme/commit/c7f1e555138e572fc788717b716b79349626d3e4)
+- EVO 3.4 - Mapping des lieux > Changement d'ID [#](https://github.com/GeotrekCE/Sitourisme/commit/c7f1e555138e572fc788717b716b79349626d3e4)
 - EVO 3.3 - Déplacer les Recommandations et ajouter le texte des étiquettes [#50](https://github.com/GeotrekCE/Sitourisme/issues/50)
 - EVO 3.2 - Revoir le mapping des champs ambiances et descriptif [#43](https://github.com/GeotrekCE/Sitourisme/issues/43)
 - EVO 3.1.1 - Updating Config for Monts d'Ardeche [#](https://github.com/GeotrekCE/Sitourisme/commit/9eaeb96b40e3a6429138021e42e649336ef9b33b)
@@ -9,16 +9,17 @@
 - EVO - Import randos / Mieux gérer les niveaux de difficulté [#22](https://github.com/GeotrekCE/Sitourisme/issues/22)
 - EVO - Supporter les images en PNG / WEBP [#41](https://github.com/GeotrekCE/Sitourisme/issues/41)
 - EVO - Import randos / Amélioration du mapping indications Localisation [#67](https://github.com/GeotrekCE/Sitourisme/issues/67), [#](https://github.com/GeotrekCE/Sitourisme/commit/974d89a992e5e7f70e41a955ae4719727bfc2fe4)
-- EVO - Take care of new Geotrek-admin API to handle city codes [@submarcos](https://github.com/GeotrekCE/Sitourisme/commits?author=submarcos)
+- EVO - Take care of new geotrek admin API to handle city codes [@submarcos](https://github.com/GeotrekCE/Sitourisme/commits?author=submarcos)
 - Conf - Guadeloupe [#](https://github.com/websenso-team/Sitourisme/commit/b26d595fe68fd67a8ccbefb7e6d50000976469d8)
 - Conf - Var [#](https://github.com/GeotrekCE/Sitourisme/commit/3caa78e1f0b8ac8b7090872a5b5181e03920569b), [#](https://github.com/GeotrekCE/Sitourisme/commit/a4311536bb7b7ec3ddf3b3f0f786a05421b6c732), [#](https://github.com/GeotrekCE/Sitourisme/commit/01631c0765e938393d5fbe8dbe68e8d2c2bbeaf7)
 - Conf - Gravel Bike Activity added to configSitraRef [#](https://github.com/GeotrekCE/Sitourisme/commit/392cb8dcca60814d9ea8d40eb1faaecd0e76896a)
 - Conf - Update configImport_GEOTREK.js [@raphaeldoisy](https://github.com/GeotrekCE/Sitourisme/commits?author=raphaeldoisy), [@CedricGilbert1979](https://github.com/GeotrekCE/Sitourisme/commits?author=CedricGilbert1979) [#](https://github.com/GeotrekCE/Sitourisme/commit/8a5b6a5fe7dd4fe70997cd616fc895005f63f39b), [#](https://github.com/GeotrekCE/Sitourisme/commit/703f60a0915d916df9cf819bc2b9ee5dab68005b), [#](https://github.com/GeotrekCE/Sitourisme/commit/600d06af2ff392b76eeeaff3af1d7104fb4d4caa), [#](https://github.com/GeotrekCE/Sitourisme/commit/89f09402f7f8a40ae0e91a9db7673ca83aa8e7df)
+- Fix - Var > MEP Fix API timeout
 - Adding Mapping Events informations about District, Place and Geotrek Cities
 - Improve Geotrek events mapping and import 
 
 ## [2.3.1](https://github.com/GeotrekCE/Sitourisme/releases/tag/2.3.1) - June 2025
-- EVO 0.1 - Upgrade to Mongoose 7.8.7, Connect-Mongo 4.6, Express Session 1.18.1, support NodeJS 18.2
+- EVO 0.1 - Upgrades to Mongoose 7.8.7, Connect-Mongo 4.6, Express Session 1.18.1, support NodeJS 18.2
 
 ## [2.3.0](https://github.com/GeotrekCE/Sitourisme/releases/tag/2.3.0) - May 2025
 - EVO 3.5 - Events - Entite de gestion et d'information [#](https://github.com/GeotrekCE/Sitourisme/commit/62d5af588d4f526db812d1c99a48236422add1a2)

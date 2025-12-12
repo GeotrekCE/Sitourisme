@@ -1,5 +1,7 @@
 'use strict';
 
+//const { exit } = require('process');
+
 const _ = require('lodash'),
   path = require('path'),
   moment = require('moment'),
@@ -7,22 +9,24 @@ const _ = require('lodash'),
   https = require('https'),
   request = require('request'),
   Promise = require('bluebird'),
-  mongoose = require('mongoose'),
+  //mongoose = require('mongoose'),
   Url = require('url'),
-  DataString = require(path.resolve('./library/data/manipulate.js')),
+  //DataString = require(path.resolve('./library/data/manipulate.js')),
   config = require(path.resolve('./config/config.js')),
   configSitraReference = require(path.resolve('./config/configSitraReference.js')),
   chalk = require('chalk'),
-  fetch = require("node-fetch");
+  fetch = require("node-fetch")
+  //fxp = require("fast-xml-parser")
 
 class Apidae
 {
   constructor(entity)
   {
-    this.productImage = null;
-    this.productMultimedia = null;
-    this.tokenPerMemberId = {};
-    this.configSitraReferencePerId = this.__initSitraReferencePerId(require(path.resolve('./config/configSitraReference.js')));
+    this.productImage = null
+    this.productMultimedia = null
+    this.gpxData = null
+    this.tokenPerMemberId = {}
+    this.configSitraReferencePerId = this.__initSitraReferencePerId(require(path.resolve('./config/configSitraReference.js')))
   }
 
   __initSitraReferencePerId(configSitraReference)
@@ -446,7 +450,6 @@ class Apidae
         me.productImage = [];
   
         if (product.image && product.image.length) {
-          console.log("/////"+product.id+"/////");
           me.__buildImageDetail(product.image.toObject(), 0, (err, newImage) => {
             if (err) {
               console.error(err);
@@ -459,6 +462,31 @@ class Apidae
         }
       });
     });
+
+    const PromiseRequestGpx = () => {
+      me.gpxData = []
+      return Promise.all(
+        (product.gpx || [])
+          .filter(Boolean)
+          .map(async (url, nPlan) => {
+            const res = await fetch(url)
+            if (!res.ok) throw new Error(`HTTP ${res.status} for ${url}`)
+            const xml = await res.text()
+
+            /*const parser = new fxp.XMLParser()
+            const gpx = parser.parse(xml)*/
+
+            me.gpxData.push({
+              data: {
+                path: url,
+                filename: url.replace(/.*\/([^/]+)$/, '$1'),
+                contentType: 'application/gpx+xml',
+                content: xml
+              }
+            })
+          })
+      )
+    }
   
     const PromiseRequestFather = async () => {
       if (product.linkedObject.specialIdFather) {
@@ -479,11 +507,10 @@ class Apidae
       }
       return product;
     }
-  
+
     PromiseRequestImage()
-      .then(function () {
-        return PromiseRequestFather();
-      })
+      .then(() => PromiseRequestGpx())
+      .then(() =>PromiseRequestFather())
       .then(async (product) => {
         // Built root
         root = {
@@ -762,9 +789,22 @@ class Apidae
             }
           }
         }
-  
+
+        if (me.gpxData && me.gpxData.length) {
+          _.forEach(me.gpxData, function (gpxData, nPlan) {
+            if (gpxData && gpxData.data) {
+              formData['multimedia.plan-' + nPlan] = {
+                value: gpxData.data.content,
+                options: {
+                  filename: gpxData.data.filename,
+                  contentType: gpxData.data.contentType
+                }
+              }
+            }
+          })
+        }
+
         if (config.debug && config.debug.seeData) console.log('PromiseRequestImage > datas = ', formData);
-        
         if (config.debug && config.debug.idGeo != 0 && config.debug.idGeo != product.specialId) 
         {
           return callback(null, finalData);
@@ -814,6 +854,18 @@ class Apidae
               }
             }
   
+            // Critères internes
+            console.log('crit interne pour ', body.id, product.specialIdSitra)
+            let specialIdSitraForCI = null
+            if (body.id !== undefined && body.id !== null) {
+              specialIdSitraForCI = body.id;
+            } else if (product.specialIdSitra !== '') {
+              specialIdSitraForCI = product.specialIdSitra;
+            }
+            if (specialIdSitraForCI) {
+              me.__syncCriteresInternes(product, specialIdSitraForCI, accessToken)
+            }
+            
             options.iteration = options.iteration || 0;
   
             if (config.debug && config.debug.logs)
@@ -1183,6 +1235,7 @@ class Apidae
           )
           fieldList.push(blockCategory + '.' + blockField)
         }
+        
         // Activity
         if (product.activity && product.activity.length) {
           blockField = 'activites'
@@ -1236,7 +1289,8 @@ class Apidae
             blockItinerary.altitudeMinimum = product.itinerary.altitudeMinimum
             fieldList.push(blockCategory + '.' + blockField + '.altitudeMinimum')
           }
-          if (product.passagesDelicats) {
+
+          /*if (product.passagesDelicats) {
             blockItinerary.passagesDelicats = {
               libelleFr: product.passagesDelicats,
               libelleEn: product.passagesDelicatsEn,
@@ -1245,12 +1299,15 @@ class Apidae
               libelleDe: product.passagesDelicatsDe,
               libelleNl: product.passagesDelicatsNl
             }
+            //(process.env.NODE_ENV == 'production') ? 6527 : 5536, //Topo/pas à pas : 6527 / cooking 5536
           }
-          fieldList.push(blockCategory + '.' + blockField + '.passagesDelicats')
+          fieldList.push(blockCategory + '.' + blockField + '.passagesDelicats')*/
+
           if (itinerary.itineraireType && itinerary.itineraireType.length) {
             blockItinerary.itineraireType = product.itinerary.itineraireType
             fieldList.push(blockCategory + '.' + blockField + '.itineraireType')
           }
+
           if (itinerary.itineraireBalise && itinerary.itineraireBalise.length) {
             blockItinerary.itineraireBalise = product.itinerary.itineraireBalise
             fieldList.push(
@@ -2514,47 +2571,28 @@ class Apidae
 
  __buildDescriptifsThematises(product, root, rootFieldList) {
   let descriptifsThematises = [],
-    err = false;
+    err = false
 
   // Retrieving the Geotrek ambiance field from the Apidae themed description
-  /*if (product.ambianceLibelle) {
-    let description = {};
+  if (product.ambianceLibelle) {
+    let description = {}
       
-    description.libelleFr = product.ambianceLibelle;
+    description.libelleFr = product.ambianceLibelle
     if (product.ambianceLibelleEn) {
-      description.libelleEn = product.ambianceLibelleEn;
+      description.libelleEn = product.ambianceLibelleEn
     }
     if (product.ambianceLibelleEs) {
-      description.libelleEs = product.ambianceLibelleEs;
+      description.libelleEs = product.ambianceLibelleEs
     }
     if (product.ambianceLibelleIt) {
-      description.libelleIt = product.ambianceLibelleIt;
+      description.libelleIt = product.ambianceLibelleIt
     }
     if (product.ambianceLibelleDe) {
-      description.libelleDe = product.ambianceLibelleDe;
+      description.libelleDe = product.ambianceLibelleDe
     }
     if (product.ambianceLibelleNl) {
-      description.libelleNl = product.ambianceLibelleNl;
+      description.libelleNl = product.ambianceLibelleNl
     }
-
-    descriptifsThematises.push({
-      theme: {
-        elementReferenceType: 'DescriptifTheme',
-        id: 5536, //Topo/pas à pas : 6527 / cooking 5536
-      },
-      description: description
-    });
-  }*/
-
-  if (product.ambianceLibelle) {
-    let description = {};
-      
-    description.libelleFr = '';
-    description.libelleEn = '';
-    description.libelleEs = '';
-    description.libelleIt = '';
-    description.libelleDe = ''; 
-    description.libelleNl = '';
 
     descriptifsThematises.push({
       theme: {
@@ -2562,22 +2600,90 @@ class Apidae
         id: (process.env.NODE_ENV == 'production') ? 6527 : 5536, //Topo/pas à pas : 6527 / cooking 5536
       },
       description: description
-    });
+    })
+  }
+
+  if (product.passagesDelicats) {
+    let descriptifsThematisesConseilsSuggest = {}
+      
+    descriptifsThematisesConseilsSuggest.libelleFr = product.passagesDelicats
+    if (product.passagesDelicatsEn) {
+      descriptifsThematisesConseilsSuggest.libelleEn = product.passagesDelicatsEn
+    }
+    if (product.passagesDelicatsEs) {
+      descriptifsThematisesConseilsSuggest.libelleEs = product.passagesDelicatsEs
+    }
+    if (product.passagesDelicatsIt) {
+      descriptifsThematisesConseilsSuggest.libelleIt = product.passagesDelicatsIt
+    }
+    if (product.passagesDelicatsDe) {
+      descriptifsThematisesConseilsSuggest.libelleDe = product.passagesDelicatsDe
+    }
+    if (product.passagesDelicatsNl) {
+      descriptifsThematisesConseilsSuggest.libelleNl = product.passagesDelicatsNl
+    }
+
+    descriptifsThematises.push({
+      theme: {
+        elementReferenceType: 'DescriptifTheme',
+        id: 5154, //5154 - Descriptifs thématisés > Conseils et suggestions / cooking 5154 - Bons plans	 
+      },
+      description: descriptifsThematisesConseilsSuggest
+    })
   }
 
   if (descriptifsThematises.length) {
     if (!root.presentation) {
-      root.presentation = {};
+      root.presentation = {}
     }
-    root.presentation.descriptifsThematises = descriptifsThematises;
-    rootFieldList.push('presentation.descriptifsThematises');
+    root.presentation.descriptifsThematises = descriptifsThematises
+    rootFieldList.push('presentation.descriptifsThematises')
   } else {
-    err = true;
+    err = true
   }
 
-  return !err ? { root: root, rootFieldList: rootFieldList } : false;
+  return !err ? { root: root, rootFieldList: rootFieldList } : false
 }
 
+ __syncCriteresInternes(product, specialIdSitra, accessToken) {
+  let criteresInternes = {
+    'id': [specialIdSitra],
+    'criteresInternesAAjouter': []
+  }
+
+  product.labelsMapping.forEach(labelMapping => {
+      console.log('LabelMapping = ', labelMapping)
+      criteresInternes.criteresInternesAAjouter.push(labelMapping)
+  })
+
+  product.theme.forEach(themeId => {
+      console.log('Theme = ', themeId)
+      criteresInternes.criteresInternesAAjouter.push(themeId)
+  })
+
+  const form = new FormData()
+  form.append("criteres", JSON.stringify(criteresInternes))
+  
+  console.log(`__syncCriteresInternes https://${config.sitra.apiCriteriaInternal.host}${config.sitra.apiCriteriaInternal.path}`, criteresInternes, accessToken)
+  console.time('Send data apiCriteriaInternal');
+  //https://dev.apidae-tourisme.com/documentation-technique/api-decriture/v002criteres-internes/
+  request(
+  {
+    url: `https://${config.sitra.apiCriteriaInternal.host}${config.sitra.apiCriteriaInternal.path}`,
+    method: 'PUT',
+    body: form,
+    json: true,
+    headers: {
+      Authorization: `Bearer ${accessToken}`
+    }
+  },
+  async function (err, httpResponse, body) {
+    console.log('end = __syncCriteresInternes', err, body?.message)
+    console.timeEnd('Send data apiCriteriaInternal');
+  })
+  console.log('end = __syncCriteresInternes')
+}
+            
  __buildAspectGroupes(product) {
   let descriptionAspectGroupe = {},
     err = false,
@@ -2657,24 +2763,25 @@ class Apidae
 }
 
  __buildTypePromoSitra(product, root, rootFieldList, unwantedTypes) {
-  let err = false;
+  let err = false,
+    me = this
 
   if (product.typePromoSitra && product.typePromoSitra.length) {
     if (!root.presentation) {
-      root.presentation = {};
+      root.presentation = {}
     }
     root.presentation.typologiesPromoSitra = this.buildTypeKeyArray(
       product.typePromoSitra,
       null,
       unwantedTypes,
-      context
-    );
+      me
+    )
   } else {
-    err = true;
+    err = true
   }
-  rootFieldList.push('presentation.typologiesPromoSitra');
+  rootFieldList.push('presentation.typologiesPromoSitra')
 
-  return !err ? { root: root, rootFieldList: rootFieldList } : false;
+  return !err ? { root: root, rootFieldList: rootFieldList } : false
 }
 /*__buildAddressReset(product, root, rootFieldList, unwantedTypes) {
   let err = false;
@@ -3463,13 +3570,13 @@ class Apidae
   }
   rootFieldList.push('prestations.languesDocumentation');
 
-  if (product.typeClient && product.typeClient.length) {
+  if (product.typeClient) {
     prestation.typesClientele = this.buildTypeKeyArray(
       product.typeClient,
-      null,
+      'TypeClientele',
       unwantedTypes,
-      context
-    );
+      this
+    )
   }
   rootFieldList.push('prestations.typesClientele');
 
@@ -4209,15 +4316,16 @@ class Apidae
   // Add GPX
   let arrMultimediaDataGpx = [];
   if (product.gpx && product.gpx.length) {
-    _.forEach(product.gpx, function (url) {
+    product.gpx.forEach((url, nPlan) => {
       if (url) {
         arrMultimediaDataGpx.push({
           locale: 'fr',
-          url: url
-        });
+          url: 'MULTIMEDIA#plan-' + (nPlan)
+        })
       }
-    });
+    })   
   }
+
   if (product.gpxEn && product.gpxEn.length) {
     _.forEach(product.gpxEn, function (url) {
       if (url) {
@@ -4271,7 +4379,7 @@ class Apidae
   if (arrMultimediaDataGpx && arrMultimediaDataGpx.length) {
     let multimediaGpx = {};
     multimediaGpx.nom = {};
-    multimediaGpx.link = 'true';
+    multimediaGpx.link = 'false';
     multimediaGpx.type = 'PLAN';
     multimediaGpx.traductionFichiers = arrMultimediaDataGpx;
     multimediaGpx.nom.libelleFr = 'GPX';
@@ -4360,167 +4468,136 @@ class Apidae
   return !err ? { root: root, rootFieldList: rootFieldList } : false;
 }
  
-__buildImageDetail(images, nImage, callback,originalImage = false,sizeImage = 2500) {
+__buildImageDetail(images, nImage, callback, originalImage = false, sizeImage = 2500)
+{
   if (images && nImage < images.length) {
-    let image = images[nImage];
+    let image = images[nImage]
     if (image.url) {
-      /*if (image.url.match(/JPG$/)) {
-        // extension to lowercase
-        var matchUppercase = image.url.match(/\.[A-Z0-9]{3,4}$/),
-          replacement = matchUppercase[0].toLowerCase();
+      let me = this,
+        urlResize,
+        urlObject
 
-        image.url = image.url.replace(matchUppercase[0], replacement);
-      }*/
-     
-      let me = this;
-      if(originalImage)
-      {
-          var urlObject = Url.parse(image.url);
-          
-      }
-      else
-      {
-        var urlResize = 'https://wsrv.nl/?w='+sizeImage+'&url=' + image.url;
-        var urlObject = Url.parse(urlResize);
+      if (originalImage) {
+        urlObject = new URL(image.url)
+      } else {
+        urlResize = 'https://wsrv.nl/?w=' + sizeImage + '&url=' + image.url + '&output=jpg'
+        urlObject = new URL(urlResize)
         if (config.debug && config.debug.logs) {
-          console.log('urlResize = ',urlResize);
+          console.log('urlResize = ', urlResize)
         }
       }
-      
-      me.__getImageSize(urlObject.href, function(size)
-      {
+
+      me.__getImageSize(urlObject.href, function(size) {
           if (config.debug && config.debug.logs) {
-            console.log('urlResize response = ',size);
+            console.log('urlResize response = ', size)
           }
-          //l'image est trop grande 
-          if(size>9500)
-          {
-            //si on voulait l'image originale et qu'elle est trop grand on passe a la prochaine
-            if(originalImage)
-            {
-                images.splice(nImage--, 1);
-                me.__buildImageDetail(images, ++nImage, callback);
+          if (size > 9500) {
+            //l'image est trop grande 
+            if (originalImage) {
+                //si on voulait l'image originale et qu'elle est trop grand on passe a la prochaine
+                images.splice(nImage--, 1)
+                me.__buildImageDetail(images, ++nImage, callback)
+            } else {
+                //sinon on retente avec un image + petite
+                sizeImage = sizeImage - 250
+                me.__buildImageDetail(images, nImage, callback, false, sizeImage)
             }
-            else //sinon on retente avec un image + petite
-            {
-                sizeImage = sizeImage - 250;
-                //console.log("newCall");
-                me.__buildImageDetail(images,nImage, callback,false,sizeImage);
-              
-            }
-            return;
-          }
-          else
-          {
+          } else {
               if (config.debug && config.debug.logs) {
-                console.log("Image url = ", image.url);
+                console.log("Image url = ", urlObject.href)
               }
-              let path = urlObject.path,
+              let path = image.url,
                 httpProtocol,
                 filename = path.replace(new RegExp('^.*/([^/]+)$'), '$1'),
                 ext = filename
                   .replace(new RegExp('.*\\.([^\\.]+)$'), '$1')
                   .toLowerCase(),
-                contentType;
+                contentType
         
               switch (ext) {
                 case 'jpg':
                 case 'jpeg':
-                  contentType = 'image/jpeg';
-                  break;
-        
+                  contentType = 'image/jpeg'
+                  break
                 default:
-                  contentType = 'image/' + ext;
-                  break;
+                  contentType = 'image/' + ext
+                  break
               }
         
               switch (urlObject.protocol) {
                 case 'https:':
-                  httpProtocol = https;
-                  break;
+                  httpProtocol = https
+                  break
                 default:
-                  httpProtocol = http;
-                  break;
-              }
-        
-              
+                  httpProtocol = http
+                  break
+              }  
               let request = httpProtocol.request(urlObject, function (response) {
                 if (config.debug && config.debug.logs) {
-                  console.log("starting requesting Image");
+                  console.log("starting requesting Image")
                 }
-                let myBuffer = Buffer.from('');
+                let myBuffer = Buffer.from('')
         
                 response.on('data', function (chunk) {
-                  myBuffer = Buffer.concat([myBuffer, Buffer.from(chunk, 'binary')]);
-                });
+                  myBuffer = Buffer.concat([myBuffer, Buffer.from(chunk, 'binary')])
+                })
 
                 response.on('error', function (err) {
-                    console.error(`Response error: ${err.message}`);
+                    console.error(`Response error: ${err.message}`)
                     // Catch error and store on obj' errMessage 
-                    me.__buildImageDetail(images, ++nImage, callback);
-                });
+                    me.__buildImageDetail(images, ++nImage, callback)
+                })
             
                 response.on('aborted', function () {
-                    console.error("Request was aborted by the server.");
-                });
+                    console.error("Request was aborted by the server.")
+                })
         
                 response.on('end', function () {
                   if (config.debug && config.debug.logs) {
-                    console.log("end requesting Image checking for next one", response?.statusCode);
+                    console.log("end requesting Image checking for next one", response?.statusCode)
                   }
                   if (
                     response &&
                     response.statusCode &&
                     parseInt(response.statusCode) !== 404
                   ) {
-                    
-                    if(images[nImage])
-                    {
+                    if (images[nImage]) {
                       images[nImage].data = {
                         path: path,
                         filename: filename,
                         contentType: contentType,
                         content: myBuffer
-                      };
-                      
+                      }
                     }
                   } else {
-                    if(originalImage!=true)
-                    {
-                      
-                      me.__buildImageDetail(images,nImage, callback,true);
-                      return;
-                    }
-                    else
-                    {
-                      images.splice(nImage--, 1);
-                      
+                    if (originalImage != true) {
+                      me.__buildImageDetail(images, nImage, callback, true)
+                      return
+                    } else {
+                      images.splice(nImage--, 1)
                     }
                   }
-        
-                  me.__buildImageDetail(images, ++nImage, callback);
-                });
-              });
+                  me.__buildImageDetail(images, ++nImage, callback)
+                })
+              })
         
               // Handle errors
               request.on('error', function (error) {
-                console.log('Problem with request : ', error.message);
-                me.__buildImageDetail(images, ++nImage, callback);
-              });
+                console.log('Problem with request : ', error.message)
+                me.__buildImageDetail(images, ++nImage, callback)
+              })
               if (config.debug && config.debug.logs) {
-                console.log("end requesting Image");
+                console.log("end requesting Image")
               }
-              request.end();
+              request.end()
           }
-      });
-
-    }
-    else {
-      this.__buildImageDetail(images, ++nImage, callback);
+      })
+    } else {
+      this.__buildImageDetail(images, ++nImage, callback)
     }
   } else {
     if (callback) {
-      callback(null, images);
+      callback(null, images)
     }
   }
 }
@@ -4920,9 +4997,8 @@ __buildImageDetail(images, nImage, callback,originalImage = false,sizeImage = 25
   return !err ? { root: root, rootFieldList: rootFieldList } : false;
 }
 
-__getImageSize(url,callback)
+__getImageSize(url, callback)
 {
-    // Utilise fetch pour envoyer une requête HEAD
   fetch(url, { method: 'HEAD' })
     .then(response => {
       if (!response.ok)
@@ -4945,6 +5021,7 @@ __getImageSize(url,callback)
      callback(-1)
     });
 }
+
 }
 
 module.exports = Apidae;

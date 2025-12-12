@@ -2,6 +2,8 @@ const path = require('path'),
     chalk = require('chalk'),
     axios = require('axios'),
     pify = require('pify'),
+    striptags = require('striptags'),
+    he = require('he'),
     _ = require('lodash'),
     Import = require(path.resolve('./library/import/geotrek.js')),
     config = require(path.resolve('./config/config.js')),
@@ -23,11 +25,14 @@ class ImportGeotrekApi extends Import
     this.lang = options.lang ? options.lang : 'fr'
     this.importInstance = options.importInstance ? parseInt(options.importInstance, 10) : 0
     this.importApi = options.importApi
-    
+
     this.Model = options.Model
     this.moduleName = options.moduleName
     this.EntityServer = options.EntityServer
     this.cgt = options.cgt
+
+    this.labels = {}
+    this.difficulties = {}
     
     this.importModule = require(path.resolve('./modules/' + options.moduleName + '/server/models/import.model.js'))
   }
@@ -49,6 +54,26 @@ class ImportGeotrekApi extends Import
           ' - GeoAdmin URL = ',
           configImportGEOTREK.geotrekInstance[instance].geotrekUrl
         )
+
+        if (me.importApi == 'trek') {
+          me.getLabels(
+            configImportGEOTREK.geotrekInstance[instance].geotrekUrl,
+            instance
+          )
+          .catch((err) => {
+            console.log(chalk.red('>>> LABELS ERR = ', err, 'For instance = ', instance))
+            return false
+          })
+
+          me.getDifficulty(
+            configImportGEOTREK.geotrekInstance[instance].geotrekUrl,
+            instance
+          )
+          .catch((err) => {
+            console.log(chalk.red('>>> DIFFICULTY ERR = ', err, 'For instance = ', instance))
+            return false
+          })
+        }
   
         me.executeQuery(
           0,
@@ -68,7 +93,77 @@ class ImportGeotrekApi extends Import
       }
     })
   }
+
+  async getLabels(instanceGeo, instance)
+  {
+    if (config.debug && config.debug.logs)
+      console.log('ImportGenericGeotrekApi.prototype.getLabels')
+
+    this.instanceApi = axios.create({
+      baseURL: instanceGeo,
+      validateStatus(status) {
+        return status < 500
+      }
+    })
+    
+    const { data, status } = await this.instanceApi.get('/label?format=json')
+    if (status === 200) {
+      data.results.forEach(item => {
+        
+        let labelMappingId = null
+        let typologieMappingId = null
+
+        if (configImportGEOTREK.geotrekInstance[instance].trek_label && 
+          configImportGEOTREK.geotrekInstance[instance].trek_label[item.id]) {
+            labelMappingId = configImportGEOTREK.geotrekInstance[instance].trek_label[item.id]
+        }
+
+        if (configImportGEOTREK.geotrekInstance[instance].trek_typologie && 
+          configImportGEOTREK.geotrekInstance[instance].trek_typologie[item.id]) {
+            typologieMappingId = configImportGEOTREK.geotrekInstance[instance].trek_typologie[item.id]
+        }
+
+        this.labels[item.id] = {
+          fr: item.name.fr ? he.decode(striptags(item.name.fr)) + ' : ' +  he.decode(striptags(item.advice.fr)).replace(/[\r\n]+/g, '') : null,
+          en: item.name.en ? he.decode(striptags(item.name.en)) + ' : ' +  he.decode(striptags(item.advice.en)).replace(/[\r\n]+/g, '') : null,
+          es: item.name.es ? he.decode(striptags(item.name.es)) + ' : ' +  he.decode(striptags(item.advice.es)).replace(/[\r\n]+/g, '') : null,
+          it: item.name.it ? he.decode(striptags(item.name.it)) + ' : ' +  he.decode(striptags(item.advice.it)).replace(/[\r\n]+/g, '') : null,
+          de: item.name.de ? he.decode(striptags(item.name.de)) + ' : ' +  he.decode(striptags(item.advice.de)).replace(/[\r\n]+/g, '') : null,
+          nl: item.name.nl ? he.decode(striptags(item.name.nl)) + ' : ' +  he.decode(striptags(item.advice.nl)).replace(/[\r\n]+/g, '') : null,
+          labelMappingId: labelMappingId,
+          typologieMappingId: typologieMappingId,
+        }
+      })
+    }
+  }
+
+  async getDifficulty(instanceGeo, instance)
+  {
+    if (config.debug && config.debug.logs)
+      console.log('ImportGenericGeotrekApi.prototype.getDifficulty')
+
+    this.instanceApi = axios.create({
+      baseURL: instanceGeo,
+      validateStatus(status) {
+        return status < 500
+      }
+    })
+    const { data, status } = await this.instanceApi.get('/trek_difficulty?format=json')
+    if (status === 200) {
+      data.results.forEach(item => {
+        if (configImportGEOTREK.geotrekInstance[instance].trek_difficulty && 
+          configImportGEOTREK.geotrekInstance[instance].trek_difficulty[item.id]) {
+            this.difficulties[item.id] = configImportGEOTREK.geotrekInstance[instance].trek_difficulty[item.id] 
+        } else {
+            this.difficulties[item.id] = configImportGEOTREK.trek_difficulty[item.id] 
+        }
+      })
+              console.log('trek_difficulty = ', this.difficulties)
+
+    }
+  }
   
+
   async executeQuery(page, instanceGeo, instance)
   {
     if (config.debug && config.debug.logs)
@@ -110,7 +205,7 @@ class ImportGeotrekApi extends Import
         data.results = data
       }
 
-      await this.importDatas(data.results, instance)
+      await this.importDatas(data.results, instance, this.labels, this.difficulties)
 
       if (config.debug && config.debug.seeData) console.log('Data = ', data)
 
@@ -164,7 +259,7 @@ class ImportGeotrekApi extends Import
     });
   }
   
-  async importDatas(listElement, structure)
+  async importDatas(listElement, structure, labels, difficulties)
   {
     if (config.debug && config.debug.logs)
       console.log(
@@ -217,7 +312,11 @@ class ImportGeotrekApi extends Import
 
       console.log(chalk.green('Config = ', configImportGEOTREK.geotrekInstance[structure].structures[element.structure]));
 
-      if (this.member && configImportGEOTREK.geotrekInstance[structure].structures[element.structure].production.trek) {
+      if (this.member && 
+        (configImportGEOTREK.geotrekInstance[structure].structures[element.structure].production.trek ||
+        configImportGEOTREK.geotrekInstance[structure].structures[element.structure].production.event ||
+        configImportGEOTREK.geotrekInstance[structure].structures[element.structure].production.touristiccontent)
+      ) {
         this.configData = {
           specialId: null,
           codeType: (this.moduleName == 'events') ? 'F&M' : 'EQU',
@@ -234,6 +333,10 @@ class ImportGeotrekApi extends Import
             additionalInformation = data;
           }
         }
+        
+        additionalInformation.labels = labels
+        additionalInformation.difficulties = difficulties
+
         const proprietaireId = (process.env.NODE_ENV == 'production') ? configImportGEOTREK.geotrekInstance[structure].structures[element.structure].proprietaireId : config.proprietaireId;
         
         let product = await this.importData.formatDatas(element, additionalInformation, structure, proprietaireId, this.importType, this.configData, this.user);
@@ -263,7 +366,7 @@ class ImportGeotrekApi extends Import
         );
       }
       if (config.debug == undefined || config.debug.idGeo == 0) {
-        return this.importDatas(listElement, structure);
+        return this.importDatas(listElement, structure, labels, difficulties);
       } else {
         return;
       }
