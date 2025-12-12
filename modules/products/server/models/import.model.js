@@ -129,21 +129,14 @@ class importModel extends geotrek
 
   getAmbianceLibelle(element, lang) {
     let ambianceLibelle = null;
-    /*if (element.description && element.description[lang]) {
+    if (element.description && element.description[lang]) {
       ambianceLibelle = DataString.stripTags(
         DataString.strEncode(
           DataString.br2nl(element.description[lang])
         )
-      );
-    }*/
-      if (element.ambiance && element.ambiance[lang]) {
-        ambianceLibelle = DataString.stripTags(
-          DataString.strEncode(
-            DataString.br2nl(element.ambiance[lang])
-          )
-        );
-      }
-    return ambianceLibelle;
+      )
+    }
+    return ambianceLibelle
   }
 
   getPassagesDelicats(element, lang) {
@@ -284,21 +277,14 @@ class importModel extends geotrek
   }
 
   getDescription(element, lang) {
-    /*if (element.ambiance && element.ambiance[lang]) {
+    if (element.ambiance && element.ambiance[lang]) {
       return DataString.stripTags(
         DataString.strEncode(
           DataString.br2nl(element.ambiance[lang])
         )
       );
-    }*/
-      if (element.description && element.description[lang]) {
-        return DataString.stripTags(
-          DataString.strEncode(
-            DataString.br2nl(element.description[lang])
-          )
-        );
-      }
-    return '';
+    }
+    return ''
   }
 
   getEmail(additionalElement, defaultEmail) {
