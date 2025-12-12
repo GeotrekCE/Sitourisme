@@ -111,9 +111,16 @@ class ImportGeotrekApi extends Import
       data.results.forEach(item => {
         
         let labelMappingId = null
+        let typologieMappingId = null
+
         if (configImportGEOTREK.geotrekInstance[instance].trek_label && 
           configImportGEOTREK.geotrekInstance[instance].trek_label[item.id]) {
             labelMappingId = configImportGEOTREK.geotrekInstance[instance].trek_label[item.id]
+        }
+
+        if (configImportGEOTREK.geotrekInstance[instance].trek_typologie && 
+          configImportGEOTREK.geotrekInstance[instance].trek_typologie[item.id]) {
+            typologieMappingId = configImportGEOTREK.geotrekInstance[instance].trek_typologie[item.id]
         }
 
         this.labels[item.id] = {
@@ -123,7 +130,8 @@ class ImportGeotrekApi extends Import
           it: item.name.it ? he.decode(striptags(item.name.it)) + ' : ' +  he.decode(striptags(item.advice.it)).replace(/[\r\n]+/g, '') : null,
           de: item.name.de ? he.decode(striptags(item.name.de)) + ' : ' +  he.decode(striptags(item.advice.de)).replace(/[\r\n]+/g, '') : null,
           nl: item.name.nl ? he.decode(striptags(item.name.nl)) + ' : ' +  he.decode(striptags(item.advice.nl)).replace(/[\r\n]+/g, '') : null,
-          labelMappingId: labelMappingId
+          labelMappingId: labelMappingId,
+          typologieMappingId: typologieMappingId,
         }
       })
     }
@@ -304,7 +312,11 @@ class ImportGeotrekApi extends Import
 
       console.log(chalk.green('Config = ', configImportGEOTREK.geotrekInstance[structure].structures[element.structure]));
 
-      if (this.member && configImportGEOTREK.geotrekInstance[structure].structures[element.structure].production.trek) {
+      if (this.member && 
+        (configImportGEOTREK.geotrekInstance[structure].structures[element.structure].production.trek ||
+        configImportGEOTREK.geotrekInstance[structure].structures[element.structure].production.event ||
+        configImportGEOTREK.geotrekInstance[structure].structures[element.structure].production.touristiccontent)
+      ) {
         this.configData = {
           specialId: null,
           codeType: (this.moduleName == 'events') ? 'F&M' : 'EQU',

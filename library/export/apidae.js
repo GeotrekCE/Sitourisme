@@ -1235,6 +1235,7 @@ class Apidae
           )
           fieldList.push(blockCategory + '.' + blockField)
         }
+        
         // Activity
         if (product.activity && product.activity.length) {
           blockField = 'activites'
@@ -2655,6 +2656,11 @@ class Apidae
       criteresInternes.criteresInternesAAjouter.push(labelMapping)
   })
 
+  product.theme.forEach(themeId => {
+      console.log('Theme = ', themeId)
+      criteresInternes.criteresInternesAAjouter.push(themeId)
+  })
+
   const form = new FormData()
   form.append("criteres", JSON.stringify(criteresInternes))
   
@@ -2757,24 +2763,25 @@ class Apidae
 }
 
  __buildTypePromoSitra(product, root, rootFieldList, unwantedTypes) {
-  let err = false;
+  let err = false,
+    me = this
 
   if (product.typePromoSitra && product.typePromoSitra.length) {
     if (!root.presentation) {
-      root.presentation = {};
+      root.presentation = {}
     }
     root.presentation.typologiesPromoSitra = this.buildTypeKeyArray(
       product.typePromoSitra,
       null,
       unwantedTypes,
-      context
-    );
+      me
+    )
   } else {
-    err = true;
+    err = true
   }
-  rootFieldList.push('presentation.typologiesPromoSitra');
+  rootFieldList.push('presentation.typologiesPromoSitra')
 
-  return !err ? { root: root, rootFieldList: rootFieldList } : false;
+  return !err ? { root: root, rootFieldList: rootFieldList } : false
 }
 /*__buildAddressReset(product, root, rootFieldList, unwantedTypes) {
   let err = false;

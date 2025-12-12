@@ -8,7 +8,7 @@
 | Difficulté | `difficulty` | Types de clientèle | `prestations.typesClientele` | Une correspondance suivant le niveau de difficulté Geotrek est faite avec les éléments de références Apidae de type TypeClientele  |
 | Pratique | `practice` | Types d'activité / d'équipement | `informationsEquipement.activites` | Correspondance définie dans la configuration de la passerelle, pour l'instance/la structure Geotrek souhaitée. Valeurs Apidae : [/config/apidae/equipement_activity.json](https://github.com/GeotrekCE/Sitourisme/blob/main/config/apidae/equipement_activity.json) |
 | Parcours | `route` | Type d'itinéraire | `informationsEquipement.itineraire.itineraireType` | Correspondance définie dans la configuration de la passerelle, pour l'instance/la structure Geotrek souhaitée. Valeurs Apidae : **BOUCLE**, **ALLER_RETOUR**, **ALLER_ITINERANCE** |
-| Thèmes | `themes` | *Non repris* |  |  |
+| Thèmes | `themes` | Critères internes | `critères internes` | EVO 5.2 via le fichier de configuration des instances, il est possible d'ajouter un mapping entre les thèmes Geotrek et les critères internes Apidae |
 | Étiquettes | `labels` | Descriptifs thématisés / Conseils et suggestions  | `presentation.descriptifsThematises`  |  |
 | Réseaux | `networks` | Précisions balisage | `informationsEquipement.itineraire.precisionsBalisage` | Les valeurs Geotrek sont écrites en texte dans Apidae, séparées par des tirets. Certaines valeurs sont réécrites : **PR → Balisage Petite Randonnée**, **GR → Balisage Grande Randonnée**, **GRP → Balisage Grande Randonnée de Pays**, **VTT → Balisage VTT** |
 | Lien web | `web_links` | *Non repris* |  |  |

@@ -61,6 +61,8 @@ class importModel extends geotrek
       passagesDelicatsDe: this.getPassagesDelicats(element, 'de', additionalInformation.labels),
       passagesDelicatsNl: this.getPassagesDelicats(element, 'nl', additionalInformation.labels),
       labelsMapping: this.getLabelsMapping(element, additionalInformation.labels),
+      typePromoSitra: this.getTypologieMapping(element, additionalInformation.labels),
+      theme: this.getThemesMapping(element, structure),
       complement: this.getComplement(element, 'fr'),
       complementEn: this.getComplement(element, 'en'),
       complementEs: this.getComplement(element, 'es'),
@@ -121,10 +123,14 @@ class importModel extends geotrek
 
   async getComplementAccueil(element, lang) {
     if (element.difficulty) {
-      const { data } = await this.instanceApi.get(
-        `trek_difficulty/${element.difficulty}/?format=json`
-      );
-      return data.label[lang];
+      try {
+        const { data } = await this.instanceApi.get(
+          `trek_difficulty/${element.difficulty}/?format=json`
+        );
+        return data.label[lang];
+      } catch (err) {
+        return null;
+      }
     }
     return null;
   }
@@ -180,6 +186,34 @@ class importModel extends geotrek
       })
     }
     return labelMapping
+  }
+
+  getTypologieMapping(element, labels) {
+    let typologieMapping = []
+    if (element.labels && element.labels.length) {
+      element.labels.forEach(id => {
+        if (labels[id]['typologieMappingId']) {
+         typologieMapping.push(labels[id]['typologieMappingId'])
+        }
+      })
+    }
+    return typologieMapping
+  }
+
+  getThemesMapping(element, structure) {
+    var themes = [];
+    if (element.themes && element.themes.length) {
+      element.themes.forEach(theme => {
+        if (configImportGEOTREK.geotrekInstance[structure].trek_theme != undefined &&
+          configImportGEOTREK.geotrekInstance[structure].trek_theme[theme] != undefined
+        ) {
+          themes.push(configImportGEOTREK.geotrekInstance[structure].trek_theme[theme]);
+        } else {
+          themes.push(configImportGEOTREK.trek_theme[theme]);
+        }
+      })
+    }
+    return themes;
   }
 
   getComplement(element, lang) {

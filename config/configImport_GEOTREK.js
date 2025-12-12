@@ -38,6 +38,8 @@ exports.trek_difficulty = {
 }
 
 exports.trek_label = {}
+exports.trek_typologie = {}
+exports.trek_theme = {}
 
 exports.geotrekInstance = {
   0: {
@@ -1142,14 +1144,27 @@ exports.geotrekInstance = {
       5: 590, //Niveau noir - Très difficile
     },
     trek_label : {
+      8: 29577, //Qualité Espaces Sports Nature	> Qualité Espaces Sports Nature
+      10: 29578, //Partager l'espace > Partager l'espace
+    },
+    trek_typologie : {
       2: 4830, //Labellisé FFRandonnée®	> FFRandonnée
       4: 7449, //Oenorando®	> Oenorando
       6: 7450, //Espace naturel sensible	> Espace Naturel Sensible
-      8: 29577, //Qualité Espaces Sports Nature	> Qualité Espaces Sports Nature
       9: 1582, //Labellisé Site VTT-FFC® >Label VTT - FFC
       11: 5538, //Labellisé Base VTT de randonnée	> Label VTT - FFCT
-      10: 29578, //Partager l'espace > Partager l'espace
-    }
+    },
+    trek_theme : {
+      145: 31125, //Biodiversité remarquable
+      146: 31126, //Patrimoines
+      147: 31127, //Produits du terroir
+      148: 31128, //Géologie
+      149: 31129, //Point de vue
+      150: 31130, //En forêt
+      151: 31131, //Au bord de l'eau
+      152: 31132, //En famille
+      153: 31133, //Sport aventure
+    },
   },
   8 : {
     geotrekUrl : 'https://admin.destination-parc-monts-ardeche.fr/api/v2/',
@@ -1417,7 +1432,8 @@ exports.geotrekInstance = {
         proprietaireId: 1894,
         production: {
           trek: true,
-          event: false
+          event: false,
+          touristiccontent: true
         },
       },
     },
@@ -1455,26 +1471,66 @@ exports.geotrekInstance = {
         },
       },
       2: {
+        specialId: 'SITRA2_STR_7045769',
+        name: "Comité du Tourisme des Iles de Guadeloupe",
+        address1: "Rue Goerges Biras",
+        address2: "La Providence",
+        city: '36686',
+        insee: '97101',
+        specialIdSitra: '7045769',
+        statusImport: 2,
+        memberId : 2484,
+        proprietaireId: 2484,
         production: {
-          trek: false,
+          trek: true,
           event: false
         },
       },
       4: {
+        specialId: 'SITRA2_STR_7045769',
+        name: "Comité du Tourisme des Iles de Guadeloupe",
+        address1: "Rue Goerges Biras",
+        address2: "La Providence",
+        city: '36686',
+        insee: '97101',
+        specialIdSitra: '7045769',
+        statusImport: 2,
+        memberId : 2484,
+        proprietaireId: 2484,
         production: {
-          trek: false,
+          trek: true,
           event: false
         },
       },
       5: {
+        specialId: 'SITRA2_STR_7045769',
+        name: "Comité du Tourisme des Iles de Guadeloupe",
+        address1: "Rue Goerges Biras",
+        address2: "La Providence",
+        city: '36686',
+        insee: '97101',
+        specialIdSitra: '7045769',
+        statusImport: 2,
+        memberId : 2484,
+        proprietaireId: 2484,
         production: {
-          trek: false,
+          trek: true,
           event: false
         },
       },
       29: {
+        specialId: 'SITRA2_STR_7045769',
+        name: "Comité du Tourisme des Iles de Guadeloupe",
+        address1: "Rue Goerges Biras",
+        address2: "La Providence",
+        city: '36686',
+        insee: '97101',
+        specialIdSitra: '7045769',
+        statusImport: 2,
+        memberId : 2484,
+        proprietaireId: 2484,
         production: {
-          trek: false,
+          trek: true,
           event: false
         },
       },
