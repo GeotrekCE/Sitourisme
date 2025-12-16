@@ -315,29 +315,33 @@ class importModel extends geotrek
       }
     }
     if (element.networks && element.networks.length) {
-      const trekNetwork = await Promise.all(
-        element.networks.map((id) =>
-          this.instanceApi.get(`/trek_network/${id}`)
+      try {
+        const trekNetwork = await Promise.all(
+          element.networks.map((id) =>
+            this.instanceApi.get(`/trek_network/${id}`)
+          )
         )
-      )
-      const labelNetworks = _(trekNetwork).map('data').map('label').valueOf()
+        const labelNetworks = _(trekNetwork).map('data').map('label').valueOf()
 
-      itineraire.itineraireBalise = 'BALISE'
-      let sep = ''
-      _.forEach(labelNetworks, (label) => {
-        if (label[this.lang] === 'PR') {
-          itineraire.precisionsBalisage += `${sep}Balisage Petite Randonnée`
-        } else if (label[this.lang] === 'GR') {
-          itineraire.precisionsBalisage += `${sep}Balisage Grande Randonnée`
-        } else if (label[this.lang] === 'GRP') {
-          itineraire.precisionsBalisage += `${sep}Balisage Grande Randonnée de Pays`
-        } else if (label[this.lang] === 'VTT') {
-          itineraire.precisionsBalisage += `${sep}Balisage VTT`
-        } else {
-          itineraire.precisionsBalisage += `${sep} ${label[this.lang]}`
-        }
-        sep += ' - '
-      })
+        itineraire.itineraireBalise = 'BALISE'
+        let sep = ''
+        _.forEach(labelNetworks, (label) => {
+          if (label[this.lang] === 'PR') {
+            itineraire.precisionsBalisage += `${sep}Balisage Petite Randonnée`
+          } else if (label[this.lang] === 'GR') {
+            itineraire.precisionsBalisage += `${sep}Balisage Grande Randonnée`
+          } else if (label[this.lang] === 'GRP') {
+            itineraire.precisionsBalisage += `${sep}Balisage Grande Randonnée de Pays`
+          } else if (label[this.lang] === 'VTT') {
+            itineraire.precisionsBalisage += `${sep}Balisage VTT`
+          } else {
+            itineraire.precisionsBalisage += `${sep} ${label[this.lang]}`
+          }
+          sep += ' - '
+        })
+      } catch (err) {
+        return itineraire;
+      }
     }
     return itineraire
   }
