@@ -336,11 +336,17 @@ class ImportGeotrekApi extends Import
         
         additionalInformation.labels = labels
         additionalInformation.difficulties = difficulties
-
-        const proprietaireId = (process.env.NODE_ENV == 'production') ? configImportGEOTREK.geotrekInstance[structure].structures[element.structure].proprietaireId : config.proprietaireId;
         
-        let product = await this.importData.formatDatas(element, additionalInformation, structure, proprietaireId, this.importType, this.configData, this.user);
-        console.log('ok importData formatDatas');
+        let product = await this.importData.formatDatas(
+          element, 
+          additionalInformation, 
+          structure, 
+          configImportGEOTREK.geotrekInstance[structure].structures[element.structure].proprietaireId, 
+          this.importType, 
+          this.configData, 
+          this.user
+        )
+        console.log('ok importData formatDatas')
         
         if (this.moduleName == 'events') {
           product.legalEntity = this.getLegalEntity(element, product, structure, product.district)
