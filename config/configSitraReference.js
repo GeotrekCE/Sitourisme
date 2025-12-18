@@ -21378,6 +21378,14 @@ module.exports = {
     {
       id: 1694,
       labelFr: 'Yourte / Tipi / Tente insolite'
-    }
+    },
+    {
+      id: 7449,
+      labelFr: 'Oenorando'
+    },
+    {
+      id: 7450,
+      labelFr: 'Espace Naturel Sensible'
+    },
   ]
-};
+}

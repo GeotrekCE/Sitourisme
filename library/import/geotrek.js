@@ -126,7 +126,7 @@ class Import
       cedex: null,
       zipcode: (element && insee_field && configSitraTownByInsee[insee_field] !== undefined) ? configSitraTownByInsee[insee_field].zipcode : insee_field,
       insee: insee_field,
-      city: (configSitraTownByInsee[insee_field] && process.env.NODE_ENV == 'production') ? configSitraTownByInsee[insee_field].sitraId : 14707,
+      city: configSitraTownByInsee[insee_field]?.sitraId,
       region: null
     };
 
