@@ -1290,18 +1290,15 @@ class Apidae
             fieldList.push(blockCategory + '.' + blockField + '.altitudeMinimum')
           }
 
-          /*if (product.passagesDelicats) {
-            blockItinerary.passagesDelicats = {
-              libelleFr: product.passagesDelicats,
-              libelleEn: product.passagesDelicatsEn,
-              libelleEs: product.passagesDelicatsEs,
-              libelleIt: product.passagesDelicatsIt,
-              libelleDe: product.passagesDelicatsDe,
-              libelleNl: product.passagesDelicatsNl
-            }
-            //(process.env.NODE_ENV == 'production') ? 6527 : 5536, //Topo/pas à pas : 6527 / cooking 5536
+          blockItinerary.passagesDelicats = {
+            libelleFr: '',
+            libelleEn: '',
+            libelleEs: '',
+            libelleIt: '',
+            libelleDe: '',
+            libelleNl: ''
           }
-          fieldList.push(blockCategory + '.' + blockField + '.passagesDelicats')*/
+          fieldList.push(blockCategory + '.' + blockField + '.passagesDelicats')
 
           if (itinerary.itineraireType && itinerary.itineraireType.length) {
             blockItinerary.itineraireType = product.itinerary.itineraireType
