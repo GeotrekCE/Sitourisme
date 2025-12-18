@@ -2773,6 +2773,7 @@ class Apidae
       unwantedTypes,
       me
     )
+    console.log('__buildTypePromoSitra', product.typePromoSitra, root.presentation.typologiesPromoSitra)
   } else {
     err = true
   }

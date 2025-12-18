@@ -16602,5 +16602,7 @@ exports.territory = {
   81876: { labelFr: 'Voironnais Chartreuse' },
   1381: { labelFr: 'Vonnas et ses environs' },
   651718: { labelFr: 'Yvelines' },
-  6706: { labelFr: 'Yvoire' }
+  6706: { labelFr: 'Yvoire' },
+  7449: { labelFr: 'Oenorando' },
+  7450: { labelFr: 'Espace Naturel Sensible' },
 };
