@@ -256,7 +256,7 @@ class importModel extends geotrek
 
   getLocalization(element) {
     const localization = {};
-    if (process.env.NODE_ENV == 'production') {
+    //if (process.env.NODE_ENV == 'production') {
       if (element.departure_geom && element.departure_geom.length) {
         localization.lat = element.departure_geom[1];
         localization.lon = element.departure_geom[0];
@@ -264,7 +264,7 @@ class importModel extends geotrek
         localization.lat = element.parking_location[1];
         localization.lon = element.parking_location[0];
       }
-    }
+    //}
     return localization;
   }
   
