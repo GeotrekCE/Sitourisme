@@ -3744,9 +3744,9 @@ class Apidae
   if (product.legalEntity && product.legalEntity.length) {
 
     let gestionSitraId = product.gestionSitraId
-    if (product.type != 'FETE_ET_MANIFESTATION' && process.env.NODE_ENV != 'production') {
+    /*if (product.type != 'FETE_ET_MANIFESTATION' && process.env.NODE_ENV != 'production') {
       gestionSitraId = 223268
-    }
+    }*/
 
     _.forEach(product.legalEntity, function (legalEntityObj) {
       

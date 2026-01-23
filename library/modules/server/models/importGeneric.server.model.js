@@ -155,11 +155,14 @@ class ImportGeotrekApi extends Import
           configImportGEOTREK.geotrekInstance[instance].trek_difficulty[item.id]) {
             this.difficulties[item.id] = configImportGEOTREK.geotrekInstance[instance].trek_difficulty[item.id] 
         } else {
-            this.difficulties[item.id] = configImportGEOTREK.trek_difficulty[item.id] 
+            if (process.env.NODE_ENV == 'development') {
+              this.difficulties[item.id] = configImportGEOTREK.trek_difficultyCooking[item.id] 
+            } else {
+              this.difficulties[item.id] = configImportGEOTREK.trek_difficulty[item.id] 
+            }
         }
       })
-              console.log('trek_difficulty = ', this.difficulties)
-
+      console.log('trek_difficulty = ', this.difficulties)
     }
   }
   
@@ -353,10 +356,17 @@ class ImportGeotrekApi extends Import
           product.gestionSitraId = product.district
         } else {
           product.legalEntity = this.getLegalEntity(element, product, structure)
-          product.gestionSitraId = configImportGEOTREK.geotrekInstance[structure].structures[element.structure].specialIdSitra
+          if (process.env.NODE_ENV == 'development' && configImportGEOTREK.geotrekInstance[structure].structures[element.structure].specialIdSitraCooking) {
+            product.gestionSitraId = configImportGEOTREK.geotrekInstance[structure].structures[element.structure].specialIdSitraCooking
+          } else {
+            product.gestionSitraId = configImportGEOTREK.geotrekInstance[structure].structures[element.structure].specialIdSitra
+          }
         }
-        product.informationSitraId = configImportGEOTREK.geotrekInstance[structure].structures[element.structure].specialIdSitra;
-
+        if (process.env.NODE_ENV == 'development' && configImportGEOTREK.geotrekInstance[structure].structures[element.structure].specialIdSitraCooking) {
+          product.informationSitraId = configImportGEOTREK.geotrekInstance[structure].structures[element.structure].specialIdSitraCooking
+        } else {
+          product.informationSitraId = configImportGEOTREK.geotrekInstance[structure].structures[element.structure].specialIdSitra
+        }
         product.rateCompletion = this.calculateRateCompletion(product);
 
         console.log(`GeoTrek API => import specialId : ${product.specialId}`, product);
@@ -414,7 +424,7 @@ class ImportGeotrekApi extends Import
           city: conf.city,
           insee: conf.insee
         },
-        specialIdSitra: conf.specialIdSitra,
+        specialIdSitra:  (process.env.NODE_ENV == 'development' && conf.specialIdSitraCooking) ? conf.specialIdSitraCooking : conf.specialIdSitra,
         statusImport: conf.statusImport
       };
     }

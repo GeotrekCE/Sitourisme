@@ -34,7 +34,14 @@ exports.trek_difficulty = {
   1: 587, // Niveau vert - Facile
   2: 588, // Niveau bleu - Modéré
   3: 6669,// Niveau orange - assez difficile	
-  4: 589, //Niveau rouge - Difficile
+  4: 589, // Niveau rouge - Difficile
+}
+
+exports.trek_difficultyCooking = {
+  1: 587, // Niveau vert - Facile
+  2: 588, // Niveau bleu - Modéré
+  3: 6445,// Niveau orange - assez difficile	
+  4: 589, // Niveau rouge - Difficile
 }
 
 exports.trek_label = {}
@@ -1462,6 +1469,7 @@ exports.geotrekInstance = {
         city: '36686',
         insee: '97101',
         specialIdSitra: '7045769',
+        specialIdSitraCooking : '5269325',
         statusImport: 2,
         memberId : 2484,
         proprietaireId: 2484,
@@ -1478,6 +1486,7 @@ exports.geotrekInstance = {
         city: '36686',
         insee: '97101',
         specialIdSitra: '7045769',
+        specialIdSitraCooking : '5269325',
         statusImport: 2,
         memberId : 2484,
         proprietaireId: 2484,
@@ -1494,6 +1503,7 @@ exports.geotrekInstance = {
         city: '36686',
         insee: '97101',
         specialIdSitra: '7045769',
+        specialIdSitraCooking : '5269325',
         statusImport: 2,
         memberId : 2484,
         proprietaireId: 2484,
@@ -1510,6 +1520,7 @@ exports.geotrekInstance = {
         city: '36686',
         insee: '97101',
         specialIdSitra: '7045769',
+        specialIdSitraCooking : '5269325',
         statusImport: 2,
         memberId : 2484,
         proprietaireId: 2484,
@@ -1526,6 +1537,7 @@ exports.geotrekInstance = {
         city: '36686',
         insee: '97101',
         specialIdSitra: '7045769',
+        specialIdSitraCooking : '5269325',
         statusImport: 2,
         memberId : 2484,
         proprietaireId: 2484,
