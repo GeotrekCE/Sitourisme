@@ -470,20 +470,21 @@ class Apidae
           .filter(Boolean)
           .map(async (url, nPlan) => {
             const res = await fetch(url)
-            if (!res.ok) throw new Error(`HTTP ${res.status} for ${url}`)
-            const xml = await res.text()
+            if (res.ok) {
+              const xml = await res.text()
 
-            /*const parser = new fxp.XMLParser()
-            const gpx = parser.parse(xml)*/
+              /*const parser = new fxp.XMLParser()
+              const gpx = parser.parse(xml)*/
 
-            me.gpxData.push({
-              data: {
-                path: url,
-                filename: url.replace(/.*\/([^/]+)$/, '$1'),
-                contentType: 'application/gpx+xml',
-                content: xml
-              }
-            })
+              me.gpxData.push({
+                data: {
+                  path: url,
+                  filename: url.replace(/.*\/([^/]+)$/, '$1'),
+                  contentType: 'application/gpx+xml',
+                  content: xml
+                }
+              })
+            }
           })
       )
     }
@@ -809,7 +810,6 @@ class Apidae
         {
           return callback(null, finalData);
         } else {
-          console.time('Send data apidae');
           console.log('Api PUT = ', config.sitra.api.host, config.sitra.api.path);
         }
         
@@ -824,7 +824,6 @@ class Apidae
             }
           },
           async function (err, httpResponse, body) {
-            console.timeEnd('Send data apidae');
             //console.log(formData);
             const statusCode = httpResponse?.statusCode;
             const success = statusCode === 200;
@@ -2648,37 +2647,54 @@ class Apidae
     'criteresInternesAAjouter': []
   }
 
-  product.labelsMapping.forEach(labelMapping => {
-      console.log('LabelMapping = ', labelMapping)
-      criteresInternes.criteresInternesAAjouter.push(labelMapping)
-  })
+  if (Array.isArray(product?.labelsMapping)) {
+    product.labelsMapping
+      .filter(v => v != null) // ignore null et undefined
+      .forEach(labelMapping => {
+        console.log('LabelMapping =', labelMapping);
+        criteresInternes.criteresInternesAAjouter.push(labelMapping);
+      });
+  }
 
-  product.theme.forEach(themeId => {
-      console.log('Theme = ', themeId)
-      criteresInternes.criteresInternesAAjouter.push(themeId)
-  })
+  if (Array.isArray(product?.theme)) {
+    product.theme
+      .filter(v => v != null)
+      .forEach(themeId => {
+        console.log('Theme =', themeId);
+        criteresInternes.criteresInternesAAjouter.push(themeId);
+      });
+  }
 
-  const form = new FormData()
+  if (criteresInternes.criteresInternesAAjouter.length === 0) {
+    console.log('__syncCriteresInternes skipped: no criteria to add')
+    return
+  }
+
+  /*const form = new FormData()
   form.append("criteres", JSON.stringify(criteresInternes))
   
-  console.log(`__syncCriteresInternes https://${config.sitra.apiCriteriaInternal.host}${config.sitra.apiCriteriaInternal.path}`, criteresInternes, accessToken)
-  console.time('Send data apiCriteriaInternal');
+  console.log(`__syncCriteresInternes https://${config.sitra.apiCriteriaInternal.host}${config.sitra.apiCriteriaInternal.path}`, form, accessToken)*/
   //https://dev.apidae-tourisme.com/documentation-technique/api-decriture/v002criteres-internes/
-  request(
-  {
-    url: `https://${config.sitra.apiCriteriaInternal.host}${config.sitra.apiCriteriaInternal.path}`,
-    method: 'PUT',
-    body: form,
-    json: true,
-    headers: {
-      Authorization: `Bearer ${accessToken}`
-    }
-  },
-  async function (err, httpResponse, body) {
-    console.log('end = __syncCriteresInternes', err, body?.message)
-    console.timeEnd('Send data apiCriteriaInternal');
-  })
-  console.log('end = __syncCriteresInternes')
+  try {
+    request(
+    {
+      url: `https://${config.sitra.apiCriteriaInternal.host}${config.sitra.apiCriteriaInternal.path}`,
+      method: 'PUT',
+      headers: {
+        Authorization: `Bearer ${accessToken}`,
+        Accept: 'application/json'
+      },
+      formData: {
+        criteres: JSON.stringify(criteresInternes)
+      }
+    },
+    async function (err, httpResponse, body) {
+      console.log('end = __syncCriteresInternes', err, body)
+    })
+    console.log('end = __syncCriteresInternes')
+  } catch (err) {
+    console.log('exception = __syncCriteresInternes', err)
+  }
 }
             
  __buildAspectGroupes(product) {
@@ -2773,7 +2789,6 @@ class Apidae
       unwantedTypes,
       me
     )
-    console.log('__buildTypePromoSitra', product.typePromoSitra, root.presentation.typologiesPromoSitra)
   } else {
     err = true
   }
@@ -3744,9 +3759,6 @@ class Apidae
   if (product.legalEntity && product.legalEntity.length) {
 
     let gestionSitraId = product.gestionSitraId
-    /*if (product.type != 'FETE_ET_MANIFESTATION' && process.env.NODE_ENV != 'production') {
-      gestionSitraId = 223268
-    }*/
 
     _.forEach(product.legalEntity, function (legalEntityObj) {
       

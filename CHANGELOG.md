@@ -1,5 +1,6 @@
 ## [2.4.1]
 - EVO - Amélioration de la configuration entre env de production / cooking [#116](https://github.com/GeotrekCE/Sitourisme/issues/116)
+- #121 - Synchroniser les latitudes et longitudes sur Apidae Cooking
 
 ## [2.4.0](https://github.com/GeotrekCE/Sitourisme/releases/tag/2.4.0) - December 2025
 - EVO 5.4 - Uploader les GPX sur Apidae [#49](https://github.com/GeotrekCE/Sitourisme/issues/49)

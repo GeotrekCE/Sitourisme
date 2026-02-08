@@ -1157,9 +1157,9 @@ exports.geotrekInstance = {
     trek_typologie : {
       2: 4830, //Labellisé FFRandonnée®	> FFRandonnée
       4: 7449, //Oenorando®	> Oenorando
-      6: 7450, //Espace naturel sensible	> Espace Naturel Sensible
-      9: 1582, //Labellisé Site VTT-FFC® >Label VTT - FFC
-      11: 5538, //Labellisé Base VTT de randonnée	> Label VTT - FFCT
+      /*Environnement6: 7450, //Espace naturel sensible	> Espace Naturel Sensible
+      DistinctionNom??9: 1582, //Labellisé Site VTT-FFC® >Label VTT - FFC
+      DistinctionNom??11: 5538, //Labellisé Base VTT de randonnée	> Label VTT - FFCT*/
     },
     trek_theme : {
       145: 31125, //Biodiversité remarquable
