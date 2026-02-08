@@ -4475,10 +4475,10 @@ class Apidae
 
 async __buildImageDetail(images, nImage = 0, callback, sizeImage = 2500) { ///* To width 2500px */
   
-  console.log('__buildImageDetail > images = ',images[nImage], ' nImage = ', nImage, 'sizeImage = ', sizeImage)
+  if (config.debug && config.debug.logImages) console.log('__buildImageDetail > images = ',images[nImage], ' nImage = ', nImage, 'sizeImage = ', sizeImage)
 
   if (!Array.isArray(images) || nImage >= images.length) {
-    console.log('__buildImageDetail > not an array or end of images')
+    if (config.debug && config.debug.logImages) console.log('__buildImageDetail > not an array or end of images')
     return callback?.(null, images)
   }
 
@@ -4519,10 +4519,10 @@ async __buildImageDetail(images, nImage = 0, callback, sizeImage = 2500) { ///* 
       images.splice(nImage, 1)
       return this.__buildImageDetail(images, nImage, callback)
     }*/
-    console.log('__buildImageDetail buffer size', buffer.length)
+    if (config.debug && config.debug.logImages) console.log('__buildImageDetail buffer size', buffer.length)
 
     if (buffer.length > 9500000) { /* 9500Ko */
-      console.log('__buildImageDetail buffer > 9500 so recall __buildImageDetail for ', sizeImage - 500)
+      if (config.debug && config.debug.logImages) console.log('__buildImageDetail buffer > 9500 so recall __buildImageDetail for ', sizeImage - 500)
       if (sizeImage <= 500) {
         images.splice(nImage, 1)
         return this.__buildImageDetail(images, nImage, callback)
@@ -4547,7 +4547,7 @@ async __buildImageDetail(images, nImage = 0, callback, sizeImage = 2500) { ///* 
       content: buffer
     }
 
-    console.log('__buildImageDetail ending > ',images[nImage].data)
+    if (config.debug && config.debug.logImages) console.log('__buildImageDetail ending > ',images[nImage].data)
 
     return this.__buildImageDetail(images, nImage + 1, callback)
 

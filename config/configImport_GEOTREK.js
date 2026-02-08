@@ -871,6 +871,18 @@ exports.geotrekInstance = {
           event: false
         },
       },
+      5: {
+        production: {
+          trek: false,
+          event: false
+        },
+      },
+      6: {
+        production: {
+          trek: false,
+          event: false
+        },
+      },
       9: {
         specialId: 'SITRA2_STR_844260',
         name: 'Communauté de Communes Centre Tarn',
