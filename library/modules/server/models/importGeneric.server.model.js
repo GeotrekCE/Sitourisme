@@ -161,10 +161,8 @@ class ImportGeotrekApi extends Import
         }
         if (process.env.NODE_ENV == 'development') {
           this.difficulties[item.id] = configImportGEOTREK.trek_difficultyCooking[item.id] 
-          console.log('trek_difficulty dev = ', this.difficulties)
         }
       })
-      console.log('trek_difficulty = ', this.difficulties)
     }
   }
   
