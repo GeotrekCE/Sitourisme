@@ -1,3 +1,5 @@
+const { exit } = require('process');
+
 const path = require('path'),
     chalk = require('chalk'),
     axios = require('axios'),
@@ -154,12 +156,12 @@ class ImportGeotrekApi extends Import
         if (configImportGEOTREK.geotrekInstance[instance].trek_difficulty && 
           configImportGEOTREK.geotrekInstance[instance].trek_difficulty[item.id]) {
             this.difficulties[item.id] = configImportGEOTREK.geotrekInstance[instance].trek_difficulty[item.id] 
-        } else {
-            if (process.env.NODE_ENV == 'development') {
-              this.difficulties[item.id] = configImportGEOTREK.trek_difficultyCooking[item.id] 
-            } else {
-              this.difficulties[item.id] = configImportGEOTREK.trek_difficulty[item.id] 
-            }
+        } else {  
+          this.difficulties[item.id] = configImportGEOTREK.trek_difficulty[item.id] 
+        }
+        if (process.env.NODE_ENV == 'development') {
+          this.difficulties[item.id] = configImportGEOTREK.trek_difficultyCooking[item.id] 
+          console.log('trek_difficulty dev = ', this.difficulties)
         }
       })
       console.log('trek_difficulty = ', this.difficulties)

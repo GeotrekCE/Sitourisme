@@ -4472,13 +4472,18 @@ class Apidae
 
   return !err ? { root: root, rootFieldList: rootFieldList } : false;
 }
- 
-async __buildImageDetail(images, nImage = 0, callback, sizeImage = 2500) {
+
+async __buildImageDetail(images, nImage = 0, callback, sizeImage = 2500) { ///* To width 2500px */
+  
+  console.log('__buildImageDetail > images = ',images[nImage], ' nImage = ', nImage, 'sizeImage = ', sizeImage)
+
   if (!Array.isArray(images) || nImage >= images.length) {
+    console.log('__buildImageDetail > not an array or end of images')
     return callback?.(null, images)
   }
 
   const image = images[nImage]
+
   if (!image?.url) {
     return this.__buildImageDetail(images, nImage + 1, callback)
   }
@@ -4495,12 +4500,10 @@ async __buildImageDetail(images, nImage = 0, callback, sizeImage = 2500) {
         }
 
         let transformer = sharp().rotate()
-
         if (sizeImage) {
           transformer = transformer.resize({ width: sizeImage })
         }
-
-        transformer = transformer.jpeg({ quality: 85 })
+        transformer = transformer.jpeg({ quality: 70 })
 
         response
           .pipe(transformer)
@@ -4512,12 +4515,14 @@ async __buildImageDetail(images, nImage = 0, callback, sizeImage = 2500) {
       req.on('error', reject)
     })
 
-    if (!buffer) {
+    /*if (!buffer) {
       images.splice(nImage, 1)
       return this.__buildImageDetail(images, nImage, callback)
-    }
+    }*/
+    console.log('__buildImageDetail buffer size', buffer.length)
 
-    if (buffer.length > 9500) {
+    if (buffer.length > 9500000) { /* 9500Ko */
+      console.log('__buildImageDetail buffer > 9500 so recall __buildImageDetail for ', sizeImage - 500)
       if (sizeImage <= 500) {
         images.splice(nImage, 1)
         return this.__buildImageDetail(images, nImage, callback)
@@ -4527,7 +4532,7 @@ async __buildImageDetail(images, nImage = 0, callback, sizeImage = 2500) {
         images,
         nImage,
         callback,
-        sizeImage - 250
+        sizeImage - 500
       )
     }
 
@@ -4541,6 +4546,8 @@ async __buildImageDetail(images, nImage = 0, callback, sizeImage = 2500) {
       contentType: ext === 'png' ? 'image/png' : 'image/jpeg',
       content: buffer
     }
+
+    console.log('__buildImageDetail ending > ',images[nImage].data)
 
     return this.__buildImageDetail(images, nImage + 1, callback)
 
