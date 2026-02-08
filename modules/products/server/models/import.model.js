@@ -41,12 +41,6 @@ class importModel extends geotrek
       nameDe: element.name['de'],
       nameNl: element.name['nl'],
       activity: this.getActivity(element, structure),
-      complementAccueil: await this.getComplementAccueil(element, 'fr'),
-      complementAccueilEn: await this.getComplementAccueil(element, 'en'),
-      complementAccueilEs: await this.getComplementAccueil(element, 'es'),
-      complementAccueilIt: await this.getComplementAccueil(element, 'it'),
-      complementAccueilDe: await this.getComplementAccueil(element, 'de'),
-      complementAccueilNl: await this.getComplementAccueil(element, 'nl'),
       typeClient: this.getDifficulty(element, additionalInformation.difficulties),
       ambianceLibelle: this.getAmbianceLibelle(element, 'fr'),
       ambianceLibelleEn: this.getAmbianceLibelle(element, 'en'),
@@ -119,20 +113,6 @@ class importModel extends geotrek
       }
     }
     return activity;
-  }
-
-  async getComplementAccueil(element, lang) {
-    if (element.difficulty) {
-      try {
-        const { data } = await this.instanceApi.get(
-          `trek_difficulty/${element.difficulty}/?format=json`
-        );
-        return data.label[lang];
-      } catch (err) {
-        return null;
-      }
-    }
-    return null;
   }
 
   getDifficulty(element, difficulties) {

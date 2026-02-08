@@ -1,4 +1,5 @@
 ## [2.4.1]
+- Randos / Difficultés - Ne pas doublonner l'info ? [#115](https://github.com/GeotrekCE/Sitourisme/issues/115)
 - Indication tarif : mettre "Accès libre" plutôt que "Gratuit" [#113](https://github.com/GeotrekCE/Sitourisme/issues/113)
 - Evol Apidae : ne plus utiliser prestations.labelsTourismeHandicap [#125](https://github.com/GeotrekCE/Sitourisme/issues/125)
 - Amélioration de la configuration entre env de production / cooking [#116](https://github.com/GeotrekCE/Sitourisme/issues/116)
