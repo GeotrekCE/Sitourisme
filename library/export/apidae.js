@@ -9,6 +9,7 @@ const _ = require('lodash'),
   https = require('https'),
   request = require('request'),
   Promise = require('bluebird'),
+  sharp = require('sharp'),
   //mongoose = require('mongoose'),
   Url = require('url'),
   //DataString = require(path.resolve('./library/data/manipulate.js')),
@@ -4472,137 +4473,80 @@ class Apidae
   return !err ? { root: root, rootFieldList: rootFieldList } : false;
 }
  
-__buildImageDetail(images, nImage, callback, originalImage = false, sizeImage = 2500)
-{
-  if (images && nImage < images.length) {
-    let image = images[nImage]
-    if (image.url) {
-      let me = this,
-        urlResize,
-        urlObject
+async __buildImageDetail(images, nImage = 0, callback, sizeImage = 2500) {
+  if (!Array.isArray(images) || nImage >= images.length) {
+    return callback?.(null, images)
+  }
 
-      if (originalImage) {
-        urlObject = new URL(image.url)
-      } else {
-        urlResize = 'https://wsrv.nl/?w=' + sizeImage + '&url=' + image.url + '&output=jpg'
-        urlObject = new URL(urlResize)
-        if (config.debug && config.debug.logs) {
-          console.log('urlResize = ', urlResize)
+  const image = images[nImage]
+  if (!image?.url) {
+    return this.__buildImageDetail(images, nImage + 1, callback)
+  }
+
+  const url = new URL(image.url)
+  const protocol = url.protocol === 'https:' ? https : http
+
+  try {
+    const buffer = await new Promise((resolve, reject) => {
+      const req = protocol.get(url, response => {
+        if (response.statusCode === 404) {
+          response.destroy()
+          return resolve(null)
         }
+
+        let transformer = sharp().rotate()
+
+        if (sizeImage) {
+          transformer = transformer.resize({ width: sizeImage })
+        }
+
+        transformer = transformer.jpeg({ quality: 85 })
+
+        response
+          .pipe(transformer)
+          .toBuffer()
+          .then(resolve)
+          .catch(reject)
+      })
+
+      req.on('error', reject)
+    })
+
+    if (!buffer) {
+      images.splice(nImage, 1)
+      return this.__buildImageDetail(images, nImage, callback)
+    }
+
+    if (buffer.length > 9500) {
+      if (sizeImage <= 500) {
+        images.splice(nImage, 1)
+        return this.__buildImageDetail(images, nImage, callback)
       }
 
-      me.__getImageSize(urlObject.href, function(size) {
-          if (config.debug && config.debug.logs) {
-            console.log('urlResize response = ', size)
-          }
-          if (size > 9500) {
-            //l'image est trop grande 
-            if (originalImage) {
-                //si on voulait l'image originale et qu'elle est trop grand on passe a la prochaine
-                images.splice(nImage--, 1)
-                me.__buildImageDetail(images, ++nImage, callback)
-            } else {
-                //sinon on retente avec un image + petite
-                sizeImage = sizeImage - 250
-                me.__buildImageDetail(images, nImage, callback, false, sizeImage)
-            }
-          } else {
-              if (config.debug && config.debug.logs) {
-                console.log("Image url = ", urlObject.href)
-              }
-              let path = image.url,
-                httpProtocol,
-                filename = path.replace(new RegExp('^.*/([^/]+)$'), '$1'),
-                ext = filename
-                  .replace(new RegExp('.*\\.([^\\.]+)$'), '$1')
-                  .toLowerCase(),
-                contentType
-        
-              switch (ext) {
-                case 'jpg':
-                case 'jpeg':
-                  contentType = 'image/jpeg'
-                  break
-                default:
-                  contentType = 'image/' + ext
-                  break
-              }
-        
-              switch (urlObject.protocol) {
-                case 'https:':
-                  httpProtocol = https
-                  break
-                default:
-                  httpProtocol = http
-                  break
-              }  
-              let request = httpProtocol.request(urlObject, function (response) {
-                if (config.debug && config.debug.logs) {
-                  console.log("starting requesting Image")
-                }
-                let myBuffer = Buffer.from('')
-        
-                response.on('data', function (chunk) {
-                  myBuffer = Buffer.concat([myBuffer, Buffer.from(chunk, 'binary')])
-                })
+      return this.__buildImageDetail(
+        images,
+        nImage,
+        callback,
+        sizeImage - 250
+      )
+    }
 
-                response.on('error', function (err) {
-                    console.error(`Response error: ${err.message}`)
-                    // Catch error and store on obj' errMessage 
-                    me.__buildImageDetail(images, ++nImage, callback)
-                })
-            
-                response.on('aborted', function () {
-                    console.error("Request was aborted by the server.")
-                })
-        
-                response.on('end', function () {
-                  if (config.debug && config.debug.logs) {
-                    console.log("end requesting Image checking for next one", response?.statusCode)
-                  }
-                  if (
-                    response &&
-                    response.statusCode &&
-                    parseInt(response.statusCode) !== 404
-                  ) {
-                    if (images[nImage]) {
-                      images[nImage].data = {
-                        path: path,
-                        filename: filename,
-                        contentType: contentType,
-                        content: myBuffer
-                      }
-                    }
-                  } else {
-                    if (originalImage != true) {
-                      me.__buildImageDetail(images, nImage, callback, true)
-                      return
-                    } else {
-                      images.splice(nImage--, 1)
-                    }
-                  }
-                  me.__buildImageDetail(images, ++nImage, callback)
-                })
-              })
-        
-              // Handle errors
-              request.on('error', function (error) {
-                console.log('Problem with request : ', error.message)
-                me.__buildImageDetail(images, ++nImage, callback)
-              })
-              if (config.debug && config.debug.logs) {
-                console.log("end requesting Image")
-              }
-              request.end()
-          }
-      })
-    } else {
-      this.__buildImageDetail(images, ++nImage, callback)
+    const path = image.url
+    const filename = path.replace(/^.*\/([^/]+)$/, '$1')
+    const ext = filename.split('.').pop().toLowerCase()
+
+    images[nImage].data = {
+      path,
+      filename,
+      contentType: ext === 'png' ? 'image/png' : 'image/jpeg',
+      content: buffer
     }
-  } else {
-    if (callback) {
-      callback(null, images)
-    }
+
+    return this.__buildImageDetail(images, nImage + 1, callback)
+
+  } catch (err) {
+    console.error('Image processing error:', err.message)
+    return this.__buildImageDetail(images, nImage + 1, callback)
   }
 }
 
