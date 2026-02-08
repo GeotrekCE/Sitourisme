@@ -982,11 +982,6 @@ const _defaultSchema = {
   labelType: {
     type: Number
   },
-  labelTourismHandicap: [
-    {
-      type: Number
-    }
-  ],
   labelChartQuality: [
     {
       type: Number

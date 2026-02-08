@@ -3593,16 +3593,6 @@ class Apidae
   }
   rootFieldList.push('prestations.typesClientele');
 
-  if (product.labelTourismHandicap && product.labelTourismHandicap.length) {
-    prestation.labelsTourismeHandicap = this.buildTypeKeyArray(
-      product.labelTourismHandicap,
-      null,
-      unwantedTypes,
-      context
-    );
-  }
-  rootFieldList.push('prestations.labelsTourismeHandicap');
-
   if (
     root.informationsPrestataireActivites &&
     root.informationsPrestataireActivites.prestataireActivites
