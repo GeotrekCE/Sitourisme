@@ -3402,7 +3402,11 @@ class Apidae
 
     if (typeof product.price.gratuit !== 'undefined') {
       if (product.price.gratuit === true) {
-        price.indicationTarif = 'GRATUIT';
+        if (product.type == 'EQUIPEMENT') {
+          price.indicationTarif = 'Accès libre';
+        } else {
+          price.indicationTarif = 'GRATUIT';
+        }
         price.gratuit = 'true';
       } else {
         price.indicationTarif = 'PAYANT';
