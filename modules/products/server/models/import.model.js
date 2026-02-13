@@ -127,17 +127,34 @@ class importModel extends geotrek
     return null
   }
 
-  getAmbianceLibelle(element, lang) {
-    let ambianceLibelle = null;
-    if (element.description && element.description[lang]) {
-      ambianceLibelle = DataString.stripTags(
-        DataString.strEncode(
-          DataString.br2nl(element.description[lang])
-        )
+getAmbianceLibelle(element, lang) {
+  let ambianceLibelle = null
+
+  if (element.description && element.description[lang]) {
+    let content = element.description[lang]
+
+    content = content.replace(/\n/g, '')
+    content = content.replace(/<br\s*\/?>/gi, '\n')
+    content = content.replace(/<ol[^>]*>/gi, '\n')
+    content = content.replace(/<\/ol>/gi, '\n')
+
+    let index = 0
+    content = content.replace(/<li>(.*?)<\/li>/gi, (_, item) => {
+      index++
+      return `\n${index}. ${item.trim()}`
+    })
+
+    content = content.replace(/\n{3,}/g, '\n\n')
+
+    content = DataString.stripTags(
+      DataString.strEncode(
+        DataString.br2nl(content)
       )
-    }
-    return ambianceLibelle
+    )
+    ambianceLibelle = content.trim()
   }
+  return ambianceLibelle
+}
 
   getPassagesDelicats(element, lang, labels) {
     let passagesDelicats = null

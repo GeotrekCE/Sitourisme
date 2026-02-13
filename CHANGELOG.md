@@ -1,4 +1,5 @@
 ## [2.4.1]
+- Listes numérotées dans le champs "Description" non prises en compte [#93](https://github.com/GeotrekCE/Sitourisme/issues/93)
 - Ne plus faire appel au service wsrv.nl pour retailler les photos [#118](https://github.com/GeotrekCE/Sitourisme/issues/118)
 - Randos / Difficultés - Ne pas doublonner l'info ? [#115](https://github.com/GeotrekCE/Sitourisme/issues/115)
 - Indication tarif : mettre "Accès libre" plutôt que "Gratuit" [#113](https://github.com/GeotrekCE/Sitourisme/issues/113)
