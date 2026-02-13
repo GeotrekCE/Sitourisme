@@ -111,6 +111,11 @@ class importModel extends geotrek
       } else {
         activity.push(configImportGEOTREK.activity[element.practice]);
       }
+      if (process.env.NODE_ENV != 'production') { 
+        activity = activity.map((_, index) => {
+          return configImportGEOTREK.activityCooking[index];
+        })
+      }
     }
     return activity;
   }

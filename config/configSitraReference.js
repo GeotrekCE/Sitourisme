@@ -6086,6 +6086,10 @@ module.exports = {
       labelFr: 'Itinéraire gravel bike'
     },
     {
+      id: 6447,
+      labelFr: 'Itinéraire gravel bike'
+    },
+    {
       id: 3983,
       labelFr: 'Jeu de piste / Chasse au trésor'
     },
