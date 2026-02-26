@@ -17,6 +17,18 @@ exports.activity = {
   14: 3283
 };
 
+exports.activityCooking = {
+  3284: 3284,
+  3313: 3313,
+  3333: 3333,
+  3302: 3302,
+  4201: 4201,
+  3333: 3333,
+  6225: 6447, /* Itinéraire de VTT à Assistance Électrique*/
+  6224: 6447, /* Itinéraire gravel bike*/
+  3283: 3283
+};
+
 exports.itineraireType = {
   1: 'BOUCLE',
   2: 'ALLER_RETOUR',
@@ -60,6 +72,7 @@ exports.geotrekInstance = {
         city: '1813',
         insee: '05061',
         specialIdSitra: '5411158',
+        specialIdSitraCooking: '366196',
         statusImport: 2,
         memberId : 4433, // to remove not used anymore
         proprietaireId: 707,
@@ -609,6 +622,7 @@ exports.geotrekInstance = {
         city: '34224',
         insee: '84031',
         specialIdSitra: '5584767',
+        specialIdSitraCooking: '578849',
         statusImport: 2,
         memberId : 2122,
         proprietaireId: 2122,
@@ -871,6 +885,18 @@ exports.geotrekInstance = {
           event: false
         },
       },
+      5: {
+        production: {
+          trek: false,
+          event: false
+        },
+      },
+      6: {
+        production: {
+          trek: false,
+          event: false
+        },
+      },
       9: {
         specialId: 'SITRA2_STR_844260',
         name: 'Communauté de Communes Centre Tarn',
@@ -911,6 +937,7 @@ exports.geotrekInstance = {
         city: '33564',
         insee: '81045',
         specialIdSitra: '6437334',
+        specialIdSitraCooking: '763031',
         statusImport: 2,
         memberId : 862,
         proprietaireId: 862,
@@ -943,6 +970,7 @@ exports.geotrekInstance = {
         city: '33811',
         insee: '81294',
         specialIdSitra: '6146219',
+        specialIdSitraCooking: '5098908',
         statusImport: 2,
         memberId : 862,
         proprietaireId: 862,
@@ -975,6 +1003,7 @@ exports.geotrekInstance = {
         city: '33583',
         insee: '81065',
         specialIdSitra: '6150073',
+        specialIdSitraCooking: '4703946',
         statusImport: 2,
         memberId : 862,
         proprietaireId: 862,
@@ -991,6 +1020,7 @@ exports.geotrekInstance = {
         city: '33774',
         insee: '81257',
         specialIdSitra: '5303931',
+        specialIdSitraCooking: '4727616',
         statusImport: 2,
         memberId : 862,
         proprietaireId: 862,
@@ -1157,9 +1187,9 @@ exports.geotrekInstance = {
     trek_typologie : {
       2: 4830, //Labellisé FFRandonnée®	> FFRandonnée
       4: 7449, //Oenorando®	> Oenorando
-      6: 7450, //Espace naturel sensible	> Espace Naturel Sensible
-      9: 1582, //Labellisé Site VTT-FFC® >Label VTT - FFC
-      11: 5538, //Labellisé Base VTT de randonnée	> Label VTT - FFCT
+      /*Environnement6: 7450, //Espace naturel sensible	> Espace Naturel Sensible
+      DistinctionNom??9: 1582, //Labellisé Site VTT-FFC® >Label VTT - FFC
+      DistinctionNom??11: 5538, //Labellisé Base VTT de randonnée	> Label VTT - FFCT*/
     },
     trek_theme : {
       145: 31125, //Biodiversité remarquable
@@ -1405,6 +1435,7 @@ exports.geotrekInstance = {
         city: '34106',
         insee: '83069',
         specialIdSitra: '5214782',
+        specialIdSitraCooking: '366196',
         statusImport: 2,
         memberId : 1764,
         proprietaireId: 1764,

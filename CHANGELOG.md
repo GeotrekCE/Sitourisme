@@ -1,5 +1,12 @@
 ## [2.4.1]
-- EVO - Amélioration de la configuration entre env de production / cooking [#116](https://github.com/GeotrekCE/Sitourisme/issues/116)
+- Listes numérotées dans le champs "Description" non prises en compte [#93](https://github.com/GeotrekCE/Sitourisme/issues/93)
+- Ne plus faire appel au service wsrv.nl pour retailler les photos [#118](https://github.com/GeotrekCE/Sitourisme/issues/118)
+- Randos / Difficultés - Ne pas doublonner l'info ? [#115](https://github.com/GeotrekCE/Sitourisme/issues/115)
+- Indication tarif : mettre "Accès libre" plutôt que "Gratuit" [#113](https://github.com/GeotrekCE/Sitourisme/issues/113)
+- Evol Apidae : ne plus utiliser prestations.labelsTourismeHandicap [#125](https://github.com/GeotrekCE/Sitourisme/issues/125)
+- Amélioration de la configuration entre env de production / cooking [#116](https://github.com/GeotrekCE/Sitourisme/issues/116)
+- Synchroniser les latitudes et longitudes sur Apidae Cooking [#121](https://github.com/GeotrekCE/Sitourisme/issues/121)
+- Fix conf, Gpx, geoloc, console
 
 ## [2.4.0](https://github.com/GeotrekCE/Sitourisme/releases/tag/2.4.0) - December 2025
 - EVO 5.4 - Uploader les GPX sur Apidae [#49](https://github.com/GeotrekCE/Sitourisme/issues/49)

@@ -15,7 +15,6 @@ angular.module('products').run([
       state: 'products.list'
     });
 
-    // Using ImportInstance 7 for development purposes
     Menus.addSubMenuItem('topbar', 'products', {
       title: 'Import Geotrek API',
       state: 'products.import',

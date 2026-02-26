@@ -982,11 +982,6 @@ const _defaultSchema = {
   labelType: {
     type: Number
   },
-  labelTourismHandicap: [
-    {
-      type: Number
-    }
-  ],
   labelChartQuality: [
     {
       type: Number
@@ -1289,26 +1284,6 @@ const _defaultSchema = {
     trim: true
   },
   ambianceLibelleNl: {
-    type: String,
-    trim: true
-  },
-  complementAccueil: {
-    type: String,
-    trim: true
-  },
-  complementAccueilEn: {
-    type: String,
-    trim: true
-  },
-  complementAccueilDe: {
-    type: String,
-    trim: true
-  },
-  complementAccueilNl: {
-    type: String,
-    trim: true
-  },
-  complementAccueilIt: {
     type: String,
     trim: true
   },

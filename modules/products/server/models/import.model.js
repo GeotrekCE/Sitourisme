@@ -41,12 +41,6 @@ class importModel extends geotrek
       nameDe: element.name['de'],
       nameNl: element.name['nl'],
       activity: this.getActivity(element, structure),
-      complementAccueil: await this.getComplementAccueil(element, 'fr'),
-      complementAccueilEn: await this.getComplementAccueil(element, 'en'),
-      complementAccueilEs: await this.getComplementAccueil(element, 'es'),
-      complementAccueilIt: await this.getComplementAccueil(element, 'it'),
-      complementAccueilDe: await this.getComplementAccueil(element, 'de'),
-      complementAccueilNl: await this.getComplementAccueil(element, 'nl'),
       typeClient: this.getDifficulty(element, additionalInformation.difficulties),
       ambianceLibelle: this.getAmbianceLibelle(element, 'fr'),
       ambianceLibelleEn: this.getAmbianceLibelle(element, 'en'),
@@ -117,22 +111,13 @@ class importModel extends geotrek
       } else {
         activity.push(configImportGEOTREK.activity[element.practice]);
       }
-    }
-    return activity;
-  }
-
-  async getComplementAccueil(element, lang) {
-    if (element.difficulty) {
-      try {
-        const { data } = await this.instanceApi.get(
-          `trek_difficulty/${element.difficulty}/?format=json`
-        );
-        return data.label[lang];
-      } catch (err) {
-        return null;
+      if (process.env.NODE_ENV != 'production') { 
+        activity = activity.map((_, index) => {
+          return configImportGEOTREK.activityCooking[index];
+        })
       }
     }
-    return null;
+    return activity;
   }
 
   getDifficulty(element, difficulties) {
@@ -142,17 +127,34 @@ class importModel extends geotrek
     return null
   }
 
-  getAmbianceLibelle(element, lang) {
-    let ambianceLibelle = null;
-    if (element.description && element.description[lang]) {
-      ambianceLibelle = DataString.stripTags(
-        DataString.strEncode(
-          DataString.br2nl(element.description[lang])
-        )
+getAmbianceLibelle(element, lang) {
+  let ambianceLibelle = null
+
+  if (element.description && element.description[lang]) {
+    let content = element.description[lang]
+
+    content = content.replace(/\n/g, '')
+    content = content.replace(/<br\s*\/?>/gi, '\n')
+    content = content.replace(/<ol[^>]*>/gi, '\n')
+    content = content.replace(/<\/ol>/gi, '\n')
+
+    let index = 0
+    content = content.replace(/<li>(.*?)<\/li>/gi, (_, item) => {
+      index++
+      return `\n${index}. ${item.trim()}`
+    })
+
+    content = content.replace(/\n{3,}/g, '\n\n')
+
+    content = DataString.stripTags(
+      DataString.strEncode(
+        DataString.br2nl(content)
       )
-    }
-    return ambianceLibelle
+    )
+    ambianceLibelle = content.trim()
   }
+  return ambianceLibelle
+}
 
   getPassagesDelicats(element, lang, labels) {
     let passagesDelicats = null
@@ -256,15 +258,13 @@ class importModel extends geotrek
 
   getLocalization(element) {
     const localization = {};
-    //if (process.env.NODE_ENV == 'production') {
-      if (element.departure_geom && element.departure_geom.length) {
-        localization.lat = element.departure_geom[1];
-        localization.lon = element.departure_geom[0];
-      } else if (element.parking_location && element.parking_location.length) {
-        localization.lat = element.parking_location[1];
-        localization.lon = element.parking_location[0];
-      }
-    //}
+    if (element.departure_geom && element.departure_geom.length) {
+      localization.lat = element.departure_geom[1];
+      localization.lon = element.departure_geom[0];
+    } else if (element.parking_location && element.parking_location.length) {
+      localization.lat = element.parking_location[1];
+      localization.lon = element.parking_location[0];
+    }
     return localization;
   }
   

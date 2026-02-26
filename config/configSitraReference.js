@@ -6086,6 +6086,10 @@ module.exports = {
       labelFr: 'Itinéraire gravel bike'
     },
     {
+      id: 6447,
+      labelFr: 'Itinéraire gravel bike'
+    },
+    {
       id: 3983,
       labelFr: 'Jeu de piste / Chasse au trésor'
     },
@@ -19852,6 +19856,10 @@ module.exports = {
     },
     {
       id: 6669,
+      labelFr: 'Niveau orange - assez difficile'
+    },
+    {
+      id: 6445,
       labelFr: 'Niveau orange - assez difficile'
     },
     {

@@ -9,6 +9,7 @@ const _ = require('lodash'),
   https = require('https'),
   request = require('request'),
   Promise = require('bluebird'),
+  sharp = require('sharp'),
   //mongoose = require('mongoose'),
   Url = require('url'),
   //DataString = require(path.resolve('./library/data/manipulate.js')),
@@ -470,20 +471,21 @@ class Apidae
           .filter(Boolean)
           .map(async (url, nPlan) => {
             const res = await fetch(url)
-            if (!res.ok) throw new Error(`HTTP ${res.status} for ${url}`)
-            const xml = await res.text()
+            if (res.ok) {
+              const xml = await res.text()
 
-            /*const parser = new fxp.XMLParser()
-            const gpx = parser.parse(xml)*/
+              /*const parser = new fxp.XMLParser()
+              const gpx = parser.parse(xml)*/
 
-            me.gpxData.push({
-              data: {
-                path: url,
-                filename: url.replace(/.*\/([^/]+)$/, '$1'),
-                contentType: 'application/gpx+xml',
-                content: xml
-              }
-            })
+              me.gpxData.push({
+                data: {
+                  path: url,
+                  filename: url.replace(/.*\/([^/]+)$/, '$1'),
+                  contentType: 'application/gpx+xml',
+                  content: xml
+                }
+              })
+            }
           })
       )
     }
@@ -809,7 +811,6 @@ class Apidae
         {
           return callback(null, finalData);
         } else {
-          console.time('Send data apidae');
           console.log('Api PUT = ', config.sitra.api.host, config.sitra.api.path);
         }
         
@@ -824,7 +825,6 @@ class Apidae
             }
           },
           async function (err, httpResponse, body) {
-            console.timeEnd('Send data apidae');
             //console.log(formData);
             const statusCode = httpResponse?.statusCode;
             const success = statusCode === 200;
@@ -2648,37 +2648,54 @@ class Apidae
     'criteresInternesAAjouter': []
   }
 
-  product.labelsMapping.forEach(labelMapping => {
-      console.log('LabelMapping = ', labelMapping)
-      criteresInternes.criteresInternesAAjouter.push(labelMapping)
-  })
+  if (Array.isArray(product?.labelsMapping)) {
+    product.labelsMapping
+      .filter(v => v != null) // ignore null et undefined
+      .forEach(labelMapping => {
+        console.log('LabelMapping =', labelMapping);
+        criteresInternes.criteresInternesAAjouter.push(labelMapping);
+      });
+  }
 
-  product.theme.forEach(themeId => {
-      console.log('Theme = ', themeId)
-      criteresInternes.criteresInternesAAjouter.push(themeId)
-  })
+  if (Array.isArray(product?.theme)) {
+    product.theme
+      .filter(v => v != null)
+      .forEach(themeId => {
+        console.log('Theme =', themeId);
+        criteresInternes.criteresInternesAAjouter.push(themeId);
+      });
+  }
 
-  const form = new FormData()
+  if (criteresInternes.criteresInternesAAjouter.length === 0) {
+    console.log('__syncCriteresInternes skipped: no criteria to add')
+    return
+  }
+
+  /*const form = new FormData()
   form.append("criteres", JSON.stringify(criteresInternes))
   
-  console.log(`__syncCriteresInternes https://${config.sitra.apiCriteriaInternal.host}${config.sitra.apiCriteriaInternal.path}`, criteresInternes, accessToken)
-  console.time('Send data apiCriteriaInternal');
+  console.log(`__syncCriteresInternes https://${config.sitra.apiCriteriaInternal.host}${config.sitra.apiCriteriaInternal.path}`, form, accessToken)*/
   //https://dev.apidae-tourisme.com/documentation-technique/api-decriture/v002criteres-internes/
-  request(
-  {
-    url: `https://${config.sitra.apiCriteriaInternal.host}${config.sitra.apiCriteriaInternal.path}`,
-    method: 'PUT',
-    body: form,
-    json: true,
-    headers: {
-      Authorization: `Bearer ${accessToken}`
-    }
-  },
-  async function (err, httpResponse, body) {
-    console.log('end = __syncCriteresInternes', err, body?.message)
-    console.timeEnd('Send data apiCriteriaInternal');
-  })
-  console.log('end = __syncCriteresInternes')
+  try {
+    request(
+    {
+      url: `https://${config.sitra.apiCriteriaInternal.host}${config.sitra.apiCriteriaInternal.path}`,
+      method: 'PUT',
+      headers: {
+        Authorization: `Bearer ${accessToken}`,
+        Accept: 'application/json'
+      },
+      formData: {
+        criteres: JSON.stringify(criteresInternes)
+      }
+    },
+    async function (err, httpResponse, body) {
+      console.log('end = __syncCriteresInternes', err, body)
+    })
+    console.log('end = __syncCriteresInternes')
+  } catch (err) {
+    console.log('exception = __syncCriteresInternes', err)
+  }
 }
             
  __buildAspectGroupes(product) {
@@ -2773,7 +2790,6 @@ class Apidae
       unwantedTypes,
       me
     )
-    console.log('__buildTypePromoSitra', product.typePromoSitra, root.presentation.typologiesPromoSitra)
   } else {
     err = true
   }
@@ -3387,7 +3403,11 @@ class Apidae
 
     if (typeof product.price.gratuit !== 'undefined') {
       if (product.price.gratuit === true) {
-        price.indicationTarif = 'GRATUIT';
+        if (product.type == 'EQUIPEMENT') {
+          price.indicationTarif = 'ACCES_LIBRE';
+        } else {
+          price.indicationTarif = 'GRATUIT';
+        }
         price.gratuit = 'true';
       } else {
         price.indicationTarif = 'PAYANT';
@@ -3578,16 +3598,6 @@ class Apidae
   }
   rootFieldList.push('prestations.typesClientele');
 
-  if (product.labelTourismHandicap && product.labelTourismHandicap.length) {
-    prestation.labelsTourismeHandicap = this.buildTypeKeyArray(
-      product.labelTourismHandicap,
-      null,
-      unwantedTypes,
-      context
-    );
-  }
-  rootFieldList.push('prestations.labelsTourismeHandicap');
-
   if (
     root.informationsPrestataireActivites &&
     root.informationsPrestataireActivites.prestataireActivites
@@ -3744,9 +3754,6 @@ class Apidae
   if (product.legalEntity && product.legalEntity.length) {
 
     let gestionSitraId = product.gestionSitraId
-    /*if (product.type != 'FETE_ET_MANIFESTATION' && process.env.NODE_ENV != 'production') {
-      gestionSitraId = 223268
-    }*/
 
     _.forEach(product.legalEntity, function (legalEntityObj) {
       
@@ -4465,138 +4472,88 @@ class Apidae
 
   return !err ? { root: root, rootFieldList: rootFieldList } : false;
 }
- 
-__buildImageDetail(images, nImage, callback, originalImage = false, sizeImage = 2500)
-{
-  if (images && nImage < images.length) {
-    let image = images[nImage]
-    if (image.url) {
-      let me = this,
-        urlResize,
-        urlObject
 
-      if (originalImage) {
-        urlObject = new URL(image.url)
-      } else {
-        urlResize = 'https://wsrv.nl/?w=' + sizeImage + '&url=' + image.url + '&output=jpg'
-        urlObject = new URL(urlResize)
-        if (config.debug && config.debug.logs) {
-          console.log('urlResize = ', urlResize)
+async __buildImageDetail(images, nImage = 0, callback, sizeImage = 2500) { ///* To width 2500px */
+  
+  if (config.debug && config.debug.logImages) console.log('__buildImageDetail > images = ',images[nImage], ' nImage = ', nImage, 'sizeImage = ', sizeImage)
+
+  if (!Array.isArray(images) || nImage >= images.length) {
+    if (config.debug && config.debug.logImages) console.log('__buildImageDetail > not an array or end of images')
+    return callback?.(null, images)
+  }
+
+  const image = images[nImage]
+
+  if (!image?.url) {
+    return this.__buildImageDetail(images, nImage + 1, callback)
+  }
+
+  const url = new URL(image.url)
+  const protocol = url.protocol === 'https:' ? https : http
+
+  try {
+    const buffer = await new Promise((resolve, reject) => {
+      const req = protocol.get(url, response => {
+        if (response.statusCode === 404) {
+          response.destroy()
+          return resolve(null)
         }
+
+        let transformer = sharp().rotate()
+        if (sizeImage) {
+          transformer = transformer.resize({ width: sizeImage })
+        }
+        transformer = transformer.jpeg({ quality: 70 })
+
+        response
+          .pipe(transformer)
+          .toBuffer()
+          .then(resolve)
+          .catch(reject)
+      })
+
+      req.on('error', reject)
+    })
+
+    /*if (!buffer) {
+      images.splice(nImage, 1)
+      return this.__buildImageDetail(images, nImage, callback)
+    }*/
+    if (config.debug && config.debug.logImages) console.log('__buildImageDetail buffer size', buffer.length)
+
+    if (buffer.length > 9500000) { /* 9500Ko */
+      if (config.debug && config.debug.logImages) console.log('__buildImageDetail buffer > 9500 so recall __buildImageDetail for ', sizeImage - 500)
+      if (sizeImage <= 500) {
+        images.splice(nImage, 1)
+        return this.__buildImageDetail(images, nImage, callback)
       }
 
-      me.__getImageSize(urlObject.href, function(size) {
-          if (config.debug && config.debug.logs) {
-            console.log('urlResize response = ', size)
-          }
-          if (size > 9500) {
-            //l'image est trop grande 
-            if (originalImage) {
-                //si on voulait l'image originale et qu'elle est trop grand on passe a la prochaine
-                images.splice(nImage--, 1)
-                me.__buildImageDetail(images, ++nImage, callback)
-            } else {
-                //sinon on retente avec un image + petite
-                sizeImage = sizeImage - 250
-                me.__buildImageDetail(images, nImage, callback, false, sizeImage)
-            }
-          } else {
-              if (config.debug && config.debug.logs) {
-                console.log("Image url = ", urlObject.href)
-              }
-              let path = image.url,
-                httpProtocol,
-                filename = path.replace(new RegExp('^.*/([^/]+)$'), '$1'),
-                ext = filename
-                  .replace(new RegExp('.*\\.([^\\.]+)$'), '$1')
-                  .toLowerCase(),
-                contentType
-        
-              switch (ext) {
-                case 'jpg':
-                case 'jpeg':
-                  contentType = 'image/jpeg'
-                  break
-                default:
-                  contentType = 'image/' + ext
-                  break
-              }
-        
-              switch (urlObject.protocol) {
-                case 'https:':
-                  httpProtocol = https
-                  break
-                default:
-                  httpProtocol = http
-                  break
-              }  
-              let request = httpProtocol.request(urlObject, function (response) {
-                if (config.debug && config.debug.logs) {
-                  console.log("starting requesting Image")
-                }
-                let myBuffer = Buffer.from('')
-        
-                response.on('data', function (chunk) {
-                  myBuffer = Buffer.concat([myBuffer, Buffer.from(chunk, 'binary')])
-                })
+      return this.__buildImageDetail(
+        images,
+        nImage,
+        callback,
+        sizeImage - 500
+      )
+    }
 
-                response.on('error', function (err) {
-                    console.error(`Response error: ${err.message}`)
-                    // Catch error and store on obj' errMessage 
-                    me.__buildImageDetail(images, ++nImage, callback)
-                })
-            
-                response.on('aborted', function () {
-                    console.error("Request was aborted by the server.")
-                })
-        
-                response.on('end', function () {
-                  if (config.debug && config.debug.logs) {
-                    console.log("end requesting Image checking for next one", response?.statusCode)
-                  }
-                  if (
-                    response &&
-                    response.statusCode &&
-                    parseInt(response.statusCode) !== 404
-                  ) {
-                    if (images[nImage]) {
-                      images[nImage].data = {
-                        path: path,
-                        filename: filename,
-                        contentType: contentType,
-                        content: myBuffer
-                      }
-                    }
-                  } else {
-                    if (originalImage != true) {
-                      me.__buildImageDetail(images, nImage, callback, true)
-                      return
-                    } else {
-                      images.splice(nImage--, 1)
-                    }
-                  }
-                  me.__buildImageDetail(images, ++nImage, callback)
-                })
-              })
-        
-              // Handle errors
-              request.on('error', function (error) {
-                console.log('Problem with request : ', error.message)
-                me.__buildImageDetail(images, ++nImage, callback)
-              })
-              if (config.debug && config.debug.logs) {
-                console.log("end requesting Image")
-              }
-              request.end()
-          }
-      })
-    } else {
-      this.__buildImageDetail(images, ++nImage, callback)
+    const path = image.url
+    const filename = path.replace(/^.*\/([^/]+)$/, '$1')
+    const ext = filename.split('.').pop().toLowerCase()
+
+    images[nImage].data = {
+      path,
+      filename,
+      contentType: ext === 'png' ? 'image/png' : 'image/jpeg',
+      content: buffer
     }
-  } else {
-    if (callback) {
-      callback(null, images)
-    }
+
+    if (config.debug && config.debug.logImages) console.log('__buildImageDetail ending > ',images[nImage].data)
+
+    return this.__buildImageDetail(images, nImage + 1, callback)
+
+  } catch (err) {
+    console.error('Image processing error:', err.message)
+    return this.__buildImageDetail(images, nImage + 1, callback)
   }
 }
 
