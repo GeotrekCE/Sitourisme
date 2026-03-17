@@ -64,6 +64,8 @@ exports.trek_theme = {}
 exports.geotrekInstance = {
   0: {
     geotrekUrl : 'https://geotrek-admin.ecrins-parcnational.fr/api/v2',
+    trek_syncFull : false,
+    trek_syncFrom : '', //Blank for today = Production State - or a value ex : 2026-03-12
     structures : {
       1: {
         specialId: 'SITRA2_STR_5411158',
@@ -77,16 +79,16 @@ exports.geotrekInstance = {
         memberId : 4433, // to remove not used anymore
         proprietaireId: 707,
         production: {
-          trek: true,
-          event: true
+          syncTrek: true,
+          syncEvent:true
         },
         www: 'https://destination.ecrins-parcnational.fr/trek/',
         www_events: 'https://destination.ecrins-parcnational.fr/event/',
       },
       4: {
         production: {
-          trek: false,
-          event: false
+          syncTrek: false,
+          syncEvent:false
         },
       },
       5: {
@@ -101,8 +103,8 @@ exports.geotrekInstance = {
         memberId : 6705,
         proprietaireId: 854,
         production: {
-          trek: true,
-          event: false
+          syncTrek: true,
+          syncEvent:false
         },
       },
       7: {
@@ -117,14 +119,14 @@ exports.geotrekInstance = {
         memberId : 6696,
         proprietaireId: 593,
         production: {
-          trek: true,
-          event: false
+          syncTrek: true,
+          syncEvent:false
         },
       },
       8: {
         production: {
-          trek: false,
-          event: false
+          syncTrek: false,
+          syncEvent:false
         },
       },
       9: {
@@ -139,20 +141,20 @@ exports.geotrekInstance = {
         memberId : 6707,
         proprietaireId: 541,
         production: {
-          trek: false,
-          event: false
+          syncTrek: false,
+          syncEvent:false
         },
       },
       11: {
         production: {
-          trek: false,
-          event: false
+          syncTrek: false,
+          syncEvent:false
         },
       },
       13: {
         production: {
-          trek: false,
-          event: false
+          syncTrek: false,
+          syncEvent:false
         },
       }
     },
@@ -210,8 +212,8 @@ exports.geotrekInstance = {
         memberId : 1158,
         proprietaireId: 1158,
         production: {
-          trek: true,
-          event: false
+          syncTrek: true,
+          syncEvent:false
         },
       },
       2: { // CD43
@@ -227,8 +229,8 @@ exports.geotrekInstance = {
         memberId : 1158,
         proprietaireId: 1158,
         production: {
-          trek: true,
-          event: false
+          syncTrek: true,
+          syncEvent:false
         },
 		    www: '', // Dev https://gtr3demo.ecrins-parcnational.fr/event/
       },
@@ -245,8 +247,8 @@ exports.geotrekInstance = {
         memberId : 1158,
         proprietaireId: 1158,
         production: {
-          trek: true,
-          event: false
+          syncTrek: true,
+          syncEvent:false
         },
       },
       4: { // CC Mézenc Loire Meygal
@@ -262,8 +264,8 @@ exports.geotrekInstance = {
         memberId : 1158,
         proprietaireId: 1158,
         production: {
-          trek: true,
-          event: false
+          syncTrek: true,
+          syncEvent:false
         },
       },
       5: { // CC Cayres Pradelles
@@ -279,8 +281,8 @@ exports.geotrekInstance = {
         memberId : 1158,
         proprietaireId: 1158,
         production: {
-          trek: true,
-          event: false
+          syncTrek: true,
+          syncEvent:false
         },
       },
       6: { // CC Brioude Sud Auvergne
@@ -296,8 +298,8 @@ exports.geotrekInstance = {
         memberId : 1158,
         proprietaireId: 1158,
         production: {
-          trek: true,
-          event: false
+          syncTrek: true,
+          syncEvent:false
         },
       },
       7: { // CC des SUCS
@@ -313,8 +315,8 @@ exports.geotrekInstance = {
         memberId : 1158,
         proprietaireId: 1158,
         production: {
-          trek: true,
-          event: false
+          syncTrek: true,
+          syncEvent:false
         },
       },
       8: { // CC Loire Semene
@@ -330,8 +332,8 @@ exports.geotrekInstance = {
         memberId : 1158,
         proprietaireId: 1158,
         production: {
-          trek: true,
-          event: false
+          syncTrek: true,
+          syncEvent:false
         },
       },
       10: { // CC Marches du Velay Rochebaron
@@ -347,8 +349,8 @@ exports.geotrekInstance = {
         memberId : 1158,
         proprietaireId: 1158,
         production: {
-          trek: true,
-          event: false
+          syncTrek: true,
+          syncEvent:false
         },
       },
       43: { // CC Haut Lignon
@@ -364,8 +366,8 @@ exports.geotrekInstance = {
         memberId : 1158,
         proprietaireId: 1158,
         production: {
-          trek: true,
-          event: false
+          syncTrek: true,
+          syncEvent:false
         },
       },
       76: { // Auzon Communauté
@@ -381,8 +383,8 @@ exports.geotrekInstance = {
         memberId : 1158,
         proprietaireId: 1158,
         production: {
-          trek: true,
-          event: false
+          syncTrek: true,
+          syncEvent:false
         },
       },
       109: { // CC Rives du Haut Allier
@@ -398,8 +400,8 @@ exports.geotrekInstance = {
         memberId : 1158,
         proprietaireId: 1158,
         production: {
-          trek: true,
-          event: false
+          syncTrek: true,
+          syncEvent:false
         },
       },
       110: { // CC Haut Pays du Velay
@@ -415,8 +417,8 @@ exports.geotrekInstance = {
         memberId : 1158,
         proprietaireId: 1158,
         production: {
-          trek: true,
-          event: false
+          syncTrek: true,
+          syncEvent:false
         },
       },
     },
@@ -466,8 +468,8 @@ exports.geotrekInstance = {
         memberId : 710,
         proprietaireId: 710,
         production: {
-          trek: false,
-          event: false
+          syncTrek: false,
+          syncEvent:false
         },
       },
     },
@@ -492,8 +494,8 @@ exports.geotrekInstance = {
     structures : {
       1: {
         production: {
-          trek: false,
-          event: false
+          syncTrek: false,
+          syncEvent:false
         },
       },
       2: { // PNR_LUBERON
@@ -508,8 +510,8 @@ exports.geotrekInstance = {
         memberId : 5112,
         proprietaireId: 1222,
         production: {
-          trek: true,
-          event: false
+          syncTrek: true,
+          syncEvent:false
         },
       },
       3: {
@@ -524,14 +526,14 @@ exports.geotrekInstance = {
         memberId : 1221,
         proprietaireId: 1221,
         production: {
-          trek: true,
-          event: false
+          syncTrek: true,
+          syncEvent:false
         },
       },
       4: {
         production: {
-          trek: false,
-          event: false
+          syncTrek: false,
+          syncEvent:false
         },
       },
       5: {
@@ -546,8 +548,8 @@ exports.geotrekInstance = {
         memberId : 831,
         proprietaireId: 831,
         production: {
-          trek: true,
-          event: false
+          syncTrek: true,
+          syncEvent:false
         },
       },
       6: {
@@ -562,8 +564,8 @@ exports.geotrekInstance = {
         memberId : 5033,
         proprietaireId: 1220,
         production: {
-          trek: true,
-          event: false
+          syncTrek: true,
+          syncEvent:false
         },
       },
       7: {
@@ -578,8 +580,8 @@ exports.geotrekInstance = {
         memberId : 5053,
         proprietaireId: 1386,
         production: {
-          trek: true,
-          event: false
+          syncTrek: true,
+          syncEvent:false
         },
       },
       8: {
@@ -594,8 +596,8 @@ exports.geotrekInstance = {
         memberId : 5052,
         proprietaireId: 1380,
         production: {
-          trek: true,
-          event: false
+          syncTrek: true,
+          syncEvent:false
         },
       },
       9: {
@@ -610,8 +612,8 @@ exports.geotrekInstance = {
         memberId : 2008,
         proprietaireId: 2008,
         production: {
-          trek: true,
-          event: false
+          syncTrek: true,
+          syncEvent:false
         },
       },
       10: {
@@ -628,8 +630,8 @@ exports.geotrekInstance = {
         proprietaireId: 2122,
         proprietaireIdCooking: 1912,
         production: {
-          trek: true,
-          event: false
+          syncTrek: true,
+          syncEvent:false
         },
       }
     },
@@ -651,8 +653,8 @@ exports.geotrekInstance = {
     structures : {
       1: {
         production: {
-          trek: false,
-          event: false
+          syncTrek: false,
+          syncEvent:false
         },
       },
       2: { // DEP05
@@ -667,33 +669,33 @@ exports.geotrekInstance = {
         memberId : 708,
         proprietaireId: 708,
         production: {
-          trek: true,
-          event: false
+          syncTrek: true,
+          syncEvent:false
         },
         www: '',
       },
       4: {
         production: {
-          trek: false,
-          event: false
+          syncTrek: false,
+          syncEvent:false
         },
       },
       5: {
         production: {
-          trek: false,
-          event: false
+          syncTrek: false,
+          syncEvent:false
         },
       },
       6: {
         production: {
-          trek: false,
-          event: false
+          syncTrek: false,
+          syncEvent:false
         },
       },
       9: {
         production: {
-          trek: false,
-          event: false
+          syncTrek: false,
+          syncEvent:false
         },
       },
     },
@@ -734,8 +736,8 @@ exports.geotrekInstance = {
         memberId : 537,
         proprietaireId: 537,
         production: {
-          trek: true,
-          event: false
+          syncTrek: true,
+          syncEvent:false
         },
       },
     },
@@ -772,62 +774,62 @@ exports.geotrekInstance = {
         memberId : 2255,
         proprietaireId: 1842,
         production: {
-          trek: true,
-          event: false
+          syncTrek: true,
+          syncEvent:false
         },
       },
       4: {
         production: {
-          trek: false,
-          event: false
+          syncTrek: false,
+          syncEvent:false
         },
       },
       6: {
         production: {
-          trek: false,
-          event: false
+          syncTrek: false,
+          syncEvent:false
         },
       },
       7: {
         production: {
-          trek: false,
-          event: false
+          syncTrek: false,
+          syncEvent:false
         },
       },
       8: {
         production: {
-          trek: false,
-          event: false
+          syncTrek: false,
+          syncEvent:false
         },
       },
       9: {
         production: {
-          trek: false,
-          event: false
+          syncTrek: false,
+          syncEvent:false
         },
       },
       14: {
         production: {
-          trek: false,
-          event: false
+          syncTrek: false,
+          syncEvent:false
         },
       },
       15: {
         production: {
-          trek: false,
-          event: false
+          syncTrek: false,
+          syncEvent:false
         },
       },
       16: {
         production: {
-          trek: false,
-          event: false
+          syncTrek: false,
+          syncEvent:false
         },
       },
       18: {
         production: {
-          trek: false,
-          event: false
+          syncTrek: false,
+          syncEvent:false
         },
       },
     },
@@ -867,8 +869,8 @@ exports.geotrekInstance = {
         memberId : 862,
         proprietaireId: 862,
         production: {
-          trek: true,
-          event: false
+          syncTrek: true,
+          syncEvent:false
         },
       },
       3: {
@@ -883,20 +885,20 @@ exports.geotrekInstance = {
         memberId : 862,
         proprietaireId: 862,
         production: {
-          trek: true,
-          event: false
+          syncTrek: true,
+          syncEvent:false
         },
       },
       5: {
         production: {
-          trek: false,
-          event: false
+          syncTrek: false,
+          syncEvent:false
         },
       },
       6: {
         production: {
-          trek: false,
-          event: false
+          syncTrek: false,
+          syncEvent:false
         },
       },
       9: {
@@ -911,8 +913,8 @@ exports.geotrekInstance = {
         memberId : 862,
         proprietaireId: 862,
         production: {
-          trek: true,
-          event: false
+          syncTrek: true,
+          syncEvent:false
         },
       },
       10: {
@@ -927,8 +929,8 @@ exports.geotrekInstance = {
         memberId : 862,
         proprietaireId: 862,
         production: {
-          trek: true,
-          event: false
+          syncTrek: true,
+          syncEvent:false
         },
       },
       11: {
@@ -944,8 +946,8 @@ exports.geotrekInstance = {
         memberId : 862,
         proprietaireId: 862,
         production: {
-          trek: true,
-          event: false
+          syncTrek: true,
+          syncEvent:false
         },
       },
       12: {
@@ -960,8 +962,8 @@ exports.geotrekInstance = {
         memberId : 862,
         proprietaireId: 862,
         production: {
-          trek: true,
-          event: false
+          syncTrek: true,
+          syncEvent:false
         },
       },
       13: {
@@ -976,8 +978,8 @@ exports.geotrekInstance = {
         memberId : 862,
         proprietaireId: 862,
         production: {
-          trek: true,
-          event: false
+          syncTrek: true,
+          syncEvent:false
         },
       },
       14: {
@@ -992,8 +994,8 @@ exports.geotrekInstance = {
         memberId : 862,
         proprietaireId: 862,
         production: {
-          trek: true,
-          event: false
+          syncTrek: true,
+          syncEvent:false
         },
       },
       15: {
@@ -1008,8 +1010,8 @@ exports.geotrekInstance = {
         memberId : 862,
         proprietaireId: 862,
         production: {
-          trek: true,
-          event: false
+          syncTrek: true,
+          syncEvent:false
         },
       },
       16: {
@@ -1025,8 +1027,8 @@ exports.geotrekInstance = {
         memberId : 862,
         proprietaireId: 862,
         production: {
-          trek: true,
-          event: false
+          syncTrek: true,
+          syncEvent:false
         },
       },
       17: {
@@ -1041,8 +1043,8 @@ exports.geotrekInstance = {
         memberId : 862,
         proprietaireId: 862,
         production: {
-          trek: true,
-          event: false
+          syncTrek: true,
+          syncEvent:false
         },
       },
       18: {
@@ -1057,8 +1059,8 @@ exports.geotrekInstance = {
         memberId : 862,
         proprietaireId: 862,
         production: {
-          trek: true,
-          event: false
+          syncTrek: true,
+          syncEvent:false
         },
       },
       19: {
@@ -1073,8 +1075,8 @@ exports.geotrekInstance = {
         memberId : 862,
         proprietaireId: 862,
         production: {
-          trek: true,
-          event: false
+          syncTrek: true,
+          syncEvent:false
         },
       },
       22: {
@@ -1089,8 +1091,8 @@ exports.geotrekInstance = {
         memberId : 862,
         proprietaireId: 862,
         production: {
-          trek: true,
-          event: false
+          syncTrek: true,
+          syncEvent:false
         },
       },
       23: {
@@ -1105,8 +1107,8 @@ exports.geotrekInstance = {
         memberId : 862,
         proprietaireId: 862,
         production: {
-          trek: true,
-          event: false
+          syncTrek: true,
+          syncEvent:false
         },
       },
       24: {
@@ -1121,8 +1123,8 @@ exports.geotrekInstance = {
         memberId : 862,
         proprietaireId: 862,
         production: {
-          trek: true,
-          event: false
+          syncTrek: true,
+          syncEvent:false
         },
       },
       25: {
@@ -1137,8 +1139,8 @@ exports.geotrekInstance = {
         memberId : 862,
         proprietaireId: 862,
         production: {
-          trek: true,
-          event: false
+          syncTrek: true,
+          syncEvent:false
         },
       },
       26: {
@@ -1153,8 +1155,8 @@ exports.geotrekInstance = {
         memberId : 862,
         proprietaireId: 862,
         production: {
-          trek: true,
-          event: false
+          syncTrek: true,
+          syncEvent:false
         },
       },
     },
@@ -1222,8 +1224,8 @@ exports.geotrekInstance = {
         memberId : 96,
         proprietaireId: 96,
         production: {
-          trek: true,
-          event: false
+          syncTrek: true,
+          syncEvent:false
         },
       },
       5: {
@@ -1238,8 +1240,8 @@ exports.geotrekInstance = {
         memberId : 96,
         proprietaireId: 96,
         production: {
-          trek: true,
-          event: false
+          syncTrek: true,
+          syncEvent:false
         },
       },
       6: {
@@ -1254,8 +1256,8 @@ exports.geotrekInstance = {
         memberId : 96,
         proprietaireId: 96,
         production: {
-          trek: true,
-          event: false
+          syncTrek: true,
+          syncEvent:false
         },
       },
       7: {
@@ -1270,8 +1272,8 @@ exports.geotrekInstance = {
         memberId : 96,
         proprietaireId: 96,
         production: {
-          trek: true,
-          event: false
+          syncTrek: true,
+          syncEvent:false
         },
       },
       8: {
@@ -1286,8 +1288,8 @@ exports.geotrekInstance = {
         memberId : 96,
         proprietaireId: 96,
         production: {
-          trek: true,
-          event: false
+          syncTrek: true,
+          syncEvent:false
         },
       },
       9: {
@@ -1302,8 +1304,8 @@ exports.geotrekInstance = {
         memberId : 96,
         proprietaireId: 96,
         production: {
-          trek: true,
-          event: false
+          syncTrek: true,
+          syncEvent:false
         },
       },
       12: {
@@ -1318,8 +1320,8 @@ exports.geotrekInstance = {
         memberId : 96,
         proprietaireId: 96,
         production: {
-          trek: true,
-          event: false
+          syncTrek: true,
+          syncEvent:false
         },
       },
       13: {
@@ -1334,8 +1336,8 @@ exports.geotrekInstance = {
         memberId : 96,
         proprietaireId: 96,
         production: {
-          trek: true,
-          event: false
+          syncTrek: true,
+          syncEvent:false
         },
       },
       14: {
@@ -1350,8 +1352,8 @@ exports.geotrekInstance = {
         memberId : 96,
         proprietaireId: 96,
         production: {
-          trek: true,
-          event: false
+          syncTrek: true,
+          syncEvent:false
         },
       },
       15: {
@@ -1366,8 +1368,8 @@ exports.geotrekInstance = {
         memberId : 96,
         proprietaireId: 96,
         production: {
-          trek: true,
-          event: false
+          syncTrek: true,
+          syncEvent:false
         },
       },
       16: {
@@ -1382,8 +1384,8 @@ exports.geotrekInstance = {
         memberId : 96,
         proprietaireId: 96,
         production: {
-          trek: true,
-          event: false
+          syncTrek: true,
+          syncEvent:false
         },
       },
       17: {
@@ -1398,8 +1400,8 @@ exports.geotrekInstance = {
         memberId : 96,
         proprietaireId: 96,
         production: {
-          trek: true,
-          event: false
+          syncTrek: true,
+          syncEvent:false
         },
       },
     },
@@ -1443,8 +1445,8 @@ exports.geotrekInstance = {
         memberId : 1764,
         proprietaireId: 1764,
         production: {
-          trek: true,
-          event: false
+          syncTrek: true,
+          syncEvent:false
         },
 	      www: 'https://destination.portcros-parcnational.fr/trek/',
       },
@@ -1474,9 +1476,9 @@ exports.geotrekInstance = {
         proprietaireId: 1894,
         proprietaireIdCooking: 1903,
         production: {
-          trek: true,
-          event: false,
-          touristiccontent: true
+          syncTrek: true,
+          syncEvent:false,
+          syncTouristiccontent: true
         },
       },
     },
@@ -1511,8 +1513,8 @@ exports.geotrekInstance = {
         proprietaireId: 2484,
         proprietaireIdCooking: 1909,
         production: {
-          trek: true,
-          event: false
+          syncTrek: true,
+          syncEvent:false
         },
       },
       2: {
@@ -1529,8 +1531,8 @@ exports.geotrekInstance = {
         proprietaireId: 2484,
         proprietaireIdCooking: 1909,
         production: {
-          trek: true,
-          event: false
+          syncTrek: true,
+          syncEvent:false
         },
       },
       4: {
@@ -1547,8 +1549,8 @@ exports.geotrekInstance = {
         proprietaireId: 2484,
         proprietaireIdCooking: 1909,
         production: {
-          trek: true,
-          event: false
+          syncTrek: true,
+          syncEvent:false
         },
       },
       5: {
@@ -1565,8 +1567,8 @@ exports.geotrekInstance = {
         proprietaireId: 2484,
         proprietaireIdCooking: 1909,
         production: {
-          trek: true,
-          event: false
+          syncTrek: true,
+          syncEvent:false
         },
       },
       29: {
@@ -1583,8 +1585,8 @@ exports.geotrekInstance = {
         proprietaireId: 2484,
         proprietaireIdCooking: 1909,
         production: {
-          trek: true,
-          event: false
+          syncTrek: true,
+          syncEvent:false
         },
       },
     },

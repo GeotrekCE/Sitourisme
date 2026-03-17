@@ -178,7 +178,15 @@ class ImportGeotrekApi extends Import
       console.log('ImportGenericGeotrekApi.prototype.executeQuery - Trek Filtering on ', configImportGEOTREK.geotrekInstance[instance].trek_filtering)
       trekFiltering = configImportGEOTREK.geotrekInstance[instance].trek_filtering
     }
-    let geoTrekPath = '/' + this.importApi + '?format=json&' + trekFiltering
+
+    let geoTrekPath = '/' + this.importApi + '?format=json&' + trekFiltering + '&updated_after=' + new Date(Date.now()).toLocaleDateString('en-CA')
+
+    if (this.importApi == 'trek' && configImportGEOTREK.geotrekInstance[instance].trek_syncFrom) {
+      geoTrekPath = '/' + this.importApi + '?format=json&' + trekFiltering + '&updated_after=' + configImportGEOTREK.geotrekInstance[instance].trek_syncFrom
+    }
+    if (this.importApi == 'trek' && configImportGEOTREK.geotrekInstance[instance].trek_syncFull) {
+      geoTrekPath = '/' + this.importApi + '?format=json&' + trekFiltering
+    }
     let urlNext = ''
 
     if (config.debug != undefined && config.debug.idGeo != 0) {
@@ -317,9 +325,9 @@ class ImportGeotrekApi extends Import
       console.log(chalk.green('Config = ', configImportGEOTREK.geotrekInstance[structure].structures[element.structure]));
 
       if (this.member && 
-        (configImportGEOTREK.geotrekInstance[structure].structures[element.structure].production.trek ||
-        configImportGEOTREK.geotrekInstance[structure].structures[element.structure].production.event ||
-        configImportGEOTREK.geotrekInstance[structure].structures[element.structure].production.touristiccontent)
+        (configImportGEOTREK.geotrekInstance[structure].structures[element.structure].production.syncTrek ||
+        configImportGEOTREK.geotrekInstance[structure].structures[element.structure].production.syncEvent ||
+        configImportGEOTREK.geotrekInstance[structure].structures[element.structure].production.syncTouristiccontent)
       ) {
         this.configData = {
           specialId: null,
