@@ -1,3 +1,6 @@
+## [2.5.0]
+- Import randos / Intégrer les lieux de renseignement dans les contacts [#52](https://github.com/GeotrekCE/Sitourisme/issues/52)
+
 ## [2.4.1]
 - Listes numérotées dans le champs "Description" non prises en compte [#93](https://github.com/GeotrekCE/Sitourisme/issues/93)
 - Ne plus faire appel au service wsrv.nl pour retailler les photos [#118](https://github.com/GeotrekCE/Sitourisme/issues/118)

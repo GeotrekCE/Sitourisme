@@ -11,10 +11,11 @@
 | Étiquettes | `labels` | Descriptifs thématisés / Conseils et suggestions  | `presentation.descriptifsThematises`  |  |
 | Réseaux | `networks` | Précisions balisage | `informationsEquipement.itineraire.precisionsBalisage` | Les valeurs Geotrek sont écrites en texte dans Apidae, séparées par des tirets. Certaines valeurs sont réécrites : **PR → Balisage Petite Randonnée**, **GR → Balisage Grande Randonnée**, **GRP → Balisage Grande Randonnée de Pays**, **VTT → Balisage VTT** |
 | Lien web | `web_links` | *Non repris* |  |  |
-| Lieu de renseignement → Rue | `information_desks` (référence) → `street` | Adresse | `localisation.adresse` | Les coordonnées du lieu de renseignement sont réparties dans plusieurs champs de la fiche Apidae. |
-| Lieu de renseignement → Site web | `information_desks` (référence) → `website` | Moyens de communication | `informations.moyensCommunication` | Les coordonnées du lieu de renseignement sont réparties dans plusieurs champs de la fiche Apidae. |
-| Lieu de renseignement → Courriel | `information_desks` (référence) → `email` | Moyens de communication | `informations.moyensCommunication` | Les coordonnées du lieu de renseignement sont réparties dans plusieurs champs de la fiche Apidae. |
-| Lieu de renseignement → Téléphone | `information_desks` (référence) → `phone` | Moyens de communication | `informations.moyensCommunication` | Les coordonnées du lieu de renseignement sont réparties dans plusieurs champs de la fiche Apidae. |
+| Lieu de renseignement → Nom | `information_desks` (référence) → `name` | Adresse | `localisation.adresse.nomDuLieu` | |
+| Lieu de renseignement → Rue | `information_desks` (référence) → `street` | Adresse | `localisation.adresse.adresse1` | |
+| Lieu de renseignement → Site web | `information_desks` (référence) → `website` | Moyens de communication | `informations.moyensCommunication` | |
+| Lieu de renseignement → Courriel | `information_desks` (référence) → `email` | Moyens de communication | `informations.moyensCommunication` | |
+| Lieu de renseignement → Téléphone | `information_desks` (référence) → `phone` | Moyens de communication | `informations.moyensCommunication` | |
 | Source | `source` | *Non repris* |  |  |
 | Portail | `portal` | *Non repris* |  |  |
 | Enfant | `children` ? | *Non repris* |  |  |

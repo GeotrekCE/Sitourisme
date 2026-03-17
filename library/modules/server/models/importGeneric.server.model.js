@@ -325,15 +325,15 @@ class ImportGeotrekApi extends Import
           codeType: (this.moduleName == 'events') ? 'F&M' : 'EQU',
           subType: (this.moduleName == 'events') ? '1974' : '2988', // 1974="Distractions et loisirs" 2988="Loisirs sportifs"
           member: this.member
-        };
+        }
 
-        let additionalInformation = {};
-        if (element.information_desk && element.information_desks.length) {
+        let additionalInformation = {}
+        if (element.information_desks && element.information_desks.length) {
           const { data } = await this.instanceApi.get(
             `/informationdesk/${_.last(element.information_desks)}/?format=json`
-          );
+          )
           if (data) {
-            additionalInformation = data;
+            additionalInformation = data
           }
         }
         

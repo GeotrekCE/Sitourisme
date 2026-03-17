@@ -201,6 +201,10 @@ const _defaultSchema = {
     type: String,
     trim: true
   },
+  nomLieu: {
+    type: String,
+    trim: true
+  },
   address: {
     address1: {
       type: String,
