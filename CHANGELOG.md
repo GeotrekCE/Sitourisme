@@ -1,4 +1,5 @@
 ## [2.5.0]
+- Apidae Cooking > Entité de gestion et propriétaires [#130](https://github.com/GeotrekCE/Sitourisme/issues/130)
 - Import randos / Intégrer les lieux de renseignement dans les contacts [#52](https://github.com/GeotrekCE/Sitourisme/issues/52)
 
 ## [2.4.1]

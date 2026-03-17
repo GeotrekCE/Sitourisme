@@ -24,7 +24,7 @@ exports.activityCooking = {
   3302: 3302,
   4201: 4201,
   3333: 3333,
-  6225: 6447, /* Itinéraire de VTT à Assistance Électrique*/
+  6225: 6448, /* Itinéraire de VTT à Assistance Électrique*/
   6224: 6447, /* Itinéraire gravel bike*/
   3283: 3283
 };
@@ -58,6 +58,7 @@ exports.trek_difficultyCooking = {
 
 exports.trek_label = {}
 exports.trek_typologie = {}
+exports.trek_typologieCooking = {}
 exports.trek_theme = {}
 
 exports.geotrekInstance = {
@@ -71,8 +72,7 @@ exports.geotrekInstance = {
         address2: null,
         city: '1813',
         insee: '05061',
-        specialIdSitra: '5411158',
-        specialIdSitraCooking: '366196',
+        specialIdSitra: '366196',
         statusImport: 2,
         memberId : 4433, // to remove not used anymore
         proprietaireId: 707,
@@ -622,10 +622,11 @@ exports.geotrekInstance = {
         city: '34224',
         insee: '84031',
         specialIdSitra: '5584767',
-        specialIdSitraCooking: '578849',
+        specialIdSitraCooking: '5284802',
         statusImport: 2,
         memberId : 2122,
         proprietaireId: 2122,
+        proprietaireIdCooking: 1912,
         production: {
           trek: true,
           event: false
@@ -766,9 +767,10 @@ exports.geotrekInstance = {
         city: '11732',
         insee: '30189',
         specialIdSitra: '5069339',
+        specialIdSitraCooking: '5193007',
         statusImport: 2,
         memberId : 2255,
-        proprietaireId: 2255,
+        proprietaireId: 1842,
         production: {
           trek: true,
           event: false
@@ -936,7 +938,7 @@ exports.geotrekInstance = {
         address2: null,
         city: '33564',
         insee: '81045',
-        specialIdSitra: '6437334',
+        specialIdSitra: '807008',
         specialIdSitraCooking: '763031',
         statusImport: 2,
         memberId : 862,
@@ -969,8 +971,7 @@ exports.geotrekInstance = {
         address2: 'BP 81133',
         city: '33811',
         insee: '81294',
-        specialIdSitra: '6146219',
-        specialIdSitraCooking: '5098908',
+        specialIdSitra: '5098908',
         statusImport: 2,
         memberId : 862,
         proprietaireId: 862,
@@ -1002,8 +1003,7 @@ exports.geotrekInstance = {
         address2: null,
         city: '33583',
         insee: '81065',
-        specialIdSitra: '6150073',
-        specialIdSitraCooking: '4703946',
+        specialIdSitra: '4703946',
         statusImport: 2,
         memberId : 862,
         proprietaireId: 862,
@@ -1191,6 +1191,10 @@ exports.geotrekInstance = {
       DistinctionNom??9: 1582, //Labellisé Site VTT-FFC® >Label VTT - FFC
       DistinctionNom??11: 5538, //Labellisé Base VTT de randonnée	> Label VTT - FFCT*/
     },
+    trek_typologieCooking : {
+      2: 4830, //Labellisé FFRandonnée®	> FFRandonnée
+      4: 6449, //Oenorando®	> Oenorando
+    },
     trek_theme : {
       145: 31125, //Biodiversité remarquable
       146: 31126, //Patrimoines
@@ -1309,7 +1313,7 @@ exports.geotrekInstance = {
         address2: null,
         city: '2165',
         insee: '07071',
-        specialIdSitra: '162317',
+        specialIdSitra: '170981',
         statusImport: 2,
         memberId : 96,
         proprietaireId: 96,
@@ -1434,8 +1438,7 @@ exports.geotrekInstance = {
         address2: null,
         city: '34106',
         insee: '83069',
-        specialIdSitra: '5214782',
-        specialIdSitraCooking: '366196',
+        specialIdSitra: '366196',
         statusImport: 2,
         memberId : 1764,
         proprietaireId: 1764,
@@ -1465,9 +1468,11 @@ exports.geotrekInstance = {
         city: '34174',
         insee: '83137',
         specialIdSitra: '5171183',
+        specialIdSitraCooking: '765553',
         statusImport: 2,
         memberId : 1894,
         proprietaireId: 1894,
+        proprietaireIdCooking: 1903,
         production: {
           trek: true,
           event: false,
@@ -1504,6 +1509,7 @@ exports.geotrekInstance = {
         statusImport: 2,
         memberId : 2484,
         proprietaireId: 2484,
+        proprietaireIdCooking: 1909,
         production: {
           trek: true,
           event: false
@@ -1521,6 +1527,7 @@ exports.geotrekInstance = {
         statusImport: 2,
         memberId : 2484,
         proprietaireId: 2484,
+        proprietaireIdCooking: 1909,
         production: {
           trek: true,
           event: false
@@ -1538,6 +1545,7 @@ exports.geotrekInstance = {
         statusImport: 2,
         memberId : 2484,
         proprietaireId: 2484,
+        proprietaireIdCooking: 1909,
         production: {
           trek: true,
           event: false
@@ -1555,6 +1563,7 @@ exports.geotrekInstance = {
         statusImport: 2,
         memberId : 2484,
         proprietaireId: 2484,
+        proprietaireIdCooking: 1909,
         production: {
           trek: true,
           event: false
@@ -1572,6 +1581,7 @@ exports.geotrekInstance = {
         statusImport: 2,
         memberId : 2484,
         proprietaireId: 2484,
+        proprietaireIdCooking: 1909,
         production: {
           trek: true,
           event: false

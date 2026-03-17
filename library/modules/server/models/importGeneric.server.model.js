@@ -120,10 +120,11 @@ class ImportGeotrekApi extends Import
             labelMappingId = configImportGEOTREK.geotrekInstance[instance].trek_label[item.id]
         }
 
-        if (configImportGEOTREK.geotrekInstance[instance].trek_typologie && 
-          configImportGEOTREK.geotrekInstance[instance].trek_typologie[item.id]) {
-            typologieMappingId = configImportGEOTREK.geotrekInstance[instance].trek_typologie[item.id]
-        }
+        const geotrekConf = configImportGEOTREK.geotrekInstance[instance]
+        typologieMappingId =
+          process.env.NODE_ENV === 'development' && geotrekConf.trek_typologieCooking?.[item.id]
+            ? geotrekConf.trek_typologieCooking[item.id]
+            : geotrekConf.trek_typologie?.[item.id]
 
         this.labels[item.id] = {
           fr: item.name.fr ? he.decode(striptags(item.name.fr)) + ' : ' +  he.decode(striptags(item.advice.fr)).replace(/[\r\n]+/g, '') : null,
@@ -339,12 +340,18 @@ class ImportGeotrekApi extends Import
         
         additionalInformation.labels = labels
         additionalInformation.difficulties = difficulties
+
+        const proprietaireId =
+          process.env.NODE_ENV === 'development' &&
+          configImportGEOTREK.geotrekInstance[structure].structures[element.structure].proprietaireIdCooking
+            ? configImportGEOTREK.geotrekInstance[structure].structures[element.structure].proprietaireIdCooking
+            : configImportGEOTREK.geotrekInstance[structure].structures[element.structure].proprietaireId
         
         let product = await this.importData.formatDatas(
           element, 
           additionalInformation, 
           structure, 
-          configImportGEOTREK.geotrekInstance[structure].structures[element.structure].proprietaireId, 
+          proprietaireId, 
           this.importType, 
           this.configData, 
           this.user
