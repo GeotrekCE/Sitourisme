@@ -179,7 +179,7 @@ class ImportGeotrekApi extends Import
       trekFiltering = configImportGEOTREK.geotrekInstance[instance].trek_filtering
     }
 
-    let geoTrekPath = '/' + this.importApi + '?format=json&' + trekFiltering + '&updated_after=' + new Date(Date.now()).toLocaleDateString('en-CA')
+    let geoTrekPath = '/' + this.importApi + '?format=json&' + trekFiltering + '&updated_after=' + new Date(Date.now() - 86400000).toLocaleDateString('en-CA')
 
     if (this.importApi == 'trek' && configImportGEOTREK.geotrekInstance[instance].trek_syncFrom) {
       geoTrekPath = '/' + this.importApi + '?format=json&' + trekFiltering + '&updated_after=' + configImportGEOTREK.geotrekInstance[instance].trek_syncFrom
