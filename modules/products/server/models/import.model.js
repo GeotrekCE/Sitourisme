@@ -80,7 +80,6 @@ class importModel extends geotrek
       shortDescriptionDe: this.getShortDescription(element, 'de'),
       shortDescriptionNl: this.getShortDescription(element, 'nl'),
       address: this.getAddress(element, additionalInformation),
-      nomLieu: (additionalInformation && additionalInformation.name && additionalInformation.name.fr) ? additionalInformation.name.fr : null,
       website: this.getWebsite(element, additionalInformation),
       email: this.getEmail(additionalInformation, configImportGEOTREK.geotrekInstance[structure].structures[element.structure].defaultEmail),
       phone: this.getPhone(additionalInformation),

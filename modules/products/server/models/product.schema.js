@@ -201,10 +201,6 @@ const _defaultSchema = {
     type: String,
     trim: true
   },
-  nomLieu: {
-    type: String,
-    trim: true
-  },
   address: {
     address1: {
       type: String,
@@ -1235,10 +1231,6 @@ const _defaultSchema = {
   },
   scope: {
     type: Number
-  },
-  nomLieu: {
-    type: String,
-    trim: true
   },
   category: [
     {
