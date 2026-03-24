@@ -4,6 +4,7 @@
 
 const _ = require('lodash'),
   path = require('path'),
+  log = require(path.resolve('./library/data/log.js')),
   moment = require('moment'),
   http = require('http'),
   https = require('https'),
@@ -17,7 +18,8 @@ const _ = require('lodash'),
   configSitraReference = require(path.resolve('./config/configSitraReference.js')),
   chalk = require('chalk'),
   fetch = require("node-fetch")
-  //fxp = require("fast-xml-parser")
+  //fxp = require("fast-xml-parser"),
+
 
 class Apidae
 {
@@ -806,14 +808,16 @@ class Apidae
           })
         }
 
-        if (config.debug && config.debug.seeData) console.log('PromiseRequestImage > datas = ', formData);
         if (config.debug && config.debug.idGeo != 0 && config.debug.idGeo != product.specialId) 
         {
           return callback(null, finalData);
         } else {
           console.log('Api PUT = ', config.sitra.api.host, config.sitra.api.path);
         }
-        
+
+        if (config.debug && config.debug.seeData) console.log('PromiseRequestImage > datas = ', formData)
+        if (config.debug && config.debug.logsFile) log.writeLog('GEOTREK = ' + product.specialId, formData.root)
+
         request(
           {
             url: `https://${config.sitra.api.host}${config.sitra.api.path}`,
@@ -848,12 +852,17 @@ class Apidae
                 err,
                 errMessage: err.message ? err.message : null,
                 specialIdSitra: product.specialIdSitra
-              };
+              }
+              
+              if (config.debug && config.debug.logsFile) log.writeLog('APIDAE ERR =', err)
+
               if (callback) {
                 return callback(err, finalData);
               }
             }
   
+            if (config.debug && config.debug.logsFile) log.writeLog('APIDAE REPONSE =', body)
+
             // Critères internes
             console.log('crit interne pour ', body.id, product.specialIdSitra)
             let specialIdSitraForCI = null
