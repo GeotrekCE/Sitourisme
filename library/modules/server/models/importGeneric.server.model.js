@@ -384,7 +384,7 @@ class ImportGeotrekApi extends Import
         }
         product.rateCompletion = this.calculateRateCompletion(product);
 
-        console.log(`GeoTrek API => import specialId : ${product.specialId}`, product);
+        if (config.debug && config.debug.seeData) console.log(`GeoTrek API => import specialId : ${product.specialId}`, product);
 
         await this.doUpsertAsync(
           product,
