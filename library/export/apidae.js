@@ -1280,12 +1280,6 @@ class Apidae
             blockItinerary.distance = product.itinerary.distance
             fieldList.push(blockCategory + '.' + blockField + '.distance')
           }
-          if (typeof itinerary.dailyDuration === 'number') {
-            blockItinerary.dureeJournaliere = product.itinerary.dailyDuration
-            fieldList.push(
-              blockCategory + '.' + blockField + '.dureeJournaliere'
-            )
-          }
           if (typeof itinerary.altitudeMaximum === 'number') {
             blockItinerary.altitudeMaximum = product.itinerary.altitudeMaximum
             fieldList.push(blockCategory + '.' + blockField + '.altitudeMaximum')
