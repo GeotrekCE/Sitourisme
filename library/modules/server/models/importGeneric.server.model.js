@@ -2,6 +2,7 @@ const { exit } = require('process');
 
 const path = require('path'),
     chalk = require('chalk'),
+    log = require(path.resolve('./library/data/log.js')),
     axios = require('axios'),
     pify = require('pify'),
     striptags = require('striptags'),
@@ -370,7 +371,7 @@ class ImportGeotrekApi extends Import
           product.legalEntity = this.getLegalEntity(element, product, structure, product.district)
           product.gestionSitraId = product.district
         } else {
-          product.legalEntity = this.getLegalEntity(element, product, structure)
+          product.legalEntity = this.getLegalEntity(element, product, structure, 0)
           if (process.env.NODE_ENV == 'development' && configImportGEOTREK.geotrekInstance[structure].structures[element.structure].specialIdSitraCooking) {
             product.gestionSitraId = configImportGEOTREK.geotrekInstance[structure].structures[element.structure].specialIdSitraCooking
           } else {
@@ -384,7 +385,8 @@ class ImportGeotrekApi extends Import
         }
         product.rateCompletion = this.calculateRateCompletion(product);
 
-        if (config.debug && config.debug.seeData) console.log(`GeoTrek API => import specialId : ${product.specialId}`, product);
+        if (config.debug && config.debug.seeData) console.log(`GeoTrek API => import specialId : ${product.specialId}`, product)
+        if (config.debug && config.debug.logsFile) log.writeLog('IMPORT GEOTREK = ' + product.specialId + ' = ' + JSON.stringify(product))
 
         await this.doUpsertAsync(
           product,
@@ -425,7 +427,10 @@ class ImportGeotrekApi extends Import
 
     if (conf) {
       
-      if (district) conf.specialIdSitra = district
+      const effectiveSpecialIdSitra =
+        district > 0
+          ? district
+          : conf.specialIdSitra
 
       legalEntity = {
         specialId: conf.specialId,
@@ -439,7 +444,7 @@ class ImportGeotrekApi extends Import
           city: conf.city,
           insee: conf.insee
         },
-        specialIdSitra:  (process.env.NODE_ENV == 'development' && conf.specialIdSitraCooking) ? conf.specialIdSitraCooking : conf.specialIdSitra,
+        specialIdSitra:  (process.env.NODE_ENV == 'development' && conf.specialIdSitraCooking) ? conf.specialIdSitraCooking : effectiveSpecialIdSitra,
         statusImport: conf.statusImport
       };
     }

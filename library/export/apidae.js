@@ -808,15 +808,16 @@ class Apidae
           })
         }
 
+        //if (config.debug && config.debug.seeData) console.log('PromiseRequestImage > datas = ', formData);
         if (config.debug && config.debug.idGeo != 0 && config.debug.idGeo != product.specialId) 
         {
           return callback(null, finalData);
         } else {
           console.log('Api PUT = ', config.sitra.api.host, config.sitra.api.path);
         }
-
+        
         if (config.debug && config.debug.seeData) console.log('PromiseRequestImage > datas = ', formData)
-        if (config.debug && config.debug.logsFile) log.writeLog('GEOTREK = ' + product.specialId, formData.root)
+        if (config.debug && config.debug.logsFile && product.specialId == '904168') log.writeLog('GEOTREK = ' + product.specialId, formData.root)        
 
         request(
           {
@@ -854,14 +855,14 @@ class Apidae
                 specialIdSitra: product.specialIdSitra
               }
               
-              if (config.debug && config.debug.logsFile) log.writeLog('APIDAE ERR =', err)
+              if (config.debug && config.debug.logsFile && product.specialId == '904168') log.writeLog('APIDAE ERR =', err)
 
               if (callback) {
                 return callback(err, finalData);
               }
             }
   
-            if (config.debug && config.debug.logsFile) log.writeLog('APIDAE REPONSE =', body)
+            if (config.debug && config.debug.logsFile && product.specialId == '904168') log.writeLog('APIDAE REPONSE =', body)
 
             // Critères internes
             console.log('crit interne pour ', body.id, product.specialIdSitra)
