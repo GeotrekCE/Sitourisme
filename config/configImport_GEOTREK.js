@@ -1427,7 +1427,7 @@ exports.geotrekInstance = {
     trek_difficulty : {
       1: 587, // Niveau vert - Facile
       2: 588, // Niveau bleu - Modéré
-      3: 6669,// Niveau orange - assez difficile	
+      3: 589,// 6669 - Niveau orange - assez difficile	
       4: 589, //Niveau rouge - Difficile
       5: 590, //Niveau noir - Très difficile
     },
