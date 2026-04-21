@@ -2017,6 +2017,10 @@ const _defaultSchema = {
   gestionSitraId : {
     type: Number
   },
-};
+  complementAccueil: {
+    type: String,
+    trim: true
+  },
+}
 
-exports.defaultSchema = _defaultSchema;
+exports.defaultSchema = _defaultSchema

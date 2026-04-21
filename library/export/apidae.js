@@ -3511,23 +3511,26 @@ class Apidae
   rootFieldList.push('prestations.animauxAcceptes');
 /* TODO SPECIAL TREK*/
 
-  if (product.complementAccueil && product.complementAccueil.length) {
-    prestation.complementAccueil = {};
-    prestation.complementAccueil.libelleFr = product.complementAccueil;
-    if (product.complementAccueilEn && product.complementAccueilEn.length) {
-      prestation.complementAccueil.libelleEn = product.complementAccueilEn;
-    }
-    if (product.complementAccueilDe && product.complementAccueilDe.length) {
-      prestation.complementAccueil.libelleDe = product.complementAccueilDe;
-    }
-    if (product.complementAccueilNl && product.complementAccueilNl.length) {
-      prestation.complementAccueil.libelleNl = product.complementAccueilNl;
-    }
-    if (product.complementAccueilIt && product.complementAccueilIt.length) {
-      prestation.complementAccueil.libelleIt = product.complementAccueilIt;
-    }
-    rootFieldList.push('prestations.complementAccueil');
+if (product.complementAccueil === 'reset') {
+  prestation.complementAccueil = {}
+  rootFieldList.push('prestations.complementAccueil')
+} else if (product.complementAccueil && product.complementAccueil.length) {
+  prestation.complementAccueil = {}
+  prestation.complementAccueil.libelleFr = product.complementAccueil
+  if (product.complementAccueilEn && product.complementAccueilEn.length) {
+    prestation.complementAccueil.libelleEn = product.complementAccueilEn;
   }
+  if (product.complementAccueilDe && product.complementAccueilDe.length) {
+    prestation.complementAccueil.libelleDe = product.complementAccueilDe
+  }
+  if (product.complementAccueilNl && product.complementAccueilNl.length) {
+    prestation.complementAccueil.libelleNl = product.complementAccueilNl
+  }
+  if (product.complementAccueilIt && product.complementAccueilIt.length) {
+    prestation.complementAccueil.libelleIt = product.complementAccueilIt
+  }
+  rootFieldList.push('prestations.complementAccueil')
+}
 
   if (product.adaptedTourism && product.adaptedTourism.length) {
     prestation.tourismesAdaptes = this.buildTypeKeyArray(
