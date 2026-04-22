@@ -854,8 +854,18 @@ class Apidae
                 errMessage: err.message ? err.message : null,
                 specialIdSitra: product.specialIdSitra
               }
+
+              await Product.updateOne(
+                { _id: product.id },
+                {
+                  $set: {
+                    statusImport: -1,
+                    specialIdSitra: product.specialIdSitra
+                  }
+                }
+              )
               
-              if (config.debug && config.debug.logsFile && product.specialId == '904168') log.writeLog('APIDAE ERR =', err)
+              if (config.debug && config.debug.logsFile /*&& product.specialId == '904168'*/) log.writeLog('APIDAE ERR =', err)
 
               if (callback) {
                 return callback(err, finalData);
@@ -925,7 +935,7 @@ class Apidae
                   { _id: product.id },
                   {
                     $set: {
-                      statusImport: 4,
+                      statusImport: -1,
                       specialIdSitra: body.message
                     }
                   }
@@ -935,8 +945,9 @@ class Apidae
                   console.log('body = ', body)
                 }
 
+                if (config.debug && config.debug.logsFile) log.writeLog('APIDAE ERR NO MSG !DOUPDATE ', product.id)
                 console.log(
-                  `Error on creation - ${body} ${body.message} from Apidae > change statusImport = 4 for ${product.name}`
+                  `Error on creation - ${body} ${body.message} from Apidae > change statusImport = -1 for ${product.name}`
                 )
 
                 return callback(null, finalData)
@@ -962,15 +973,16 @@ class Apidae
                   { _id: product.id },
                   {
                     $set: {
-                      statusImport: 4,
+                      statusImport: -2,
                       specialIdSitra: body.message
                     }
                   }
                 )
 
                 console.log(
-                  `Error on creation - ${body.message} from Apidae > change statusImport = 4 for ${product.name}`
+                  `Error on creation - ${body.message} from Apidae > change statusImport = -2 for ${product.name}`
                 )
+                if (config.debug && config.debug.logsFile) log.writeLog('APIDAE ERR OBJET_TOURISTIQUE_NOT_FOUND ', product.id)
 
                 return callback(null, finalData)
               } catch (err) {

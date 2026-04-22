@@ -72,9 +72,17 @@ class ExportApidae
     
       try {
         let entities = await Entity.find({
-          importType: importType,
-          lastUpdate: { $gte: today.toDate() },
-          statusImport: { $in: [0, 1, 2] }
+          $or: [
+            {
+              importType: importType,
+              lastUpdate: { $gte: today.toDate() },
+              statusImport: { $in: [0, 1, 2] }
+            },
+            {
+              importType: importType,
+              statusImport: { $in: [-1, 4] }
+            }
+          ]
         }).sort({ 'linkedObject.isFather': -1 })
 
         if (config.debug && config.debug.logs) {

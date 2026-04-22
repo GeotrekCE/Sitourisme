@@ -207,50 +207,56 @@ class ImportGeotrekApi extends Import
     
     this.importData = new this.importModule(this.instanceApi)
     
-    console.log(chalk.green("Axiox Connex = ", geoTrekPath + urlNext))
-    const { data, status } = await this.instanceApi.get(geoTrekPath + urlNext)
-    if (status === 200) {
-      this.doUpsertAsync = await pify(this.doUpsert)
+    try {
+      console.log(chalk.green("Axiox Connex = ", geoTrekPath + urlNext))
+      const { data, status } = await this.instanceApi.get(geoTrekPath + urlNext)
+      if (status === 200) {
+        this.doUpsertAsync = await pify(this.doUpsert)
 
-      if (config.debug && config.debug.logs) console.log('Import page ' + page)
+        if (config.debug && config.debug.logs) console.log('Import page ' + page)
 
-      if (config.debug != undefined && config.debug.idGeo != 0) {
-        data.results = data
-      }
-
-      await this.importDatas(data.results, instance, this.labels, this.difficulties)
-
-      if (config.debug && config.debug.seeData) console.log('Data = ', data)
-
-      if (
-        (data.next && config.debug == undefined) ||
-        (data.next && config.debug.allpages == true && config.debug.idGeo == 0)
-      ) {
-        page++
-        this.executeQuery(page, instanceGeo, instance)
-      } else {
-        const membersToImport = []
-        Object.keys(configImportGEOTREK.geotrekInstance[instance].structures).forEach(function (
-          structure
-        ) {
-          membersToImport.push(configImportGEOTREK.geotrekInstance[instance].structures[structure].memberId)
-        })
-        console.log(chalk.green("Members To Import = ",membersToImport))
-
-        const options = {
-          exportType: 'AUTO',
-          membersToImport: membersToImport
+        if (config.debug != undefined && config.debug.idGeo != 0) {
+          data.results = data
         }
 
-        const ExportApidae = new exportApidae(this.Model)
-        ExportApidae.__exportSitraAuto('geotrek-api', options, () => {
-          if (config.debug && config.debug.logs)
-            console.log('end of export sitra auto!')
-          return
-        })
+        await this.importDatas(data.results, instance, this.labels, this.difficulties)
+
+        if (config.debug && config.debug.seeData) console.log('Data = ', data)
+
+        if (
+          (data.next && config.debug == undefined) ||
+          (data.next && config.debug.allpages == true && config.debug.idGeo == 0)
+        ) {
+          page++
+          await this.executeQuery(page, instanceGeo, instance)
+        } else {
+          const membersToImport = []
+          Object.keys(configImportGEOTREK.geotrekInstance[instance].structures).forEach(function (
+            structure
+          ) {
+            membersToImport.push(configImportGEOTREK.geotrekInstance[instance].structures[structure].memberId)
+          })
+          console.log(chalk.green("Members To Import = ",membersToImport))
+
+          const options = {
+            exportType: 'AUTO',
+            membersToImport: membersToImport
+          }
+
+          const ExportApidae = new exportApidae(this.Model)
+          ExportApidae.__exportSitraAuto('geotrek-api', options, () => {
+            if (config.debug && config.debug.logs)
+              console.log('end of export sitra auto!')
+            return
+          })
+        }
+      } else {
+        throw 'Erreur de connexion à Geotrek'
       }
-    } else {
-      throw 'Erreur de connexion à Geotrek'
+    } catch (error) {
+      // TODO REPORT ERROR
+      console.error('Erreur interne:', error.message)
+      
     }
   }
   
