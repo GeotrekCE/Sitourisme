@@ -2,6 +2,8 @@
 - Import différentiel [#53] (https://github.com/GeotrekCE/Sitourisme/issues/53)
 - Apidae Cooking > Entité de gestion et propriétaires [#130](https://github.com/GeotrekCE/Sitourisme/issues/130)
 - Import randos / Intégrer les lieux de renseignement dans les contacts [#52](https://github.com/GeotrekCE/Sitourisme/issues/52)
+- Champs dureeJournaliere deprecie [#123](https://github.com/GeotrekCE/Sitourisme/issues/123)
+- Erreur sur l'entité de gestion [#131](https://github.com/GeotrekCE/Sitourisme/issues/131)
 
 ## [2.4.1]
 - Listes numérotées dans le champs "Description" non prises en compte [#93](https://github.com/GeotrekCE/Sitourisme/issues/93)
