@@ -1232,10 +1232,6 @@ const _defaultSchema = {
   scope: {
     type: Number
   },
-  nomLieu: {
-    type: String,
-    trim: true
-  },
   category: [
     {
       type: Number
@@ -2021,6 +2017,10 @@ const _defaultSchema = {
   gestionSitraId : {
     type: Number
   },
-};
+  complementAccueil: {
+    type: String,
+    trim: true
+  },
+}
 
-exports.defaultSchema = _defaultSchema;
+exports.defaultSchema = _defaultSchema

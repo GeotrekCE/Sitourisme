@@ -21395,5 +21395,9 @@ module.exports = {
       id: 7450,
       labelFr: 'Espace Naturel Sensible'
     },
+    {
+      id: 6449,
+      labelFr: 'Oenorando'
+    },
   ]
 }

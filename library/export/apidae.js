@@ -4,6 +4,7 @@
 
 const _ = require('lodash'),
   path = require('path'),
+  log = require(path.resolve('./library/data/log.js')),
   moment = require('moment'),
   http = require('http'),
   https = require('https'),
@@ -17,7 +18,8 @@ const _ = require('lodash'),
   configSitraReference = require(path.resolve('./config/configSitraReference.js')),
   chalk = require('chalk'),
   fetch = require("node-fetch")
-  //fxp = require("fast-xml-parser")
+  //fxp = require("fast-xml-parser"),
+
 
 class Apidae
 {
@@ -806,7 +808,7 @@ class Apidae
           })
         }
 
-        if (config.debug && config.debug.seeData) console.log('PromiseRequestImage > datas = ', formData);
+        //if (config.debug && config.debug.seeData) console.log('PromiseRequestImage > datas = ', formData);
         if (config.debug && config.debug.idGeo != 0 && config.debug.idGeo != product.specialId) 
         {
           return callback(null, finalData);
@@ -814,6 +816,9 @@ class Apidae
           console.log('Api PUT = ', config.sitra.api.host, config.sitra.api.path);
         }
         
+        if (config.debug && config.debug.seeData) console.log('PromiseRequestImage > datas = ', formData)
+        if (config.debug && config.debug.logsFile && product.specialId == '904168') log.writeLog('GEOTREK = ' + product.specialId, formData.root)        
+
         request(
           {
             url: `https://${config.sitra.api.host}${config.sitra.api.path}`,
@@ -848,12 +853,27 @@ class Apidae
                 err,
                 errMessage: err.message ? err.message : null,
                 specialIdSitra: product.specialIdSitra
-              };
+              }
+
+              await Product.updateOne(
+                { _id: product.id },
+                {
+                  $set: {
+                    statusImport: -1,
+                    specialIdSitra: product.specialIdSitra
+                  }
+                }
+              )
+              
+              if (config.debug && config.debug.logsFile /*&& product.specialId == '904168'*/) log.writeLog('APIDAE ERR =', err)
+
               if (callback) {
                 return callback(err, finalData);
               }
             }
   
+            if (config.debug && config.debug.logsFile && product.specialId == '904168') log.writeLog('APIDAE REPONSE =', body)
+
             // Critères internes
             console.log('crit interne pour ', body.id, product.specialIdSitra)
             let specialIdSitraForCI = null
@@ -915,7 +935,7 @@ class Apidae
                   { _id: product.id },
                   {
                     $set: {
-                      statusImport: 4,
+                      statusImport: -1,
                       specialIdSitra: body.message
                     }
                   }
@@ -925,8 +945,9 @@ class Apidae
                   console.log('body = ', body)
                 }
 
+                if (config.debug && config.debug.logsFile) log.writeLog('APIDAE ERR NO MSG !DOUPDATE ', product.id)
                 console.log(
-                  `Error on creation - ${body} ${body.message} from Apidae > change statusImport = 4 for ${product.name}`
+                  `Error on creation - ${body} ${body.message} from Apidae > change statusImport = -1 for ${product.name}`
                 )
 
                 return callback(null, finalData)
@@ -952,15 +973,16 @@ class Apidae
                   { _id: product.id },
                   {
                     $set: {
-                      statusImport: 4,
+                      statusImport: -2,
                       specialIdSitra: body.message
                     }
                   }
                 )
 
                 console.log(
-                  `Error on creation - ${body.message} from Apidae > change statusImport = 4 for ${product.name}`
+                  `Error on creation - ${body.message} from Apidae > change statusImport = -2 for ${product.name}`
                 )
+                if (config.debug && config.debug.logsFile) log.writeLog('APIDAE ERR OBJET_TOURISTIQUE_NOT_FOUND ', product.id)
 
                 return callback(null, finalData)
               } catch (err) {
@@ -1270,12 +1292,6 @@ class Apidae
           if (typeof itinerary.distance === 'number') {
             blockItinerary.distance = product.itinerary.distance
             fieldList.push(blockCategory + '.' + blockField + '.distance')
-          }
-          if (typeof itinerary.dailyDuration === 'number') {
-            blockItinerary.dureeJournaliere = product.itinerary.dailyDuration
-            fieldList.push(
-              blockCategory + '.' + blockField + '.dureeJournaliere'
-            )
           }
           if (typeof itinerary.altitudeMaximum === 'number') {
             blockItinerary.altitudeMaximum = product.itinerary.altitudeMaximum
@@ -3507,23 +3523,26 @@ class Apidae
   rootFieldList.push('prestations.animauxAcceptes');
 /* TODO SPECIAL TREK*/
 
-  if (product.complementAccueil && product.complementAccueil.length) {
-    prestation.complementAccueil = {};
-    prestation.complementAccueil.libelleFr = product.complementAccueil;
-    if (product.complementAccueilEn && product.complementAccueilEn.length) {
-      prestation.complementAccueil.libelleEn = product.complementAccueilEn;
-    }
-    if (product.complementAccueilDe && product.complementAccueilDe.length) {
-      prestation.complementAccueil.libelleDe = product.complementAccueilDe;
-    }
-    if (product.complementAccueilNl && product.complementAccueilNl.length) {
-      prestation.complementAccueil.libelleNl = product.complementAccueilNl;
-    }
-    if (product.complementAccueilIt && product.complementAccueilIt.length) {
-      prestation.complementAccueil.libelleIt = product.complementAccueilIt;
-    }
-    rootFieldList.push('prestations.complementAccueil');
+if (product.complementAccueil === 'reset') {
+  prestation.complementAccueil = {}
+  rootFieldList.push('prestations.complementAccueil')
+} else if (product.complementAccueil && product.complementAccueil.length) {
+  prestation.complementAccueil = {}
+  prestation.complementAccueil.libelleFr = product.complementAccueil
+  if (product.complementAccueilEn && product.complementAccueilEn.length) {
+    prestation.complementAccueil.libelleEn = product.complementAccueilEn;
   }
+  if (product.complementAccueilDe && product.complementAccueilDe.length) {
+    prestation.complementAccueil.libelleDe = product.complementAccueilDe
+  }
+  if (product.complementAccueilNl && product.complementAccueilNl.length) {
+    prestation.complementAccueil.libelleNl = product.complementAccueilNl
+  }
+  if (product.complementAccueilIt && product.complementAccueilIt.length) {
+    prestation.complementAccueil.libelleIt = product.complementAccueilIt
+  }
+  rootFieldList.push('prestations.complementAccueil')
+}
 
   if (product.adaptedTourism && product.adaptedTourism.length) {
     prestation.tourismesAdaptes = this.buildTypeKeyArray(

@@ -16604,5 +16604,6 @@ exports.territory = {
   651718: { labelFr: 'Yvelines' },
   6706: { labelFr: 'Yvoire' },
   7449: { labelFr: 'Oenorando' },
+  6449: { labelFr: 'Oenorando' },
   7450: { labelFr: 'Espace Naturel Sensible' },
 };

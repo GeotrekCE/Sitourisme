@@ -2,6 +2,7 @@ const { exit } = require('process');
 
 const path = require('path'),
     chalk = require('chalk'),
+    log = require(path.resolve('./library/data/log.js')),
     axios = require('axios'),
     pify = require('pify'),
     striptags = require('striptags'),
@@ -120,10 +121,11 @@ class ImportGeotrekApi extends Import
             labelMappingId = configImportGEOTREK.geotrekInstance[instance].trek_label[item.id]
         }
 
-        if (configImportGEOTREK.geotrekInstance[instance].trek_typologie && 
-          configImportGEOTREK.geotrekInstance[instance].trek_typologie[item.id]) {
-            typologieMappingId = configImportGEOTREK.geotrekInstance[instance].trek_typologie[item.id]
-        }
+        const geotrekConf = configImportGEOTREK.geotrekInstance[instance]
+        typologieMappingId =
+          process.env.NODE_ENV === 'development' && geotrekConf.trek_typologieCooking?.[item.id]
+            ? geotrekConf.trek_typologieCooking[item.id]
+            : geotrekConf.trek_typologie?.[item.id]
 
         this.labels[item.id] = {
           fr: item.name.fr ? he.decode(striptags(item.name.fr)) + ' : ' +  he.decode(striptags(item.advice.fr)).replace(/[\r\n]+/g, '') : null,
@@ -177,7 +179,15 @@ class ImportGeotrekApi extends Import
       console.log('ImportGenericGeotrekApi.prototype.executeQuery - Trek Filtering on ', configImportGEOTREK.geotrekInstance[instance].trek_filtering)
       trekFiltering = configImportGEOTREK.geotrekInstance[instance].trek_filtering
     }
-    let geoTrekPath = '/' + this.importApi + '?format=json&' + trekFiltering
+
+    let geoTrekPath = '/' + this.importApi + '?format=json&' + trekFiltering + '&updated_after=' + new Date(Date.now() - 86400000).toLocaleDateString('en-CA')
+
+    if (this.importApi == 'trek' && configImportGEOTREK.geotrekInstance[instance].trek_syncFrom) {
+      geoTrekPath = '/' + this.importApi + '?format=json&' + trekFiltering + '&updated_after=' + configImportGEOTREK.geotrekInstance[instance].trek_syncFrom
+    }
+    if (this.importApi == 'trek' && configImportGEOTREK.geotrekInstance[instance].trek_syncFull) {
+      geoTrekPath = '/' + this.importApi + '?format=json&' + trekFiltering
+    }
     let urlNext = ''
 
     if (config.debug != undefined && config.debug.idGeo != 0) {
@@ -197,50 +207,56 @@ class ImportGeotrekApi extends Import
     
     this.importData = new this.importModule(this.instanceApi)
     
-    console.log(chalk.green("Axiox Connex = ", geoTrekPath + urlNext))
-    const { data, status } = await this.instanceApi.get(geoTrekPath + urlNext)
-    if (status === 200) {
-      this.doUpsertAsync = await pify(this.doUpsert)
+    try {
+      console.log(chalk.green("Axiox Connex = ", geoTrekPath + urlNext))
+      const { data, status } = await this.instanceApi.get(geoTrekPath + urlNext)
+      if (status === 200) {
+        this.doUpsertAsync = await pify(this.doUpsert)
 
-      if (config.debug && config.debug.logs) console.log('Import page ' + page)
+        if (config.debug && config.debug.logs) console.log('Import page ' + page)
 
-      if (config.debug != undefined && config.debug.idGeo != 0) {
-        data.results = data
-      }
-
-      await this.importDatas(data.results, instance, this.labels, this.difficulties)
-
-      if (config.debug && config.debug.seeData) console.log('Data = ', data)
-
-      if (
-        (data.next && config.debug == undefined) ||
-        (data.next && config.debug.allpages == true && config.debug.idGeo == 0)
-      ) {
-        page++
-        this.executeQuery(page, instanceGeo, instance)
-      } else {
-        const membersToImport = []
-        Object.keys(configImportGEOTREK.geotrekInstance[instance].structures).forEach(function (
-          structure
-        ) {
-          membersToImport.push(configImportGEOTREK.geotrekInstance[instance].structures[structure].memberId)
-        })
-        console.log(chalk.green("Members To Import = ",membersToImport))
-
-        const options = {
-          exportType: 'AUTO',
-          membersToImport: membersToImport
+        if (config.debug != undefined && config.debug.idGeo != 0) {
+          data.results = data
         }
 
-        const ExportApidae = new exportApidae(this.Model)
-        ExportApidae.__exportSitraAuto('geotrek-api', options, () => {
-          if (config.debug && config.debug.logs)
-            console.log('end of export sitra auto!')
-          return
-        })
+        await this.importDatas(data.results, instance, this.labels, this.difficulties)
+
+        if (config.debug && config.debug.seeData) console.log('Data = ', data)
+
+        if (
+          (data.next && config.debug == undefined) ||
+          (data.next && config.debug.allpages == true && config.debug.idGeo == 0)
+        ) {
+          page++
+          await this.executeQuery(page, instanceGeo, instance)
+        } else {
+          const membersToImport = []
+          Object.keys(configImportGEOTREK.geotrekInstance[instance].structures).forEach(function (
+            structure
+          ) {
+            membersToImport.push(configImportGEOTREK.geotrekInstance[instance].structures[structure].memberId)
+          })
+          console.log(chalk.green("Members To Import = ",membersToImport))
+
+          const options = {
+            exportType: 'AUTO',
+            membersToImport: membersToImport
+          }
+
+          const ExportApidae = new exportApidae(this.Model)
+          ExportApidae.__exportSitraAuto('geotrek-api', options, () => {
+            if (config.debug && config.debug.logs)
+              console.log('end of export sitra auto!')
+            return
+          })
+        }
+      } else {
+        throw 'Erreur de connexion à Geotrek'
       }
-    } else {
-      throw 'Erreur de connexion à Geotrek'
+    } catch (error) {
+      // TODO REPORT ERROR
+      console.error('Erreur interne:', error.message)
+      
     }
   }
   
@@ -316,35 +332,41 @@ class ImportGeotrekApi extends Import
       console.log(chalk.green('Config = ', configImportGEOTREK.geotrekInstance[structure].structures[element.structure]));
 
       if (this.member && 
-        (configImportGEOTREK.geotrekInstance[structure].structures[element.structure].production.trek ||
-        configImportGEOTREK.geotrekInstance[structure].structures[element.structure].production.event ||
-        configImportGEOTREK.geotrekInstance[structure].structures[element.structure].production.touristiccontent)
+        (configImportGEOTREK.geotrekInstance[structure].structures[element.structure].production.syncTrek ||
+        configImportGEOTREK.geotrekInstance[structure].structures[element.structure].production.syncEvent ||
+        configImportGEOTREK.geotrekInstance[structure].structures[element.structure].production.syncTouristiccontent)
       ) {
         this.configData = {
           specialId: null,
           codeType: (this.moduleName == 'events') ? 'F&M' : 'EQU',
           subType: (this.moduleName == 'events') ? '1974' : '2988', // 1974="Distractions et loisirs" 2988="Loisirs sportifs"
           member: this.member
-        };
+        }
 
-        let additionalInformation = {};
-        if (element.information_desk && element.information_desks.length) {
+        let additionalInformation = {}
+        if (element.information_desks && element.information_desks.length) {
           const { data } = await this.instanceApi.get(
             `/informationdesk/${_.last(element.information_desks)}/?format=json`
-          );
+          )
           if (data) {
-            additionalInformation = data;
+            additionalInformation = data
           }
         }
         
         additionalInformation.labels = labels
         additionalInformation.difficulties = difficulties
+
+        const proprietaireId =
+          process.env.NODE_ENV === 'development' &&
+          configImportGEOTREK.geotrekInstance[structure].structures[element.structure].proprietaireIdCooking
+            ? configImportGEOTREK.geotrekInstance[structure].structures[element.structure].proprietaireIdCooking
+            : configImportGEOTREK.geotrekInstance[structure].structures[element.structure].proprietaireId
         
         let product = await this.importData.formatDatas(
           element, 
           additionalInformation, 
           structure, 
-          configImportGEOTREK.geotrekInstance[structure].structures[element.structure].proprietaireId, 
+          proprietaireId, 
           this.importType, 
           this.configData, 
           this.user
@@ -355,7 +377,7 @@ class ImportGeotrekApi extends Import
           product.legalEntity = this.getLegalEntity(element, product, structure, product.district)
           product.gestionSitraId = product.district
         } else {
-          product.legalEntity = this.getLegalEntity(element, product, structure)
+          product.legalEntity = this.getLegalEntity(element, product, structure, 0)
           if (process.env.NODE_ENV == 'development' && configImportGEOTREK.geotrekInstance[structure].structures[element.structure].specialIdSitraCooking) {
             product.gestionSitraId = configImportGEOTREK.geotrekInstance[structure].structures[element.structure].specialIdSitraCooking
           } else {
@@ -369,7 +391,8 @@ class ImportGeotrekApi extends Import
         }
         product.rateCompletion = this.calculateRateCompletion(product);
 
-        console.log(`GeoTrek API => import specialId : ${product.specialId}`, product);
+        if (config.debug && config.debug.seeData) console.log(`GeoTrek API => import specialId : ${product.specialId}`, product)
+        if (config.debug && config.debug.logsFile) log.writeLog('IMPORT GEOTREK = ' + product.specialId + ' = ' + JSON.stringify(product))
 
         await this.doUpsertAsync(
           product,
@@ -410,7 +433,10 @@ class ImportGeotrekApi extends Import
 
     if (conf) {
       
-      if (district) conf.specialIdSitra = district
+      const effectiveSpecialIdSitra =
+        district > 0
+          ? district
+          : conf.specialIdSitra
 
       legalEntity = {
         specialId: conf.specialId,
@@ -424,7 +450,7 @@ class ImportGeotrekApi extends Import
           city: conf.city,
           insee: conf.insee
         },
-        specialIdSitra:  (process.env.NODE_ENV == 'development' && conf.specialIdSitraCooking) ? conf.specialIdSitraCooking : conf.specialIdSitra,
+        specialIdSitra:  (process.env.NODE_ENV == 'development' && conf.specialIdSitraCooking) ? conf.specialIdSitraCooking : effectiveSpecialIdSitra,
         statusImport: conf.statusImport
       };
     }

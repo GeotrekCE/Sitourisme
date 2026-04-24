@@ -376,12 +376,14 @@ class EntityFactory
 
   getStatusImportReference(data) {
     return {
+     -2: 'liaison Apidae cassée',
+     -1: 'erreur Apidae', 
       0: 'non importable',
       1: 'importable',
       2: 'importé',
       3: 'supprimé',
       4: 'passerelle arrêtée'
-    };
+    }
   }
 
   getSitraMemberReference(data) {
