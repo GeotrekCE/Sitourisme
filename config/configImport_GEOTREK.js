@@ -431,6 +431,7 @@ exports.geotrekInstance = {
       4: 3333,
       6: 4201,
       8: 3333,
+      14: 6224,
       15: 3283
     },
     itineraireType : {
