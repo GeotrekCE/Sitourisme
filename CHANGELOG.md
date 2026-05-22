@@ -1,3 +1,7 @@
+## [2.5.1]
+- Import différentiel [#53] (https://github.com/GeotrekCE/Sitourisme/issues/53)
+- Config Trek Ht Loire Ajout itinéraire Gravel
+
 ## [2.5.0]
 - Import différentiel [#53] (https://github.com/GeotrekCE/Sitourisme/issues/53)
 - Apidae Cooking > Entité de gestion et propriétaires [#130](https://github.com/GeotrekCE/Sitourisme/issues/130)

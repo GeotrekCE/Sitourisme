@@ -174,13 +174,26 @@ class ImportGeotrekApi extends Import
     if (config.debug && config.debug.logs)
       console.log('ImportGenericGeotrekApi.prototype.executeQuery')
 
+    const lastSync = await this.getLastSync(instance)
+
+    let syncFrom = new Date(
+      Date.now() - 86400000
+    ).toLocaleDateString('en-CA')
+
+    if (lastSync && lastSync.lastSyncDate) {
+      syncFrom = new Date(
+        new Date(lastSync.lastSyncDate).getTime() - 86400000
+      ).toLocaleDateString('en-CA');
+    }
+    console.log('InstanceSync = ', instance, syncFrom);
+
     let trekFiltering = null
     if (this.importApi == 'trek' && configImportGEOTREK.geotrekInstance[instance].trek_filtering) {
       console.log('ImportGenericGeotrekApi.prototype.executeQuery - Trek Filtering on ', configImportGEOTREK.geotrekInstance[instance].trek_filtering)
       trekFiltering = configImportGEOTREK.geotrekInstance[instance].trek_filtering
     }
 
-    let geoTrekPath = '/' + this.importApi + '?format=json&' + trekFiltering + '&updated_after=' + new Date(Date.now() - 86400000).toLocaleDateString('en-CA')
+    let geoTrekPath = '/' + this.importApi + '?format=json&' + trekFiltering + '&updated_after=' + syncFrom
 
     if (this.importApi == 'trek' && configImportGEOTREK.geotrekInstance[instance].trek_syncFrom) {
       geoTrekPath = '/' + this.importApi + '?format=json&' + trekFiltering + '&updated_after=' + configImportGEOTREK.geotrekInstance[instance].trek_syncFrom
@@ -222,6 +235,8 @@ class ImportGeotrekApi extends Import
         await this.importDatas(data.results, instance, this.labels, this.difficulties)
 
         if (config.debug && config.debug.seeData) console.log('Data = ', data)
+
+        await this.updateInstanceSync(instance)
 
         if (
           (data.next && config.debug == undefined) ||

@@ -3,8 +3,9 @@
 const _ = require('lodash'),
   path = require('path'),
   DataString = require(path.resolve('./library/data/manipulate.js')),
-  configSitraTownByInsee = require(path.resolve('./config/configSitraTownByInsee.js'))
-
+  configSitraTownByInsee = require(path.resolve('./config/configSitraTownByInsee.js')),
+  InstanceSyncModel = require(path.resolve('./modules/core/server/models/instanceSync.model'))
+  
 class Import
 {
   translate(key, ln) {
@@ -368,6 +369,38 @@ class Import
 
     return url;
   }
+
+  async updateInstanceSync (instanceId) {
+    try {
+      return await InstanceSyncModel.findOneAndUpdate(
+        { instanceId: instanceId },
+        {
+          $set: {
+            lastSyncDate: new Date()
+          }
+        },
+        {
+          upsert: true,
+          new: true
+        }
+      )
+    } catch (err) {
+      console.error('Erreur updateInstanceSync :', err)
+      throw err
+    }
+  }
+
+  async getLastSync(instanceId) {
+    try {
+      return await InstanceSyncModel.findOne({
+        instanceId: instanceId
+      })
+    } catch (err) {
+      console.error('Erreur getLastSync :', err)
+      throw err
+    }
+  }
+
 }
 
 module.exports = Import;
