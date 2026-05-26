@@ -64,8 +64,8 @@ exports.trek_theme = {}
 exports.geotrekInstance = {
   0: {
     geotrekUrl : 'https://geotrek-admin.ecrins-parcnational.fr/api/v2',
-    trek_syncFull : false,
-    trek_syncFrom : '', //Blank for today = Production State - or a value ex : 2026-03-12
+    syncFull : false,
+    syncFrom : '', //Blank for today = Production State - or a value ex : 2026-03-12
     structures : {
       1: {
         specialId: 'SITRA2_STR_5411158',
@@ -198,8 +198,8 @@ exports.geotrekInstance = {
   },
   1 : {
     geotrekUrl : 'https://admin.sportsnature.hauteloire.fr/api/v2',
-    trek_syncFull : false,
-    trek_syncFrom : '',
+    syncFull : false,
+    syncFrom : '',
     structures : {
       1: { // CDRP43
         specialId: 'Haute-Loire CDRP43',
@@ -458,8 +458,8 @@ exports.geotrekInstance = {
   },
   2 : {
     geotrekUrl : 'https://geotrek.nature-haute-savoie.fr/api/v2/',
-    trek_syncFull : false,
-    trek_syncFrom : '',
+    syncFull : false,
+    syncFrom : '',
     structures : {
       1: { // CEN74
         specialId: 'CEN74',
@@ -496,8 +496,8 @@ exports.geotrekInstance = {
   },
   3 : {
     geotrekUrl : 'https://admin.cheminsdesparcs.fr/api/v2',
-    trek_syncFull : false,
-    trek_syncFrom : '',
+    syncFull : false,
+    syncFrom : '',
     structures : {
       1: {
         production: {
@@ -657,8 +657,8 @@ exports.geotrekInstance = {
   },
   4 : {
     geotrekUrl : 'https://geotrek-admin.alpesrando.net/api/v2',
-    trek_syncFull : false,
-    trek_syncFrom : '',
+    syncFull : false,
+    syncFrom : '',
     structures : {
       1: {
         production: {
@@ -732,8 +732,8 @@ exports.geotrekInstance = {
   },
   5 : {
     geotrekUrl : 'https://admin.sisteron-buech.fr/api/v2',
-    trek_syncFull : false,
-    trek_syncFrom : '',
+    syncFull : false,
+    syncFrom : '',
     structures : {
       2: {
         specialId: 'OTSisteronBuech',
@@ -771,8 +771,8 @@ exports.geotrekInstance = {
   },
   6 : {
     geotrekUrl : 'https://gardpleinenature-admin.gard.fr/api/v2',
-    trek_syncFull : false,
-    trek_syncFrom : '',
+    syncFull : false,
+    syncFrom : '',
     structures : {
       1: {
         specialId: 'Département',
@@ -869,8 +869,8 @@ exports.geotrekInstance = {
   },
   7 : {
     geotrekUrl : 'https://geotrekadmin.tarn.fr/api/v2',
-    trek_syncFull : false,
-    trek_syncFrom : '',
+    syncFull : false,
+    syncFrom : '',
     structures : {
       1: {
         specialId: 'SITRA2_STR_574511',
@@ -1228,8 +1228,8 @@ exports.geotrekInstance = {
   },
   8 : {
     geotrekUrl : 'https://admin.destination-parc-monts-ardeche.fr/api/v2/',
-    trek_syncFull : false,
-    trek_syncFrom : '',
+    syncFull : false,
+    syncFrom : '',
     structures : {
       1: {
         specialId: '07AASOR100506_struct',
@@ -1451,8 +1451,8 @@ exports.geotrekInstance = {
   },
   9 : {
     geotrekUrl : 'https://geotrek-admin.portcros-parcnational.fr/api/v2/',
-    trek_syncFull : false,
-    trek_syncFrom : '',
+    syncFull : false,
+    syncFrom : '',
     structures : {
       1: {
         specialId: 'SITRA2_STR_5214782',
@@ -1482,8 +1482,8 @@ exports.geotrekInstance = {
   },
   10 : {
     geotrekUrl : 'https://snvadmin.var.fr/api/v2',
-    trek_syncFull : false,
-    trek_syncFrom : '',
+    syncFull : false,
+    syncFrom : '',
     structures : {
       1: {
         specialId: 'SITRA2_STR_5171183',
@@ -1521,8 +1521,8 @@ exports.geotrekInstance = {
   },
   11 : {
     geotrekUrl : 'https://geotrek.guadeloupe-parcnational.fr/api/v2',
-    trek_syncFull : false,
-    trek_syncFrom : '',
+    syncFull : false,
+    syncFrom : '',
     structures : {
       1: {
         specialId: 'SITRA2_STR_7045769',

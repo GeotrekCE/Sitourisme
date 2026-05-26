@@ -183,9 +183,11 @@ class ImportGeotrekApi extends Import
     if (lastSync && lastSync.lastSyncDate) {
       syncFrom = new Date(
         new Date(lastSync.lastSyncDate).getTime() - 86400000
-      ).toLocaleDateString('en-CA');
+      ).toLocaleDateString('en-CA')
     }
-    console.log('InstanceSync = ', instance, syncFrom);
+    
+    if (config.debug && config.debug.logs)
+      console.log('InstanceSync = ', instance, syncFrom)
 
     let trekFiltering = null
     if (this.importApi == 'trek' && configImportGEOTREK.geotrekInstance[instance].trek_filtering) {
@@ -195,10 +197,10 @@ class ImportGeotrekApi extends Import
 
     let geoTrekPath = '/' + this.importApi + '?format=json&' + trekFiltering + '&updated_after=' + syncFrom
 
-    if (this.importApi == 'trek' && configImportGEOTREK.geotrekInstance[instance].trek_syncFrom) {
-      geoTrekPath = '/' + this.importApi + '?format=json&' + trekFiltering + '&updated_after=' + configImportGEOTREK.geotrekInstance[instance].trek_syncFrom
+    if (configImportGEOTREK.geotrekInstance[instance].syncFrom) {
+      geoTrekPath = '/' + this.importApi + '?format=json&' + trekFiltering + '&updated_after=' + configImportGEOTREK.geotrekInstance[instance].shiftyncFrom
     }
-    if (this.importApi == 'trek' && configImportGEOTREK.geotrekInstance[instance].trek_syncFull) {
+    if (configImportGEOTREK.geotrekInstance[instance].syncFull) {
       geoTrekPath = '/' + this.importApi + '?format=json&' + trekFiltering
     }
     let urlNext = ''
