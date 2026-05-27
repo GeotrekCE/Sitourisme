@@ -945,7 +945,7 @@ class Apidae
                   console.log('body = ', body)
                 }
 
-                if (config.debug && config.debug.logsFile) log.writeLog('APIDAE ERR NO MSG !DOUPDATE ', product.id)
+                if (config.debug && config.debug.logsFile) log.writeLog('APIDAE ERR !DOUPDATE ' + body.message + ' > ' + product.specialId)
                 console.log(
                   `Error on creation - ${body} ${body.message} from Apidae > change statusImport = -1 for ${product.name}`
                 )
@@ -3803,14 +3803,14 @@ if (product.complementAccueil === 'reset') {
           break;
 
         case 'information':
-          if (!finalLegalEntity.informations) {
+          /*if (!finalLegalEntity.informations) {
             finalLegalEntity.informations = {};
           }
           
           finalLegalEntity.informations.structureInformation = {
             type: 'STRUCTURE',
             id: gestionSitraId
-          };
+          };*/  
           break;
 
         case 'reservation':

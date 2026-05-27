@@ -1,3 +1,6 @@
+## [2.5.2]
+- Import randos / Intégrer les lieux de renseignement dans les contacts [#52](https://github.com/GeotrekCE/Sitourisme/issues/52)
+
 ## [2.5.1]
 - Import différentiel [#53] (https://github.com/GeotrekCE/Sitourisme/issues/53)
 - Config Trek Ht Loire Ajout itinéraire Gravel
