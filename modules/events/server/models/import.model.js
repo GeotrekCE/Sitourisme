@@ -30,6 +30,7 @@ class importModel extends geotrek
       typeCode: configData.codeType,
       type: configImportGEOTREK.types[configData.codeType],
       specialId: element.id,
+      instanceStructureGeotrekId: `${structure}_${element.structure}_${element.id}`,
       district: this.getDistrict(element, structure),
       subType: configData.subType,
       category: this.getCategory(element, structure),

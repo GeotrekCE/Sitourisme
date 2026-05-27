@@ -277,22 +277,22 @@ class ImportGeotrekApi extends Import
     }
   }
   
-  doUpsert(datas, specialId, importType, next)
+  doUpsert(datas, specialId, importType, instanceStructureGeotrekId, next)
   {
     if (config.debug && config.debug.logs)
-      console.log('importGeneric - doUpsert',datas.name, this.cgt);
+      console.log('importGeneric - doUpsert',datas.name, this.cgt, ' SpecialId = ', specialId, ' instanceStructureGeotrekId = ', instanceStructureGeotrekId)
   
-    this.Model.doUpsert(datas, specialId, importType, this.Model, this.EntityServer, this.cgt, function (err, data) {
-      if (config.debug && config.debug.logs) console.log('>>> cb doUpsert');
+    this.Model.doUpsert(datas, specialId, instanceStructureGeotrekId, importType, this.Model, this.EntityServer, this.cgt, function (err, data) {
+      if (config.debug && config.debug.logs) console.log('>>> cb doUpsert')
       if (err) {
         console.log(
           'Error in doUpsert() : Upsert failed for event : ',
           datas.specialId
-        );
+        )
       }
-      if (config.debug && config.debug.logs) console.log('Next !');
-      next(null, data);
-    });
+      if (config.debug && config.debug.logs) console.log('Next ! ')
+      next(null, data)
+    })
   }
   
   async importDatas(listElement, structure, labels, difficulties)
@@ -414,8 +414,9 @@ class ImportGeotrekApi extends Import
         await this.doUpsertAsync(
           product,
           product.specialId,
-          product.importType
-        );
+          product.importType,
+          product.instanceStructureGeotrekId,
+        )
       } else {
         console.log(
           `GeoTrek API => NOT import structure : ${element.structure}`
