@@ -69,17 +69,32 @@ class EntityServer
           callback,
         ) {
           console.log('SAVE1 OK DATAS', datas.name, cgt)
-          try {
-            let docs = await Model.find({ instanceStructureGeotrekId, importType })
+          try { 
+            let doc
+            if (instanceStructureGeotrekId !== undefined) {
+              doc = await Model.findOne({ instanceStructureGeotrekId })
+            }
 
-            if (docs.length == 0) {
+            if (!doc) {  
               console.log('>> SAVE1 SEARCH ON OLD KEY')
-              docs = await Model.find({ specialId, importType })
+              //docs = await Model.find({ specialId, importType })
+
+              doc = await Model.findOne({
+                specialId,
+                importType,
+                instanceStructureGeotrekId: { $exists: false }
+              })
+
+              if (doc) {
+                console.log('>> MIGRATE OLD DOC')
+                doc.instanceStructureGeotrekId = instanceStructureGeotrekId
+                await doc.save()
+              }
             }
 
             let data
-            if (docs.length > 0) {
-              data = docs[0]
+            if (doc) {
+              data = doc
               data.set(datas)
             } else {
               data = new Model(datas)
