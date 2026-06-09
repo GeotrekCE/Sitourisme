@@ -198,7 +198,7 @@ class ImportGeotrekApi extends Import
     let geoTrekPath = '/' + this.importApi + '?format=json&' + trekFiltering + '&updated_after=' + syncFrom
 
     if (configImportGEOTREK.geotrekInstance[instance].syncFrom) {
-      geoTrekPath = '/' + this.importApi + '?format=json&' + trekFiltering + '&updated_after=' + configImportGEOTREK.geotrekInstance[instance].shiftyncFrom
+      geoTrekPath = '/' + this.importApi + '?format=json&' + trekFiltering + '&updated_after=' + configImportGEOTREK.geotrekInstance[instance].syncFrom
     }
     if (configImportGEOTREK.geotrekInstance[instance].syncFull) {
       geoTrekPath = '/' + this.importApi + '?format=json&' + trekFiltering
