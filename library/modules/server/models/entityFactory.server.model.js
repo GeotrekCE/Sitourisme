@@ -196,52 +196,6 @@ class EntityFactory
     return alert;
   }
 
-  doUpsert(datas, specialId, importType, callback) {
-    console.log('>>>>>>>>>NOT USED, doUpsert FROM entityServer ', this.name);
-    const Model = mongoose.model(this.name);
-//    const LegalEntity = mongoose.model('LegalEntity');
-    
-    let params = {};
-
-    // Avoid to duplicate legalEntities - address is the matching key
-    if (
-      this.name === 'LegalEntity' &&
-      (datas.address.address1 || datas.address.address2)
-    ) {
-      params = {
-        'address.address1': datas.address.address1,
-        'address.address2': datas.address.address2,
-        'address.city': datas.address.city,
-        'address.insee': datas.address.insee
-      };
-    } else {
-      params = { specialId, importType };
-    }
-
-    Model.find(params, (err, docs) => {
-      if (err) {
-        console.log('Error in ' + this.name + ' doUpsert() : ' + err);
-        if (callback) {
-          callback(err);
-        }
-      } else {
-        if (datas.legalEntity && datas.legalEntity.length) {
-          _.forEach(datas.legalEntity, function (legalEntity, ind) {
-            if (legalEntity.product && !legalEntity.product._id) {
-              /*datas.legalEntity[ind].product = new LegalEntity(
-                legalEntity.product
-              );*/
-              console.log('New LegalEntitty >>>>> ', legalEntity.product);
-            }
-          });
-        }
-        const data =
-          docs.length > 0 ? _.extend(docs[0], datas) : new Model(datas);
-        Model.save(data, callback);
-      }
-    });
-  }
-
   exportSitra(datas, options, callback) {
     let optionsExportSitra = options || {};
     

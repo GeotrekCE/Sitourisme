@@ -77,9 +77,10 @@ class ImportGeotrekApi extends Import
             return false
           })
         }
-  
+        if (config.debug && config.debug.logsFile) log.writeLog('before executeQuery from import')
+
         me.executeQuery(
-          0,
+          1,
           configImportGEOTREK.geotrekInstance[instance].geotrekUrl,
           instance
         ).catch((err) => {
@@ -198,7 +199,7 @@ class ImportGeotrekApi extends Import
     let geoTrekPath = '/' + this.importApi + '?format=json&' + trekFiltering + '&updated_after=' + syncFrom
 
     if (configImportGEOTREK.geotrekInstance[instance].syncFrom) {
-      geoTrekPath = '/' + this.importApi + '?format=json&' + trekFiltering + '&updated_after=' + configImportGEOTREK.geotrekInstance[instance].shiftyncFrom
+      geoTrekPath = '/' + this.importApi + '?format=json&' + trekFiltering + '&updated_after=' + configImportGEOTREK.geotrekInstance[instance].syncFrom
     }
     if (configImportGEOTREK.geotrekInstance[instance].syncFull) {
       geoTrekPath = '/' + this.importApi + '?format=json&' + trekFiltering
@@ -210,8 +211,10 @@ class ImportGeotrekApi extends Import
       if (config.debug && config.debug.logs)
         console.log('GeoPath = ', geoTrekPath)
     } else {
-      urlNext = page != 0 ? '&page=' + page : ''
+      urlNext = '&page=' + page
     }
+
+    if (config.debug && config.debug.logsFile) log.writeLog('before axios = ' + geoTrekPath + urlNext)
 
     this.instanceApi = axios.create({
       baseURL: instanceGeo,
@@ -233,6 +236,7 @@ class ImportGeotrekApi extends Import
         if (config.debug != undefined && config.debug.idGeo != 0) {
           data.results = data
         }
+        if (config.debug && config.debug.logsFile) log.writeLog('before importDatas = ' + data.results.length)
 
         await this.importDatas(data.results, instance, this.labels, this.difficulties)
 
@@ -277,22 +281,22 @@ class ImportGeotrekApi extends Import
     }
   }
   
-  doUpsert(datas, specialId, importType, next)
+  doUpsert(datas, specialId, importType, instanceStructureGeotrekId, next)
   {
     if (config.debug && config.debug.logs)
-      console.log('importGeneric - doUpsert',datas.name, this.cgt);
+      console.log('importGeneric - doUpsert',datas.name, this.cgt, ' SpecialId = ', specialId, ' instanceStructureGeotrekId = ', instanceStructureGeotrekId)
   
-    this.Model.doUpsert(datas, specialId, importType, this.Model, this.EntityServer, this.cgt, function (err, data) {
-      if (config.debug && config.debug.logs) console.log('>>> cb doUpsert');
+    this.Model.doUpsert(datas, specialId, instanceStructureGeotrekId, importType, this.Model, this.EntityServer, this.cgt, function (err, data) {
+      if (config.debug && config.debug.logs) console.log('>>> cb doUpsert')
       if (err) {
         console.log(
           'Error in doUpsert() : Upsert failed for event : ',
           datas.specialId
-        );
+        )
       }
-      if (config.debug && config.debug.logs) console.log('Next !');
-      next(null, data);
-    });
+      if (config.debug && config.debug.logs) console.log('Next ! ')
+      next(null, data)
+    })
   }
   
   async importDatas(listElement, structure, labels, difficulties)
@@ -324,6 +328,8 @@ class ImportGeotrekApi extends Import
         delete element.steps;
         delete element.geometry;
       }
+
+      if (config.debug && config.debug.logsFile) log.writeLog('importDatas IMPORT GEOTREK = ' + element.id)
       
       console.log(
         chalk.green('struc = ', structure, ' elem = ', element.structure)
@@ -414,21 +420,22 @@ class ImportGeotrekApi extends Import
         await this.doUpsertAsync(
           product,
           product.specialId,
-          product.importType
-        );
+          product.importType,
+          product.instanceStructureGeotrekId,
+        )
       } else {
         console.log(
           `GeoTrek API => NOT import structure : ${element.structure}`
         );
       }
       if (config.debug == undefined || config.debug.idGeo == 0) {
-        return this.importDatas(listElement, structure, labels, difficulties);
+        return await this.importDatas(listElement, structure, labels, difficulties)
       } else {
-        return;
+        return
       }
     } else {
-      console.log("Fin de l'import");
-      return;
+      console.log("Fin de l'import")
+      return
     }
   }
   

@@ -817,9 +817,9 @@ class Apidae
         }
         
         if (config.debug && config.debug.seeData) console.log('PromiseRequestImage > datas = ', formData)
-        if (config.debug && config.debug.logsFile && product.specialId == '904168') log.writeLog('GEOTREK = ' + product.specialId, formData.root)        
+        if (config.debug && config.debug.logsFile) log.writeLog('GEOTREK TO APIDAE = ' + product.specialId)
 
-        request(
+        await request(
           {
             url: `https://${config.sitra.api.host}${config.sitra.api.path}`,
             method: 'PUT',
@@ -838,6 +838,9 @@ class Apidae
             }
             console.log(body);
             console.log("****"+product.id);
+
+            if (config.debug && config.debug.logsFile) log.writeLog('REPONSE GEOTREK TO APIDAE = ' + product.specialId)
+
             //console.log('FormData= ',formData);
             // si erreur http (pas pour une erreur apidae)
             if (err) {
@@ -945,7 +948,7 @@ class Apidae
                   console.log('body = ', body)
                 }
 
-                if (config.debug && config.debug.logsFile) log.writeLog('APIDAE ERR NO MSG !DOUPDATE ', product.id)
+                if (config.debug && config.debug.logsFile) log.writeLog('APIDAE ERR !DOUPDATE ' + body.message + ' > ' + product.specialId)
                 console.log(
                   `Error on creation - ${body} ${body.message} from Apidae > change statusImport = -1 for ${product.name}`
                 )
@@ -1009,6 +1012,8 @@ class Apidae
             if (config.debug && config.debug.logProductExports) {
               me.__logExport(product, success, body)
             }
+
+            if (config.debug && config.debug.logsFile) log.writeLog('FINAL GEOTREK TO APIDAE = ' + product.specialId)
 
             return callback(null, finalData)
           }
@@ -3803,14 +3808,14 @@ if (product.complementAccueil === 'reset') {
           break;
 
         case 'information':
-          if (!finalLegalEntity.informations) {
+          /*if (!finalLegalEntity.informations) {
             finalLegalEntity.informations = {};
           }
           
           finalLegalEntity.informations.structureInformation = {
             type: 'STRUCTURE',
             id: gestionSitraId
-          };
+          };*/  
           break;
 
         case 'reservation':

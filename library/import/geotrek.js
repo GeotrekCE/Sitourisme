@@ -121,7 +121,7 @@ class Import
       console.error("Zipcode missing for this Insee code city : " + insee_field);
     }
     const address = {
-      address1: (additionalElement) ? additionalElement.street : null,
+      address1: /*(additionalElement) ? additionalElement.street :*/ null,
       address2: null,
       address3: null,
       cedex: null,
