@@ -817,9 +817,9 @@ class Apidae
         }
         
         if (config.debug && config.debug.seeData) console.log('PromiseRequestImage > datas = ', formData)
-        if (config.debug && config.debug.logsFile && product.specialId == '904168') log.writeLog('GEOTREK = ' + product.specialId, formData.root)        
+        if (config.debug && config.debug.logsFile) log.writeLog('GEOTREK TO APIDAE = ' + product.specialId)
 
-        request(
+        await request(
           {
             url: `https://${config.sitra.api.host}${config.sitra.api.path}`,
             method: 'PUT',
@@ -838,6 +838,9 @@ class Apidae
             }
             console.log(body);
             console.log("****"+product.id);
+
+            if (config.debug && config.debug.logsFile) log.writeLog('REPONSE GEOTREK TO APIDAE = ' + product.specialId)
+
             //console.log('FormData= ',formData);
             // si erreur http (pas pour une erreur apidae)
             if (err) {
@@ -1009,6 +1012,8 @@ class Apidae
             if (config.debug && config.debug.logProductExports) {
               me.__logExport(product, success, body)
             }
+
+            if (config.debug && config.debug.logsFile) log.writeLog('FINAL GEOTREK TO APIDAE = ' + product.specialId)
 
             return callback(null, finalData)
           }
