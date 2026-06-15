@@ -839,7 +839,7 @@ class Apidae
             console.log(body);
             console.log("****"+product.id);
 
-            if (config.debug && config.debug.logsFile) log.writeLog('REPONSE GEOTREK TO APIDAE = ' + product.specialId)
+            if (config.debug && config.debug.logsFile) log.writeLog('REPONSE GEOTREK TO APIDAE = ' + product.specialId + ' ' + product.specialIdSitra)
 
             //console.log('FormData= ',formData);
             // si erreur http (pas pour une erreur apidae)
@@ -1013,7 +1013,7 @@ class Apidae
               me.__logExport(product, success, body)
             }
 
-            if (config.debug && config.debug.logsFile) log.writeLog('FINAL GEOTREK TO APIDAE = ' + product.specialId)
+            if (config.debug && config.debug.logsFile) log.writeLog('FINAL GEOTREK TO APIDAE = ' + product.specialId + ' ' + product.specialIdSitra)
 
             return callback(null, finalData)
           }
@@ -1022,6 +1022,31 @@ class Apidae
       .catch(function (error) {
         console.error(error)
       })
+  }
+
+  __deleteSitra(product, accessToken, callback) {
+    if (!product.specialIdSitra) return callback(null, { skipped: 'pas de specialIdSitra' })
+    if (config.debug && config.debug.logsFile)
+      log.writeLog('APIDAE BEFORE DELETE ' + product.specialIdSitra)
+
+    request(
+      {
+        url: `https://${config.sitra.api.host}${config.sitra.api.path}`,
+        method: 'PUT',
+        formData: {
+          mode: 'DEMANDE_SUPPRESSION',
+          id: product.specialIdSitra
+        },
+        json: true,
+        headers: { Authorization: `Bearer ${accessToken}` }
+      },
+      (err, httpResponse, body) => {
+        const ok = httpResponse && httpResponse.statusCode === 200
+        if (config.debug && config.debug.logsFile)
+          log.writeLog('APIDAE DELETE ' + product.specialIdSitra + ' = ' + (ok ? 'OK' : JSON.stringify(body)))
+        return callback(ok ? null : (err || body), body)
+      }
+    )
   }
 
   async __logExport(product, success, body) {

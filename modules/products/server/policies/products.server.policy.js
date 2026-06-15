@@ -23,6 +23,10 @@ exports.invokeRolesPolicies = function () {
         {
           resources: '/api/products/import',
           permissions: '*'
+        },
+        {
+          resources: '/api/products/delete',
+          permissions: '*'
         }
       ]
     },
@@ -35,6 +39,10 @@ exports.invokeRolesPolicies = function () {
         },
         {
           resources: '/api/products/import',
+          permissions: '*'
+        },
+        {
+          resources: '/api/products/delete',
           permissions: '*'
         }
       ]
@@ -50,6 +58,10 @@ exports.invokeRolesPolicies = function () {
           resources: '/api/products/import',
           permissions: '*'
         },
+        {
+          resources: '/api/products/delete',
+          permissions: '*'
+        }
       ]
     }
   ]);

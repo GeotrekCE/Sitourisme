@@ -49,6 +49,7 @@ class EntityServer
         this.EntitySchema.statics.getSitraPersonTypeReference = this.entityFactory.getSitraPersonTypeReference.bind(this.entityFactory)
         this.EntitySchema.statics.getSitraCivilityReference = this.entityFactory.getSitraCivilityReference.bind(this.entityFactory)
         this.EntitySchema.statics.getSITRAInternalCriteriaReference = this.entityFactory.getSITRAInternalCriteriaReference.bind(this.entityFactory)
+        this.EntitySchema.statics.deleteSitra = this.entityFactory.deleteSitra.bind(this.entityFactory)
     }
     
     setFn()

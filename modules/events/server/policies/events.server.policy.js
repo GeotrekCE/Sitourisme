@@ -23,6 +23,10 @@ exports.invokeRolesPolicies = function () {
         {
           resources: '/api/events/import',
           permissions: '*'
+        },
+        {
+          resources: '/api/events/delete',
+          permissions: '*'
         }
       ]
     },
@@ -31,6 +35,10 @@ exports.invokeRolesPolicies = function () {
       allows: [
         {
           resources: '/api/events',
+          permissions: '*'
+        },
+        {
+          resources: '/api/events/import',
           permissions: '*'
         },
         {
@@ -50,6 +58,10 @@ exports.invokeRolesPolicies = function () {
           resources: '/api/events/import',
           permissions: '*'
         },
+        {
+          resources: '/api/events/import',
+          permissions: '*'
+        }
       ]
     }
   ]);

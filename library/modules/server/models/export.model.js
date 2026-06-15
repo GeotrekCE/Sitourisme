@@ -60,6 +60,21 @@ class ExportApidae
         }
       }
     }
+
+    async __deleteSitra(entity, options, callback) {
+      console.log('-> Suppression APIDAE id : ' + entity.specialId + ' / sitra : ' + entity.specialIdSitra)
+
+      if (!entity.specialIdSitra) {
+        if (callback) callback(null, { skipped: 'pas de specialIdSitra' })
+        return;
+      }
+
+      ApidaeLib.__getSitraToken(ApidaeLib, entity, null, function (accessToken) {
+        ApidaeLib.__deleteSitra(entity, accessToken, function (err, result) {
+          if (callback) callback(err, result)
+        })
+      })
+    }
     
     async __exportSitraAuto(type, options, callback)
     {
