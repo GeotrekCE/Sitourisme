@@ -203,6 +203,10 @@ class EntityFactory
     new ExportModel(this.model).__exportSitra(datas, optionsExportSitra, callback);
   }
 
+  deleteSitra(entity, options, callback) {
+    new ExportModel(this.model).__deleteSitra(entity, options || {}, callback)
+  }
+
   exportSitraAuto(type, options, callback) {
     options.typeExport = this.name;
     new ExportModel(this.model).__exportSitraAuto(type, options, callback);

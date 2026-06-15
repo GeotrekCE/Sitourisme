@@ -26,3 +26,9 @@ exports.import = function (req, res) {
     genericServerController.init(entityModel, eventsApi, moduleName, entityServer, cgt);
     return genericServerController.import(req, res);
 }
+
+exports.delete = function (req, res) {
+    console.log('controller events delete > entity model = ', entityServer.entity);
+    genericServerController.init(entityModel, eventsApi, moduleName, entityServer, cgt);
+    return genericServerController.delete(req, res);
+}
