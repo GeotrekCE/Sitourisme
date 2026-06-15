@@ -42,7 +42,7 @@ exports.invokeRolesPolicies = function () {
           permissions: '*'
         },
         {
-          resources: '/api/events/import',
+          resources: '/api/events/delete',
           permissions: '*'
         }
       ]
@@ -59,7 +59,7 @@ exports.invokeRolesPolicies = function () {
           permissions: '*'
         },
         {
-          resources: '/api/events/import',
+          resources: '/api/events/delete',
           permissions: '*'
         }
       ]
