@@ -4537,37 +4537,15 @@ async __buildImageDetail(images, nImage = 0, callback, sizeImage = 2500) { ///* 
     return this.__buildImageDetail(images, nImage + 1, callback)
   }
 
-  const url = new URL(image.url)
-  const protocol = url.protocol === 'https:' ? https : http
-
   try {
-    const buffer = await new Promise((resolve, reject) => {
-      const req = protocol.get(url, response => {
-        if (response.statusCode === 404) {
-          response.destroy()
-          return resolve(null)
-        }
-
-        let transformer = sharp().rotate()
-        if (sizeImage) {
-          transformer = transformer.resize({ width: sizeImage })
-        }
-        transformer = transformer.jpeg({ quality: 70 })
-
-        response
-          .pipe(transformer)
-          .toBuffer()
-          .then(resolve)
-          .catch(reject)
-      })
-
-      req.on('error', reject)
-    })
-
-    /*if (!buffer) {
+    const buffer = await this.__fetchAndTransform(image.url, sizeImage)
+    
+    // 404 / invalid redir / images HS > splice
+    if (!buffer) {
       images.splice(nImage, 1)
       return this.__buildImageDetail(images, nImage, callback)
-    }*/
+    }
+
     if (config.debug && config.debug.logImages) console.log('__buildImageDetail buffer size', buffer.length)
 
     if (buffer.length > 9500000) { /* 9500Ko */
@@ -4601,9 +4579,46 @@ async __buildImageDetail(images, nImage = 0, callback, sizeImage = 2500) { ///* 
     return this.__buildImageDetail(images, nImage + 1, callback)
 
   } catch (err) {
-    console.error('Image processing error:', err.message)
+    console.error('Image processing error:', image.url, err.message)
+    if (config.debug && config.debug.logsFile) log.writeLog('Image processing error: ' + image.url + ' err = ' + err.message)
     return this.__buildImageDetail(images, nImage + 1, callback)
   }
+}
+
+__fetchAndTransform(urlString, sizeImage, redirects = 0) {
+  return new Promise((resolve, reject) => {
+    if (redirects > 5) return reject(new Error('Too many redirects: ' + urlString))
+
+    const url = new URL(urlString)
+    const protocol = url.protocol === 'https:' ? https : http
+
+    const req = protocol.get(url, response => {
+      const { statusCode, headers } = response
+
+      // Redirection -> go new one
+      if (statusCode >= 300 && statusCode < 400 && headers.location) {
+        response.resume()
+        const next = new URL(headers.location, url).toString()
+        return resolve(this.__fetchAndTransform(next, sizeImage, redirects + 1))
+      }
+
+      // Pic HS
+      if (statusCode !== 200) {
+        response.resume()
+        return resolve(null)
+      }
+
+      let transformer = sharp().rotate()
+      if (sizeImage) transformer = transformer.resize({ width: sizeImage })
+      transformer = transformer.jpeg({ quality: 70 })
+
+      response.on('error', reject)
+      response.pipe(transformer).toBuffer().then(resolve).catch(reject)
+    })
+
+    req.on('error', reject)
+    req.setTimeout(30000, () => req.destroy(new Error('Request timeout: ' + urlString)))
+  })
 }
 
  __buildPdfDetail(pdfs, nPdf, callback) {
