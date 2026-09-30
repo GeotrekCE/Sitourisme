@@ -893,7 +893,7 @@ class Apidae
             const success = statusCode === 200
             if (!success) {
               console.log(chalk.red("##### L'export a échoué ! #####"))
-              if (config.debug && config.debug.logsFile) log.writeLog('REPONSE GEOTREK TO APIDAE / ERR = ' + product.specialId + ' ' + product.specialIdSitra + ' statusCode = ' + statusCode + ' err = ' + body.message)
+              if (config.debug && config.debug.logsFile) log.writeLog('REPONSE GEOTREK TO APIDAE / ERR = ' + product.specialId + ' ' + product.specialIdSitra + ' statusCode = ' + statusCode + ' err = ' + body)
             } else {
               if (config.debug && config.debug.logsFile) log.writeLog('REPONSE GEOTREK TO APIDAE = ' + product.specialId + ' ' + product.specialIdSitra + ' statusCode = ' + statusCode + ' err = ' + body.message)
             }
@@ -935,9 +935,9 @@ class Apidae
             }
   
             // Critères internes
-            console.log('crit interne pour ', body.id, product.specialIdSitra)
             let specialIdSitraForCI = null
-            if (body.id !== undefined && body.id !== null) {
+            if (body !== undefined && body.id !== undefined && body.id !== null) {
+              console.log('crit interne pour ', body.id, product.specialIdSitra)
               specialIdSitraForCI = body.id;
             } else if (product.specialIdSitra !== '') {
               specialIdSitraForCI = product.specialIdSitra;
@@ -948,7 +948,7 @@ class Apidae
             
             options.iteration = options.iteration || 0;
   
-            if (config.debug && config.debug.logs)
+            if (config.debug && config.debug.logs && body !== undefined)
               console.log('Sending request Do Update = ', doUpdate, body.id);
             // si creation on ajoute et callback
             if (!doUpdate && body && body.id) {
