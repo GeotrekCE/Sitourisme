@@ -46,6 +46,9 @@
 | Transports en commun | `public_transport` | Complément localisation | `geoLocalization.complement`  | 'Transports en commun' : ' (FR/EN/IT/ES/DE/NL) + public_transport  |
 | Tracé KML | `kml` | Multimédia  | `multimedia.plan`  | Plans et tracés GPS, en lien (.KML) |
 | Tracé GPX | `gpx` | Multimédia  | `multimedia.plan`  | Plans et tracés GPS hébergés sur Apidae (.GPX + carte)  |
+| Pièces jointes | `attachments` | Multimédia  | `multimedia`  | Visuels et PDFs présents en pièces jointes  |
+| Pièces jointes | `attachments` | Multimédia  | `multimedia.illustration`  | Visuels |
+
 
 ## Geotrek:Touristicevent → Apidae:Fête et manifestation (Mapping des champs)
 

@@ -866,6 +866,19 @@ const _defaultSchema = {
       }
     }
   ],
+  morePdfs: [
+    {
+      url: {
+        type: String,
+        required: 'Please fill pdf url',
+        trim: true
+      },
+      name: {
+        type: String,
+        trim: true
+      }
+    }
+  ],
   gpx: [
     {
       type: String,

@@ -893,7 +893,7 @@ class Apidae
             const success = statusCode === 200
             if (!success) {
               console.log(chalk.red("##### L'export a échoué ! #####"))
-              if (config.debug && config.debug.logsFile) log.writeLog('REPONSE GEOTREK TO APIDAE / ERR = ' + product.specialId + ' ' + product.specialIdSitra + ' statusCode = ' + statusCode + ' err = ' + body.message)
+              if (config.debug && config.debug.logsFile) log.writeLog('REPONSE GEOTREK TO APIDAE / ERR = ' + product.specialId + ' ' + product.specialIdSitra + ' statusCode = ' + statusCode + ' err = ' + body)
             } else {
               if (config.debug && config.debug.logsFile) log.writeLog('REPONSE GEOTREK TO APIDAE = ' + product.specialId + ' ' + product.specialIdSitra + ' statusCode = ' + statusCode + ' err = ' + body.message)
             }
@@ -935,9 +935,9 @@ class Apidae
             }
   
             // Critères internes
-            console.log('crit interne pour ', body.id, product.specialIdSitra)
             let specialIdSitraForCI = null
-            if (body.id !== undefined && body.id !== null) {
+            if (body !== undefined && body.id !== undefined && body.id !== null) {
+              console.log('crit interne pour ', body.id, product.specialIdSitra)
               specialIdSitraForCI = body.id;
             } else if (product.specialIdSitra !== '') {
               specialIdSitraForCI = product.specialIdSitra;
@@ -948,7 +948,7 @@ class Apidae
             
             options.iteration = options.iteration || 0;
   
-            if (config.debug && config.debug.logs)
+            if (config.debug && config.debug.logs && body !== undefined)
               console.log('Sending request Do Update = ', doUpdate, body.id);
             // si creation on ajoute et callback
             if (!doUpdate && body && body.id) {
@@ -4514,16 +4514,18 @@ class Apidae
   }
 
   // Add PDF
-  let arrMultimediaDataPdf = [];
+  let arrMultimediaDataPdf = []
+  let arrMultimediaDataPdf2 = []
+
   if (product.pdf && product.pdf.length) {
     _.forEach(product.pdf, function (multimediaPdf) {
       if (multimediaPdf.url) {
         arrMultimediaDataPdf.push({
           locale: 'fr',
           url: multimediaPdf.url
-        });
+        })
       }
-    });
+    })
   }
   if (product.pdfEn && product.pdfEn.length) {
     _.forEach(product.pdfEn, function (multimediaPdf) {
@@ -4531,9 +4533,9 @@ class Apidae
         arrMultimediaDataPdf.push({
           locale: 'en',
           url: multimediaPdf.url
-        });
+        })
       }
-    });
+    })
   }
   if (product.pdfEs && product.pdfEs.length) {
     _.forEach(product.pdfEs, function (multimediaPdf) {
@@ -4541,9 +4543,9 @@ class Apidae
         arrMultimediaDataPdf.push({
           locale: 'es',
           url: multimediaPdf.url
-        });
+        })
       }
-    });
+    })
   }
   if (product.pdfIt && product.pdfIt.length) {
     _.forEach(product.pdfIt, function (multimediaPdf) {
@@ -4551,9 +4553,9 @@ class Apidae
         arrMultimediaDataPdf.push({
           locale: 'it',
           url: multimediaPdf.url
-        });
+        })
       }
-    });
+    })
   }
   if (product.pdfDe && product.pdfDe.length) {
     _.forEach(product.pdfDe, function (multimediaPdf) {
@@ -4561,9 +4563,9 @@ class Apidae
         arrMultimediaDataPdf.push({
           locale: 'de',
           url: multimediaPdf.url
-        });
+        })
       }
-    });
+    })
   }
   if (product.pdfNl && product.pdfNl.length) {
     _.forEach(product.pdfNl, function (multimediaPdf) {
@@ -4571,18 +4573,39 @@ class Apidae
         arrMultimediaDataPdf.push({
           locale: 'nl',
           url: multimediaPdf.url
-        });
+        })
       }
-    });
+    })
   }
+  if (product.morePdfs && product.morePdfs.length) {
+    _.forEach(product.morePdfs, function (attachmentPdf) {
+      if (attachmentPdf.url) {
+        arrMultimediaDataPdf2.push({
+          locale: 'fr',
+          url: attachmentPdf.url
+        })
+      }
+    })
+  }
+
   if (arrMultimediaDataPdf && arrMultimediaDataPdf.length) {
-    let multimediaPdf = {};
-    multimediaPdf.nom = {};
-    multimediaPdf.link = 'true';
-    multimediaPdf.type = 'DOCUMENT';
-    multimediaPdf.traductionFichiers = arrMultimediaDataPdf;
-    multimediaPdf.nom.libelleFr = 'PDF';
-    arrMultimedia.push(multimediaPdf);
+    let multimediaPdf = {}
+    multimediaPdf.nom = {}
+    multimediaPdf.link = 'true'
+    multimediaPdf.type = 'DOCUMENT'
+    multimediaPdf.traductionFichiers = arrMultimediaDataPdf
+    multimediaPdf.nom.libelleFr = 'PDF'
+    arrMultimedia.push(multimediaPdf)
+  }
+
+  if (arrMultimediaDataPdf2 && arrMultimediaDataPdf2.length) {
+    let multimediaPdf = {}
+    multimediaPdf.nom = {}
+    multimediaPdf.link = 'true'
+    multimediaPdf.type = 'DOCUMENT'
+    multimediaPdf.traductionFichiers = arrMultimediaDataPdf2
+    multimediaPdf.nom.libelleFr = 'PDF'
+    arrMultimedia.push(multimediaPdf)
   }
   
   if (arrMultimedia.length) {
@@ -4590,6 +4613,7 @@ class Apidae
   } else {
     err = true;
   }
+  
   rootFieldList.push('multimedias');
 
   return !err ? { root: root, rootFieldList: rootFieldList } : false;

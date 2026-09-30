@@ -1,3 +1,7 @@
+## [2.6.2]
+- Geotrek Tarn > Faire remonter les PDF présents dans les fichiers liés [#98] (https://github.com/GeotrekCE/Sitourisme/issues/98)
+- Quick Fix Apidae logging
+
 ## [2.6.1]
 - Ajout entête curl sur récupération des visuels, erreur 403 sur le Var
 - Fix process de détection des fiches en synchronisation courante

@@ -99,6 +99,7 @@ class importModel extends geotrek
       pdfDe: this.getPdf(element, 'de'),
       pdfNl: this.getPdf(element, 'nl'),
       image: this.getImage(element),
+      morePdfs : this.getMorePdfs(element),
       /*complementAccueil: 'reset',*/
       complementAccueil: this.getComplementAccueil(element, 'fr', additionalInformation),
       complementAccueilEn: this.getComplementAccueil(element, 'en', additionalInformation),

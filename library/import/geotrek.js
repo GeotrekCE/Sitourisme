@@ -159,9 +159,9 @@ class Import
 
   getPdf(element, lang) {
     if (element.pdf && element.pdf[lang]) {
-      let urlPdf = element.pdf[lang];
+      let urlPdf = element.pdf[lang]
       if (urlPdf) {
-        urlPdf = [urlPdf];
+        urlPdf = [urlPdf]
       }
       return _(urlPdf)
         .map((url) => ({
@@ -169,9 +169,29 @@ class Import
           name: 'Pdf',
           type: 'Pdf'
         }))
-        .valueOf();
+        .valueOf()
     }
-    return [];
+    return []
+  }
+
+  getMorePdfs(element) {
+    if (element.attachments) {
+       let pdfs = (element.attachments)
+        .filter((item) => {
+          if (item['type'] == 'file' && item['filetype']['type'] == 'Fichier Pdf')
+          {
+            return {
+              url: this.addUrlHttp(item['url']),
+              legend: item['legend'],
+              title: item['title'],
+              author: item['author']
+            }
+          }
+        })
+        pdfs = _(pdfs).valueOf()
+      return pdfs
+    }
+    return []
   }
 
   getImage(element) {
@@ -185,13 +205,13 @@ class Import
               legend: item['legend'],
               title: item['title'],
               author: item['author']
-            };
+            }
           }
-        });
-        images = _(images).valueOf();
-      return images;
+        })
+        images = _(images).valueOf()
+      return images
     }
-    return [];
+    return []
   }
 
   start(callback) {
