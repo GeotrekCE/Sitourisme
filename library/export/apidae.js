@@ -114,6 +114,13 @@ class Apidae
   }
 
   __getSitraToken(context, product, member, callback) {
+    const postData = 'grant_type=client_credentials'
+    const authUrl = new URL(
+      config.sitra.auth.path,
+      `https://${config.sitra.auth.host}`
+    )
+    authUrl.searchParams.delete('grant_type')
+
     const me = context,
       memberId = config.memberId,
       //var memberId = member || (product.member ? product.member : '-'),
@@ -125,14 +132,18 @@ class Apidae
       now = new Date().getTime(),
       expire = now + 15 * 60 * 1000,
       options = {
-        host: config.sitra.auth.host,
-        path: config.sitra.auth.path,
-        port: '80',
-        auth: access.user + ':' + access.pass,
+        hostname: authUrl.hostname,
+        port: 443,
+        path: authUrl.pathname + authUrl.search,
+        method: 'POST',
+        auth: `${access.user}:${access.pass}`,
+        rejectUnauthorized: true,
         headers: {
-          Accept: 'application/json'
+          Accept: 'application/json',
+          'Content-Type': 'application/x-www-form-urlencoded',
+          'Content-Length': Buffer.byteLength(postData)
         }
-      };
+      }
   
     console.log('send for id =>', memberId, access.user, access.pass, 'tokenMember = ',me.tokenPerMemberId);
   
@@ -141,7 +152,7 @@ class Apidae
         callback(me.tokenPerMemberId[memberId].accessToken);
       }
     } else {
-      let req = http.request(options, function (response) {
+      let req = https.request(options, function (response) {
         let str = '';
         response.on('data', function (chunk) {
           str += chunk;
@@ -183,7 +194,7 @@ class Apidae
         }
       });
   
-      req.end();
+      req.end(postData)
     }
   }
 
@@ -893,7 +904,7 @@ class Apidae
             const success = statusCode === 200
             if (!success) {
               console.log(chalk.red("##### L'export a échoué ! #####"))
-              if (config.debug && config.debug.logsFile) log.writeLog('REPONSE GEOTREK TO APIDAE / ERR = ' + product.specialId + ' ' + product.specialIdSitra + ' statusCode = ' + statusCode + ' err = ' + body)
+              if (config.debug && config.debug.logsFile) log.writeLog('REPONSE GEOTREK TO APIDAE / ERR = ' + product.specialId + ' ' + product.specialIdSitra + ' statusCode = ' + statusCode + ' err = ' + err)
             } else {
               if (config.debug && config.debug.logsFile) log.writeLog('REPONSE GEOTREK TO APIDAE = ' + product.specialId + ' ' + product.specialIdSitra + ' statusCode = ' + statusCode + ' err = ' + body.message)
             }
@@ -986,7 +997,7 @@ class Apidae
                 name: product.name,
                 data: null,
                 err: 'no message Apidae',
-                errMessage: body.message,
+                errMessage: body?.message ?? '',
                 specialIdSitra: 0
               }
 
@@ -1017,6 +1028,7 @@ class Apidae
               }
             } else if (
               doUpdate &&
+              body != undefined &&
               body.errorType == 'OBJET_TOURISTIQUE_NOT_FOUND'
             ) {
               // obj supprimé d'APIDAE
