@@ -1,3 +1,7 @@
+## [2.7.0]
+- Suppression dans APIDAE si suppression dans Geotrek [#54] (https://github.com/GeotrekCE/Sitourisme/issues/54
+- Déplacer les étiquettes dans Prestation > Complément accueil (#128 bis) [#128] (https://github.com/GeotrekCE/Sitourisme/issues/128
+
 ## [2.6.3]
 - Geotrek > Erreur 401 en écriture 
 

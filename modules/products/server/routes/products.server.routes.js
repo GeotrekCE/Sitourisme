@@ -13,6 +13,12 @@ module.exports = function (app) {
     .get(products.import)
 
   app
+    .route('/api/products/cleanup')
+    .all(productsPolicy.isAllowed)
+    .get(products.cleanup)
+    .post(products.cleanup)
+
+  app
     .route('/api/products/delete')
     .all(productsPolicy.isAllowed)
     .delete(products.delete)

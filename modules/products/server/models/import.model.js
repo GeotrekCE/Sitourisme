@@ -6,6 +6,7 @@ const path = require('path'),
   DataString = require(path.resolve('./library/data/manipulate.js')),
   config = require(path.resolve('./config/config.js')),
   configImportGEOTREK = require(path.resolve('./config/configImport_GEOTREK.js')),
+  log = require(path.resolve('./library/data/log.js')),
   //configSitraTownByInsee = require(path.resolve('./config/configSitraTownByInsee.js')),
   geotrek = require(path.resolve('./library/import/geotrek.js'));
 
@@ -516,12 +517,29 @@ getAmbianceLibelle(element, lang) {
     /*
     * RECOMMANDATIONS
     */
-    if (element.advice && element.advice[lang]) {
-      sections.push(
-        `>>>> RECOMMANDATIONS\n${cleanText(element.advice)}`
-      )
+    const recommendationParts = []
+    const advice = cleanText(element.advice)
+    if (advice) {
+      recommendationParts.push(advice)
+    }
+    
+    const labelIds = Array.isArray(element.labels)
+      ? element.labels
+      : []
+
+    for (const id of new Set(labelIds)) {
+      const labelText = additionalInformation?.labels?.[id]?.[lang]
+
+      if (typeof labelText === 'string' && labelText.trim()) {
+        recommendationParts.push(labelText.trim())
+      }
     }
 
+    if (recommendationParts.length) {
+      sections.push(
+        `>>> RECOMMANDATIONS\n\n${recommendationParts.join('\n\n')}`
+      )
+    }
     /*
     * MATERIELS
     */

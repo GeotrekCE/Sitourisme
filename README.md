@@ -72,3 +72,33 @@ Pour les Events via la commande :
 ```
 $ curl "URL/api/events/import?instance=X&type=geotrek-api""
 ```
+
+### Nettoyage
+
+Dans `config/configImport_GEOTREK.js` :
+
+```js
+2: {
+  geotrekUrl: 'https://geotrek.nature-haute-savoie.fr/api/v2/',
+  syncFull: false,
+  syncFrom: '',
+  cleanup: 'masking',
+  cleanupPrio: 'structure',
+  structures: {
+```
+
+| Paramètre | Effet |
+|---|---|
+| `cleanup: 'masking'` | Demande de masquage Apidae ; ligne Mongo conservée, même `specialIdSitra`. |
+| `cleanup: 'deletion'` | Demande de suppression Apidae ; ligne Mongo supprimée physiquement sur accusé positif. |
+| `cleanupPrio: 'instance'` | Le mode de l'instance s'impose ; les overrides de structures sont ignorés. |
+| `cleanupPrio: 'structure'` | `production.cleanup` prévaut lorsqu'il est renseigné ; sinon héritage de l'instance. |
+
+Sans `cleanupPrio`, la priorité est `structure`. Sans mode applicable, aucun nettoyage.
+
+```bash
+# Exécution produits, toutes les structures éligibles de l'instance 0.
+curl --fail-with-body --silent --show-error --request POST \
+  -H "Authorization: Bearer ${GEOTREK_CLEANUP_TOKEN}" \
+  'https://geotrek-apidae.websenso.dev/api/products/cleanup?instance=0&type=geotrek-api'
+```
