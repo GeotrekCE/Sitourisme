@@ -67,6 +67,8 @@ exports.geotrekInstance = {
     geotrekUrl : 'https://geotrek-admin.ecrins-parcnational.fr/api/v2',
     syncFull : false,
     syncFrom : '', //Blank for today = Production State - or a value ex : 2026-03-12
+    cleanup: 'masking',
+    cleanupPrio: 'instance',
     structures : {
       1: {
         specialId: 'SITRA2_STR_5411158',
