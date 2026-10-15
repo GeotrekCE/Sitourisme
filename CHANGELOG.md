@@ -1,3 +1,8 @@
+## [2.6.4]
+- Configuration Mont d'Ardèche
+- Arrêt synchronisation du Var
+- Activité Alpinisme en pause de synchronisation
+
 ## [2.6.3]
 - Geotrek > Erreur 401 en écriture 
 
