@@ -11,7 +11,7 @@ exports.activity = {
   7: 3302, /* Raquette : Itinéraire raquettes */
   8: 4201, /* Trail : Itinéraire de Trail */
   9: 4201, /* Snow trail : Itinéraire de Trail */
-  11: 3849, /* Alpinisme : Site d'alpinisme */
+  //11: 3849, /* Alpinisme : Site d'alpinisme */
   12: 6225, /* VTTAE : Itinéraire de VTT à Assistance Électrique */
   13: 6224, /* Gravel : Itinéraire gravel bike */
   14: 3283 /* Cyclo : Itinéraire cyclotourisme */
@@ -160,7 +160,7 @@ exports.geotrekInstance = {
         memberId : 6707,
         proprietaireId: 511,
         production: {
-          syncTrek: false,
+          syncTrek: true,
           syncEvent:false
         },
       },
@@ -1364,13 +1364,13 @@ exports.geotrekInstance = {
         address2: null,
         city: '2165',
         insee: '07071',
-        specialIdSitra: '170981',
+        specialIdSitra: '162317',
         statusImport: 2,
         memberId : 96,
         proprietaireId: 96,
         production: {
           syncTrek: true,
-          syncEvent:false
+          syncEvent: false
         },
       },
       13: {
@@ -1529,7 +1529,7 @@ exports.geotrekInstance = {
         proprietaireId: 1894,
         proprietaireIdCooking: 1903,
         production: {
-          syncTrek: true,
+          syncTrek: false,
           syncEvent:false,
           syncTouristiccontent: true
         },

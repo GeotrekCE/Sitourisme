@@ -2,6 +2,11 @@
 - Suppression dans APIDAE si suppression dans Geotrek [#54] (https://github.com/GeotrekCE/Sitourisme/issues/54)
 - Déplacer les étiquettes dans Prestation > Complément accueil (#128 bis) [#128] (https://github.com/GeotrekCE/Sitourisme/issues/128)
 
+## [2.6.4]
+- Configuration Mont d'Ardèche
+- Arrêt synchronisation du Var
+- Activité Alpinisme en pause de synchronisation
+
 ## [2.6.3]
 - Geotrek > Erreur 401 en écriture 
 
