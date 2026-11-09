@@ -98,6 +98,8 @@ Sans `cleanupPrio`, la priorité est `structure`. Sans mode applicable, aucun ne
 
 ```bash
 # Exécution produits, toutes les structures éligibles de l'instance 0.
+CLEANUP_TOKEN=$(NODE_ENV=production node -e "const c=require('./config/config.js'); process.stdout.write(c.cleanupToken)")
+
 curl --fail-with-body --silent --show-error --request POST \
   -H "Authorization: Bearer ${GEOTREK_CLEANUP_TOKEN}" \
   'https://geotrek-apidae.websenso.dev/api/products/cleanup?instance=0&type=geotrek-api'
