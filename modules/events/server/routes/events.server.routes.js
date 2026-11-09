@@ -13,6 +13,12 @@ module.exports = function (app) {
     .get(events.import)
 
   app
+    .route('/api/events/cleanup')
+    .all(eventsPolicy.isAllowed)
+    .get(events.cleanup)
+    .post(events.cleanup)
+
+  app
     .route('/api/events/delete')
     .all(eventsPolicy.isAllowed)
     .delete(events.delete)

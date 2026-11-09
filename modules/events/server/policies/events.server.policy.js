@@ -1,12 +1,12 @@
-'use strict';
+'use strict'
 
 /**
  * Module dependencies.
  */
-var ACL = require('acl2');
+var ACL = require('acl2')
 
 // Using the memory backend
-const acl = new ACL(new ACL.memoryBackend());
+const acl = new ACL(new ACL.memoryBackend())
 
 /**
  * Invoke Products Permissions
@@ -27,6 +27,10 @@ exports.invokeRolesPolicies = function () {
         {
           resources: '/api/events/delete',
           permissions: '*'
+        },
+        {
+          resources: '/api/events/cleanup',
+          permissions: ['get', 'post']
         }
       ]
     },
@@ -44,6 +48,10 @@ exports.invokeRolesPolicies = function () {
         {
           resources: '/api/events/delete',
           permissions: '*'
+        },
+        {
+          resources: '/api/events/cleanup',
+          permissions: ['get', 'post']
         }
       ]
     },
@@ -61,11 +69,15 @@ exports.invokeRolesPolicies = function () {
         {
           resources: '/api/events/delete',
           permissions: '*'
+        },
+        {
+          resources: '/api/events/cleanup',
+          permissions: ['get', 'post']
         }
       ]
     }
-  ]);
-};
+  ])
+}
 
 /**
  * Check If Products Policy Allows
@@ -89,13 +101,13 @@ exports.isAllowed = async function (req, res, next) {
   }
 
   try {
-    const isAllowed = await acl.areAnyRolesAllowed(roles, path, method);
+    const isAllowed = await acl.areAnyRolesAllowed(roles, path, method)
     if (isAllowed) {
-      return next();
+      return next()
     } else {
-      return res.status(403).json({ message: 'User is not authorized' });
+      return res.status(403).json({ message: 'User is not authorized' })
     }
   } catch (err) {
-    return res.status(500).send('Unexpected authorization error');
+    return res.status(500).send('Unexpected authorization error')
   }
 }
